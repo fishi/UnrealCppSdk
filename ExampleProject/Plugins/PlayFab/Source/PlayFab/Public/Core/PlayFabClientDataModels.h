@@ -3716,7 +3716,7 @@ namespace ClientModels
 		bool GetUserVirtualCurrency;
 		// Whether to get the player's custom data. Defaults to false
 		bool GetUserData;
-		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if UserDataKeys is false
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetUserData is false
 		TArray<FString> UserDataKeys;
 		// Whether to get the player's read only data. Defaults to false
 		bool GetUserReadOnlyData;
@@ -5493,132 +5493,6 @@ namespace ClientModels
         }
 		
 		~FGetTradeStatusResponse();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetUserCombinedInfoRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Unique PlayFab identifier of the user whose info is being requested. Optional, defaults to the authenticated user if no other lookup identifier set.
-		FString PlayFabId;
-		// [optional] PlayFab Username for the account to find (if no PlayFabId is specified).
-		FString Username;
-		// [optional] User email address for the account to find (if no Username is specified).
-		FString Email;
-		// [optional] Title-specific username for the account to find (if no Email is set).
-		FString TitleDisplayName;
-		// [optional] If set to false, account info will not be returned. Defaults to true.
-		OptionalBool GetAccountInfo;
-		// [optional] If set to false, inventory will not be returned. Defaults to true. Inventory will never be returned for users other than yourself.
-		OptionalBool GetInventory;
-		// [optional] If set to false, virtual currency balances will not be returned. Defaults to true. Currency balances will never be returned for users other than yourself.
-		OptionalBool GetVirtualCurrency;
-		// [optional] If set to false, custom user data will not be returned. Defaults to true.
-		OptionalBool GetUserData;
-		// [optional] User custom data keys to return. If set to null, all keys will be returned. For users other than yourself, only public data will be returned.
-		TArray<FString> UserDataKeys;
-		// [optional] If set to false, read-only user data will not be returned. Defaults to true.
-		OptionalBool GetReadOnlyData;
-		// [optional] User read-only custom data keys to return. If set to null, all keys will be returned. For users other than yourself, only public data will be returned.
-		TArray<FString> ReadOnlyDataKeys;
-	
-        FGetUserCombinedInfoRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			Username(),
-			Email(),
-			TitleDisplayName(),
-			GetAccountInfo(),
-			GetInventory(),
-			GetVirtualCurrency(),
-			GetUserData(),
-			UserDataKeys(),
-			GetReadOnlyData(),
-			ReadOnlyDataKeys()
-			{}
-		
-		FGetUserCombinedInfoRequest(const FGetUserCombinedInfoRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			Username(src.Username),
-			Email(src.Email),
-			TitleDisplayName(src.TitleDisplayName),
-			GetAccountInfo(src.GetAccountInfo),
-			GetInventory(src.GetInventory),
-			GetVirtualCurrency(src.GetVirtualCurrency),
-			GetUserData(src.GetUserData),
-			UserDataKeys(src.UserDataKeys),
-			GetReadOnlyData(src.GetReadOnlyData),
-			ReadOnlyDataKeys(src.ReadOnlyDataKeys)
-			{}
-			
-		FGetUserCombinedInfoRequest(const TSharedPtr<FJsonObject>& obj) : FGetUserCombinedInfoRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetUserCombinedInfoRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetUserCombinedInfoResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] Unique PlayFab identifier of the owner of the combined info.
-		FString PlayFabId;
-		// [optional] Account information for the user.
-		TSharedPtr<FUserAccountInfo> AccountInfo;
-		// [optional] Array of inventory items in the user's current inventory.
-		TArray<FItemInstance> Inventory;
-		// [optional] Array of virtual currency balance(s) belonging to the user.
-		TMap<FString, int32> VirtualCurrency;
-		// [optional] Array of remaining times and timestamps for virtual currencies.
-		TMap<FString, FVirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
-		// [optional] User specific custom data.
-		TMap<FString, FUserDataRecord> Data;
-		// The version of the UserData that was returned.
-		uint32 DataVersion;
-		// [optional] User specific read-only data.
-		TMap<FString, FUserDataRecord> ReadOnlyData;
-		// The version of the Read-Only UserData that was returned.
-		uint32 ReadOnlyDataVersion;
-	
-        FGetUserCombinedInfoResult() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			AccountInfo(nullptr),
-			Inventory(),
-			VirtualCurrency(),
-			VirtualCurrencyRechargeTimes(),
-			Data(),
-			DataVersion(0),
-			ReadOnlyData(),
-			ReadOnlyDataVersion(0)
-			{}
-		
-		FGetUserCombinedInfoResult(const FGetUserCombinedInfoResult& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			AccountInfo(src.AccountInfo.IsValid() ? MakeShareable(new FUserAccountInfo(*src.AccountInfo)) : nullptr),
-			Inventory(src.Inventory),
-			VirtualCurrency(src.VirtualCurrency),
-			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes),
-			Data(src.Data),
-			DataVersion(src.DataVersion),
-			ReadOnlyData(src.ReadOnlyData),
-			ReadOnlyDataVersion(src.ReadOnlyDataVersion)
-			{}
-			
-		FGetUserCombinedInfoResult(const TSharedPtr<FJsonObject>& obj) : FGetUserCombinedInfoResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetUserCombinedInfoResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

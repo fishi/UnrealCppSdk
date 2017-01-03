@@ -896,32 +896,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientGetUserCombinedInfoRequest(
-		const FBPClientGetUserCombinedInfoRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutUsername
-        ,FString& OutEmail
-        ,FString& OutTitleDisplayName
-        ,bool& OutGetAccountInfo
-        ,bool& OutGetInventory
-        ,bool& OutGetVirtualCurrency
-        ,bool& OutGetUserData
-        ,TArray<FString>& OutUserDataKeys
-        ,bool& OutGetReadOnlyData
-        ,TArray<FString>& OutReadOnlyDataKeys
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientGetUserCombinedInfoResult(
-		const FBPClientGetUserCombinedInfoResult& In
-        ,FString& OutPlayFabId
-        ,FBPClientUserAccountInfo& OutAccountInfo
-        ,TArray<FBPClientItemInstance>& OutInventory
-        ,int32& OutDataVersion
-        ,int32& OutReadOnlyDataVersion
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetUserDataRequest(
 		const FBPClientGetUserDataRequest& In
         ,TArray<FString>& OutKeys

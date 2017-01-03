@@ -543,7 +543,7 @@ namespace PlayFab
         bool RunTask(AdminModels::FRunTaskRequest& request, const FRunTaskDelegate& SuccessDelegate = FRunTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Update an existing task.
-         * If the task name in the update request is new, a task rename operation will be executed before updating other fields of the task. WARNING: Renaming of a task may break logics where the task name is used as an identifier.
+         * Note that when calling this API, all properties of the task have to be provided, including properties that you do not want to change. Parameters not specified would be set to default value. If the task name in the update request is new, a task rename operation will be executed before updating other fields of the task. WARNING: Renaming of a task may break logics where the task name is used as an identifier.
          */
         bool UpdateTask(AdminModels::FUpdateTaskRequest& request, const FUpdateTaskDelegate& SuccessDelegate = FUpdateTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 

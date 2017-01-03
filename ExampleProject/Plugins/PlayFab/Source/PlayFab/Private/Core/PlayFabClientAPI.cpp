@@ -771,33 +771,6 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromTwitchIDsResult(FHttpRequestPtr HttpR
     }
 }
 
-bool UPlayFabClientAPI::GetUserCombinedInfo(
-    ClientModels::FGetUserCombinedInfoRequest& request,
-    const FGetUserCombinedInfoDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserCombinedInfo")), request.toJSONString(),
-        TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserCombinedInfoResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabClientAPI::OnGetUserCombinedInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserCombinedInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ClientModels::FGetUserCombinedInfoResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
 bool UPlayFabClientAPI::LinkAndroidDeviceID(
     ClientModels::FLinkAndroidDeviceIDRequest& request,
     const FLinkAndroidDeviceIDDelegate& SuccessDelegate,

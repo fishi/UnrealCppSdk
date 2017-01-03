@@ -3812,7 +3812,7 @@ namespace ServerModels
 		bool GetUserVirtualCurrency;
 		// Whether to get the player's custom data. Defaults to false
 		bool GetUserData;
-		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if UserDataKeys is false
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetUserData is false
 		TArray<FString> UserDataKeys;
 		// Whether to get the player's read only data. Defaults to false
 		bool GetUserReadOnlyData;

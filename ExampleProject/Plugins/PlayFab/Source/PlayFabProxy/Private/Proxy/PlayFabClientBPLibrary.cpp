@@ -1647,62 +1647,6 @@ void UPFClientProxyLibrary::BreakBPClientGetTradeStatusResponse(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientGetUserCombinedInfoRequest(
-		const FBPClientGetUserCombinedInfoRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutUsername
-        ,FString& OutEmail
-        ,FString& OutTitleDisplayName
-        ,bool& OutGetAccountInfo
-        ,bool& OutGetInventory
-        ,bool& OutGetVirtualCurrency
-        ,bool& OutGetUserData
-        ,TArray<FString>& OutUserDataKeys
-        ,bool& OutGetReadOnlyData
-        ,TArray<FString>& OutReadOnlyDataKeys
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutUsername = In.Data.Username;
-	OutEmail = In.Data.Email;
-	OutTitleDisplayName = In.Data.TitleDisplayName;
-	OutGetAccountInfo = In.Data.GetAccountInfo;
-	OutGetInventory = In.Data.GetInventory;
-	OutGetVirtualCurrency = In.Data.GetVirtualCurrency;
-	OutGetUserData = In.Data.GetUserData;
-	OutUserDataKeys = In.Data.UserDataKeys;
-	OutGetReadOnlyData = In.Data.GetReadOnlyData;
-	OutReadOnlyDataKeys = In.Data.ReadOnlyDataKeys;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientGetUserCombinedInfoResult(
-		const FBPClientGetUserCombinedInfoResult& In
-        ,FString& OutPlayFabId
-        ,FBPClientUserAccountInfo& OutAccountInfo
-        ,TArray<FBPClientItemInstance>& OutInventory
-        ,int32& OutDataVersion
-        ,int32& OutReadOnlyDataVersion
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	if (In.Data.AccountInfo.IsValid()) {    OutAccountInfo.Data = *In.Data.AccountInfo;}
-	for (const PlayFab::ClientModels::FItemInstance& elem : In.Data.Inventory)
-    {
-        FBPClientItemInstance result;
-        result.Data = elem;
-        OutInventory.Add(result);
-    }
-
-	
-	
-	
-	OutDataVersion = In.Data.DataVersion;
-	
-	OutReadOnlyDataVersion = In.Data.ReadOnlyDataVersion;
-	
-}
-
 void UPFClientProxyLibrary::BreakBPClientGetUserDataRequest(
 		const FBPClientGetUserDataRequest& In
         ,TArray<FString>& OutKeys

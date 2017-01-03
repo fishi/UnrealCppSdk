@@ -1236,26 +1236,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetTradeStatusResponseDelegate, const FBPClientGetTradeStatusResponse&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetUserCombinedInfoRequest"))
-struct FBPClientGetUserCombinedInfoRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FGetUserCombinedInfoRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetUserCombinedInfoRequestDelegate, const FBPClientGetUserCombinedInfoRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetUserCombinedInfoResult"))
-struct FBPClientGetUserCombinedInfoResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FGetUserCombinedInfoResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetUserCombinedInfoResultDelegate, const FBPClientGetUserCombinedInfoResult&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetUserDataRequest"))
 struct FBPClientGetUserDataRequest
 {
