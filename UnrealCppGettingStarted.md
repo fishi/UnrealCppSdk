@@ -23,7 +23,7 @@ Unreal Project Setup
       * Select all the optons as seen here:
         * New Project tab, C++ sub-tab, No Starter Content
         * Remember your path - referenced as {UeCppLocation} for the rest of this guide
-        * ![Unreal image](/SdkQuickStart/images/Unreal/NewProjectCpp.png)
+        * ![Unreal image](/images/Unreal/NewProjectCpp.png)
       * This will launch an Unreal Editor window, and Visual Studio
         * Stop, and close everything
 * Install the PlayFab Plugin into your project
@@ -36,14 +36,14 @@ Unreal Project Setup
     * Navigate back up to {UeCppLocation}, and right-click your "GettingStartedUeCpp.uproject" (your .uproject file name will match your project name from earlier)
     * Select "Generate Visual Studio project files"
     * When the popup completes, re-open GettingStartedUeCpp.sln in Visual Studio
-    * ![Unreal image](/SdkQuickStart/images/Unreal/GenVsProjCpp.png)
+    * ![Unreal image](/images/Unreal/GenVsProjCpp.png)
 * Run Unreal, Create a new actor, and place it in the scene
   * We are using an actor to trigger an API call - You can make API calls from any C++ code
   * From Visual Studio, Run Unreal Engine (Debug -> Start Debugging)
   * Create a new actor (This screenshot shows multiple sequential popups, you won't see all of this at once):
-  * ![Unreal image](/SdkQuickStart/images/Unreal/NewActorCpp.png)
+  * ![Unreal image](/images/Unreal/NewActorCpp.png)
   * Place the actor in the scene
-  * ![Unreal image](/SdkQuickStart/images/Unreal/PlaceActor.png)
+  * ![Unreal image](/images/Unreal/PlaceActor.png)
   * Once again, stop and close Unreal (Keep Visual Studio open)
     * We need to modify LoginActor in Visual Studio in the next section
 * PlayFab Installation Complete!
