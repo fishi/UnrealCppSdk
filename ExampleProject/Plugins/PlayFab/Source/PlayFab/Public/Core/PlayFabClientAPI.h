@@ -437,8 +437,8 @@ namespace PlayFab
          */
         bool AddUserVirtualCurrency(ClientModels::FAddUserVirtualCurrencyRequest& request, const FAddUserVirtualCurrencyDelegate& SuccessDelegate = FAddUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Confirms with the payment provider that the purchase was approved (if applicable) and adjusts inventory and virtual currency balances as appropriate
-         * The final step in the purchasing process, this API finalizes the purchase with the payment provider, where applicable, adding virtual goods to the player inventory (including random drop table resolution and recursive addition of bundled items) and adjusting virtual currency balances for funds used or added. Note that this is a pull operation, and should be polled regularly when a purchase is in progress.
+         * Confirms with the payment provider that the purchase was approved (if applicable) and adjusts inventory and  virtual currency balances as appropriate
+         * The final step in the purchasing process, this API finalizes the purchase with the payment provider, where applicable, adding virtual goods to the player inventory (including random drop table resolution and recursive addition of bundled items) and adjusting virtual currency balances for funds used or added. Note that this is a pull operation, and should be polled regularly when a purchase is in progress. Please note that the processing time for inventory grants and purchases increases fractionally the more items are  in the inventory, and the more items are in the grant/purchase operation.
          */
         bool ConfirmPurchase(ClientModels::FConfirmPurchaseRequest& request, const FConfirmPurchaseDelegate& SuccessDelegate = FConfirmPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -464,7 +464,8 @@ namespace PlayFab
          */
         bool PayForPurchase(ClientModels::FPayForPurchaseRequest& request, const FPayForPurchaseDelegate& SuccessDelegate = FPayForPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Buys a single item with virtual currency. You must specify both the virtual currency to use to purchase, as well as what the client believes the price to be. This lets the server fail the purchase if the price has changed.
+         * Buys a single item with virtual currency. You must specify both the virtual currency to use to purchase,  as well as what the client believes the price to be. This lets the server fail the purchase if the price has changed.
+         * Please note that the processing time for inventory grants and purchases increases fractionally  the more items are in the inventory, and the more items are in the grant/purchase operation (with each item in a bundle being a distinct add).
          */
         bool PurchaseItem(ClientModels::FPurchaseItemRequest& request, const FPurchaseItemDelegate& SuccessDelegate = FPurchaseItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

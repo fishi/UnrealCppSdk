@@ -342,17 +342,17 @@ namespace PlayFab
         bool GetUserInventory(ServerModels::FGetUserInventoryRequest& request, const FGetUserInventoryDelegate& SuccessDelegate = FGetUserInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Adds the specified items to the specified character's inventory
-         * This function directly adds inventory items to the character's inventories. As  a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item  catalog definition.
+         * This function directly adds inventory items to the character's inventories. As  a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item  catalog definition. Please note that the processing time for inventory grants and purchases increases fractionally  the more items are in the inventory, and the more items are in the grant/purchase operation.
          */
         bool GrantItemsToCharacter(ServerModels::FGrantItemsToCharacterRequest& request, const FGrantItemsToCharacterDelegate& SuccessDelegate = FGrantItemsToCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Adds the specified items to the specified user's inventory
-         * This function directly adds inventory items to the user's inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
+         * This function directly adds inventory items to the user's inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition. Please note that the processing time for  inventory grants and purchases increases fractionally the more items are in the inventory, and the more items are in the grant/purchase  operation.
          */
         bool GrantItemsToUser(ServerModels::FGrantItemsToUserRequest& request, const FGrantItemsToUserDelegate& SuccessDelegate = FGrantItemsToUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Adds the specified items to the specified user inventories
-         * This function directly adds inventory items to user inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
+         * This function directly adds inventory items to user inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition. Please note that the processing time for inventory grants and purchases increases fractionally the more items are in the inventory, and the more items are in the grant/purchase  operation.
          */
         bool GrantItemsToUsers(ServerModels::FGrantItemsToUsersRequest& request, const FGrantItemsToUsersDelegate& SuccessDelegate = FGrantItemsToUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
