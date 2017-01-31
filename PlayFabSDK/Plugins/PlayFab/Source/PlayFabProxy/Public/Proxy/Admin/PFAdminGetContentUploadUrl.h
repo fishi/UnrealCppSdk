@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPAdminGetContentUploadUrlResultDelegate OnFailure;
 	
-	// Retrieves the pre-signed URL for uploading a content file. A subsequent HTTP PUT to the returned URL uploads the content.
+	// Retrieves the pre-signed URL for uploading a content file. A subsequent HTTP PUT to the returned URL uploads the  content. Also, please be aware that the Content service is specifically PlayFab's CDN offering, for which standard CDN rates apply.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Content")
 	static UPFAdminGetContentUploadUrl* GetContentUploadUrl(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InKey, const FString& InContentType);
 

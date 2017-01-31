@@ -1871,11 +1871,13 @@ void UPFClientProxyLibrary::BreakBPClientLinkGameCenterAccountResult(
 
 void UPFClientProxyLibrary::BreakBPClientLinkGoogleAccountRequest(
 		const FBPClientLinkGoogleAccountRequest& In
+        ,FString& OutServerAuthCode
         ,FString& OutAccessToken
         ,bool& OutForceLink
 	)
 {
-    OutAccessToken = In.Data.AccessToken;
+    OutServerAuthCode = In.Data.ServerAuthCode;
+	OutAccessToken = In.Data.AccessToken;
 	OutForceLink = In.Data.ForceLink;
 	
 }
@@ -2090,12 +2092,14 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithGameCenterRequest(
 void UPFClientProxyLibrary::BreakBPClientLoginWithGoogleAccountRequest(
 		const FBPClientLoginWithGoogleAccountRequest& In
         ,FString& OutTitleId
+        ,FString& OutServerAuthCode
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
+	OutServerAuthCode = In.Data.ServerAuthCode;
 	OutAccessToken = In.Data.AccessToken;
 	OutCreateAccount = In.Data.CreateAccount;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
@@ -2256,6 +2260,17 @@ void UPFClientProxyLibrary::BreakBPClientModifyUserVirtualCurrencyResult(
 	OutVirtualCurrency = In.Data.VirtualCurrency;
 	OutBalanceChange = In.Data.BalanceChange;
 	OutBalance = In.Data.Balance;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientNameIdentifier(
+		const FBPClientNameIdentifier& In
+        ,FString& OutName
+        ,FString& OutId
+	)
+{
+    OutName = In.Data.Name;
+	OutId = In.Data.Id;
 	
 }
 

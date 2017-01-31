@@ -7130,7 +7130,7 @@ namespace ServerModels
 	struct PLAYFAB_API FSetGameServerInstanceDataRequest : public FPlayFabBaseModel
     {
 		
-		// Unique identifier of the Game Instance to be updated.
+		// Unique identifier of the Game Instance to be updated, in decimal format.
 		FString LobbyId;
 		// Custom data to set for the specified game server instance.
 		FString GameServerData;
@@ -7184,7 +7184,7 @@ namespace ServerModels
 	struct PLAYFAB_API FSetGameServerInstanceStateRequest : public FPlayFabBaseModel
     {
 		
-		// Unique identifier of the Game Instance to be updated.
+		// Unique identifier of the Game Instance to be updated, in decimal format.
 		FString LobbyId;
 		// State to set for the specified game server instance.
 		GameInstanceState State;

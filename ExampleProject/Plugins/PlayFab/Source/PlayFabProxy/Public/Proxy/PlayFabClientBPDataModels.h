@@ -1706,6 +1706,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientModifyUserVirtualCurrencyResultDelegate, const FBPClientModifyUserVirtualCurrencyResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientNameIdentifier"))
+struct FBPClientNameIdentifier
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FNameIdentifier Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientNameIdentifierDelegate, const FBPClientNameIdentifier&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientOpenTradeRequest"))
 struct FBPClientOpenTradeRequest
 {

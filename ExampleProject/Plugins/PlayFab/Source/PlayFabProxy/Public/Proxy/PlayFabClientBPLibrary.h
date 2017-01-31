@@ -1031,6 +1031,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLinkGoogleAccountRequest(
 		const FBPClientLinkGoogleAccountRequest& In
+        ,FString& OutServerAuthCode
         ,FString& OutAccessToken
         ,bool& OutForceLink
 	);
@@ -1165,6 +1166,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLoginWithGoogleAccountRequest(
 		const FBPClientLoginWithGoogleAccountRequest& In
         ,FString& OutTitleId
+        ,FString& OutServerAuthCode
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
@@ -1260,6 +1262,13 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutVirtualCurrency
         ,int32& OutBalanceChange
         ,int32& OutBalance
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientNameIdentifier(
+		const FBPClientNameIdentifier& In
+        ,FString& OutName
+        ,FString& OutId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

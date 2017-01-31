@@ -5958,19 +5958,23 @@ namespace ClientModels
 	struct PLAYFAB_API FLinkGoogleAccountRequest : public FPlayFabBaseModel
     {
 		
-		// Unique token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods) from Google Play for the user.
+		// [optional] Server authentication code obtained on the client by calling getServerAuthCode() (https://developers.google.com/identity/sign-in/android/offline-access) from Google Play for the user.
+		FString ServerAuthCode;
+		// [optional] OAuth 2.0 access token obtained on the client by calling the getAccessToken() Google client API.
 		FString AccessToken;
 		// [optional] If another user is already linked to the account, unlink the other user and re-link.
 		OptionalBool ForceLink;
 	
         FLinkGoogleAccountRequest() :
 			FPlayFabBaseModel(),
+			ServerAuthCode(),
 			AccessToken(),
 			ForceLink()
 			{}
 		
 		FLinkGoogleAccountRequest(const FLinkGoogleAccountRequest& src) :
 			FPlayFabBaseModel(),
+			ServerAuthCode(src.ServerAuthCode),
 			AccessToken(src.AccessToken),
 			ForceLink(src.ForceLink)
 			{}
@@ -6573,7 +6577,9 @@ namespace ClientModels
 		
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// Unique token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods) from Google Play for the user.
+		// [optional] OAuth 2.0 server authentication code obtained on the client by calling the getServerAuthCode() (https://developers.google.com/identity/sign-in/android/offline-access) Google client API.
+		FString ServerAuthCode;
+		// [optional] OAuth 2.0 access token obtained on the client by calling the getAccessToken() Google client API.
 		FString AccessToken;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Google account.
 		OptionalBool CreateAccount;
@@ -6583,6 +6589,7 @@ namespace ClientModels
         FLoginWithGoogleAccountRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
+			ServerAuthCode(),
 			AccessToken(),
 			CreateAccount(),
 			InfoRequestParameters(nullptr)
@@ -6591,6 +6598,7 @@ namespace ClientModels
 		FLoginWithGoogleAccountRequest(const FLoginWithGoogleAccountRequest& src) :
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
+			ServerAuthCode(src.ServerAuthCode),
 			AccessToken(src.AccessToken),
 			CreateAccount(src.CreateAccount),
 			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
@@ -6967,6 +6975,37 @@ namespace ClientModels
         }
 		
 		~FModifyUserVirtualCurrencyResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FNameIdentifier : public FPlayFabBaseModel
+    {
+		
+		// [optional] undefined
+		FString Name;
+		// [optional] undefined
+		FString Id;
+	
+        FNameIdentifier() :
+			FPlayFabBaseModel(),
+			Name(),
+			Id()
+			{}
+		
+		FNameIdentifier(const FNameIdentifier& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			Id(src.Id)
+			{}
+			
+		FNameIdentifier(const TSharedPtr<FJsonObject>& obj) : FNameIdentifier()
+        {
+            readFromValue(obj);
+        }
+		
+		~FNameIdentifier();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

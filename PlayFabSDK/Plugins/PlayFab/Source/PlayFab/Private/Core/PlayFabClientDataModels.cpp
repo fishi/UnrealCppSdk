@@ -9296,7 +9296,9 @@ void PlayFab::ClientModels::FLinkGoogleAccountRequest::writeJSON(JsonWriter& wri
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
+    if(ServerAuthCode.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerAuthCode")); writer->WriteValue(ServerAuthCode); }
+	
+    if(AccessToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken); }
 	
     if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
 	
@@ -9308,6 +9310,13 @@ bool PlayFab::ClientModels::FLinkGoogleAccountRequest::readFromValue(const TShar
 {
 	bool HasSucceeded = true; 
 	
+    const TSharedPtr<FJsonValue> ServerAuthCodeValue = obj->TryGetField(TEXT("ServerAuthCode"));
+    if (ServerAuthCodeValue.IsValid()&& !ServerAuthCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerAuthCodeValue->TryGetString(TmpValue)) {ServerAuthCode = TmpValue; }
+    }
+    
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
     if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
     {
@@ -10125,7 +10134,9 @@ void PlayFab::ClientModels::FLoginWithGoogleAccountRequest::writeJSON(JsonWriter
     
     writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
 	
-    writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
+    if(ServerAuthCode.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerAuthCode")); writer->WriteValue(ServerAuthCode); }
+	
+    if(AccessToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
 	
@@ -10144,6 +10155,13 @@ bool PlayFab::ClientModels::FLoginWithGoogleAccountRequest::readFromValue(const 
     {
         FString TmpValue;
         if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerAuthCodeValue = obj->TryGetField(TEXT("ServerAuthCode"));
+    if (ServerAuthCodeValue.IsValid()&& !ServerAuthCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerAuthCodeValue->TryGetString(TmpValue)) {ServerAuthCode = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
@@ -10747,6 +10765,46 @@ bool PlayFab::ClientModels::FModifyUserVirtualCurrencyResult::readFromValue(cons
     {
         int32 TmpValue;
         if(BalanceValue->TryGetNumber(TmpValue)) {Balance = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FNameIdentifier::~FNameIdentifier()
+{
+    
+}
+
+void PlayFab::ClientModels::FNameIdentifier::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+	
+    if(Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FNameIdentifier::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
+    if (IdValue.IsValid()&& !IdValue->IsNull())
+    {
+        FString TmpValue;
+        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
     }
     
     
