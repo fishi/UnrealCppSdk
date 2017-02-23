@@ -10,13 +10,15 @@ UPFClientGetLeaderboardAroundPlayer::UPFClientGetLeaderboardAroundPlayer(const F
 {
 }
 
-UPFClientGetLeaderboardAroundPlayer* UPFClientGetLeaderboardAroundPlayer::GetLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InStatisticName, const int32& InMaxResultsCount)
+UPFClientGetLeaderboardAroundPlayer* UPFClientGetLeaderboardAroundPlayer::GetLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InStatisticName, const int32& InMaxResultsCount, const int32& InVersion, const bool& InUseSpecificVersion)
 {
 	UPFClientGetLeaderboardAroundPlayer* Proxy = NewObject<UPFClientGetLeaderboardAroundPlayer>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
 	Proxy->Request.StatisticName = InStatisticName;
 	Proxy->Request.MaxResultsCount = InMaxResultsCount;
+	Proxy->Request.Version = InVersion;
+	Proxy->Request.UseSpecificVersion = InUseSpecificVersion;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves a list of ranked users for the given statistic, centered on the requested player. If PlayFabId is empty or null will return currently logged in user.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Data Management")
-	static UPFClientGetLeaderboardAroundPlayer* GetLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InStatisticName, const int32& InMaxResultsCount);
+	static UPFClientGetLeaderboardAroundPlayer* GetLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InStatisticName, const int32& InMaxResultsCount, const int32& InVersion, const bool& InUseSpecificVersion);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

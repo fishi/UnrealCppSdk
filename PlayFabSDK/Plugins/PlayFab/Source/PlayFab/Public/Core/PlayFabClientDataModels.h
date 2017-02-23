@@ -161,6 +161,41 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FAdCampaignAttribution : public FPlayFabBaseModel
+    {
+		
+		// [optional] Attribution network name
+		FString Platform;
+		// [optional] Attribution campaign identifier
+		FString CampaignId;
+		// UTC time stamp of attribution
+		FDateTime AttributedAt;
+	
+        FAdCampaignAttribution() :
+			FPlayFabBaseModel(),
+			Platform(),
+			CampaignId(),
+			AttributedAt(0)
+			{}
+		
+		FAdCampaignAttribution(const FAdCampaignAttribution& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			CampaignId(src.CampaignId),
+			AttributedAt(src.AttributedAt)
+			{}
+			
+		FAdCampaignAttribution(const TSharedPtr<FJsonObject>& obj) : FAdCampaignAttribution()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAdCampaignAttribution();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAddFriendRequest : public FPlayFabBaseModel
     {
 		
@@ -518,22 +553,18 @@ namespace ClientModels
 		
 		// [optional] The IdentifierForAdvertisers for iOS Devices.
 		FString Idfa;
-		// [optional] The android advertising id. This field is deprecated in favor of Adid for clarity.
-		FString Android_Id;
 		// [optional] The adid for this device.
 		FString Adid;
 	
         FAttributeInstallRequest() :
 			FPlayFabBaseModel(),
 			Idfa(),
-			Android_Id(),
 			Adid()
 			{}
 		
 		FAttributeInstallRequest(const FAttributeInstallRequest& src) :
 			FPlayFabBaseModel(),
 			Idfa(src.Idfa),
-			Android_Id(src.Android_Id),
 			Adid(src.Adid)
 			{}
 			
@@ -1280,6 +1311,278 @@ namespace ClientModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
+	
+	enum ContinentCode
+	{
+		ContinentCodeAF,
+		ContinentCodeAN,
+		ContinentCodeAS,
+		ContinentCodeEU,
+		ContinentCodeNA,
+		ContinentCodeOC,
+		ContinentCodeSA
+	};
+	
+	void writeContinentCodeEnumJSON(ContinentCode enumVal, JsonWriter& writer);
+	ContinentCode readContinentCodeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	enum CountryCode
+	{
+		CountryCodeAF,
+		CountryCodeAX,
+		CountryCodeAL,
+		CountryCodeDZ,
+		CountryCodeAS,
+		CountryCodeAD,
+		CountryCodeAO,
+		CountryCodeAI,
+		CountryCodeAQ,
+		CountryCodeAG,
+		CountryCodeAR,
+		CountryCodeAM,
+		CountryCodeAW,
+		CountryCodeAU,
+		CountryCodeAT,
+		CountryCodeAZ,
+		CountryCodeBS,
+		CountryCodeBH,
+		CountryCodeBD,
+		CountryCodeBB,
+		CountryCodeBY,
+		CountryCodeBE,
+		CountryCodeBZ,
+		CountryCodeBJ,
+		CountryCodeBM,
+		CountryCodeBT,
+		CountryCodeBO,
+		CountryCodeBQ,
+		CountryCodeBA,
+		CountryCodeBW,
+		CountryCodeBV,
+		CountryCodeBR,
+		CountryCodeIO,
+		CountryCodeBN,
+		CountryCodeBG,
+		CountryCodeBF,
+		CountryCodeBI,
+		CountryCodeKH,
+		CountryCodeCM,
+		CountryCodeCA,
+		CountryCodeCV,
+		CountryCodeKY,
+		CountryCodeCF,
+		CountryCodeTD,
+		CountryCodeCL,
+		CountryCodeCN,
+		CountryCodeCX,
+		CountryCodeCC,
+		CountryCodeCO,
+		CountryCodeKM,
+		CountryCodeCG,
+		CountryCodeCD,
+		CountryCodeCK,
+		CountryCodeCR,
+		CountryCodeCI,
+		CountryCodeHR,
+		CountryCodeCU,
+		CountryCodeCW,
+		CountryCodeCY,
+		CountryCodeCZ,
+		CountryCodeDK,
+		CountryCodeDJ,
+		CountryCodeDM,
+		CountryCodeDO,
+		CountryCodeEC,
+		CountryCodeEG,
+		CountryCodeSV,
+		CountryCodeGQ,
+		CountryCodeER,
+		CountryCodeEE,
+		CountryCodeET,
+		CountryCodeFK,
+		CountryCodeFO,
+		CountryCodeFJ,
+		CountryCodeFI,
+		CountryCodeFR,
+		CountryCodeGF,
+		CountryCodePF,
+		CountryCodeTF,
+		CountryCodeGA,
+		CountryCodeGM,
+		CountryCodeGE,
+		CountryCodeDE,
+		CountryCodeGH,
+		CountryCodeGI,
+		CountryCodeGR,
+		CountryCodeGL,
+		CountryCodeGD,
+		CountryCodeGP,
+		CountryCodeGU,
+		CountryCodeGT,
+		CountryCodeGG,
+		CountryCodeGN,
+		CountryCodeGW,
+		CountryCodeGY,
+		CountryCodeHT,
+		CountryCodeHM,
+		CountryCodeVA,
+		CountryCodeHN,
+		CountryCodeHK,
+		CountryCodeHU,
+		CountryCodeIS,
+		CountryCodeIN,
+		CountryCodeID,
+		CountryCodeIR,
+		CountryCodeIQ,
+		CountryCodeIE,
+		CountryCodeIM,
+		CountryCodeIL,
+		CountryCodeIT,
+		CountryCodeJM,
+		CountryCodeJP,
+		CountryCodeJE,
+		CountryCodeJO,
+		CountryCodeKZ,
+		CountryCodeKE,
+		CountryCodeKI,
+		CountryCodeKP,
+		CountryCodeKR,
+		CountryCodeKW,
+		CountryCodeKG,
+		CountryCodeLA,
+		CountryCodeLV,
+		CountryCodeLB,
+		CountryCodeLS,
+		CountryCodeLR,
+		CountryCodeLY,
+		CountryCodeLI,
+		CountryCodeLT,
+		CountryCodeLU,
+		CountryCodeMO,
+		CountryCodeMK,
+		CountryCodeMG,
+		CountryCodeMW,
+		CountryCodeMY,
+		CountryCodeMV,
+		CountryCodeML,
+		CountryCodeMT,
+		CountryCodeMH,
+		CountryCodeMQ,
+		CountryCodeMR,
+		CountryCodeMU,
+		CountryCodeYT,
+		CountryCodeMX,
+		CountryCodeFM,
+		CountryCodeMD,
+		CountryCodeMC,
+		CountryCodeMN,
+		CountryCodeME,
+		CountryCodeMS,
+		CountryCodeMA,
+		CountryCodeMZ,
+		CountryCodeMM,
+		CountryCodeNA,
+		CountryCodeNR,
+		CountryCodeNP,
+		CountryCodeNL,
+		CountryCodeNC,
+		CountryCodeNZ,
+		CountryCodeNI,
+		CountryCodeNE,
+		CountryCodeNG,
+		CountryCodeNU,
+		CountryCodeNF,
+		CountryCodeMP,
+		CountryCodeNO,
+		CountryCodeOM,
+		CountryCodePK,
+		CountryCodePW,
+		CountryCodePS,
+		CountryCodePA,
+		CountryCodePG,
+		CountryCodePY,
+		CountryCodePE,
+		CountryCodePH,
+		CountryCodePN,
+		CountryCodePL,
+		CountryCodePT,
+		CountryCodePR,
+		CountryCodeQA,
+		CountryCodeRE,
+		CountryCodeRO,
+		CountryCodeRU,
+		CountryCodeRW,
+		CountryCodeBL,
+		CountryCodeSH,
+		CountryCodeKN,
+		CountryCodeLC,
+		CountryCodeMF,
+		CountryCodePM,
+		CountryCodeVC,
+		CountryCodeWS,
+		CountryCodeSM,
+		CountryCodeST,
+		CountryCodeSA,
+		CountryCodeSN,
+		CountryCodeRS,
+		CountryCodeSC,
+		CountryCodeSL,
+		CountryCodeSG,
+		CountryCodeSX,
+		CountryCodeSK,
+		CountryCodeSI,
+		CountryCodeSB,
+		CountryCodeSO,
+		CountryCodeZA,
+		CountryCodeGS,
+		CountryCodeSS,
+		CountryCodeES,
+		CountryCodeLK,
+		CountryCodeSD,
+		CountryCodeSR,
+		CountryCodeSJ,
+		CountryCodeSZ,
+		CountryCodeSE,
+		CountryCodeCH,
+		CountryCodeSY,
+		CountryCodeTW,
+		CountryCodeTJ,
+		CountryCodeTZ,
+		CountryCodeTH,
+		CountryCodeTL,
+		CountryCodeTG,
+		CountryCodeTK,
+		CountryCodeTO,
+		CountryCodeTT,
+		CountryCodeTN,
+		CountryCodeTR,
+		CountryCodeTM,
+		CountryCodeTC,
+		CountryCodeTV,
+		CountryCodeUG,
+		CountryCodeUA,
+		CountryCodeAE,
+		CountryCodeGB,
+		CountryCodeUS,
+		CountryCodeUM,
+		CountryCodeUY,
+		CountryCodeUZ,
+		CountryCodeVU,
+		CountryCodeVE,
+		CountryCodeVN,
+		CountryCodeVG,
+		CountryCodeVI,
+		CountryCodeWF,
+		CountryCodeEH,
+		CountryCodeYE,
+		CountryCodeZM,
+		CountryCodeZW
+	};
+	
+	void writeCountryCodeEnumJSON(CountryCode enumVal, JsonWriter& writer);
+	CountryCode readCountryCodeFromValue(const TSharedPtr<FJsonValue>& value);
+	
 	
 	struct PLAYFAB_API FCreateSharedGroupRequest : public FPlayFabBaseModel
     {
@@ -2298,7 +2601,8 @@ namespace ClientModels
 		UserOriginationCustomId,
 		UserOriginationXboxLive,
 		UserOriginationParse,
-		UserOriginationTwitch
+		UserOriginationTwitch,
+		UserOriginationWindowsHello
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -2320,6 +2624,8 @@ namespace ClientModels
 		OptionalTime FirstLogin;
 		// [optional] boolean indicating whether or not the user is currently banned for a title
 		OptionalBool isBanned;
+		// [optional] URL to the player's avatar.
+		FString AvatarUrl;
 	
         FUserTitleInfo() :
 			FPlayFabBaseModel(),
@@ -2328,7 +2634,8 @@ namespace ClientModels
 			Created(0),
 			LastLogin(),
 			FirstLogin(),
-			isBanned()
+			isBanned(),
+			AvatarUrl()
 			{}
 		
 		FUserTitleInfo(const FUserTitleInfo& src) :
@@ -2338,7 +2645,8 @@ namespace ClientModels
 			Created(src.Created),
 			LastLogin(src.LastLogin),
 			FirstLogin(src.FirstLogin),
-			isBanned(src.isBanned)
+			isBanned(src.isBanned),
+			AvatarUrl(src.AvatarUrl)
 			{}
 			
 		FUserTitleInfo(const TSharedPtr<FJsonObject>& obj) : FUserTitleInfo()
@@ -3206,6 +3514,10 @@ namespace ClientModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
+		// The version of the leaderboard to get, when UseSpecificVersion is true.
+		int32 Version;
+		// If true, uses the specified version. If false, gets the most recent version.
+		bool UseSpecificVersion;
 	
         FGetFriendLeaderboardAroundPlayerRequest() :
 			FPlayFabBaseModel(),
@@ -3213,7 +3525,9 @@ namespace ClientModels
 			MaxResultsCount(),
 			PlayFabId(),
 			IncludeSteamFriends(),
-			IncludeFacebookFriends()
+			IncludeFacebookFriends(),
+			Version(0),
+			UseSpecificVersion(false)
 			{}
 		
 		FGetFriendLeaderboardAroundPlayerRequest(const FGetFriendLeaderboardAroundPlayerRequest& src) :
@@ -3222,7 +3536,9 @@ namespace ClientModels
 			MaxResultsCount(src.MaxResultsCount),
 			PlayFabId(src.PlayFabId),
 			IncludeSteamFriends(src.IncludeSteamFriends),
-			IncludeFacebookFriends(src.IncludeFacebookFriends)
+			IncludeFacebookFriends(src.IncludeFacebookFriends),
+			Version(src.Version),
+			UseSpecificVersion(src.UseSpecificVersion)
 			{}
 			
 		FGetFriendLeaderboardAroundPlayerRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundPlayerRequest()
@@ -3231,6 +3547,289 @@ namespace ClientModels
         }
 		
 		~FGetFriendLeaderboardAroundPlayerRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum LoginIdentityProvider
+	{
+		LoginIdentityProviderUnknown,
+		LoginIdentityProviderPlayFab,
+		LoginIdentityProviderCustom,
+		LoginIdentityProviderGameCenter,
+		LoginIdentityProviderGooglePlay,
+		LoginIdentityProviderSteam,
+		LoginIdentityProviderXBoxLive,
+		LoginIdentityProviderPSN,
+		LoginIdentityProviderKongregate,
+		LoginIdentityProviderFacebook,
+		LoginIdentityProviderIOSDevice,
+		LoginIdentityProviderAndroidDevice,
+		LoginIdentityProviderTwitch,
+		LoginIdentityProviderWindowsHello
+	};
+	
+	void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, JsonWriter& writer);
+	LoginIdentityProvider readLoginIdentityProviderFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FPlayerLocation : public FPlayFabBaseModel
+    {
+		
+		// The two-character continent code for this location
+		ContinentCode pfContinentCode;
+		// The two-character ISO 3166-1 country code for the country associated with the location
+		CountryCode pfCountryCode;
+		// [optional] City of the player's geographic location.
+		FString City;
+		// [optional] Latitude coordinate of the player's geographic location.
+		OptionalDouble Latitude;
+		// [optional] Longitude coordinate of the player's geographic location.
+		OptionalDouble Longitude;
+	
+        FPlayerLocation() :
+			FPlayFabBaseModel(),
+			pfContinentCode(),
+			pfCountryCode(),
+			City(),
+			Latitude(),
+			Longitude()
+			{}
+		
+		FPlayerLocation(const FPlayerLocation& src) :
+			FPlayFabBaseModel(),
+			pfContinentCode(src.pfContinentCode),
+			pfCountryCode(src.pfCountryCode),
+			City(src.City),
+			Latitude(src.Latitude),
+			Longitude(src.Longitude)
+			{}
+			
+		FPlayerLocation(const TSharedPtr<FJsonObject>& obj) : FPlayerLocation()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerLocation();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum PushNotificationPlatform
+	{
+		PushNotificationPlatformApplePushNotificationService,
+		PushNotificationPlatformGoogleCloudMessaging
+	};
+	
+	void writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer);
+	PushNotificationPlatform readPushNotificationPlatformFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FPushNotificationRegistration : public FPlayFabBaseModel
+    {
+		
+		// [optional] Push notification platform
+		Boxed<PushNotificationPlatform> Platform;
+		// [optional] Notification configured endpoint
+		FString NotificationEndpointARN;
+	
+        FPushNotificationRegistration() :
+			FPlayFabBaseModel(),
+			Platform(),
+			NotificationEndpointARN()
+			{}
+		
+		FPushNotificationRegistration(const FPushNotificationRegistration& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			NotificationEndpointARN(src.NotificationEndpointARN)
+			{}
+			
+		FPushNotificationRegistration(const TSharedPtr<FJsonObject>& obj) : FPushNotificationRegistration()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPushNotificationRegistration();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerLinkedAccount : public FPlayFabBaseModel
+    {
+		
+		// [optional] Authentication platform
+		Boxed<LoginIdentityProvider> Platform;
+		// [optional] Platform user identifier
+		FString PlatformUserId;
+		// [optional] Linked account's username
+		FString Username;
+		// [optional] Linked account's email
+		FString Email;
+	
+        FPlayerLinkedAccount() :
+			FPlayFabBaseModel(),
+			Platform(),
+			PlatformUserId(),
+			Username(),
+			Email()
+			{}
+		
+		FPlayerLinkedAccount(const FPlayerLinkedAccount& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			PlatformUserId(src.PlatformUserId),
+			Username(src.Username),
+			Email(src.Email)
+			{}
+			
+		FPlayerLinkedAccount(const TSharedPtr<FJsonObject>& obj) : FPlayerLinkedAccount()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerLinkedAccount();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerStatistic : public FPlayFabBaseModel
+    {
+		
+		// [optional] Statistic ID
+		FString Id;
+		// Statistic version (0 if not a versioned statistic)
+		int32 StatisticVersion;
+		// Current statistic value
+		int32 StatisticValue;
+		// [optional] Statistic name
+		FString Name;
+	
+        FPlayerStatistic() :
+			FPlayFabBaseModel(),
+			Id(),
+			StatisticVersion(0),
+			StatisticValue(0),
+			Name()
+			{}
+		
+		FPlayerStatistic(const FPlayerStatistic& src) :
+			FPlayFabBaseModel(),
+			Id(src.Id),
+			StatisticVersion(src.StatisticVersion),
+			StatisticValue(src.StatisticValue),
+			Name(src.Name)
+			{}
+			
+		FPlayerStatistic(const TSharedPtr<FJsonObject>& obj) : FPlayerStatistic()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerStatistic();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerProfile : public FPlayFabBaseModel
+    {
+		
+		// [optional] PlayFab Player ID
+		FString PlayerId;
+		// [optional] Title ID this profile applies to
+		FString TitleId;
+		// [optional] Player Display Name
+		FString DisplayName;
+		// [optional] Publisher this player belongs to
+		FString PublisherId;
+		// [optional] Player account origination
+		Boxed<LoginIdentityProvider> Origination;
+		// [optional] Player record created
+		OptionalTime Created;
+		// [optional] Last login
+		OptionalTime LastLogin;
+		// [optional] Banned until UTC Date. If permanent ban this is set for 20 years after the original ban date.
+		OptionalTime BannedUntil;
+		// [optional] Image URL of the player's avatar.
+		FString AvatarUrl;
+		// [optional] Dictionary of player's statistics using only the latest version's value
+		TMap<FString, int32> Statistics;
+		// [optional] A sum of player's total purchases in USD across all currencies.
+		OptionalUint32 TotalValueToDateInUSD;
+		// [optional] Dictionary of player's total purchases by currency.
+		TMap<FString, uint32> ValuesToDate;
+		// [optional] List of player's tags for segmentation.
+		TArray<FString> Tags;
+		// [optional] Dictionary of player's locations by type.
+		TMap<FString, FPlayerLocation> Locations;
+		// [optional] Dictionary of player's virtual currency balances
+		TMap<FString, int32> VirtualCurrencyBalances;
+		// [optional] Array of ad campaigns player has been attributed to
+		TArray<FAdCampaignAttribution> AdCampaignAttributions;
+		// [optional] Array of configured push notification end points
+		TArray<FPushNotificationRegistration> PushNotificationRegistrations;
+		// [optional] Array of third party accounts linked to this player
+		TArray<FPlayerLinkedAccount> LinkedAccounts;
+		// [optional] Array of player statistics
+		TArray<FPlayerStatistic> PlayerStatistics;
+	
+        FPlayerProfile() :
+			FPlayFabBaseModel(),
+			PlayerId(),
+			TitleId(),
+			DisplayName(),
+			PublisherId(),
+			Origination(),
+			Created(),
+			LastLogin(),
+			BannedUntil(),
+			AvatarUrl(),
+			Statistics(),
+			TotalValueToDateInUSD(),
+			ValuesToDate(),
+			Tags(),
+			Locations(),
+			VirtualCurrencyBalances(),
+			AdCampaignAttributions(),
+			PushNotificationRegistrations(),
+			LinkedAccounts(),
+			PlayerStatistics()
+			{}
+		
+		FPlayerProfile(const FPlayerProfile& src) :
+			FPlayFabBaseModel(),
+			PlayerId(src.PlayerId),
+			TitleId(src.TitleId),
+			DisplayName(src.DisplayName),
+			PublisherId(src.PublisherId),
+			Origination(src.Origination),
+			Created(src.Created),
+			LastLogin(src.LastLogin),
+			BannedUntil(src.BannedUntil),
+			AvatarUrl(src.AvatarUrl),
+			Statistics(src.Statistics),
+			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
+			ValuesToDate(src.ValuesToDate),
+			Tags(src.Tags),
+			Locations(src.Locations),
+			VirtualCurrencyBalances(src.VirtualCurrencyBalances),
+			AdCampaignAttributions(src.AdCampaignAttributions),
+			PushNotificationRegistrations(src.PushNotificationRegistrations),
+			LinkedAccounts(src.LinkedAccounts),
+			PlayerStatistics(src.PlayerStatistics)
+			{}
+			
+		FPlayerProfile(const TSharedPtr<FJsonObject>& obj) : FPlayerProfile()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerProfile();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3247,13 +3846,16 @@ namespace ClientModels
 		int32 StatValue;
 		// User's overall position in the leaderboard.
 		int32 Position;
+		// [optional] The profile of the user, if requested. Note that this profile may have sensitive fields scrubbed.
+		TSharedPtr<FPlayerProfile> Profile;
 	
         FPlayerLeaderboardEntry() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			DisplayName(),
 			StatValue(0),
-			Position(0)
+			Position(0),
+			Profile(nullptr)
 			{}
 		
 		FPlayerLeaderboardEntry(const FPlayerLeaderboardEntry& src) :
@@ -3261,7 +3863,8 @@ namespace ClientModels
 			PlayFabId(src.PlayFabId),
 			DisplayName(src.DisplayName),
 			StatValue(src.StatValue),
-			Position(src.Position)
+			Position(src.Position),
+			Profile(src.Profile.IsValid() ? MakeShareable(new FPlayerProfile(*src.Profile)) : nullptr)
 			{}
 			
 		FPlayerLeaderboardEntry(const TSharedPtr<FJsonObject>& obj) : FPlayerLeaderboardEntry()
@@ -3280,15 +3883,23 @@ namespace ClientModels
 		
 		// [optional] Ordered listing of users and their positions in the requested leaderboard.
 		TArray<FPlayerLeaderboardEntry> Leaderboard;
+		// The version of the leaderboard returned.
+		int32 Version;
+		// [optional] The time the next scheduled reset will occur. Null if the leaderboard does not reset on a schedule.
+		OptionalTime NextReset;
 	
         FGetFriendLeaderboardAroundPlayerResult() :
 			FPlayFabBaseModel(),
-			Leaderboard()
+			Leaderboard(),
+			Version(0),
+			NextReset()
 			{}
 		
 		FGetFriendLeaderboardAroundPlayerResult(const FGetFriendLeaderboardAroundPlayerResult& src) :
 			FPlayFabBaseModel(),
-			Leaderboard(src.Leaderboard)
+			Leaderboard(src.Leaderboard),
+			Version(src.Version),
+			NextReset(src.NextReset)
 			{}
 			
 		FGetFriendLeaderboardAroundPlayerResult(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundPlayerResult()
@@ -3315,6 +3926,10 @@ namespace ClientModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
+		// The version of the leaderboard to get, when UseSpecificVersion is true.
+		int32 Version;
+		// If true, uses the specified version. If false, gets the most recent version.
+		bool UseSpecificVersion;
 	
         FGetFriendLeaderboardRequest() :
 			FPlayFabBaseModel(),
@@ -3322,7 +3937,9 @@ namespace ClientModels
 			StartPosition(0),
 			MaxResultsCount(),
 			IncludeSteamFriends(),
-			IncludeFacebookFriends()
+			IncludeFacebookFriends(),
+			Version(0),
+			UseSpecificVersion(false)
 			{}
 		
 		FGetFriendLeaderboardRequest(const FGetFriendLeaderboardRequest& src) :
@@ -3331,7 +3948,9 @@ namespace ClientModels
 			StartPosition(src.StartPosition),
 			MaxResultsCount(src.MaxResultsCount),
 			IncludeSteamFriends(src.IncludeSteamFriends),
-			IncludeFacebookFriends(src.IncludeFacebookFriends)
+			IncludeFacebookFriends(src.IncludeFacebookFriends),
+			Version(src.Version),
+			UseSpecificVersion(src.UseSpecificVersion)
 			{}
 			
 		FGetFriendLeaderboardRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardRequest()
@@ -3478,19 +4097,27 @@ namespace ClientModels
 		FString StatisticName;
 		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
 		OptionalInt32 MaxResultsCount;
+		// The version of the leaderboard to get, when UseSpecificVersion is true.
+		int32 Version;
+		// If true, uses the specified version. If false, gets the most recent version.
+		bool UseSpecificVersion;
 	
         FGetLeaderboardAroundPlayerRequest() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			StatisticName(),
-			MaxResultsCount()
+			MaxResultsCount(),
+			Version(0),
+			UseSpecificVersion(false)
 			{}
 		
 		FGetLeaderboardAroundPlayerRequest(const FGetLeaderboardAroundPlayerRequest& src) :
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
 			StatisticName(src.StatisticName),
-			MaxResultsCount(src.MaxResultsCount)
+			MaxResultsCount(src.MaxResultsCount),
+			Version(src.Version),
+			UseSpecificVersion(src.UseSpecificVersion)
 			{}
 			
 		FGetLeaderboardAroundPlayerRequest(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardAroundPlayerRequest()
@@ -3509,15 +4136,23 @@ namespace ClientModels
 		
 		// [optional] Ordered listing of users and their positions in the requested leaderboard.
 		TArray<FPlayerLeaderboardEntry> Leaderboard;
+		// The version of the leaderboard returned.
+		int32 Version;
+		// [optional] The time the next scheduled reset will occur. Null if the leaderboard does not reset on a schedule.
+		OptionalTime NextReset;
 	
         FGetLeaderboardAroundPlayerResult() :
 			FPlayFabBaseModel(),
-			Leaderboard()
+			Leaderboard(),
+			Version(0),
+			NextReset()
 			{}
 		
 		FGetLeaderboardAroundPlayerResult(const FGetLeaderboardAroundPlayerResult& src) :
 			FPlayFabBaseModel(),
-			Leaderboard(src.Leaderboard)
+			Leaderboard(src.Leaderboard),
+			Version(src.Version),
+			NextReset(src.NextReset)
 			{}
 			
 		FGetLeaderboardAroundPlayerResult(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardAroundPlayerResult()
@@ -3598,19 +4233,27 @@ namespace ClientModels
 		int32 StartPosition;
 		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
 		OptionalInt32 MaxResultsCount;
+		// The version of the leaderboard to get, when UseSpecificVersion is true.
+		int32 Version;
+		// If true, uses the specified version. If false, gets the most recent version.
+		bool UseSpecificVersion;
 	
         FGetLeaderboardRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount()
+			MaxResultsCount(),
+			Version(0),
+			UseSpecificVersion(false)
 			{}
 		
 		FGetLeaderboardRequest(const FGetLeaderboardRequest& src) :
 			FPlayFabBaseModel(),
 			StatisticName(src.StatisticName),
 			StartPosition(src.StartPosition),
-			MaxResultsCount(src.MaxResultsCount)
+			MaxResultsCount(src.MaxResultsCount),
+			Version(src.Version),
+			UseSpecificVersion(src.UseSpecificVersion)
 			{}
 			
 		FGetLeaderboardRequest(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardRequest()
@@ -3629,15 +4272,23 @@ namespace ClientModels
 		
 		// [optional] Ordered listing of users and their positions in the requested leaderboard.
 		TArray<FPlayerLeaderboardEntry> Leaderboard;
+		// The version of the leaderboard returned.
+		int32 Version;
+		// [optional] The time the next scheduled reset will occur. Null if the leaderboard does not reset on a schedule.
+		OptionalTime NextReset;
 	
         FGetLeaderboardResult() :
 			FPlayFabBaseModel(),
-			Leaderboard()
+			Leaderboard(),
+			Version(0),
+			NextReset()
 			{}
 		
 		FGetLeaderboardResult(const FGetLeaderboardResult& src) :
 			FPlayFabBaseModel(),
-			Leaderboard(src.Leaderboard)
+			Leaderboard(src.Leaderboard),
+			Version(src.Version),
+			NextReset(src.NextReset)
 			{}
 			
 		FGetLeaderboardResult(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardResult()
@@ -5622,6 +6273,64 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetWindowsHelloChallengeRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+		FString TitleId;
+		// SHA256 hash of the PublicKey generated by Windows Hello.
+		FString PublicKeyHint;
+	
+        FGetWindowsHelloChallengeRequest() :
+			FPlayFabBaseModel(),
+			TitleId(),
+			PublicKeyHint()
+			{}
+		
+		FGetWindowsHelloChallengeRequest(const FGetWindowsHelloChallengeRequest& src) :
+			FPlayFabBaseModel(),
+			TitleId(src.TitleId),
+			PublicKeyHint(src.PublicKeyHint)
+			{}
+			
+		FGetWindowsHelloChallengeRequest(const TSharedPtr<FJsonObject>& obj) : FGetWindowsHelloChallengeRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetWindowsHelloChallengeRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetWindowsHelloChallengeResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] Server generated challenge to be signed by the user.
+		FString Challenge;
+	
+        FGetWindowsHelloChallengeResponse() :
+			FPlayFabBaseModel(),
+			Challenge()
+			{}
+		
+		FGetWindowsHelloChallengeResponse(const FGetWindowsHelloChallengeResponse& src) :
+			FPlayFabBaseModel(),
+			Challenge(src.Challenge)
+			{}
+			
+		FGetWindowsHelloChallengeResponse(const TSharedPtr<FJsonObject>& obj) : FGetWindowsHelloChallengeResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetWindowsHelloChallengeResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGrantCharacterToUserRequest : public FPlayFabBaseModel
     {
 		
@@ -6241,6 +6950,68 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FLinkWindowsHelloAccountRequest : public FPlayFabBaseModel
+    {
+		
+		// Player's user named used by Windows Hello.
+		FString UserName;
+		// PublicKey generated by Windows Hello.
+		FString PublicKey;
+		// [optional] Device name.
+		FString DeviceName;
+		// [optional] If another user is already linked to the account, unlink the other user and re-link.
+		OptionalBool ForceLink;
+	
+        FLinkWindowsHelloAccountRequest() :
+			FPlayFabBaseModel(),
+			UserName(),
+			PublicKey(),
+			DeviceName(),
+			ForceLink()
+			{}
+		
+		FLinkWindowsHelloAccountRequest(const FLinkWindowsHelloAccountRequest& src) :
+			FPlayFabBaseModel(),
+			UserName(src.UserName),
+			PublicKey(src.PublicKey),
+			DeviceName(src.DeviceName),
+			ForceLink(src.ForceLink)
+			{}
+			
+		FLinkWindowsHelloAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLinkWindowsHelloAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLinkWindowsHelloAccountRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLinkWindowsHelloAccountResponse : public FPlayFabBaseModel
+    {
+		
+	
+        FLinkWindowsHelloAccountResponse() :
+			FPlayFabBaseModel()
+			{}
+		
+		FLinkWindowsHelloAccountResponse(const FLinkWindowsHelloAccountResponse& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FLinkWindowsHelloAccountResponse(const TSharedPtr<FJsonObject>& obj) : FLinkWindowsHelloAccountResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLinkWindowsHelloAccountResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FListUsersCharactersRequest : public FPlayFabBaseModel
     {
 		
@@ -6817,6 +7588,45 @@ namespace ClientModels
         }
 		
 		~FLoginWithTwitchRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLoginWithWindowsHelloRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+		FString TitleId;
+		// The signed response from the user for the Challenge.
+		FString ChallengeSignature;
+		// SHA256 hash of the PublicKey generated by Windows Hello.
+		FString PublicKeyHint;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+	
+        FLoginWithWindowsHelloRequest() :
+			FPlayFabBaseModel(),
+			TitleId(),
+			ChallengeSignature(),
+			PublicKeyHint(),
+			InfoRequestParameters(nullptr)
+			{}
+		
+		FLoginWithWindowsHelloRequest(const FLoginWithWindowsHelloRequest& src) :
+			FPlayFabBaseModel(),
+			TitleId(src.TitleId),
+			ChallengeSignature(src.ChallengeSignature),
+			PublicKeyHint(src.PublicKeyHint),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
+			{}
+			
+		FLoginWithWindowsHelloRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithWindowsHelloRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLoginWithWindowsHelloRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7517,6 +8327,49 @@ namespace ClientModels
         }
 		
 		~FRegisterPlayFabUserResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRegisterWithWindowsHelloRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+		FString TitleId;
+		// Player's user named used by Windows Hello.
+		FString UserName;
+		// PublicKey generated by Windows Hello.
+		FString PublicKey;
+		// [optional] Device name.
+		FString DeviceName;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+	
+        FRegisterWithWindowsHelloRequest() :
+			FPlayFabBaseModel(),
+			TitleId(),
+			UserName(),
+			PublicKey(),
+			DeviceName(),
+			InfoRequestParameters(nullptr)
+			{}
+		
+		FRegisterWithWindowsHelloRequest(const FRegisterWithWindowsHelloRequest& src) :
+			FPlayFabBaseModel(),
+			TitleId(src.TitleId),
+			UserName(src.UserName),
+			PublicKey(src.PublicKey),
+			DeviceName(src.DeviceName),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
+			{}
+			
+		FRegisterWithWindowsHelloRequest(const TSharedPtr<FJsonObject>& obj) : FRegisterWithWindowsHelloRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRegisterWithWindowsHelloRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -8556,6 +9409,56 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUnlinkWindowsHelloAccountRequest : public FPlayFabBaseModel
+    {
+		
+		// SHA256 hash of the PublicKey generated by Windows Hello.
+		FString PublicKeyHint;
+	
+        FUnlinkWindowsHelloAccountRequest() :
+			FPlayFabBaseModel(),
+			PublicKeyHint()
+			{}
+		
+		FUnlinkWindowsHelloAccountRequest(const FUnlinkWindowsHelloAccountRequest& src) :
+			FPlayFabBaseModel(),
+			PublicKeyHint(src.PublicKeyHint)
+			{}
+			
+		FUnlinkWindowsHelloAccountRequest(const TSharedPtr<FJsonObject>& obj) : FUnlinkWindowsHelloAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlinkWindowsHelloAccountRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUnlinkWindowsHelloAccountResponse : public FPlayFabBaseModel
+    {
+		
+	
+        FUnlinkWindowsHelloAccountResponse() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUnlinkWindowsHelloAccountResponse(const FUnlinkWindowsHelloAccountResponse& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUnlinkWindowsHelloAccountResponse(const TSharedPtr<FJsonObject>& obj) : FUnlinkWindowsHelloAccountResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlinkWindowsHelloAccountResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUnlockContainerInstanceRequest : public FPlayFabBaseModel
     {
 		
@@ -8664,6 +9567,33 @@ namespace ClientModels
         }
 		
 		~FUnlockContainerItemResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateAvatarUrlRequest : public FPlayFabBaseModel
+    {
+		
+		// URL of the avatar image. If empty, it removes the existing avatar URL.
+		FString ImageUrl;
+	
+        FUpdateAvatarUrlRequest() :
+			FPlayFabBaseModel(),
+			ImageUrl()
+			{}
+		
+		FUpdateAvatarUrlRequest(const FUpdateAvatarUrlRequest& src) :
+			FPlayFabBaseModel(),
+			ImageUrl(src.ImageUrl)
+			{}
+			
+		FUpdateAvatarUrlRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateAvatarUrlRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateAvatarUrlRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -9198,6 +10128,68 @@ namespace ClientModels
         }
 		
 		~FValidateIOSReceiptResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FValidateWindowsReceiptRequest : public FPlayFabBaseModel
+    {
+		
+		// XML Receipt returned by the Windows App Store in-app purchase API
+		FString Receipt;
+		// [optional] Catalog version to use when granting receipt item. If null, defaults to primary catalog.
+		FString CatalogVersion;
+		// Currency used for the purchase.
+		FString CurrencyCode;
+		// Amount of the stated currency paid for the object.
+		uint32 PurchasePrice;
+	
+        FValidateWindowsReceiptRequest() :
+			FPlayFabBaseModel(),
+			Receipt(),
+			CatalogVersion(),
+			CurrencyCode(),
+			PurchasePrice(0)
+			{}
+		
+		FValidateWindowsReceiptRequest(const FValidateWindowsReceiptRequest& src) :
+			FPlayFabBaseModel(),
+			Receipt(src.Receipt),
+			CatalogVersion(src.CatalogVersion),
+			CurrencyCode(src.CurrencyCode),
+			PurchasePrice(src.PurchasePrice)
+			{}
+			
+		FValidateWindowsReceiptRequest(const TSharedPtr<FJsonObject>& obj) : FValidateWindowsReceiptRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FValidateWindowsReceiptRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FValidateWindowsReceiptResult : public FPlayFabBaseModel
+    {
+		
+	
+        FValidateWindowsReceiptResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FValidateWindowsReceiptResult(const FValidateWindowsReceiptResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FValidateWindowsReceiptResult(const TSharedPtr<FJsonObject>& obj) : FValidateWindowsReceiptResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FValidateWindowsReceiptResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

@@ -976,6 +976,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,FString& OutAvatarUrl
         ,int32& OutTotalValueToDateInUSD
         ,TArray<FString>& OutTags
         ,TArray<FBPAdminAdCampaignAttribution>& OutAdCampaignAttributions
@@ -1614,6 +1615,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+        ,FString& OutAvatarUrl
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

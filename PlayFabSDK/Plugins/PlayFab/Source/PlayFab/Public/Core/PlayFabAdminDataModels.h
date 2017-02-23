@@ -3014,7 +3014,8 @@ namespace AdminModels
 		LoginIdentityProviderFacebook,
 		LoginIdentityProviderIOSDevice,
 		LoginIdentityProviderAndroidDevice,
-		LoginIdentityProviderTwitch
+		LoginIdentityProviderTwitch,
+		LoginIdentityProviderWindowsHello
 	};
 	
 	void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, JsonWriter& writer);
@@ -3202,6 +3203,8 @@ namespace AdminModels
 		OptionalTime LastLogin;
 		// [optional] Banned until UTC Date. If permanent ban this is set for 20 years after the original ban date.
 		OptionalTime BannedUntil;
+		// [optional] Image URL of the player's avatar.
+		FString AvatarUrl;
 		// [optional] Dictionary of player's statistics using only the latest version's value
 		TMap<FString, int32> Statistics;
 		// [optional] A sum of player's total purchases in USD across all currencies.
@@ -3233,6 +3236,7 @@ namespace AdminModels
 			Created(),
 			LastLogin(),
 			BannedUntil(),
+			AvatarUrl(),
 			Statistics(),
 			TotalValueToDateInUSD(),
 			ValuesToDate(),
@@ -3255,6 +3259,7 @@ namespace AdminModels
 			Created(src.Created),
 			LastLogin(src.LastLogin),
 			BannedUntil(src.BannedUntil),
+			AvatarUrl(src.AvatarUrl),
 			Statistics(src.Statistics),
 			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
 			ValuesToDate(src.ValuesToDate),
@@ -5261,7 +5266,8 @@ namespace AdminModels
 		UserOriginationCustomId,
 		UserOriginationXboxLive,
 		UserOriginationParse,
-		UserOriginationTwitch
+		UserOriginationTwitch,
+		UserOriginationWindowsHello
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -5283,6 +5289,8 @@ namespace AdminModels
 		OptionalTime FirstLogin;
 		// [optional] boolean indicating whether or not the user is currently banned for a title
 		OptionalBool isBanned;
+		// [optional] URL to the player's avatar.
+		FString AvatarUrl;
 	
         FUserTitleInfo() :
 			FPlayFabBaseModel(),
@@ -5291,7 +5299,8 @@ namespace AdminModels
 			Created(0),
 			LastLogin(),
 			FirstLogin(),
-			isBanned()
+			isBanned(),
+			AvatarUrl()
 			{}
 		
 		FUserTitleInfo(const FUserTitleInfo& src) :
@@ -5301,7 +5310,8 @@ namespace AdminModels
 			Created(src.Created),
 			LastLogin(src.LastLogin),
 			FirstLogin(src.FirstLogin),
-			isBanned(src.isBanned)
+			isBanned(src.isBanned),
+			AvatarUrl(src.AvatarUrl)
 			{}
 			
 		FUserTitleInfo(const TSharedPtr<FJsonObject>& obj) : FUserTitleInfo()

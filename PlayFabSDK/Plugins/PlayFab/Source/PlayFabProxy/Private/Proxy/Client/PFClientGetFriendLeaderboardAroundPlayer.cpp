@@ -10,7 +10,7 @@ UPFClientGetFriendLeaderboardAroundPlayer::UPFClientGetFriendLeaderboardAroundPl
 {
 }
 
-UPFClientGetFriendLeaderboardAroundPlayer* UPFClientGetFriendLeaderboardAroundPlayer::GetFriendLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InMaxResultsCount, const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends)
+UPFClientGetFriendLeaderboardAroundPlayer* UPFClientGetFriendLeaderboardAroundPlayer::GetFriendLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InMaxResultsCount, const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const int32& InVersion, const bool& InUseSpecificVersion)
 {
 	UPFClientGetFriendLeaderboardAroundPlayer* Proxy = NewObject<UPFClientGetFriendLeaderboardAroundPlayer>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -19,6 +19,8 @@ UPFClientGetFriendLeaderboardAroundPlayer* UPFClientGetFriendLeaderboardAroundPl
 	Proxy->Request.PlayFabId = InPlayFabId;
 	Proxy->Request.IncludeSteamFriends = InIncludeSteamFriends;
 	Proxy->Request.IncludeFacebookFriends = InIncludeFacebookFriends;
+	Proxy->Request.Version = InVersion;
+	Proxy->Request.UseSpecificVersion = InUseSpecificVersion;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

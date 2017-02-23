@@ -90,6 +90,60 @@ void UPlayFabClientAPI::OnGetPhotonAuthenticationTokenResult(FHttpRequestPtr Htt
     }
 }
 
+bool UPlayFabClientAPI::GetWindowsHelloChallenge(
+    ClientModels::FGetWindowsHelloChallengeRequest& request,
+    const FGetWindowsHelloChallengeDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetWindowsHelloChallenge")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetWindowsHelloChallengeResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnGetWindowsHelloChallengeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetWindowsHelloChallengeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FGetWindowsHelloChallengeResponse outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::LinkWindowsHello(
+    ClientModels::FLinkWindowsHelloAccountRequest& request,
+    const FLinkWindowsHelloDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkWindowsHello")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkWindowsHelloResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnLinkWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FLinkWindowsHelloAccountResponse outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabClientAPI::LoginWithAndroidDeviceID(
     ClientModels::FLoginWithAndroidDeviceIDRequest& request,
     const FLoginWithAndroidDeviceIDDelegate& SuccessDelegate,
@@ -442,6 +496,38 @@ void UPlayFabClientAPI::OnLoginWithTwitchResult(FHttpRequestPtr HttpRequest, FHt
     }
 }
 
+bool UPlayFabClientAPI::LoginWithWindowsHello(
+    ClientModels::FLoginWithWindowsHelloRequest& request,
+    const FLoginWithWindowsHelloDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    if (PlayFabSettings::titleId.Len() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithWindowsHello")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithWindowsHelloResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnLoginWithWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FLoginResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+            MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabClientAPI::RegisterPlayFabUser(
     ClientModels::FRegisterPlayFabUserRequest& request,
     const FRegisterPlayFabUserDelegate& SuccessDelegate,
@@ -466,6 +552,65 @@ void UPlayFabClientAPI::OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest,
             mUserSessionTicket = outResult.SessionTicket;
             MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
         }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::RegisterWithWindowsHello(
+    ClientModels::FRegisterWithWindowsHelloRequest& request,
+    const FRegisterWithWindowsHelloDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    if (PlayFabSettings::titleId.Len() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RegisterWithWindowsHello")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRegisterWithWindowsHelloResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnRegisterWithWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterWithWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FLoginResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+            MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::UnlinkWindowsHello(
+    ClientModels::FUnlinkWindowsHelloAccountRequest& request,
+    const FUnlinkWindowsHelloDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkWindowsHello")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkWindowsHelloResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnUnlinkWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FUnlinkWindowsHelloAccountResponse outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1326,6 +1471,33 @@ bool UPlayFabClientAPI::UnlinkTwitch(
 void UPlayFabClientAPI::OnUnlinkTwitchResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkTwitchDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ClientModels::FUnlinkTwitchAccountResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::UpdateAvatarUrl(
+    ClientModels::FUpdateAvatarUrlRequest& request,
+    const FUpdateAvatarUrlDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateAvatarUrl")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateAvatarUrlResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnUpdateAvatarUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateAvatarUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FEmptyResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -3352,6 +3524,33 @@ bool UPlayFabClientAPI::GetPlayerTags(
 void UPlayFabClientAPI::OnGetPlayerTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ClientModels::FGetPlayerTagsResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::ValidateWindowsStoreReceipt(
+    ClientModels::FValidateWindowsReceiptRequest& request,
+    const FValidateWindowsStoreReceiptDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateWindowsStoreReceipt")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateWindowsStoreReceiptResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnValidateWindowsStoreReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateWindowsStoreReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FValidateWindowsReceiptResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves a list of ranked users for the given statistic, starting from the indicated point in the leaderboard
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Data Management")
-	static UPFServerGetLeaderboard* GetLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount);
+	static UPFServerGetLeaderboard* GetLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount, const FBPServerPlayerProfileViewConstraints& InProfileConstraints, const int32& InVersion, const bool& InUseSpecificVersion);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

@@ -4828,6 +4828,7 @@ void PlayFab::AdminModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvi
         case LoginIdentityProviderIOSDevice: writer->WriteValue(TEXT("IOSDevice")); break;
         case LoginIdentityProviderAndroidDevice: writer->WriteValue(TEXT("AndroidDevice")); break;
         case LoginIdentityProviderTwitch: writer->WriteValue(TEXT("Twitch")); break;
+        case LoginIdentityProviderWindowsHello: writer->WriteValue(TEXT("WindowsHello")); break;
     }
 }
 
@@ -4850,6 +4851,7 @@ AdminModels::LoginIdentityProvider PlayFab::AdminModels::readLoginIdentityProvid
         _LoginIdentityProviderMap.Add(TEXT("IOSDevice"), LoginIdentityProviderIOSDevice);
         _LoginIdentityProviderMap.Add(TEXT("AndroidDevice"), LoginIdentityProviderAndroidDevice);
         _LoginIdentityProviderMap.Add(TEXT("Twitch"), LoginIdentityProviderTwitch);
+        _LoginIdentityProviderMap.Add(TEXT("WindowsHello"), LoginIdentityProviderWindowsHello);
 
     } 
 
@@ -5126,6 +5128,8 @@ void PlayFab::AdminModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
 	
     if(BannedUntil.notNull()) { writer->WriteIdentifierPrefix(TEXT("BannedUntil")); writeDatetime(BannedUntil, writer); }
 	
+    if(AvatarUrl.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AvatarUrl")); writer->WriteValue(AvatarUrl); }
+	
     if(Statistics.Num() != 0) 
     {
         writer->WriteObjectStart(TEXT("Statistics"));
@@ -5281,6 +5285,13 @@ bool PlayFab::AdminModels::FPlayerProfile::readFromValue(const TSharedPtr<FJsonO
     if(BannedUntilValue.IsValid())
     {
         BannedUntil = readDatetime(BannedUntilValue);
+    }
+    
+    const TSharedPtr<FJsonValue> AvatarUrlValue = obj->TryGetField(TEXT("AvatarUrl"));
+    if (AvatarUrlValue.IsValid()&& !AvatarUrlValue->IsNull())
+    {
+        FString TmpValue;
+        if(AvatarUrlValue->TryGetString(TmpValue)) {AvatarUrl = TmpValue; }
     }
     
     const TSharedPtr<FJsonObject>* StatisticsObject;
@@ -8520,6 +8531,7 @@ void PlayFab::AdminModels::writeUserOriginationEnumJSON(UserOrigination enumVal,
         case UserOriginationXboxLive: writer->WriteValue(TEXT("XboxLive")); break;
         case UserOriginationParse: writer->WriteValue(TEXT("Parse")); break;
         case UserOriginationTwitch: writer->WriteValue(TEXT("Twitch")); break;
+        case UserOriginationWindowsHello: writer->WriteValue(TEXT("WindowsHello")); break;
     }
 }
 
@@ -8546,6 +8558,7 @@ AdminModels::UserOrigination PlayFab::AdminModels::readUserOriginationFromValue(
         _UserOriginationMap.Add(TEXT("XboxLive"), UserOriginationXboxLive);
         _UserOriginationMap.Add(TEXT("Parse"), UserOriginationParse);
         _UserOriginationMap.Add(TEXT("Twitch"), UserOriginationTwitch);
+        _UserOriginationMap.Add(TEXT("WindowsHello"), UserOriginationWindowsHello);
 
     } 
 
@@ -8581,6 +8594,8 @@ void PlayFab::AdminModels::FUserTitleInfo::writeJSON(JsonWriter& writer) const
     if(FirstLogin.notNull()) { writer->WriteIdentifierPrefix(TEXT("FirstLogin")); writeDatetime(FirstLogin, writer); }
 	
     if(isBanned.notNull()) { writer->WriteIdentifierPrefix(TEXT("isBanned")); writer->WriteValue(isBanned); }
+	
+    if(AvatarUrl.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AvatarUrl")); writer->WriteValue(AvatarUrl); }
 	
     
     writer->WriteObjectEnd();
@@ -8622,6 +8637,13 @@ bool PlayFab::AdminModels::FUserTitleInfo::readFromValue(const TSharedPtr<FJsonO
     {
         bool TmpValue;
         if(isBannedValue->TryGetBool(TmpValue)) {isBanned = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> AvatarUrlValue = obj->TryGetField(TEXT("AvatarUrl"));
+    if (AvatarUrlValue.IsValid()&& !AvatarUrlValue->IsNull())
+    {
+        FString TmpValue;
+        if(AvatarUrlValue->TryGetString(TmpValue)) {AvatarUrl = TmpValue; }
     }
     
     

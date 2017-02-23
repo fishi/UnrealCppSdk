@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves a list of ranked friends of the current player for the given statistic, starting from the indicated point in the leaderboard
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Data Management")
-	static UPFClientGetFriendLeaderboard* GetFriendLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends);
+	static UPFClientGetFriendLeaderboard* GetFriendLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const int32& InVersion, const bool& InUseSpecificVersion);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

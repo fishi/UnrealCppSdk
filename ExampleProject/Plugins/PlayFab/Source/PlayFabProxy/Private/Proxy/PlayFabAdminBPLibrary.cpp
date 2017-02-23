@@ -1723,6 +1723,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,FString& OutAvatarUrl
         ,int32& OutTotalValueToDateInUSD
         ,TArray<FString>& OutTags
         ,TArray<FBPAdminAdCampaignAttribution>& OutAdCampaignAttributions
@@ -1739,6 +1740,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
 	
 	
 	
+	OutAvatarUrl = In.Data.AvatarUrl;
 	
 	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
 	
@@ -2859,6 +2861,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUserTitleInfo(
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+        ,FString& OutAvatarUrl
 	)
 {
     OutDisplayName = In.Data.DisplayName;
@@ -2867,6 +2870,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	OutAvatarUrl = In.Data.AvatarUrl;
 	
 }
 

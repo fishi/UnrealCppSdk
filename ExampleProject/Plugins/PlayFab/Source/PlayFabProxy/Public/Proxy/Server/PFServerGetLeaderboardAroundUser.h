@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves a list of ranked users for the given statistic, centered on the currently signed-in user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Data Management")
-	static UPFServerGetLeaderboardAroundUser* GetLeaderboardAroundUser(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const FString& InPlayFabId, const int32& InMaxResultsCount);
+	static UPFServerGetLeaderboardAroundUser* GetLeaderboardAroundUser(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const FString& InPlayFabId, const int32& InMaxResultsCount, const FBPServerPlayerProfileViewConstraints& InProfileConstraints, const int32& InVersion, const bool& InUseSpecificVersion);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

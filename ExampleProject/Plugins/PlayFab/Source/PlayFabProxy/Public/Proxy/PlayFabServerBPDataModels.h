@@ -1486,6 +1486,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerProfileDelegate, const FBPServerPlayerProfile&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerProfileViewConstraints"))
+struct FBPServerPlayerProfileViewConstraints
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPlayerProfileViewConstraints Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerProfileViewConstraintsDelegate, const FBPServerPlayerProfileViewConstraints&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerStatistic"))
 struct FBPServerPlayerStatistic
 {
@@ -1806,6 +1816,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSendPushNotificationResultDelegate, const FBPServerSendPushNotificationResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetFriendTagsRequest"))
+struct FBPServerSetFriendTagsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSetFriendTagsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetFriendTagsRequestDelegate, const FBPServerSetFriendTagsRequest&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetGameServerInstanceDataRequest"))
 struct FBPServerSetGameServerInstanceDataRequest
 {
@@ -2035,6 +2055,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUnlockContainerItemResultDelegate, const FBPServerUnlockContainerItemResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateAvatarUrlRequest"))
+struct FBPServerUpdateAvatarUrlRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUpdateAvatarUrlRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateAvatarUrlRequestDelegate, const FBPServerUpdateAvatarUrlRequest&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateBanRequest"))
 struct FBPServerUpdateBanRequest

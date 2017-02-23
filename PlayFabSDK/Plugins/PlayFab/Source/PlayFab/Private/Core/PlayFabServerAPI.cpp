@@ -274,6 +274,33 @@ void UPlayFabServerAPI::OnSendPushNotificationResult(FHttpRequestPtr HttpRequest
     }
 }
 
+bool UPlayFabServerAPI::UpdateAvatarUrl(
+    ServerModels::FUpdateAvatarUrlRequest& request,
+    const FUpdateAvatarUrlDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/UpdateAvatarUrl")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnUpdateAvatarUrlResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnUpdateAvatarUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateAvatarUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FEmptyResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabServerAPI::UpdateBans(
     ServerModels::FUpdateBansRequest& request,
     const FUpdateBansDelegate& SuccessDelegate,
@@ -1745,6 +1772,33 @@ bool UPlayFabServerAPI::RemoveFriend(
 }
 
 void UPlayFabServerAPI::OnRemoveFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FEmptyResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabServerAPI::SetFriendTags(
+    ServerModels::FSetFriendTagsRequest& request,
+    const FSetFriendTagsDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/SetFriendTags")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnSetFriendTagsResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnSetFriendTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetFriendTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ServerModels::FEmptyResult outResult;
     FPlayFabError errorResult;

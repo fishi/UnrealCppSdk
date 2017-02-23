@@ -868,6 +868,9 @@ void UPFServerProxyLibrary::BreakBPServerGetFriendLeaderboardRequest(
         ,int32& OutMaxResultsCount
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
+        ,int32& OutVersion
+        ,bool& OutUseSpecificVersion
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -876,6 +879,9 @@ void UPFServerProxyLibrary::BreakBPServerGetFriendLeaderboardRequest(
 	OutMaxResultsCount = In.Data.MaxResultsCount;
 	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
 	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
+	OutVersion = In.Data.Version;
+	OutUseSpecificVersion = In.Data.UseSpecificVersion;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 
@@ -944,17 +950,25 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardAroundUserRequest(
         ,FString& OutStatisticName
         ,FString& OutPlayFabId
         ,int32& OutMaxResultsCount
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
+        ,int32& OutVersion
+        ,bool& OutUseSpecificVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;
 	OutPlayFabId = In.Data.PlayFabId;
 	OutMaxResultsCount = In.Data.MaxResultsCount;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
+	OutVersion = In.Data.Version;
+	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	
 }
 
 void UPFServerProxyLibrary::BreakBPServerGetLeaderboardAroundUserResult(
 		const FBPServerGetLeaderboardAroundUserResult& In
         ,TArray<FBPServerPlayerLeaderboardEntry>& OutLeaderboard
+        ,int32& OutVersion
+        ,FDateTime& OutNextReset
 	)
 {
     for (const PlayFab::ServerModels::FPlayerLeaderboardEntry& elem : In.Data.Leaderboard)
@@ -964,6 +978,8 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardAroundUserResult(
         OutLeaderboard.Add(result);
     }
 
+	OutVersion = In.Data.Version;
+	
 	
 }
 
@@ -1000,17 +1016,25 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardRequest(
         ,FString& OutStatisticName
         ,int32& OutStartPosition
         ,int32& OutMaxResultsCount
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
+        ,int32& OutVersion
+        ,bool& OutUseSpecificVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;
 	OutStartPosition = In.Data.StartPosition;
 	OutMaxResultsCount = In.Data.MaxResultsCount;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
+	OutVersion = In.Data.Version;
+	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	
 }
 
 void UPFServerProxyLibrary::BreakBPServerGetLeaderboardResult(
 		const FBPServerGetLeaderboardResult& In
         ,TArray<FBPServerPlayerLeaderboardEntry>& OutLeaderboard
+        ,int32& OutVersion
+        ,FDateTime& OutNextReset
 	)
 {
     for (const PlayFab::ServerModels::FPlayerLeaderboardEntry& elem : In.Data.Leaderboard)
@@ -1020,6 +1044,8 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardResult(
         OutLeaderboard.Add(result);
     }
 
+	OutVersion = In.Data.Version;
+	
 	
 }
 
@@ -1950,12 +1976,14 @@ void UPFServerProxyLibrary::BreakBPServerPlayerLeaderboardEntry(
         ,FString& OutDisplayName
         ,int32& OutStatValue
         ,int32& OutPosition
+        ,FBPServerPlayerProfile& OutProfile
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutDisplayName = In.Data.DisplayName;
 	OutStatValue = In.Data.StatValue;
 	OutPosition = In.Data.Position;
+	if (In.Data.Profile.IsValid()) {    OutProfile.Data = *In.Data.Profile;}
 	
 }
 
@@ -1997,6 +2025,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,FString& OutAvatarUrl
         ,int32& OutTotalValueToDateInUSD
         ,TArray<FString>& OutTags
         ,TArray<FBPServerAdCampaignAttribution>& OutAdCampaignAttributions
@@ -2013,6 +2042,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
 	
 	
 	
+	OutAvatarUrl = In.Data.AvatarUrl;
 	
 	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
 	
@@ -2047,6 +2077,43 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
         OutPlayerStatistics.Add(result);
     }
 
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerPlayerProfileViewConstraints(
+		const FBPServerPlayerProfileViewConstraints& In
+        ,bool& OutShowDisplayName
+        ,bool& OutShowCreated
+        ,bool& OutShowOrigination
+        ,bool& OutShowLastLogin
+        ,bool& OutShowBannedUntil
+        ,bool& OutShowStatistics
+        ,bool& OutShowCampaignAtributions
+        ,bool& OutShowPushNotificationRegistrations
+        ,bool& OutShowLinkedAccounts
+        ,bool& OutShowTotalValueToDateInUsd
+        ,bool& OutShowValuesToDate
+        ,bool& OutShowTags
+        ,bool& OutShowVirtualCurrencyBalances
+        ,bool& OutShowLocations
+        ,bool& OutShowAvatarUrl
+	)
+{
+    OutShowDisplayName = In.Data.ShowDisplayName;
+	OutShowCreated = In.Data.ShowCreated;
+	OutShowOrigination = In.Data.ShowOrigination;
+	OutShowLastLogin = In.Data.ShowLastLogin;
+	OutShowBannedUntil = In.Data.ShowBannedUntil;
+	OutShowStatistics = In.Data.ShowStatistics;
+	OutShowCampaignAtributions = In.Data.ShowCampaignAtributions;
+	OutShowPushNotificationRegistrations = In.Data.ShowPushNotificationRegistrations;
+	OutShowLinkedAccounts = In.Data.ShowLinkedAccounts;
+	OutShowTotalValueToDateInUsd = In.Data.ShowTotalValueToDateInUsd;
+	OutShowValuesToDate = In.Data.ShowValuesToDate;
+	OutShowTags = In.Data.ShowTags;
+	OutShowVirtualCurrencyBalances = In.Data.ShowVirtualCurrencyBalances;
+	OutShowLocations = In.Data.ShowLocations;
+	OutShowAvatarUrl = In.Data.ShowAvatarUrl;
 	
 }
 
@@ -2416,6 +2483,19 @@ void UPFServerProxyLibrary::BreakBPServerSendPushNotificationResult(
     
 }
 
+void UPFServerProxyLibrary::BreakBPServerSetFriendTagsRequest(
+		const FBPServerSetFriendTagsRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutFriendPlayFabId
+        ,TArray<FString>& OutTags
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutFriendPlayFabId = In.Data.FriendPlayFabId;
+	OutTags = In.Data.Tags;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceDataRequest(
 		const FBPServerSetGameServerInstanceDataRequest& In
         ,FString& OutLobbyId
@@ -2672,6 +2752,17 @@ void UPFServerProxyLibrary::BreakBPServerUnlockContainerItemResult(
     }
 
 	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUpdateAvatarUrlRequest(
+		const FBPServerUpdateAvatarUrlRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutImageUrl
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutImageUrl = In.Data.ImageUrl;
 	
 }
 
@@ -3043,6 +3134,7 @@ void UPFServerProxyLibrary::BreakBPServerUserTitleInfo(
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+        ,FString& OutAvatarUrl
 	)
 {
     OutDisplayName = In.Data.DisplayName;
@@ -3051,6 +3143,7 @@ void UPFServerProxyLibrary::BreakBPServerUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	OutAvatarUrl = In.Data.AvatarUrl;
 	
 }
 

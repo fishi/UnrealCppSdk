@@ -20,6 +20,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRevokeAllBansForUserDelegate, const ServerModels::FRevokeAllBansForUserResult&);
         DECLARE_DELEGATE_OneParam(FRevokeBansDelegate, const ServerModels::FRevokeBansResult&);
         DECLARE_DELEGATE_OneParam(FSendPushNotificationDelegate, const ServerModels::FSendPushNotificationResult&);
+        DECLARE_DELEGATE_OneParam(FUpdateAvatarUrlDelegate, const ServerModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FUpdateBansDelegate, const ServerModels::FUpdateBansResult&);
         DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const ServerModels::FDeleteUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardDelegate, const ServerModels::FGetLeaderboardResult&);
@@ -75,6 +76,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAddFriendDelegate, const ServerModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendsListDelegate, const ServerModels::FGetFriendsListResult&);
         DECLARE_DELEGATE_OneParam(FRemoveFriendDelegate, const ServerModels::FEmptyResult&);
+        DECLARE_DELEGATE_OneParam(FSetFriendTagsDelegate, const ServerModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FDeregisterGameDelegate, const ServerModels::FDeregisterGameResponse&);
         DECLARE_DELEGATE_OneParam(FNotifyMatchmakerPlayerLeftDelegate, const ServerModels::FNotifyMatchmakerPlayerLeftResult&);
         DECLARE_DELEGATE_OneParam(FRedeemMatchmakerTicketDelegate, const ServerModels::FRedeemMatchmakerTicketResult&);
@@ -168,6 +170,10 @@ namespace PlayFab
          * Sends an iOS/Android Push Notification to a specific user, if that user's device has been configured for Push Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
          */
         bool SendPushNotification(ServerModels::FSendPushNotificationRequest& request, const FSendPushNotificationDelegate& SuccessDelegate = FSendPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Update the avatar URL of the specified player
+         */
+        bool UpdateAvatarUrl(ServerModels::FUpdateAvatarUrlRequest& request, const FUpdateAvatarUrlDelegate& SuccessDelegate = FUpdateAvatarUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates information of a list of existing bans specified with Ban Ids.
          * For each ban, only updates the values that are set. Leave any value to null for no change. If a ban could not be found, the rest are still applied. Returns information about applied updates only.
@@ -425,6 +431,11 @@ namespace PlayFab
          */
         bool RemoveFriend(ServerModels::FRemoveFriendRequest& request, const FRemoveFriendDelegate& SuccessDelegate = FRemoveFriendDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Updates the tag list for a specified user in the friend list of another user
+         * This operation is not additive. It will completely replace the tag list for the specified user.
+         */
+        bool SetFriendTags(ServerModels::FSetFriendTagsRequest& request, const FSetFriendTagsDelegate& SuccessDelegate = FSetFriendTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Inform the matchmaker that a Game Server Instance is removed.
          */
         bool DeregisterGame(ServerModels::FDeregisterGameRequest& request, const FDeregisterGameDelegate& SuccessDelegate = FDeregisterGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -622,6 +633,7 @@ namespace PlayFab
         void OnRevokeAllBansForUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeAllBansForUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRevokeBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdateAvatarUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateAvatarUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -677,6 +689,7 @@ namespace PlayFab
         void OnAddFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendsListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendsListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetFriendTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetFriendTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeregisterGameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeregisterGameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnNotifyMatchmakerPlayerLeftResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FNotifyMatchmakerPlayerLeftDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemMatchmakerTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
