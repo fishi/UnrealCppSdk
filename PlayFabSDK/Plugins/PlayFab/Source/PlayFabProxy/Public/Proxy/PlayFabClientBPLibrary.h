@@ -29,8 +29,8 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientAdCampaignAttribution(
-		const FBPClientAdCampaignAttribution& In
+	static void BreakBPClientAdCampaignAttributionModel(
+		const FBPClientAdCampaignAttributionModel& In
         ,FString& OutPlatform
         ,FString& OutCampaignId
         ,FDateTime& OutAttributedAt
@@ -512,6 +512,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -532,6 +533,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -570,6 +572,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -601,6 +604,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1049,6 +1053,14 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientLinkedPlatformAccountModel(
+		const FBPClientLinkedPlatformAccountModel& In
+        ,FString& OutPlatformUserId
+        ,FString& OutUsername
+        ,FString& OutEmail
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLinkFacebookAccountRequest(
 		const FBPClientLinkFacebookAccountRequest& In
         ,FString& OutAccessToken
@@ -1160,6 +1172,14 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientListUsersCharactersResult(
 		const FBPClientListUsersCharactersResult& In
         ,TArray<FBPClientCharacterResult>& OutCharacters
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientLocationModel(
+		const FBPClientLocationModel& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1394,51 +1414,48 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutDisplayName
         ,int32& OutStatValue
         ,int32& OutPosition
-        ,FBPClientPlayerProfile& OutProfile
+        ,FBPClientPlayerProfileModel& OutProfile
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPlayerLinkedAccount(
-		const FBPClientPlayerLinkedAccount& In
-        ,FString& OutPlatformUserId
-        ,FString& OutUsername
-        ,FString& OutEmail
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPlayerLocation(
-		const FBPClientPlayerLocation& In
-        ,FString& OutCity
-        ,float& OutLatitude
-        ,float& OutLongitude
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPlayerProfile(
-		const FBPClientPlayerProfile& In
-        ,FString& OutPlayerId
-        ,FString& OutTitleId
-        ,FString& OutDisplayName
+	static void BreakBPClientPlayerProfileModel(
+		const FBPClientPlayerProfileModel& In
         ,FString& OutPublisherId
+        ,FString& OutTitleId
+        ,FString& OutPlayerId
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,TArray<FBPClientLocationModel>& OutLocations
+        ,FString& OutDisplayName
         ,FString& OutAvatarUrl
+        ,TArray<FBPClientTagModel>& OutTags
+        ,TArray<FBPClientPushNotificationRegistrationModel>& OutPushNotificationRegistrations
+        ,TArray<FBPClientLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPClientAdCampaignAttributionModel>& OutAdCampaignAttributions
         ,int32& OutTotalValueToDateInUSD
-        ,TArray<FString>& OutTags
-        ,TArray<FBPClientAdCampaignAttribution>& OutAdCampaignAttributions
-        ,TArray<FBPClientPushNotificationRegistration>& OutPushNotificationRegistrations
-        ,TArray<FBPClientPlayerLinkedAccount>& OutLinkedAccounts
-        ,TArray<FBPClientPlayerStatistic>& OutPlayerStatistics
+        ,TArray<FBPClientValueToDateModel>& OutValuesToDate
+        ,TArray<FBPClientVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
+        ,TArray<FBPClientStatisticModel>& OutStatistics
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPlayerStatistic(
-		const FBPClientPlayerStatistic& In
-        ,FString& OutId
-        ,int32& OutStatisticVersion
-        ,int32& OutStatisticValue
-        ,FString& OutName
+	static void BreakBPClientPlayerProfileViewConstraints(
+		const FBPClientPlayerProfileViewConstraints& In
+        ,bool& OutShowDisplayName
+        ,bool& OutShowCreated
+        ,bool& OutShowOrigination
+        ,bool& OutShowLastLogin
+        ,bool& OutShowBannedUntil
+        ,bool& OutShowStatistics
+        ,bool& OutShowCampaignAttributions
+        ,bool& OutShowPushNotificationRegistrations
+        ,bool& OutShowLinkedAccounts
+        ,bool& OutShowTotalValueToDateInUsd
+        ,bool& OutShowValuesToDate
+        ,bool& OutShowTags
+        ,bool& OutShowLocations
+        ,bool& OutShowAvatarUrl
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1475,8 +1492,8 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPushNotificationRegistration(
-		const FBPClientPushNotificationRegistration& In
+	static void BreakBPClientPushNotificationRegistrationModel(
+		const FBPClientPushNotificationRegistrationModel& In
         ,FString& OutNotificationEndpointARN
 	);
 	
@@ -1692,6 +1709,14 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientStatisticModel(
+		const FBPClientStatisticModel& In
+        ,FString& OutName
+        ,int32& OutVersion
+        ,int32& OutValue
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientStatisticNameVersion(
 		const FBPClientStatisticNameVersion& In
         ,FString& OutStatisticName
@@ -1740,6 +1765,12 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientSubtractUserVirtualCurrencyRequest& In
         ,FString& OutVirtualCurrency
         ,int32& OutAmount
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientTagModel(
+		const FBPClientTagModel& In
+        ,FString& OutTagValue
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -2185,6 +2216,21 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientValidateWindowsReceiptResult(
 		const FBPClientValidateWindowsReceiptResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientValueToDateModel(
+		const FBPClientValueToDateModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
+        ,FString& OutTotalValueAsDecimal
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientVirtualCurrencyBalanceModel(
+		const FBPClientVirtualCurrencyBalanceModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

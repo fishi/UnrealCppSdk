@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves a list of ranked friends of the current player for the given statistic, centered on the requested PlayFab user. If PlayFabId is empty or null will return currently logged in user.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Data Management")
-	static UPFClientGetFriendLeaderboardAroundPlayer* GetFriendLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const int32& InMaxResultsCount, const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const int32& InVersion, const bool& InUseSpecificVersion);
+	static UPFClientGetFriendLeaderboardAroundPlayer* GetFriendLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const int32& InMaxResultsCount, const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const int32& InVersion, const bool& InUseSpecificVersion, const FBPClientPlayerProfileViewConstraints& InProfileConstraints);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

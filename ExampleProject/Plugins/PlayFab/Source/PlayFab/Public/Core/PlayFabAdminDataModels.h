@@ -2129,7 +2129,8 @@ namespace AdminModels
 	
 	enum EffectType
 	{
-		EffectTypeAllow
+		EffectTypeAllow,
+		EffectTypeDeny
 	};
 	
 	void writeEffectTypeEnumJSON(EffectType enumVal, JsonWriter& writer);
@@ -3435,6 +3436,19 @@ namespace AdminModels
 	StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const TSharedPtr<FJsonValue>& value);
 	
 	
+	enum StatisticVersionStatus
+	{
+		StatisticVersionStatusActive,
+		StatisticVersionStatusSnapshotPending,
+		StatisticVersionStatusSnapshot,
+		StatisticVersionStatusArchivalPending,
+		StatisticVersionStatusArchived
+	};
+	
+	void writeStatisticVersionStatusEnumJSON(StatisticVersionStatus enumVal, JsonWriter& writer);
+	StatisticVersionStatus readStatisticVersionStatusFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FPlayerStatisticVersion : public FPlayFabBaseModel
     {
 		
@@ -3452,6 +3466,8 @@ namespace AdminModels
 		OptionalTime DeactivationTime;
 		// [optional] status of the process of saving player statistic values of the previous version to a downloadable archive
 		Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
+		// [optional] status of the statistic version
+		Boxed<StatisticVersionStatus> Status;
 		// [optional] URL for the downloadable archive of player statistic values, if available
 		FString ArchiveDownloadUrl;
 	
@@ -3464,6 +3480,7 @@ namespace AdminModels
 			ScheduledDeactivationTime(),
 			DeactivationTime(),
 			ArchivalStatus(),
+			Status(),
 			ArchiveDownloadUrl()
 			{}
 		
@@ -3476,6 +3493,7 @@ namespace AdminModels
 			ScheduledDeactivationTime(src.ScheduledDeactivationTime),
 			DeactivationTime(src.DeactivationTime),
 			ArchivalStatus(src.ArchivalStatus),
+			Status(src.Status),
 			ArchiveDownloadUrl(src.ArchiveDownloadUrl)
 			{}
 			
@@ -3613,7 +3631,7 @@ namespace AdminModels
 		FString Resource;
 		// The action this statement effects. The only supported action is 'Execute'.
 		FString Action;
-		// The effect this statement will have. The only supported effect is 'Allow'.
+		// The effect this statement will have. It could be either Allow or Deny
 		EffectType Effect;
 		// The principal this statement will effect. The only supported principal is '*'.
 		FString Principal;

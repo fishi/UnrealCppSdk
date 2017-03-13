@@ -1796,6 +1796,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminStatisticVersionArchivalStatusDelegate, const FBPAdminStatisticVersionArchivalStatus&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStatisticVersionStatus"))
+struct FBPAdminStatisticVersionStatus
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::StatisticVersionStatus Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminStatisticVersionStatusDelegate, const FBPAdminStatisticVersionStatus&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStoreItem"))
 struct FBPAdminStoreItem
 {

@@ -46,6 +46,19 @@ void UPFServerProxyLibrary::BreakBPServerAdCampaignAttribution(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerAdCampaignAttributionModel(
+		const FBPServerAdCampaignAttributionModel& In
+        ,FString& OutPlatform
+        ,FString& OutCampaignId
+        ,FDateTime& OutAttributedAt
+	)
+{
+    OutPlatform = In.Data.Platform;
+	OutCampaignId = In.Data.CampaignId;
+	
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerAddCharacterVirtualCurrencyRequest(
 		const FBPServerAddCharacterVirtualCurrencyRequest& In
         ,FString& OutPlayFabId
@@ -1778,6 +1791,20 @@ void UPFServerProxyLibrary::BreakBPServerItemInstance(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerLinkedPlatformAccountModel(
+		const FBPServerLinkedPlatformAccountModel& In
+        ,FString& OutPlatformUserId
+        ,FString& OutUsername
+        ,FString& OutEmail
+	)
+{
+    
+	OutPlatformUserId = In.Data.PlatformUserId;
+	OutUsername = In.Data.Username;
+	OutEmail = In.Data.Email;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerListUsersCharactersRequest(
 		const FBPServerListUsersCharactersRequest& In
         ,FString& OutPlayFabId
@@ -1799,6 +1826,21 @@ void UPFServerProxyLibrary::BreakBPServerListUsersCharactersResult(
         OutCharacters.Add(result);
     }
 
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerLocationModel(
+		const FBPServerLocationModel& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
+	)
+{
+    
+	
+	OutCity = In.Data.City;
+	OutLatitude = In.Data.Latitude;
+	OutLongitude = In.Data.Longitude;
 	
 }
 
@@ -1976,7 +2018,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerLeaderboardEntry(
         ,FString& OutDisplayName
         ,int32& OutStatValue
         ,int32& OutPosition
-        ,FBPServerPlayerProfile& OutProfile
+        ,FBPServerPlayerProfileModel& OutProfile
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -2080,6 +2122,96 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerPlayerProfileModel(
+		const FBPServerPlayerProfileModel& In
+        ,FString& OutPublisherId
+        ,FString& OutTitleId
+        ,FString& OutPlayerId
+        ,FDateTime& OutCreated
+        ,FDateTime& OutLastLogin
+        ,FDateTime& OutBannedUntil
+        ,TArray<FBPServerLocationModel>& OutLocations
+        ,FString& OutDisplayName
+        ,FString& OutAvatarUrl
+        ,TArray<FBPServerTagModel>& OutTags
+        ,TArray<FBPServerPushNotificationRegistrationModel>& OutPushNotificationRegistrations
+        ,TArray<FBPServerLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPServerAdCampaignAttributionModel>& OutAdCampaignAttributions
+        ,int32& OutTotalValueToDateInUSD
+        ,TArray<FBPServerValueToDateModel>& OutValuesToDate
+        ,TArray<FBPServerVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
+        ,TArray<FBPServerStatisticModel>& OutStatistics
+	)
+{
+    OutPublisherId = In.Data.PublisherId;
+	OutTitleId = In.Data.TitleId;
+	OutPlayerId = In.Data.PlayerId;
+	
+	
+	
+	
+	for (const PlayFab::ServerModels::FLocationModel& elem : In.Data.Locations)
+    {
+        FBPServerLocationModel result;
+        result.Data = elem;
+        OutLocations.Add(result);
+    }
+
+	OutDisplayName = In.Data.DisplayName;
+	OutAvatarUrl = In.Data.AvatarUrl;
+	for (const PlayFab::ServerModels::FTagModel& elem : In.Data.Tags)
+    {
+        FBPServerTagModel result;
+        result.Data = elem;
+        OutTags.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FPushNotificationRegistrationModel& elem : In.Data.PushNotificationRegistrations)
+    {
+        FBPServerPushNotificationRegistrationModel result;
+        result.Data = elem;
+        OutPushNotificationRegistrations.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FLinkedPlatformAccountModel& elem : In.Data.LinkedAccounts)
+    {
+        FBPServerLinkedPlatformAccountModel result;
+        result.Data = elem;
+        OutLinkedAccounts.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
+    {
+        FBPServerAdCampaignAttributionModel result;
+        result.Data = elem;
+        OutAdCampaignAttributions.Add(result);
+    }
+
+	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
+	for (const PlayFab::ServerModels::FValueToDateModel& elem : In.Data.ValuesToDate)
+    {
+        FBPServerValueToDateModel result;
+        result.Data = elem;
+        OutValuesToDate.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FVirtualCurrencyBalanceModel& elem : In.Data.VirtualCurrencyBalances)
+    {
+        FBPServerVirtualCurrencyBalanceModel result;
+        result.Data = elem;
+        OutVirtualCurrencyBalances.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FStatisticModel& elem : In.Data.Statistics)
+    {
+        FBPServerStatisticModel result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerPlayerProfileViewConstraints(
 		const FBPServerPlayerProfileViewConstraints& In
         ,bool& OutShowDisplayName
@@ -2088,13 +2220,12 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileViewConstraints(
         ,bool& OutShowLastLogin
         ,bool& OutShowBannedUntil
         ,bool& OutShowStatistics
-        ,bool& OutShowCampaignAtributions
+        ,bool& OutShowCampaignAttributions
         ,bool& OutShowPushNotificationRegistrations
         ,bool& OutShowLinkedAccounts
         ,bool& OutShowTotalValueToDateInUsd
         ,bool& OutShowValuesToDate
         ,bool& OutShowTags
-        ,bool& OutShowVirtualCurrencyBalances
         ,bool& OutShowLocations
         ,bool& OutShowAvatarUrl
 	)
@@ -2105,13 +2236,12 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileViewConstraints(
 	OutShowLastLogin = In.Data.ShowLastLogin;
 	OutShowBannedUntil = In.Data.ShowBannedUntil;
 	OutShowStatistics = In.Data.ShowStatistics;
-	OutShowCampaignAtributions = In.Data.ShowCampaignAtributions;
+	OutShowCampaignAttributions = In.Data.ShowCampaignAttributions;
 	OutShowPushNotificationRegistrations = In.Data.ShowPushNotificationRegistrations;
 	OutShowLinkedAccounts = In.Data.ShowLinkedAccounts;
 	OutShowTotalValueToDateInUsd = In.Data.ShowTotalValueToDateInUsd;
 	OutShowValuesToDate = In.Data.ShowValuesToDate;
 	OutShowTags = In.Data.ShowTags;
-	OutShowVirtualCurrencyBalances = In.Data.ShowVirtualCurrencyBalances;
 	OutShowLocations = In.Data.ShowLocations;
 	OutShowAvatarUrl = In.Data.ShowAvatarUrl;
 	
@@ -2160,6 +2290,16 @@ void UPFServerProxyLibrary::BreakBPServerPushNotificationPlatform(
 
 void UPFServerProxyLibrary::BreakBPServerPushNotificationRegistration(
 		const FBPServerPushNotificationRegistration& In
+        ,FString& OutNotificationEndpointARN
+	)
+{
+    
+	OutNotificationEndpointARN = In.Data.NotificationEndpointARN;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerPushNotificationRegistrationModel(
+		const FBPServerPushNotificationRegistrationModel& In
         ,FString& OutNotificationEndpointARN
 	)
 {
@@ -2598,6 +2738,19 @@ void UPFServerProxyLibrary::BreakBPServerSharedGroupDataRecord(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerStatisticModel(
+		const FBPServerStatisticModel& In
+        ,FString& OutName
+        ,int32& OutVersion
+        ,int32& OutValue
+	)
+{
+    OutName = In.Data.Name;
+	OutVersion = In.Data.Version;
+	OutValue = In.Data.Value;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerStatisticNameVersion(
 		const FBPServerStatisticNameVersion& In
         ,FString& OutStatisticName
@@ -2671,6 +2824,15 @@ void UPFServerProxyLibrary::BreakBPServerSubtractUserVirtualCurrencyRequest(
     OutPlayFabId = In.Data.PlayFabId;
 	OutVirtualCurrency = In.Data.VirtualCurrency;
 	OutAmount = In.Data.Amount;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerTagModel(
+		const FBPServerTagModel& In
+        ,FString& OutTagValue
+	)
+{
+    OutTagValue = In.Data.TagValue;
 	
 }
 
@@ -3164,6 +3326,30 @@ void UPFServerProxyLibrary::BreakBPServerUserXboxInfo(
 	)
 {
     OutXboxUserId = In.Data.XboxUserId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerValueToDateModel(
+		const FBPServerValueToDateModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
+        ,FString& OutTotalValueAsDecimal
+	)
+{
+    OutCurrency = In.Data.Currency;
+	OutTotalValue = In.Data.TotalValue;
+	OutTotalValueAsDecimal = In.Data.TotalValueAsDecimal;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerVirtualCurrencyBalanceModel(
+		const FBPServerVirtualCurrencyBalanceModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
+	)
+{
+    OutCurrency = In.Data.Currency;
+	OutTotalValue = In.Data.TotalValue;
 	
 }
 

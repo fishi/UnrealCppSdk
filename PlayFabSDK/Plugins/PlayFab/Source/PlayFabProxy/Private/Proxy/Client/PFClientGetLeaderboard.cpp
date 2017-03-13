@@ -10,7 +10,7 @@ UPFClientGetLeaderboard::UPFClientGetLeaderboard(const FObjectInitializer& Objec
 {
 }
 
-UPFClientGetLeaderboard* UPFClientGetLeaderboard::GetLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount, const int32& InVersion, const bool& InUseSpecificVersion)
+UPFClientGetLeaderboard* UPFClientGetLeaderboard::GetLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount, const int32& InVersion, const bool& InUseSpecificVersion, const FBPClientPlayerProfileViewConstraints& InProfileConstraints)
 {
 	UPFClientGetLeaderboard* Proxy = NewObject<UPFClientGetLeaderboard>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -19,6 +19,7 @@ UPFClientGetLeaderboard* UPFClientGetLeaderboard::GetLeaderboard(UObject* WorldC
 	Proxy->Request.MaxResultsCount = InMaxResultsCount;
 	Proxy->Request.Version = InVersion;
 	Proxy->Request.UseSpecificVersion = InUseSpecificVersion;
+	*Proxy->Request.ProfileConstraints = InProfileConstraints.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

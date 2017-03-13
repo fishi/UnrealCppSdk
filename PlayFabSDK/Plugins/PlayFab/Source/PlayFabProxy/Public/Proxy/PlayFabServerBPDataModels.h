@@ -26,6 +26,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerAdCampaignAttributionDelegate, const FBPServerAdCampaignAttribution&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAdCampaignAttributionModel"))
+struct FBPServerAdCampaignAttributionModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FAdCampaignAttributionModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerAdCampaignAttributionModelDelegate, const FBPServerAdCampaignAttributionModel&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAddCharacterVirtualCurrencyRequest"))
 struct FBPServerAddCharacterVirtualCurrencyRequest
 {
@@ -1266,6 +1276,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerItemInstanceDelegate, const FBPServerItemInstance&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLinkedPlatformAccountModel"))
+struct FBPServerLinkedPlatformAccountModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FLinkedPlatformAccountModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLinkedPlatformAccountModelDelegate, const FBPServerLinkedPlatformAccountModel&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerListUsersCharactersRequest"))
 struct FBPServerListUsersCharactersRequest
 {
@@ -1285,6 +1305,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerListUsersCharactersResultDelegate, const FBPServerListUsersCharactersResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLocationModel"))
+struct FBPServerLocationModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FLocationModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLocationModelDelegate, const FBPServerLocationModel&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLoginIdentityProvider"))
 struct FBPServerLoginIdentityProvider
@@ -1486,6 +1516,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerProfileDelegate, const FBPServerPlayerProfile&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerProfileModel"))
+struct FBPServerPlayerProfileModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPlayerProfileModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerProfileModelDelegate, const FBPServerPlayerProfileModel&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerProfileViewConstraints"))
 struct FBPServerPlayerProfileViewConstraints
 {
@@ -1535,6 +1575,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPushNotificationRegistrationDelegate, const FBPServerPushNotificationRegistration&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPushNotificationRegistrationModel"))
+struct FBPServerPushNotificationRegistrationModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPushNotificationRegistrationModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPushNotificationRegistrationModelDelegate, const FBPServerPushNotificationRegistrationModel&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRandomResultTableListing"))
 struct FBPServerRandomResultTableListing
@@ -1936,6 +1986,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSharedGroupDataRecordDelegate, const FBPServerSharedGroupDataRecord&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerStatisticModel"))
+struct FBPServerStatisticModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FStatisticModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerStatisticModelDelegate, const FBPServerStatisticModel&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerStatisticNameVersion"))
 struct FBPServerStatisticNameVersion
 {
@@ -1995,6 +2055,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSubtractUserVirtualCurrencyRequestDelegate, const FBPServerSubtractUserVirtualCurrencyRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerTagModel"))
+struct FBPServerTagModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FTagModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerTagModelDelegate, const FBPServerTagModel&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerTaskInstanceStatus"))
 struct FBPServerTaskInstanceStatus
@@ -2385,6 +2455,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserXboxInfoDelegate, const FBPServerUserXboxInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerValueToDateModel"))
+struct FBPServerValueToDateModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FValueToDateModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerValueToDateModelDelegate, const FBPServerValueToDateModel&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerVirtualCurrencyBalanceModel"))
+struct FBPServerVirtualCurrencyBalanceModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FVirtualCurrencyBalanceModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerVirtualCurrencyBalanceModelDelegate, const FBPServerVirtualCurrencyBalanceModel&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerVirtualCurrencyRechargeTime"))
 struct FBPServerVirtualCurrencyRechargeTime

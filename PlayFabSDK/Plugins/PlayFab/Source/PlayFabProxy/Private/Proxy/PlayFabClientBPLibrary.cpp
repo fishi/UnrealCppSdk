@@ -25,8 +25,8 @@ void UPFClientProxyLibrary::BreakBPClientAcceptTradeResponse(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientAdCampaignAttribution(
-		const FBPClientAdCampaignAttribution& In
+void UPFClientProxyLibrary::BreakBPClientAdCampaignAttributionModel(
+		const FBPClientAdCampaignAttributionModel& In
         ,FString& OutPlatform
         ,FString& OutCampaignId
         ,FDateTime& OutAttributedAt
@@ -869,6 +869,7 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundPlayerRequest
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -878,6 +879,7 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundPlayerRequest
 	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
 	OutVersion = In.Data.Version;
 	OutUseSpecificVersion = In.Data.UseSpecificVersion;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 
@@ -909,6 +911,7 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardRequest(
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -918,6 +921,7 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardRequest(
 	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
 	OutVersion = In.Data.Version;
 	OutUseSpecificVersion = In.Data.UseSpecificVersion;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 
@@ -984,6 +988,7 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundPlayerRequest(
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -991,6 +996,7 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundPlayerRequest(
 	OutMaxResultsCount = In.Data.MaxResultsCount;
 	OutVersion = In.Data.Version;
 	OutUseSpecificVersion = In.Data.UseSpecificVersion;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 
@@ -1046,6 +1052,7 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardRequest(
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
         ,bool& OutUseSpecificVersion
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -1053,6 +1060,7 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardRequest(
 	OutMaxResultsCount = In.Data.MaxResultsCount;
 	OutVersion = In.Data.Version;
 	OutUseSpecificVersion = In.Data.UseSpecificVersion;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 
@@ -1906,6 +1914,20 @@ void UPFClientProxyLibrary::BreakBPClientLinkCustomIDResult(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientLinkedPlatformAccountModel(
+		const FBPClientLinkedPlatformAccountModel& In
+        ,FString& OutPlatformUserId
+        ,FString& OutUsername
+        ,FString& OutEmail
+	)
+{
+    
+	OutPlatformUserId = In.Data.PlatformUserId;
+	OutUsername = In.Data.Username;
+	OutEmail = In.Data.Email;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientLinkFacebookAccountRequest(
 		const FBPClientLinkFacebookAccountRequest& In
         ,FString& OutAccessToken
@@ -2083,6 +2105,21 @@ void UPFClientProxyLibrary::BreakBPClientListUsersCharactersResult(
         OutCharacters.Add(result);
     }
 
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLocationModel(
+		const FBPClientLocationModel& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
+	)
+{
+    
+	
+	OutCity = In.Data.City;
+	OutLatitude = In.Data.Latitude;
+	OutLongitude = In.Data.Longitude;
 	
 }
 
@@ -2473,7 +2510,7 @@ void UPFClientProxyLibrary::BreakBPClientPlayerLeaderboardEntry(
         ,FString& OutDisplayName
         ,int32& OutStatValue
         ,int32& OutPosition
-        ,FBPClientPlayerProfile& OutProfile
+        ,FBPClientPlayerProfileModel& OutProfile
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -2484,111 +2521,128 @@ void UPFClientProxyLibrary::BreakBPClientPlayerLeaderboardEntry(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientPlayerLinkedAccount(
-		const FBPClientPlayerLinkedAccount& In
-        ,FString& OutPlatformUserId
-        ,FString& OutUsername
-        ,FString& OutEmail
-	)
-{
-    
-	OutPlatformUserId = In.Data.PlatformUserId;
-	OutUsername = In.Data.Username;
-	OutEmail = In.Data.Email;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientPlayerLocation(
-		const FBPClientPlayerLocation& In
-        ,FString& OutCity
-        ,float& OutLatitude
-        ,float& OutLongitude
-	)
-{
-    
-	
-	OutCity = In.Data.City;
-	OutLatitude = In.Data.Latitude;
-	OutLongitude = In.Data.Longitude;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientPlayerProfile(
-		const FBPClientPlayerProfile& In
-        ,FString& OutPlayerId
-        ,FString& OutTitleId
-        ,FString& OutDisplayName
+void UPFClientProxyLibrary::BreakBPClientPlayerProfileModel(
+		const FBPClientPlayerProfileModel& In
         ,FString& OutPublisherId
+        ,FString& OutTitleId
+        ,FString& OutPlayerId
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,TArray<FBPClientLocationModel>& OutLocations
+        ,FString& OutDisplayName
         ,FString& OutAvatarUrl
+        ,TArray<FBPClientTagModel>& OutTags
+        ,TArray<FBPClientPushNotificationRegistrationModel>& OutPushNotificationRegistrations
+        ,TArray<FBPClientLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPClientAdCampaignAttributionModel>& OutAdCampaignAttributions
         ,int32& OutTotalValueToDateInUSD
-        ,TArray<FString>& OutTags
-        ,TArray<FBPClientAdCampaignAttribution>& OutAdCampaignAttributions
-        ,TArray<FBPClientPushNotificationRegistration>& OutPushNotificationRegistrations
-        ,TArray<FBPClientPlayerLinkedAccount>& OutLinkedAccounts
-        ,TArray<FBPClientPlayerStatistic>& OutPlayerStatistics
+        ,TArray<FBPClientValueToDateModel>& OutValuesToDate
+        ,TArray<FBPClientVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
+        ,TArray<FBPClientStatisticModel>& OutStatistics
 	)
 {
-    OutPlayerId = In.Data.PlayerId;
+    OutPublisherId = In.Data.PublisherId;
 	OutTitleId = In.Data.TitleId;
-	OutDisplayName = In.Data.DisplayName;
-	OutPublisherId = In.Data.PublisherId;
+	OutPlayerId = In.Data.PlayerId;
 	
 	
 	
 	
-	OutAvatarUrl = In.Data.AvatarUrl;
-	
-	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
-	
-	OutTags = In.Data.Tags;
-	
-	
-	for (const PlayFab::ClientModels::FAdCampaignAttribution& elem : In.Data.AdCampaignAttributions)
+	for (const PlayFab::ClientModels::FLocationModel& elem : In.Data.Locations)
     {
-        FBPClientAdCampaignAttribution result;
+        FBPClientLocationModel result;
         result.Data = elem;
-        OutAdCampaignAttributions.Add(result);
+        OutLocations.Add(result);
     }
 
-	for (const PlayFab::ClientModels::FPushNotificationRegistration& elem : In.Data.PushNotificationRegistrations)
+	OutDisplayName = In.Data.DisplayName;
+	OutAvatarUrl = In.Data.AvatarUrl;
+	for (const PlayFab::ClientModels::FTagModel& elem : In.Data.Tags)
     {
-        FBPClientPushNotificationRegistration result;
+        FBPClientTagModel result;
+        result.Data = elem;
+        OutTags.Add(result);
+    }
+
+	for (const PlayFab::ClientModels::FPushNotificationRegistrationModel& elem : In.Data.PushNotificationRegistrations)
+    {
+        FBPClientPushNotificationRegistrationModel result;
         result.Data = elem;
         OutPushNotificationRegistrations.Add(result);
     }
 
-	for (const PlayFab::ClientModels::FPlayerLinkedAccount& elem : In.Data.LinkedAccounts)
+	for (const PlayFab::ClientModels::FLinkedPlatformAccountModel& elem : In.Data.LinkedAccounts)
     {
-        FBPClientPlayerLinkedAccount result;
+        FBPClientLinkedPlatformAccountModel result;
         result.Data = elem;
         OutLinkedAccounts.Add(result);
     }
 
-	for (const PlayFab::ClientModels::FPlayerStatistic& elem : In.Data.PlayerStatistics)
+	for (const PlayFab::ClientModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
     {
-        FBPClientPlayerStatistic result;
+        FBPClientAdCampaignAttributionModel result;
         result.Data = elem;
-        OutPlayerStatistics.Add(result);
+        OutAdCampaignAttributions.Add(result);
+    }
+
+	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
+	for (const PlayFab::ClientModels::FValueToDateModel& elem : In.Data.ValuesToDate)
+    {
+        FBPClientValueToDateModel result;
+        result.Data = elem;
+        OutValuesToDate.Add(result);
+    }
+
+	for (const PlayFab::ClientModels::FVirtualCurrencyBalanceModel& elem : In.Data.VirtualCurrencyBalances)
+    {
+        FBPClientVirtualCurrencyBalanceModel result;
+        result.Data = elem;
+        OutVirtualCurrencyBalances.Add(result);
+    }
+
+	for (const PlayFab::ClientModels::FStatisticModel& elem : In.Data.Statistics)
+    {
+        FBPClientStatisticModel result;
+        result.Data = elem;
+        OutStatistics.Add(result);
     }
 
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientPlayerStatistic(
-		const FBPClientPlayerStatistic& In
-        ,FString& OutId
-        ,int32& OutStatisticVersion
-        ,int32& OutStatisticValue
-        ,FString& OutName
+void UPFClientProxyLibrary::BreakBPClientPlayerProfileViewConstraints(
+		const FBPClientPlayerProfileViewConstraints& In
+        ,bool& OutShowDisplayName
+        ,bool& OutShowCreated
+        ,bool& OutShowOrigination
+        ,bool& OutShowLastLogin
+        ,bool& OutShowBannedUntil
+        ,bool& OutShowStatistics
+        ,bool& OutShowCampaignAttributions
+        ,bool& OutShowPushNotificationRegistrations
+        ,bool& OutShowLinkedAccounts
+        ,bool& OutShowTotalValueToDateInUsd
+        ,bool& OutShowValuesToDate
+        ,bool& OutShowTags
+        ,bool& OutShowLocations
+        ,bool& OutShowAvatarUrl
 	)
 {
-    OutId = In.Data.Id;
-	OutStatisticVersion = In.Data.StatisticVersion;
-	OutStatisticValue = In.Data.StatisticValue;
-	OutName = In.Data.Name;
+    OutShowDisplayName = In.Data.ShowDisplayName;
+	OutShowCreated = In.Data.ShowCreated;
+	OutShowOrigination = In.Data.ShowOrigination;
+	OutShowLastLogin = In.Data.ShowLastLogin;
+	OutShowBannedUntil = In.Data.ShowBannedUntil;
+	OutShowStatistics = In.Data.ShowStatistics;
+	OutShowCampaignAttributions = In.Data.ShowCampaignAttributions;
+	OutShowPushNotificationRegistrations = In.Data.ShowPushNotificationRegistrations;
+	OutShowLinkedAccounts = In.Data.ShowLinkedAccounts;
+	OutShowTotalValueToDateInUsd = In.Data.ShowTotalValueToDateInUsd;
+	OutShowValuesToDate = In.Data.ShowValuesToDate;
+	OutShowTags = In.Data.ShowTags;
+	OutShowLocations = In.Data.ShowLocations;
+	OutShowAvatarUrl = In.Data.ShowAvatarUrl;
 	
 }
 
@@ -2652,8 +2706,8 @@ void UPFClientProxyLibrary::BreakBPClientPushNotificationPlatform(
     
 }
 
-void UPFClientProxyLibrary::BreakBPClientPushNotificationRegistration(
-		const FBPClientPushNotificationRegistration& In
+void UPFClientProxyLibrary::BreakBPClientPushNotificationRegistrationModel(
+		const FBPClientPushNotificationRegistrationModel& In
         ,FString& OutNotificationEndpointARN
 	)
 {
@@ -3022,6 +3076,19 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientStatisticModel(
+		const FBPClientStatisticModel& In
+        ,FString& OutName
+        ,int32& OutVersion
+        ,int32& OutValue
+	)
+{
+    OutName = In.Data.Name;
+	OutVersion = In.Data.Version;
+	OutValue = In.Data.Value;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientStatisticNameVersion(
 		const FBPClientStatisticNameVersion& In
         ,FString& OutStatisticName
@@ -3104,6 +3171,15 @@ void UPFClientProxyLibrary::BreakBPClientSubtractUserVirtualCurrencyRequest(
 {
     OutVirtualCurrency = In.Data.VirtualCurrency;
 	OutAmount = In.Data.Amount;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientTagModel(
+		const FBPClientTagModel& In
+        ,FString& OutTagValue
+	)
+{
+    OutTagValue = In.Data.TagValue;
 	
 }
 
@@ -3816,6 +3892,30 @@ void UPFClientProxyLibrary::BreakBPClientValidateWindowsReceiptResult(
 	)
 {
     
+}
+
+void UPFClientProxyLibrary::BreakBPClientValueToDateModel(
+		const FBPClientValueToDateModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
+        ,FString& OutTotalValueAsDecimal
+	)
+{
+    OutCurrency = In.Data.Currency;
+	OutTotalValue = In.Data.TotalValue;
+	OutTotalValueAsDecimal = In.Data.TotalValueAsDecimal;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientVirtualCurrencyBalanceModel(
+		const FBPClientVirtualCurrencyBalanceModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
+	)
+{
+    OutCurrency = In.Data.Currency;
+	OutTotalValue = In.Data.TotalValue;
+	
 }
 
 void UPFClientProxyLibrary::BreakBPClientVirtualCurrencyRechargeTime(

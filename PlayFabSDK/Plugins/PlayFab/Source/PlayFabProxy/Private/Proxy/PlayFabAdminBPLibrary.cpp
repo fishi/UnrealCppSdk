@@ -1824,6 +1824,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticVersion(
 	
 	
 	
+	
 	OutArchiveDownloadUrl = In.Data.ArchiveDownloadUrl;
 	
 }
@@ -2305,6 +2306,13 @@ void UPFAdminProxyLibrary::BreakBPAdminStatisticResetIntervalOption(
 
 void UPFAdminProxyLibrary::BreakBPAdminStatisticVersionArchivalStatus(
 		const FBPAdminStatisticVersionArchivalStatus& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminStatisticVersionStatus(
+		const FBPAdminStatisticVersionStatus& In
 	)
 {
     

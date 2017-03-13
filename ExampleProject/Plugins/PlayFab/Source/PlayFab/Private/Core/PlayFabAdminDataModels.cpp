@@ -3575,6 +3575,7 @@ void PlayFab::AdminModels::writeEffectTypeEnumJSON(EffectType enumVal, JsonWrite
     {
         
         case EffectTypeAllow: writer->WriteValue(TEXT("Allow")); break;
+        case EffectTypeDeny: writer->WriteValue(TEXT("Deny")); break;
     }
 }
 
@@ -3585,6 +3586,7 @@ AdminModels::EffectType PlayFab::AdminModels::readEffectTypeFromValue(const TSha
     {
         // Auto-generate the map on the first use
         _EffectTypeMap.Add(TEXT("Allow"), EffectTypeAllow);
+        _EffectTypeMap.Add(TEXT("Deny"), EffectTypeDeny);
 
     } 
 
@@ -5621,6 +5623,45 @@ AdminModels::StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticV
 }
 
 
+void PlayFab::AdminModels::writeStatisticVersionStatusEnumJSON(StatisticVersionStatus enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case StatisticVersionStatusActive: writer->WriteValue(TEXT("Active")); break;
+        case StatisticVersionStatusSnapshotPending: writer->WriteValue(TEXT("SnapshotPending")); break;
+        case StatisticVersionStatusSnapshot: writer->WriteValue(TEXT("Snapshot")); break;
+        case StatisticVersionStatusArchivalPending: writer->WriteValue(TEXT("ArchivalPending")); break;
+        case StatisticVersionStatusArchived: writer->WriteValue(TEXT("Archived")); break;
+    }
+}
+
+AdminModels::StatisticVersionStatus PlayFab::AdminModels::readStatisticVersionStatusFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, StatisticVersionStatus> _StatisticVersionStatusMap;
+    if (_StatisticVersionStatusMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticVersionStatusMap.Add(TEXT("Active"), StatisticVersionStatusActive);
+        _StatisticVersionStatusMap.Add(TEXT("SnapshotPending"), StatisticVersionStatusSnapshotPending);
+        _StatisticVersionStatusMap.Add(TEXT("Snapshot"), StatisticVersionStatusSnapshot);
+        _StatisticVersionStatusMap.Add(TEXT("ArchivalPending"), StatisticVersionStatusArchivalPending);
+        _StatisticVersionStatusMap.Add(TEXT("Archived"), StatisticVersionStatusArchived);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _StatisticVersionStatusMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return StatisticVersionStatusActive; // Basically critical fail
+}
+
+
 PlayFab::AdminModels::FPlayerStatisticVersion::~FPlayerStatisticVersion()
 {
     
@@ -5643,6 +5684,8 @@ void PlayFab::AdminModels::FPlayerStatisticVersion::writeJSON(JsonWriter& writer
     if(DeactivationTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("DeactivationTime")); writeDatetime(DeactivationTime, writer); }
 	
     if(ArchivalStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("ArchivalStatus")); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
+	
+    if(Status.notNull()) { writer->WriteIdentifierPrefix(TEXT("Status")); writeStatisticVersionStatusEnumJSON(Status, writer); }
 	
     if(ArchiveDownloadUrl.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ArchiveDownloadUrl")); writer->WriteValue(ArchiveDownloadUrl); }
 	
@@ -5693,6 +5736,8 @@ bool PlayFab::AdminModels::FPlayerStatisticVersion::readFromValue(const TSharedP
     }
     
     ArchivalStatus = readStatisticVersionArchivalStatusFromValue(obj->TryGetField(TEXT("ArchivalStatus")));
+    
+    Status = readStatisticVersionStatusFromValue(obj->TryGetField(TEXT("Status")));
     
     const TSharedPtr<FJsonValue> ArchiveDownloadUrlValue = obj->TryGetField(TEXT("ArchiveDownloadUrl"));
     if (ArchiveDownloadUrlValue.IsValid()&& !ArchiveDownloadUrlValue->IsNull())

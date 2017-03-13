@@ -1305,6 +1305,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminStatisticVersionStatus(
+		const FBPAdminStatisticVersionStatus& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminStoreItem(
 		const FBPAdminStoreItem& In
         ,FString& OutItemId

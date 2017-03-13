@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientOpenTradeResponseDelegate OnFailure;
 	
-	// Opens a new outstanding trade.
+	// Opens a new outstanding trade. Note that a given item instance may only be in one open trade at a time.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Trading")
 	static UPFClientOpenTrade* OpenTrade(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FString>& InOfferedInventoryInstanceIds, const TArray<FString>& InRequestedCatalogItemIds, const TArray<FString>& InAllowedPlayerIds);
 
