@@ -3593,10 +3593,10 @@ namespace ClientModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
-		// The version of the leaderboard to get, when UseSpecificVersion is true.
-		int32 Version;
-		// If true, uses the specified version. If false, gets the most recent version.
-		bool UseSpecificVersion;
+		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		OptionalInt32 Version;
+		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -3607,8 +3607,8 @@ namespace ClientModels
 			PlayFabId(),
 			IncludeSteamFriends(),
 			IncludeFacebookFriends(),
-			Version(0),
-			UseSpecificVersion(false),
+			Version(),
+			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -4094,10 +4094,10 @@ namespace ClientModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
-		// The version of the leaderboard to get, when UseSpecificVersion is true.
-		int32 Version;
-		// If true, uses the specified version. If false, gets the most recent version.
-		bool UseSpecificVersion;
+		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		OptionalInt32 Version;
+		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -4108,8 +4108,8 @@ namespace ClientModels
 			MaxResultsCount(),
 			IncludeSteamFriends(),
 			IncludeFacebookFriends(),
-			Version(0),
-			UseSpecificVersion(false),
+			Version(),
+			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -4269,10 +4269,10 @@ namespace ClientModels
 		FString StatisticName;
 		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
 		OptionalInt32 MaxResultsCount;
-		// The version of the leaderboard to get, when UseSpecificVersion is true.
-		int32 Version;
-		// If true, uses the specified version. If false, gets the most recent version.
-		bool UseSpecificVersion;
+		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		OptionalInt32 Version;
+		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -4281,8 +4281,8 @@ namespace ClientModels
 			PlayFabId(),
 			StatisticName(),
 			MaxResultsCount(),
-			Version(0),
-			UseSpecificVersion(false),
+			Version(),
+			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -4409,10 +4409,10 @@ namespace ClientModels
 		int32 StartPosition;
 		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
 		OptionalInt32 MaxResultsCount;
-		// The version of the leaderboard to get, when UseSpecificVersion is true.
-		int32 Version;
-		// If true, uses the specified version. If false, gets the most recent version.
-		bool UseSpecificVersion;
+		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		OptionalInt32 Version;
+		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -4421,8 +4421,8 @@ namespace ClientModels
 			StatisticName(),
 			StartPosition(0),
 			MaxResultsCount(),
-			Version(0),
-			UseSpecificVersion(false),
+			Version(),
+			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -6849,22 +6849,18 @@ namespace ClientModels
 		
 		// [optional] Server authentication code obtained on the client by calling getServerAuthCode() (https://developers.google.com/identity/sign-in/android/offline-access) from Google Play for the user.
 		FString ServerAuthCode;
-		// [optional] OAuth 2.0 access token obtained on the client by calling the getAccessToken() Google client API.
-		FString AccessToken;
 		// [optional] If another user is already linked to the account, unlink the other user and re-link.
 		OptionalBool ForceLink;
 	
         FLinkGoogleAccountRequest() :
 			FPlayFabBaseModel(),
 			ServerAuthCode(),
-			AccessToken(),
 			ForceLink()
 			{}
 		
 		FLinkGoogleAccountRequest(const FLinkGoogleAccountRequest& src) :
 			FPlayFabBaseModel(),
 			ServerAuthCode(src.ServerAuthCode),
-			AccessToken(src.AccessToken),
 			ForceLink(src.ForceLink)
 			{}
 			
@@ -7372,10 +7368,14 @@ namespace ClientModels
 		
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// Custom unique identifier for the user, generated by the title.
+		// [optional] Custom unique identifier for the user, generated by the title.
 		FString CustomId;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Custom ID.
 		OptionalBool CreateAccount;
+		// [optional] Player secret that is used to verify API request signatures
+		FString PlayerSecret;
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		FString EncryptedRequest;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
@@ -7384,6 +7384,8 @@ namespace ClientModels
 			TitleId(),
 			CustomId(),
 			CreateAccount(),
+			PlayerSecret(),
+			EncryptedRequest(),
 			InfoRequestParameters(nullptr)
 			{}
 		
@@ -7392,6 +7394,8 @@ namespace ClientModels
 			TitleId(src.TitleId),
 			CustomId(src.CustomId),
 			CreateAccount(src.CreateAccount),
+			PlayerSecret(src.PlayerSecret),
+			EncryptedRequest(src.EncryptedRequest),
 			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
@@ -7530,8 +7534,6 @@ namespace ClientModels
 		FString TitleId;
 		// [optional] OAuth 2.0 server authentication code obtained on the client by calling the getServerAuthCode() (https://developers.google.com/identity/sign-in/android/offline-access) Google client API.
 		FString ServerAuthCode;
-		// [optional] OAuth 2.0 access token obtained on the client by calling the getAccessToken() Google client API.
-		FString AccessToken;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Google account.
 		OptionalBool CreateAccount;
 		// [optional] Flags for which pieces of info to return for the user.
@@ -7541,7 +7543,6 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			TitleId(),
 			ServerAuthCode(),
-			AccessToken(),
 			CreateAccount(),
 			InfoRequestParameters(nullptr)
 			{}
@@ -7550,7 +7551,6 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
 			ServerAuthCode(src.ServerAuthCode),
-			AccessToken(src.AccessToken),
 			CreateAccount(src.CreateAccount),
 			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}

@@ -1088,7 +1088,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkGoogleAccountRequest(
 		const FBPClientLinkGoogleAccountRequest& In
         ,FString& OutServerAuthCode
-        ,FString& OutAccessToken
         ,bool& OutForceLink
 	);
 	
@@ -1215,6 +1214,8 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutTitleId
         ,FString& OutCustomId
         ,bool& OutCreateAccount
+        ,FString& OutPlayerSecret
+        ,FString& OutEncryptedRequest
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
@@ -1250,7 +1251,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientLoginWithGoogleAccountRequest& In
         ,FString& OutTitleId
         ,FString& OutServerAuthCode
-        ,FString& OutAccessToken
         ,bool& OutCreateAccount
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);

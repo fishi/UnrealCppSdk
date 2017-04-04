@@ -3531,10 +3531,10 @@ namespace ServerModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
-		// The version of the leaderboard to get, when UseSpecificVersion is true.
-		int32 Version;
-		// If true, uses the specified version. If false, gets the most recent version.
-		bool UseSpecificVersion;
+		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		OptionalInt32 Version;
+		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -3546,8 +3546,8 @@ namespace ServerModels
 			MaxResultsCount(0),
 			IncludeSteamFriends(),
 			IncludeFacebookFriends(),
-			Version(0),
-			UseSpecificVersion(false),
+			Version(),
+			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -3718,10 +3718,10 @@ namespace ServerModels
 		int32 MaxResultsCount;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
-		// The version of the leaderboard to get, when UseSpecificVersion is true.
-		int32 Version;
-		// If true, uses the specified version. If false, gets the most recent version.
-		bool UseSpecificVersion;
+		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		OptionalInt32 Version;
+		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		OptionalBool UseSpecificVersion;
 	
         FGetLeaderboardAroundUserRequest() :
 			FPlayFabBaseModel(),
@@ -3729,8 +3729,8 @@ namespace ServerModels
 			PlayFabId(),
 			MaxResultsCount(0),
 			ProfileConstraints(nullptr),
-			Version(0),
-			UseSpecificVersion(false)
+			Version(),
+			UseSpecificVersion()
 			{}
 		
 		FGetLeaderboardAroundUserRequest(const FGetLeaderboardAroundUserRequest& src) :
@@ -4273,10 +4273,10 @@ namespace ServerModels
 		int32 MaxResultsCount;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
-		// The version of the leaderboard to get, when UseSpecificVersion is true.
-		int32 Version;
-		// If true, uses the specified version. If false, gets the most recent version.
-		bool UseSpecificVersion;
+		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		OptionalInt32 Version;
+		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		OptionalBool UseSpecificVersion;
 	
         FGetLeaderboardRequest() :
 			FPlayFabBaseModel(),
@@ -4284,8 +4284,8 @@ namespace ServerModels
 			StartPosition(0),
 			MaxResultsCount(0),
 			ProfileConstraints(nullptr),
-			Version(0),
-			UseSpecificVersion(false)
+			Version(),
+			UseSpecificVersion()
 			{}
 		
 		FGetLeaderboardRequest(const FGetLeaderboardRequest& src) :

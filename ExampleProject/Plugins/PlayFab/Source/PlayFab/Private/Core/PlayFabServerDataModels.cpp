@@ -5677,9 +5677,9 @@ void PlayFab::ServerModels::FGetFriendLeaderboardRequest::writeJSON(JsonWriter& 
 	
     if(IncludeFacebookFriends.notNull()) { writer->WriteIdentifierPrefix(TEXT("IncludeFacebookFriends")); writer->WriteValue(IncludeFacebookFriends); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion);
+    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
 	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
@@ -5980,9 +5980,9 @@ void PlayFab::ServerModels::FGetLeaderboardAroundUserRequest::writeJSON(JsonWrit
 	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion);
+    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
 	
     
     writer->WriteObjectEnd();
@@ -6961,9 +6961,9 @@ void PlayFab::ServerModels::FGetLeaderboardRequest::writeJSON(JsonWriter& writer
 	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion);
+    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
 	
     
     writer->WriteObjectEnd();

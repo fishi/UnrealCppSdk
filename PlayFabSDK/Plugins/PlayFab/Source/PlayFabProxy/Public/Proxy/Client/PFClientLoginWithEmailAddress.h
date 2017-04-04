@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientLoginResultDelegate OnFailure;
 	
-	// Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+	// Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithEmailAddress does not permit the  creation of new accounts via the CreateAccountFlag. Email addresses may be used to create accounts via RegisterPlayFabUser.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
 	static UPFClientLoginWithEmailAddress* LoginWithEmailAddress(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InEmail, const FString& InPassword, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 

@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientLoginResultDelegate OnFailure;
 	
-	// Register using Windows Hello authentication. Before a user can request a challenge or perform a signin the user must first either register or link a Windows Hello account.
+	// Registers a new PlayFab user account using Windows Hello authentication, returning a session ticket  that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
 	static UPFClientRegisterWithWindowsHello* RegisterWithWindowsHello(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InUserName, const FString& InPublicKey, const FString& InDeviceName, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 

@@ -13,7 +13,6 @@ namespace PlayFab
     public:
         DECLARE_DELEGATE_OneParam(FGetPhotonAuthenticationTokenDelegate, const ClientModels::FGetPhotonAuthenticationTokenResult&);
         DECLARE_DELEGATE_OneParam(FGetWindowsHelloChallengeDelegate, const ClientModels::FGetWindowsHelloChallengeResponse&);
-        DECLARE_DELEGATE_OneParam(FLinkWindowsHelloDelegate, const ClientModels::FLinkWindowsHelloAccountResponse&);
         DECLARE_DELEGATE_OneParam(FLoginWithAndroidDeviceIDDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FLoginWithCustomIDDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FLoginWithEmailAddressDelegate, const ClientModels::FLoginResult&);
@@ -28,7 +27,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLoginWithWindowsHelloDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FRegisterPlayFabUserDelegate, const ClientModels::FRegisterPlayFabUserResult&);
         DECLARE_DELEGATE_OneParam(FRegisterWithWindowsHelloDelegate, const ClientModels::FLoginResult&);
-        DECLARE_DELEGATE_OneParam(FUnlinkWindowsHelloDelegate, const ClientModels::FUnlinkWindowsHelloAccountResponse&);
         DECLARE_DELEGATE_OneParam(FAddGenericIDDelegate, const ClientModels::FAddGenericIDResult&);
         DECLARE_DELEGATE_OneParam(FAddUsernamePasswordDelegate, const ClientModels::FAddUsernamePasswordResult&);
         DECLARE_DELEGATE_OneParam(FGetAccountInfoDelegate, const ClientModels::FGetAccountInfoResult&);
@@ -49,6 +47,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLinkKongregateDelegate, const ClientModels::FLinkKongregateAccountResult&);
         DECLARE_DELEGATE_OneParam(FLinkSteamAccountDelegate, const ClientModels::FLinkSteamAccountResult&);
         DECLARE_DELEGATE_OneParam(FLinkTwitchDelegate, const ClientModels::FLinkTwitchAccountResult&);
+        DECLARE_DELEGATE_OneParam(FLinkWindowsHelloDelegate, const ClientModels::FLinkWindowsHelloAccountResponse&);
         DECLARE_DELEGATE_OneParam(FRemoveGenericIDDelegate, const ClientModels::FRemoveGenericIDResult&);
         DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ClientModels::FReportPlayerClientResult&);
         DECLARE_DELEGATE_OneParam(FSendAccountRecoveryEmailDelegate, const ClientModels::FSendAccountRecoveryEmailResult&);
@@ -61,6 +60,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUnlinkKongregateDelegate, const ClientModels::FUnlinkKongregateAccountResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkSteamAccountDelegate, const ClientModels::FUnlinkSteamAccountResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkTwitchDelegate, const ClientModels::FUnlinkTwitchAccountResult&);
+        DECLARE_DELEGATE_OneParam(FUnlinkWindowsHelloDelegate, const ClientModels::FUnlinkWindowsHelloAccountResponse&);
         DECLARE_DELEGATE_OneParam(FUpdateAvatarUrlDelegate, const ClientModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserTitleDisplayNameDelegate, const ClientModels::FUpdateUserTitleDisplayNameResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
@@ -161,11 +161,6 @@ namespace PlayFab
          */
         bool GetWindowsHelloChallenge(ClientModels::FGetWindowsHelloChallengeRequest& request, const FGetWindowsHelloChallengeDelegate& SuccessDelegate = FGetWindowsHelloChallengeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Link Windows Hello to the current PlayFab Account
-         * PublicKey must be generated using the Windows Hello Passport service.
-         */
-        bool LinkWindowsHello(ClientModels::FLinkWindowsHelloAccountRequest& request, const FLinkWindowsHelloDelegate& SuccessDelegate = FLinkWindowsHelloDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Signs the user in using the Android device identifier, returning a session identifier that can subsequently be used for API calls which require an authenticated user
          * On Android devices, the recommendation is to use the Settings.Secure.ANDROID_ID as the AndroidDeviceId, as described in this blog post (http://android-developers.blogspot.com/2011/03/identifying-app-installations.html). More information on this identifier can be found in the Android documentation (http://developer.android.com/reference/android/provider/Settings.Secure.html). If this is the first time a user has signed in with the Android device and CreateAccount is set to true, a new PlayFab account will be created and linked to the Android device ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Android device, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account. Please note that while multiple devices of this type can be linked to a single  user account, only the one most recently used to login (or most recently linked) will be reflected in the user's account information.  We will be updating to show all linked devices in a future release.
          */
@@ -176,7 +171,7 @@ namespace PlayFab
          */
         bool LoginWithCustomID(ClientModels::FLoginWithCustomIDRequest& request, const FLoginWithCustomIDDelegate& SuccessDelegate = FLoginWithCustomIDDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+         * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithEmailAddress does not permit the  creation of new accounts via the CreateAccountFlag. Email addresses may be used to create accounts via RegisterPlayFabUser.
          * Email address and password lengths are provided for information purposes. The server will validate that data passed in conforms to the field definition and report errors appropriately. It is recommended that developers not perform this validation locally, so that future updates do not require client updates.
          */
         bool LoginWithEmailAddress(ClientModels::FLoginWithEmailAddressRequest& request, const FLoginWithEmailAddressDelegate& SuccessDelegate = FLoginWithEmailAddressDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -206,7 +201,7 @@ namespace PlayFab
          */
         bool LoginWithKongregate(ClientModels::FLoginWithKongregateRequest& request, const FLoginWithKongregateDelegate& SuccessDelegate = FLoginWithKongregateDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike other login API calls, LoginWithEmailAddress does not permit the creation of new accounts via the CreateAccountFlag. Email accounts must be created using the RegisterPlayFabUser API or added to existing accounts using AddUsernamePassword.
+         * Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. Unlike most other login API calls, LoginWithPlayFab does not permit the  creation of new accounts via the CreateAccountFlag. Username/Password credentials may be used to create accounts via  RegisterPlayFabUser, or added to existing accounts using AddUsernamePassword.
          * Username and password lengths are provided for information purposes. The server will validate that data passed in conforms to the field definition and report errors appropriately. It is recommended that developers not perform this validation locally, so that future updates to the username or password do not require client updates.
          */
         bool LoginWithPlayFab(ClientModels::FLoginWithPlayFabRequest& request, const FLoginWithPlayFabDelegate& SuccessDelegate = FLoginWithPlayFabDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -230,15 +225,10 @@ namespace PlayFab
          */
         bool RegisterPlayFabUser(ClientModels::FRegisterPlayFabUserRequest& request, const FRegisterPlayFabUserDelegate& SuccessDelegate = FRegisterPlayFabUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Register using Windows Hello authentication. Before a user can request a challenge or perform a signin the user must first either register or link a Windows Hello account.
+         * Registers a new PlayFab user account using Windows Hello authentication, returning a session ticket  that can subsequently be used for API calls which require an authenticated user
          * PublicKey must be generated using the Windows Hello Passport service.
          */
         bool RegisterWithWindowsHello(ClientModels::FRegisterWithWindowsHelloRequest& request, const FRegisterWithWindowsHelloDelegate& SuccessDelegate = FRegisterWithWindowsHelloDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Unlink Windows Hello from the current PlayFab Account
-         * Must include the Public Key Hint
-         */
-        bool UnlinkWindowsHello(ClientModels::FUnlinkWindowsHelloAccountRequest& request, const FUnlinkWindowsHelloDelegate& SuccessDelegate = FUnlinkWindowsHelloDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab ID lookup of any arbitrary service identifier a title wants to add. This identifier should never be used as authentication credentials, as the intent is that it is easily accessible by other players.
          */
@@ -323,6 +313,11 @@ namespace PlayFab
          */
         bool LinkTwitch(ClientModels::FLinkTwitchAccountRequest& request, const FLinkTwitchDelegate& SuccessDelegate = FLinkTwitchDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Link Windows Hello authentication to the current PlayFab Account
+         * PublicKey must be generated using the Windows Hello Passport service.
+         */
+        bool LinkWindowsHello(ClientModels::FLinkWindowsHelloAccountRequest& request, const FLinkWindowsHelloDelegate& SuccessDelegate = FLinkWindowsHelloDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Removes the specified generic service identifier from the player's PlayFab account.
          */
         bool RemoveGenericID(ClientModels::FRemoveGenericIDRequest& request, const FRemoveGenericIDDelegate& SuccessDelegate = FRemoveGenericIDDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -371,6 +366,11 @@ namespace PlayFab
          * Unlinks the related Twitch account from the user's PlayFab account.
          */
         bool UnlinkTwitch(const FUnlinkTwitchDelegate& SuccessDelegate = FUnlinkTwitchDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Unlink Windows Hello authentication from the current PlayFab Account
+         * Must include the Public Key Hint
+         */
+        bool UnlinkWindowsHello(ClientModels::FUnlinkWindowsHelloAccountRequest& request, const FUnlinkWindowsHelloDelegate& SuccessDelegate = FUnlinkWindowsHelloDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Update the avatar URL of the player
          */
@@ -487,7 +487,7 @@ namespace PlayFab
          */
         bool GetCharacterInventory(ClientModels::FGetCharacterInventoryRequest& request, const FGetCharacterInventoryDelegate& SuccessDelegate = FGetCharacterInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves a completed purchase along with its current PlayFab status.
+         * Retrieves a purchase along with its current PlayFab status.
          */
         bool GetPurchase(ClientModels::FGetPurchaseRequest& request, const FGetPurchaseDelegate& SuccessDelegate = FGetPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -552,8 +552,8 @@ namespace PlayFab
          */
         bool RegisterForIOSPushNotification(ClientModels::FRegisterForIOSPushNotificationRequest& request, const FRegisterForIOSPushNotificationDelegate& SuccessDelegate = FRegisterForIOSPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Restores all in-app purchases based on the given refresh receipt.
-         * Iterates through every purchase in the receipt and restores the items if they still exist in the catalog and can be validated. 
+         * Restores all in-app purchases based on the given restore receipt
+         * The title should obtain a refresh receipt via restoreCompletedTransactions in the SKPaymentQueue  of the Apple StoreKit and pass that in to this call. The resultant receipt contains new receipt instances for all non-consumable  goods previously purchased by the user. This API call iterates through every purchase in the receipt and restores the items if  they still exist in the catalog and can be validated.
          */
         bool RestoreIOSPurchases(ClientModels::FRestoreIOSPurchasesRequest& request, const FRestoreIOSPurchasesDelegate& SuccessDelegate = FRestoreIOSPurchasesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -726,7 +726,6 @@ namespace PlayFab
         // ------------ Generated result handlers
         void OnGetPhotonAuthenticationTokenResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPhotonAuthenticationTokenDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetWindowsHelloChallengeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetWindowsHelloChallengeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnLinkWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithAndroidDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithAndroidDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithCustomIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithCustomIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithEmailAddressResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithEmailAddressDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -741,7 +740,6 @@ namespace PlayFab
         void OnLoginWithWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterPlayFabUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterWithWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterWithWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnUnlinkWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddGenericIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddGenericIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddUsernamePasswordResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUsernamePasswordDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -762,6 +760,7 @@ namespace PlayFab
         void OnLinkKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkSteamAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkSteamAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkTwitchResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkTwitchDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnLinkWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveGenericIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveGenericIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -774,6 +773,7 @@ namespace PlayFab
         void OnUnlinkKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkSteamAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkSteamAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkTwitchResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkTwitchDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUnlinkWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateAvatarUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateAvatarUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserTitleDisplayNameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

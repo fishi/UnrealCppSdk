@@ -1967,12 +1967,10 @@ void UPFClientProxyLibrary::BreakBPClientLinkGameCenterAccountResult(
 void UPFClientProxyLibrary::BreakBPClientLinkGoogleAccountRequest(
 		const FBPClientLinkGoogleAccountRequest& In
         ,FString& OutServerAuthCode
-        ,FString& OutAccessToken
         ,bool& OutForceLink
 	)
 {
     OutServerAuthCode = In.Data.ServerAuthCode;
-	OutAccessToken = In.Data.AccessToken;
 	OutForceLink = In.Data.ForceLink;
 	
 }
@@ -2173,12 +2171,16 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithCustomIDRequest(
         ,FString& OutTitleId
         ,FString& OutCustomId
         ,bool& OutCreateAccount
+        ,FString& OutPlayerSecret
+        ,FString& OutEncryptedRequest
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutCustomId = In.Data.CustomId;
 	OutCreateAccount = In.Data.CreateAccount;
+	OutPlayerSecret = In.Data.PlayerSecret;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
@@ -2232,14 +2234,12 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithGoogleAccountRequest(
 		const FBPClientLoginWithGoogleAccountRequest& In
         ,FString& OutTitleId
         ,FString& OutServerAuthCode
-        ,FString& OutAccessToken
         ,bool& OutCreateAccount
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutServerAuthCode = In.Data.ServerAuthCode;
-	OutAccessToken = In.Data.AccessToken;
 	OutCreateAccount = In.Data.CreateAccount;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	

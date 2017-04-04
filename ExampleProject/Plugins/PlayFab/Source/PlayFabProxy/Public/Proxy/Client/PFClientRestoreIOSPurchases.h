@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Restores all in-app purchases based on the given refresh receipt.
+	// Restores all in-app purchases based on the given restore receipt
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|IOS-Specific APIs")
 	static UPFClientRestoreIOSPurchases* RestoreIOSPurchases(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReceiptData);
 

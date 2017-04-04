@@ -19,8 +19,8 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Link Windows Hello to the current PlayFab Account
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
+	// Link Windows Hello authentication to the current PlayFab Account
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
 	static UPFClientLinkWindowsHello* LinkWindowsHello(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InUserName, const FString& InPublicKey, const FString& InDeviceName, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface

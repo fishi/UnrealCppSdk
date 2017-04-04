@@ -5881,9 +5881,9 @@ void PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerRequest::writeJSON(
 	
     if(IncludeFacebookFriends.notNull()) { writer->WriteIdentifierPrefix(TEXT("IncludeFacebookFriends")); writer->WriteValue(IncludeFacebookFriends); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion);
+    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
 	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
@@ -6787,9 +6787,9 @@ void PlayFab::ClientModels::FGetFriendLeaderboardRequest::writeJSON(JsonWriter& 
 	
     if(IncludeFacebookFriends.notNull()) { writer->WriteIdentifierPrefix(TEXT("IncludeFacebookFriends")); writer->WriteValue(IncludeFacebookFriends); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion);
+    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
 	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
@@ -7063,9 +7063,9 @@ void PlayFab::ClientModels::FGetLeaderboardAroundPlayerRequest::writeJSON(JsonWr
 	
     if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion);
+    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
 	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
@@ -7284,9 +7284,9 @@ void PlayFab::ClientModels::FGetLeaderboardRequest::writeJSON(JsonWriter& writer
 	
     if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion);
+    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
 	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
@@ -10989,8 +10989,6 @@ void PlayFab::ClientModels::FLinkGoogleAccountRequest::writeJSON(JsonWriter& wri
     
     if(ServerAuthCode.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerAuthCode")); writer->WriteValue(ServerAuthCode); }
 	
-    if(AccessToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken); }
-	
     if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
 	
     
@@ -11006,13 +11004,6 @@ bool PlayFab::ClientModels::FLinkGoogleAccountRequest::readFromValue(const TShar
     {
         FString TmpValue;
         if(ServerAuthCodeValue->TryGetString(TmpValue)) {ServerAuthCode = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
-    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
-    {
-        FString TmpValue;
-        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
@@ -11673,9 +11664,13 @@ void PlayFab::ClientModels::FLoginWithCustomIDRequest::writeJSON(JsonWriter& wri
     
     writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
 	
-    writer->WriteIdentifierPrefix(TEXT("CustomId")); writer->WriteValue(CustomId);
+    if(CustomId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CustomId")); writer->WriteValue(CustomId); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -11706,6 +11701,20 @@ bool PlayFab::ClientModels::FLoginWithCustomIDRequest::readFromValue(const TShar
     {
         bool TmpValue;
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
@@ -11907,8 +11916,6 @@ void PlayFab::ClientModels::FLoginWithGoogleAccountRequest::writeJSON(JsonWriter
 	
     if(ServerAuthCode.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerAuthCode")); writer->WriteValue(ServerAuthCode); }
 	
-    if(AccessToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken); }
-	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
@@ -11933,13 +11940,6 @@ bool PlayFab::ClientModels::FLoginWithGoogleAccountRequest::readFromValue(const 
     {
         FString TmpValue;
         if(ServerAuthCodeValue->TryGetString(TmpValue)) {ServerAuthCode = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
-    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
-    {
-        FString TmpValue;
-        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
