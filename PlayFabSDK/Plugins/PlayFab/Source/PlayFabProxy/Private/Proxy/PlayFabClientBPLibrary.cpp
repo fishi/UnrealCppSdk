@@ -2149,38 +2149,42 @@ void UPFClientProxyLibrary::BreakBPClientLoginResult(
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithAndroidDeviceIDRequest(
 		const FBPClientLoginWithAndroidDeviceIDRequest& In
-        ,FString& OutTitleId
         ,FString& OutAndroidDeviceId
         ,FString& OutOS
         ,FString& OutAndroidDevice
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutAndroidDeviceId = In.Data.AndroidDeviceId;
+    OutAndroidDeviceId = In.Data.AndroidDeviceId;
 	OutOS = In.Data.OS;
 	OutAndroidDevice = In.Data.AndroidDevice;
 	OutCreateAccount = In.Data.CreateAccount;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithCustomIDRequest(
 		const FBPClientLoginWithCustomIDRequest& In
-        ,FString& OutTitleId
         ,FString& OutCustomId
         ,bool& OutCreateAccount
-        ,FString& OutPlayerSecret
+        ,FString& OutTitleId
         ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutCustomId = In.Data.CustomId;
+    OutCustomId = In.Data.CustomId;
 	OutCreateAccount = In.Data.CreateAccount;
-	OutPlayerSecret = In.Data.PlayerSecret;
+	OutTitleId = In.Data.TitleId;
 	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
@@ -2202,82 +2206,102 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithEmailAddressRequest(
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithFacebookRequest(
 		const FBPClientLoginWithFacebookRequest& In
-        ,FString& OutTitleId
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutAccessToken = In.Data.AccessToken;
+    OutAccessToken = In.Data.AccessToken;
 	OutCreateAccount = In.Data.CreateAccount;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithGameCenterRequest(
 		const FBPClientLoginWithGameCenterRequest& In
-        ,FString& OutTitleId
         ,FString& OutPlayerId
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutPlayerId = In.Data.PlayerId;
+    OutPlayerId = In.Data.PlayerId;
 	OutCreateAccount = In.Data.CreateAccount;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithGoogleAccountRequest(
 		const FBPClientLoginWithGoogleAccountRequest& In
-        ,FString& OutTitleId
         ,FString& OutServerAuthCode
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutServerAuthCode = In.Data.ServerAuthCode;
+    OutServerAuthCode = In.Data.ServerAuthCode;
 	OutCreateAccount = In.Data.CreateAccount;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithIOSDeviceIDRequest(
 		const FBPClientLoginWithIOSDeviceIDRequest& In
-        ,FString& OutTitleId
         ,FString& OutDeviceId
         ,FString& OutOS
         ,FString& OutDeviceModel
-        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutDeviceId = In.Data.DeviceId;
+    OutDeviceId = In.Data.DeviceId;
 	OutOS = In.Data.OS;
 	OutDeviceModel = In.Data.DeviceModel;
-	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	OutCreateAccount = In.Data.CreateAccount;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithKongregateRequest(
 		const FBPClientLoginWithKongregateRequest& In
-        ,FString& OutTitleId
         ,FString& OutKongregateId
         ,FString& OutAuthTicket
         ,bool& OutCreateAccount
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutKongregateId = In.Data.KongregateId;
+    OutKongregateId = In.Data.KongregateId;
 	OutAuthTicket = In.Data.AuthTicket;
 	OutCreateAccount = In.Data.CreateAccount;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	
 }
 
@@ -2298,30 +2322,38 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithPlayFabRequest(
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
 		const FBPClientLoginWithSteamRequest& In
-        ,FString& OutTitleId
         ,FString& OutSteamTicket
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutSteamTicket = In.Data.SteamTicket;
+    OutSteamTicket = In.Data.SteamTicket;
 	OutCreateAccount = In.Data.CreateAccount;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
 void UPFClientProxyLibrary::BreakBPClientLoginWithTwitchRequest(
 		const FBPClientLoginWithTwitchRequest& In
-        ,FString& OutTitleId
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutAccessToken = In.Data.AccessToken;
+    OutAccessToken = In.Data.AccessToken;
 	OutCreateAccount = In.Data.CreateAccount;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
@@ -2787,20 +2819,26 @@ void UPFClientProxyLibrary::BreakBPClientRegisterForIOSPushNotificationResult(
 
 void UPFClientProxyLibrary::BreakBPClientRegisterPlayFabUserRequest(
 		const FBPClientRegisterPlayFabUserRequest& In
-        ,FString& OutTitleId
         ,FString& OutUsername
         ,FString& OutEmail
         ,FString& OutPassword
         ,bool& OutRequireBothUsernameAndEmail
         ,FString& OutDisplayName
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutUsername = In.Data.Username;
+    OutUsername = In.Data.Username;
 	OutEmail = In.Data.Email;
 	OutPassword = In.Data.Password;
 	OutRequireBothUsernameAndEmail = In.Data.RequireBothUsernameAndEmail;
 	OutDisplayName = In.Data.DisplayName;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -2821,17 +2859,21 @@ void UPFClientProxyLibrary::BreakBPClientRegisterPlayFabUserResult(
 
 void UPFClientProxyLibrary::BreakBPClientRegisterWithWindowsHelloRequest(
 		const FBPClientRegisterWithWindowsHelloRequest& In
-        ,FString& OutTitleId
         ,FString& OutUserName
         ,FString& OutPublicKey
         ,FString& OutDeviceName
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
-    OutTitleId = In.Data.TitleId;
-	OutUserName = In.Data.UserName;
+    OutUserName = In.Data.UserName;
 	OutPublicKey = In.Data.PublicKey;
 	OutDeviceName = In.Data.DeviceName;
+	OutTitleId = In.Data.TitleId;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	OutPlayerSecret = In.Data.PlayerSecret;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }

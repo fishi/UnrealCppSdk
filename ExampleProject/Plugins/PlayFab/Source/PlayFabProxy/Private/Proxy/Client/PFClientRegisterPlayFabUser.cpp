@@ -10,16 +10,19 @@ UPFClientRegisterPlayFabUser::UPFClientRegisterPlayFabUser(const FObjectInitiali
 {
 }
 
-UPFClientRegisterPlayFabUser* UPFClientRegisterPlayFabUser::RegisterPlayFabUser(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InUsername, const FString& InEmail, const FString& InPassword, const bool& InRequireBothUsernameAndEmail, const FString& InDisplayName)
+UPFClientRegisterPlayFabUser* UPFClientRegisterPlayFabUser::RegisterPlayFabUser(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InUsername, const FString& InEmail, const FString& InPassword, const bool& InRequireBothUsernameAndEmail, const FString& InDisplayName, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientRegisterPlayFabUser* Proxy = NewObject<UPFClientRegisterPlayFabUser>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.Username = InUsername;
 	Proxy->Request.Email = InEmail;
 	Proxy->Request.Password = InPassword;
 	Proxy->Request.RequireBothUsernameAndEmail = InRequireBothUsernameAndEmail;
 	Proxy->Request.DisplayName = InDisplayName;
+	Proxy->Request.TitleId = InTitleId;
+	Proxy->Request.EncryptedRequest = InEncryptedRequest;
+	Proxy->Request.PlayerSecret = InPlayerSecret;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

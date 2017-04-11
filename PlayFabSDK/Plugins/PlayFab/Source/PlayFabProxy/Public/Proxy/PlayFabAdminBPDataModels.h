@@ -126,6 +126,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminAddVirtualCurrencyTypesRequestDelegate, const FBPAdminAddVirtualCurrencyTypesRequest&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminApiCondition"))
+struct FBPAdminApiCondition
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FApiCondition Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminApiConditionDelegate, const FBPAdminApiCondition&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminBanInfo"))
 struct FBPAdminBanInfo
 {
@@ -255,6 +265,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCloudScriptVersionStatusDelegate, const FBPAdminCloudScriptVersionStatus&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminConditionals"))
+struct FBPAdminConditionals
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::Conditionals Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminConditionalsDelegate, const FBPAdminConditionals&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminContentInfo"))
 struct FBPAdminContentInfo

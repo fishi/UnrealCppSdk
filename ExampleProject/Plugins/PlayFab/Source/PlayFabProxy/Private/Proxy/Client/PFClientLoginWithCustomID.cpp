@@ -10,15 +10,15 @@ UPFClientLoginWithCustomID::UPFClientLoginWithCustomID(const FObjectInitializer&
 {
 }
 
-UPFClientLoginWithCustomID* UPFClientLoginWithCustomID::LoginWithCustomID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InCustomId, const bool& InCreateAccount, const FString& InPlayerSecret, const FString& InEncryptedRequest, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
+UPFClientLoginWithCustomID* UPFClientLoginWithCustomID::LoginWithCustomID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCustomId, const bool& InCreateAccount, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithCustomID* Proxy = NewObject<UPFClientLoginWithCustomID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.CustomId = InCustomId;
 	Proxy->Request.CreateAccount = InCreateAccount;
-	Proxy->Request.PlayerSecret = InPlayerSecret;
+	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.EncryptedRequest = InEncryptedRequest;
+	Proxy->Request.PlayerSecret = InPlayerSecret;
 	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 

@@ -21,7 +21,7 @@ public:
 	
 	// Registers a new PlayFab user account using Windows Hello authentication, returning a session ticket  that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientRegisterWithWindowsHello* RegisterWithWindowsHello(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InUserName, const FString& InPublicKey, const FString& InDeviceName, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
+	static UPFClientRegisterWithWindowsHello* RegisterWithWindowsHello(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InUserName, const FString& InPublicKey, const FString& InDeviceName, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

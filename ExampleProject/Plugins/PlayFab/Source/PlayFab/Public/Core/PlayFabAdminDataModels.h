@@ -581,6 +581,44 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum Conditionals
+	{
+		ConditionalsAny,
+		ConditionalsTrue,
+		ConditionalsFalse
+	};
+	
+	void writeConditionalsEnumJSON(Conditionals enumVal, JsonWriter& writer);
+	Conditionals readConditionalsFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FApiCondition : public FPlayFabBaseModel
+    {
+		
+		// [optional] Require that API calls contain an RSA encrypted payload or signed headers.
+		Boxed<Conditionals> HasSignatureOrEncryption;
+	
+        FApiCondition() :
+			FPlayFabBaseModel(),
+			HasSignatureOrEncryption()
+			{}
+		
+		FApiCondition(const FApiCondition& src) :
+			FPlayFabBaseModel(),
+			HasSignatureOrEncryption(src.HasSignatureOrEncryption)
+			{}
+			
+		FApiCondition(const TSharedPtr<FJsonObject>& obj) : FApiCondition()
+        {
+            readFromValue(obj);
+        }
+		
+		~FApiCondition();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FBanInfo : public FPlayFabBaseModel
     {
 		
@@ -3637,6 +3675,8 @@ namespace AdminModels
 		FString Principal;
 		// [optional] A comment about the statement. Intended solely for bookeeping and debugging.
 		FString Comment;
+		// [optional] Additional conditions to be applied for API Resources.
+		TSharedPtr<FApiCondition> ApiConditions;
 	
         FPermissionStatement() :
 			FPlayFabBaseModel(),
@@ -3644,7 +3684,8 @@ namespace AdminModels
 			Action(),
 			Effect(),
 			Principal(),
-			Comment()
+			Comment(),
+			ApiConditions(nullptr)
 			{}
 		
 		FPermissionStatement(const FPermissionStatement& src) :
@@ -3653,7 +3694,8 @@ namespace AdminModels
 			Action(src.Action),
 			Effect(src.Effect),
 			Principal(src.Principal),
-			Comment(src.Comment)
+			Comment(src.Comment),
+			ApiConditions(src.ApiConditions.IsValid() ? MakeShareable(new FApiCondition(*src.ApiConditions)) : nullptr)
 			{}
 			
 		FPermissionStatement(const TSharedPtr<FJsonObject>& obj) : FPermissionStatement()

@@ -11586,15 +11586,19 @@ void PlayFab::ClientModels::FLoginWithAndroidDeviceIDRequest::writeJSON(JsonWrit
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
-    writer->WriteIdentifierPrefix(TEXT("AndroidDeviceId")); writer->WriteValue(AndroidDeviceId);
+    if(AndroidDeviceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AndroidDeviceId")); writer->WriteValue(AndroidDeviceId); }
 	
     if(OS.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("OS")); writer->WriteValue(OS); }
 	
     if(AndroidDevice.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AndroidDevice")); writer->WriteValue(AndroidDevice); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -11606,13 +11610,6 @@ bool PlayFab::ClientModels::FLoginWithAndroidDeviceIDRequest::readFromValue(cons
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> AndroidDeviceIdValue = obj->TryGetField(TEXT("AndroidDeviceId"));
     if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
     {
@@ -11641,6 +11638,27 @@ bool PlayFab::ClientModels::FLoginWithAndroidDeviceIDRequest::readFromValue(cons
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
     }
     
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
+    }
+    
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
     if (InfoRequestParametersValue.IsValid()&& !InfoRequestParametersValue->IsNull())
     {
@@ -11662,15 +11680,15 @@ void PlayFab::ClientModels::FLoginWithCustomIDRequest::writeJSON(JsonWriter& wri
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
     if(CustomId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CustomId")); writer->WriteValue(CustomId); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
 	
-    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
 	
     if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -11682,13 +11700,6 @@ bool PlayFab::ClientModels::FLoginWithCustomIDRequest::readFromValue(const TShar
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> CustomIdValue = obj->TryGetField(TEXT("CustomId"));
     if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
     {
@@ -11703,11 +11714,11 @@ bool PlayFab::ClientModels::FLoginWithCustomIDRequest::readFromValue(const TShar
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
-    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
     {
         FString TmpValue;
-        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
@@ -11715,6 +11726,13 @@ bool PlayFab::ClientModels::FLoginWithCustomIDRequest::readFromValue(const TShar
     {
         FString TmpValue;
         if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
@@ -11796,11 +11814,15 @@ void PlayFab::ClientModels::FLoginWithFacebookRequest::writeJSON(JsonWriter& wri
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
     writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -11812,13 +11834,6 @@ bool PlayFab::ClientModels::FLoginWithFacebookRequest::readFromValue(const TShar
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
     if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
     {
@@ -11831,6 +11846,27 @@ bool PlayFab::ClientModels::FLoginWithFacebookRequest::readFromValue(const TShar
     {
         bool TmpValue;
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
@@ -11854,11 +11890,15 @@ void PlayFab::ClientModels::FLoginWithGameCenterRequest::writeJSON(JsonWriter& w
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
-    writer->WriteIdentifierPrefix(TEXT("PlayerId")); writer->WriteValue(PlayerId);
+    if(PlayerId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerId")); writer->WriteValue(PlayerId); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -11870,13 +11910,6 @@ bool PlayFab::ClientModels::FLoginWithGameCenterRequest::readFromValue(const TSh
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> PlayerIdValue = obj->TryGetField(TEXT("PlayerId"));
     if (PlayerIdValue.IsValid()&& !PlayerIdValue->IsNull())
     {
@@ -11889,6 +11922,27 @@ bool PlayFab::ClientModels::FLoginWithGameCenterRequest::readFromValue(const TSh
     {
         bool TmpValue;
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
@@ -11912,11 +11966,15 @@ void PlayFab::ClientModels::FLoginWithGoogleAccountRequest::writeJSON(JsonWriter
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
     if(ServerAuthCode.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerAuthCode")); writer->WriteValue(ServerAuthCode); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -11928,13 +11986,6 @@ bool PlayFab::ClientModels::FLoginWithGoogleAccountRequest::readFromValue(const 
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> ServerAuthCodeValue = obj->TryGetField(TEXT("ServerAuthCode"));
     if (ServerAuthCodeValue.IsValid()&& !ServerAuthCodeValue->IsNull())
     {
@@ -11947,6 +11998,27 @@ bool PlayFab::ClientModels::FLoginWithGoogleAccountRequest::readFromValue(const 
     {
         bool TmpValue;
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
@@ -11970,17 +12042,21 @@ void PlayFab::ClientModels::FLoginWithIOSDeviceIDRequest::writeJSON(JsonWriter& 
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
-    writer->WriteIdentifierPrefix(TEXT("DeviceId")); writer->WriteValue(DeviceId);
+    if(DeviceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DeviceId")); writer->WriteValue(DeviceId); }
 	
     if(OS.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("OS")); writer->WriteValue(OS); }
 	
     if(DeviceModel.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DeviceModel")); writer->WriteValue(DeviceModel); }
 	
-    if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
-	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
+	
+    if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -11990,13 +12066,6 @@ bool PlayFab::ClientModels::FLoginWithIOSDeviceIDRequest::readFromValue(const TS
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> DeviceIdValue = obj->TryGetField(TEXT("DeviceId"));
     if (DeviceIdValue.IsValid()&& !DeviceIdValue->IsNull())
     {
@@ -12018,17 +12087,38 @@ bool PlayFab::ClientModels::FLoginWithIOSDeviceIDRequest::readFromValue(const TS
         if(DeviceModelValue->TryGetString(TmpValue)) {DeviceModel = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
-    if (InfoRequestParametersValue.IsValid()&& !InfoRequestParametersValue->IsNull())
-    {
-        InfoRequestParameters = MakeShareable(new FGetPlayerCombinedInfoRequestParams(InfoRequestParametersValue->AsObject()));
-    }
-    
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
     if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
     {
         bool TmpValue;
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
+    if (InfoRequestParametersValue.IsValid()&& !InfoRequestParametersValue->IsNull())
+    {
+        InfoRequestParameters = MakeShareable(new FGetPlayerCombinedInfoRequestParams(InfoRequestParametersValue->AsObject()));
     }
     
     
@@ -12046,15 +12136,19 @@ void PlayFab::ClientModels::FLoginWithKongregateRequest::writeJSON(JsonWriter& w
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+    if(KongregateId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("KongregateId")); writer->WriteValue(KongregateId); }
 	
-    writer->WriteIdentifierPrefix(TEXT("KongregateId")); writer->WriteValue(KongregateId);
-	
-    writer->WriteIdentifierPrefix(TEXT("AuthTicket")); writer->WriteValue(AuthTicket);
+    if(AuthTicket.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AuthTicket")); writer->WriteValue(AuthTicket); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     
     writer->WriteObjectEnd();
@@ -12064,13 +12158,6 @@ bool PlayFab::ClientModels::FLoginWithKongregateRequest::readFromValue(const TSh
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> KongregateIdValue = obj->TryGetField(TEXT("KongregateId"));
     if (KongregateIdValue.IsValid()&& !KongregateIdValue->IsNull())
     {
@@ -12096,6 +12183,27 @@ bool PlayFab::ClientModels::FLoginWithKongregateRequest::readFromValue(const TSh
     if (InfoRequestParametersValue.IsValid()&& !InfoRequestParametersValue->IsNull())
     {
         InfoRequestParameters = MakeShareable(new FGetPlayerCombinedInfoRequestParams(InfoRequestParametersValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     
@@ -12171,11 +12279,15 @@ void PlayFab::ClientModels::FLoginWithSteamRequest::writeJSON(JsonWriter& writer
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
-    writer->WriteIdentifierPrefix(TEXT("SteamTicket")); writer->WriteValue(SteamTicket);
+    if(SteamTicket.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SteamTicket")); writer->WriteValue(SteamTicket); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -12187,13 +12299,6 @@ bool PlayFab::ClientModels::FLoginWithSteamRequest::readFromValue(const TSharedP
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> SteamTicketValue = obj->TryGetField(TEXT("SteamTicket"));
     if (SteamTicketValue.IsValid()&& !SteamTicketValue->IsNull())
     {
@@ -12206,6 +12311,27 @@ bool PlayFab::ClientModels::FLoginWithSteamRequest::readFromValue(const TSharedP
     {
         bool TmpValue;
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
@@ -12229,11 +12355,15 @@ void PlayFab::ClientModels::FLoginWithTwitchRequest::writeJSON(JsonWriter& write
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
-    writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
+    if(AccessToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken); }
 	
     if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -12245,13 +12375,6 @@ bool PlayFab::ClientModels::FLoginWithTwitchRequest::readFromValue(const TShared
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
     if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
     {
@@ -12264,6 +12387,27 @@ bool PlayFab::ClientModels::FLoginWithTwitchRequest::readFromValue(const TShared
     {
         bool TmpValue;
         if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
@@ -13335,6 +13479,7 @@ bool PlayFab::ClientModels::FRegisterForIOSPushNotificationResult::readFromValue
 
 PlayFab::ClientModels::FRegisterPlayFabUserRequest::~FRegisterPlayFabUserRequest()
 {
+    //if(InfoRequestParameters != nullptr) delete InfoRequestParameters;
     
 }
 
@@ -13342,17 +13487,23 @@ void PlayFab::ClientModels::FRegisterPlayFabUserRequest::writeJSON(JsonWriter& w
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
     if(Username.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Username")); writer->WriteValue(Username); }
 	
     if(Email.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Email")); writer->WriteValue(Email); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Password")); writer->WriteValue(Password);
+    if(Password.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Password")); writer->WriteValue(Password); }
 	
     if(RequireBothUsernameAndEmail.notNull()) { writer->WriteIdentifierPrefix(TEXT("RequireBothUsernameAndEmail")); writer->WriteValue(RequireBothUsernameAndEmail); }
 	
     if(DisplayName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DisplayName")); writer->WriteValue(DisplayName); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
+	
+    if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -13362,13 +13513,6 @@ bool PlayFab::ClientModels::FRegisterPlayFabUserRequest::readFromValue(const TSh
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
     if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
     {
@@ -13402,6 +13546,33 @@ bool PlayFab::ClientModels::FRegisterPlayFabUserRequest::readFromValue(const TSh
     {
         FString TmpValue;
         if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
+    if (InfoRequestParametersValue.IsValid()&& !InfoRequestParametersValue->IsNull())
+    {
+        InfoRequestParameters = MakeShareable(new FGetPlayerCombinedInfoRequestParams(InfoRequestParametersValue->AsObject()));
     }
     
     
@@ -13477,13 +13648,17 @@ void PlayFab::ClientModels::FRegisterWithWindowsHelloRequest::writeJSON(JsonWrit
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+    if(UserName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("UserName")); writer->WriteValue(UserName); }
 	
-    writer->WriteIdentifierPrefix(TEXT("UserName")); writer->WriteValue(UserName);
-	
-    writer->WriteIdentifierPrefix(TEXT("PublicKey")); writer->WriteValue(PublicKey);
+    if(PublicKey.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PublicKey")); writer->WriteValue(PublicKey); }
 	
     if(DeviceName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DeviceName")); writer->WriteValue(DeviceName); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
 	
     if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
 	
@@ -13495,13 +13670,6 @@ bool PlayFab::ClientModels::FRegisterWithWindowsHelloRequest::readFromValue(cons
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> UserNameValue = obj->TryGetField(TEXT("UserName"));
     if (UserNameValue.IsValid()&& !UserNameValue->IsNull())
     {
@@ -13521,6 +13689,27 @@ bool PlayFab::ClientModels::FRegisterWithWindowsHelloRequest::readFromValue(cons
     {
         FString TmpValue;
         if(DeviceNameValue->TryGetString(TmpValue)) {DeviceName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));

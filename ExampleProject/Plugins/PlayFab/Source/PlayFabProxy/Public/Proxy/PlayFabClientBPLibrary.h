@@ -1200,22 +1200,24 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithAndroidDeviceIDRequest(
 		const FBPClientLoginWithAndroidDeviceIDRequest& In
-        ,FString& OutTitleId
         ,FString& OutAndroidDeviceId
         ,FString& OutOS
         ,FString& OutAndroidDevice
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithCustomIDRequest(
 		const FBPClientLoginWithCustomIDRequest& In
-        ,FString& OutTitleId
         ,FString& OutCustomId
         ,bool& OutCreateAccount
-        ,FString& OutPlayerSecret
+        ,FString& OutTitleId
         ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
@@ -1231,49 +1233,59 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithFacebookRequest(
 		const FBPClientLoginWithFacebookRequest& In
-        ,FString& OutTitleId
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithGameCenterRequest(
 		const FBPClientLoginWithGameCenterRequest& In
-        ,FString& OutTitleId
         ,FString& OutPlayerId
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithGoogleAccountRequest(
 		const FBPClientLoginWithGoogleAccountRequest& In
-        ,FString& OutTitleId
         ,FString& OutServerAuthCode
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithIOSDeviceIDRequest(
 		const FBPClientLoginWithIOSDeviceIDRequest& In
-        ,FString& OutTitleId
         ,FString& OutDeviceId
         ,FString& OutOS
         ,FString& OutDeviceModel
-        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithKongregateRequest(
 		const FBPClientLoginWithKongregateRequest& In
-        ,FString& OutTitleId
         ,FString& OutKongregateId
         ,FString& OutAuthTicket
         ,bool& OutCreateAccount
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1288,18 +1300,22 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithSteamRequest(
 		const FBPClientLoginWithSteamRequest& In
-        ,FString& OutTitleId
         ,FString& OutSteamTicket
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithTwitchRequest(
 		const FBPClientLoginWithTwitchRequest& In
-        ,FString& OutTitleId
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
@@ -1540,12 +1556,15 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientRegisterPlayFabUserRequest(
 		const FBPClientRegisterPlayFabUserRequest& In
-        ,FString& OutTitleId
         ,FString& OutUsername
         ,FString& OutEmail
         ,FString& OutPassword
         ,bool& OutRequireBothUsernameAndEmail
         ,FString& OutDisplayName
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1560,10 +1579,12 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientRegisterWithWindowsHelloRequest(
 		const FBPClientRegisterWithWindowsHelloRequest& In
-        ,FString& OutTitleId
         ,FString& OutUserName
         ,FString& OutPublicKey
         ,FString& OutDeviceName
+        ,FString& OutTitleId
+        ,FString& OutEncryptedRequest
+        ,FString& OutPlayerSecret
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
 	

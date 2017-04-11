@@ -116,6 +116,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminApiCondition(
+		const FBPAdminApiCondition& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminBanInfo(
 		const FBPAdminBanInfo& In
         ,FString& OutPlayFabId
@@ -231,6 +236,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutVersion
         ,int32& OutPublishedRevision
         ,int32& OutLatestRevision
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminConditionals(
+		const FBPAdminConditionals& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -948,6 +958,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutAction
         ,FString& OutPrincipal
         ,FString& OutComment
+        ,FBPAdminApiCondition& OutApiConditions
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

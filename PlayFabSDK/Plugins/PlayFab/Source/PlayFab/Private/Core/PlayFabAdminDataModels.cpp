@@ -931,6 +931,67 @@ bool PlayFab::AdminModels::FAddVirtualCurrencyTypesRequest::readFromValue(const 
 }
 
 
+void PlayFab::AdminModels::writeConditionalsEnumJSON(Conditionals enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case ConditionalsAny: writer->WriteValue(TEXT("Any")); break;
+        case ConditionalsTrue: writer->WriteValue(TEXT("True")); break;
+        case ConditionalsFalse: writer->WriteValue(TEXT("False")); break;
+    }
+}
+
+AdminModels::Conditionals PlayFab::AdminModels::readConditionalsFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, Conditionals> _ConditionalsMap;
+    if (_ConditionalsMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ConditionalsMap.Add(TEXT("Any"), ConditionalsAny);
+        _ConditionalsMap.Add(TEXT("True"), ConditionalsTrue);
+        _ConditionalsMap.Add(TEXT("False"), ConditionalsFalse);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _ConditionalsMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return ConditionalsAny; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FApiCondition::~FApiCondition()
+{
+    
+}
+
+void PlayFab::AdminModels::FApiCondition::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(HasSignatureOrEncryption.notNull()) { writer->WriteIdentifierPrefix(TEXT("HasSignatureOrEncryption")); writeConditionalsEnumJSON(HasSignatureOrEncryption, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FApiCondition::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    HasSignatureOrEncryption = readConditionalsFromValue(obj->TryGetField(TEXT("HasSignatureOrEncryption")));
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FBanInfo::~FBanInfo()
 {
     
@@ -5911,6 +5972,7 @@ bool PlayFab::AdminModels::FGetPolicyRequest::readFromValue(const TSharedPtr<FJs
 
 PlayFab::AdminModels::FPermissionStatement::~FPermissionStatement()
 {
+    //if(ApiConditions != nullptr) delete ApiConditions;
     
 }
 
@@ -5927,6 +5989,8 @@ void PlayFab::AdminModels::FPermissionStatement::writeJSON(JsonWriter& writer) c
     writer->WriteIdentifierPrefix(TEXT("Principal")); writer->WriteValue(Principal);
 	
     if(Comment.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Comment")); writer->WriteValue(Comment); }
+	
+    if(ApiConditions.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ApiConditions")); ApiConditions->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -5964,6 +6028,12 @@ bool PlayFab::AdminModels::FPermissionStatement::readFromValue(const TSharedPtr<
     {
         FString TmpValue;
         if(CommentValue->TryGetString(TmpValue)) {Comment = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ApiConditionsValue = obj->TryGetField(TEXT("ApiConditions"));
+    if (ApiConditionsValue.IsValid()&& !ApiConditionsValue->IsNull())
+    {
+        ApiConditions = MakeShareable(new FApiCondition(ApiConditionsValue->AsObject()));
     }
     
     

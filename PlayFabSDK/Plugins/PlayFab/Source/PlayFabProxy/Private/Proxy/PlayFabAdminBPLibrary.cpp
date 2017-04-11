@@ -179,6 +179,14 @@ void UPFAdminProxyLibrary::BreakBPAdminAddVirtualCurrencyTypesRequest(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminApiCondition(
+		const FBPAdminApiCondition& In
+	)
+{
+    
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminBanInfo(
 		const FBPAdminBanInfo& In
         ,FString& OutPlayFabId
@@ -392,6 +400,13 @@ void UPFAdminProxyLibrary::BreakBPAdminCloudScriptVersionStatus(
 	OutPublishedRevision = In.Data.PublishedRevision;
 	OutLatestRevision = In.Data.LatestRevision;
 	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminConditionals(
+		const FBPAdminConditionals& In
+	)
+{
+    
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminContentInfo(
@@ -1675,6 +1690,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPermissionStatement(
         ,FString& OutAction
         ,FString& OutPrincipal
         ,FString& OutComment
+        ,FBPAdminApiCondition& OutApiConditions
 	)
 {
     OutResource = In.Data.Resource;
@@ -1682,6 +1698,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPermissionStatement(
 	
 	OutPrincipal = In.Data.Principal;
 	OutComment = In.Data.Comment;
+	if (In.Data.ApiConditions.IsValid()) {    OutApiConditions.Data = *In.Data.ApiConditions;}
 	
 }
 

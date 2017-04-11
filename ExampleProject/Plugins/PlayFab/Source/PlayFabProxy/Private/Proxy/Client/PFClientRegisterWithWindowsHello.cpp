@@ -10,14 +10,16 @@ UPFClientRegisterWithWindowsHello::UPFClientRegisterWithWindowsHello(const FObje
 {
 }
 
-UPFClientRegisterWithWindowsHello* UPFClientRegisterWithWindowsHello::RegisterWithWindowsHello(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InUserName, const FString& InPublicKey, const FString& InDeviceName, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
+UPFClientRegisterWithWindowsHello* UPFClientRegisterWithWindowsHello::RegisterWithWindowsHello(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InUserName, const FString& InPublicKey, const FString& InDeviceName, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientRegisterWithWindowsHello* Proxy = NewObject<UPFClientRegisterWithWindowsHello>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.UserName = InUserName;
 	Proxy->Request.PublicKey = InPublicKey;
 	Proxy->Request.DeviceName = InDeviceName;
+	Proxy->Request.TitleId = InTitleId;
+	Proxy->Request.EncryptedRequest = InEncryptedRequest;
+	Proxy->Request.PlayerSecret = InPlayerSecret;
 	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 

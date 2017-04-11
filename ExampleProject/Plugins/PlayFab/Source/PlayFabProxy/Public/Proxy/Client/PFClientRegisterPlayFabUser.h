@@ -21,7 +21,7 @@ public:
 	
 	// Registers a new Playfab user account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. You must supply either a username or an email address.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientRegisterPlayFabUser* RegisterPlayFabUser(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InUsername, const FString& InEmail, const FString& InPassword, const bool& InRequireBothUsernameAndEmail, const FString& InDisplayName);
+	static UPFClientRegisterPlayFabUser* RegisterPlayFabUser(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InUsername, const FString& InEmail, const FString& InPassword, const bool& InRequireBothUsernameAndEmail, const FString& InDisplayName, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

@@ -10,15 +10,17 @@ UPFClientLoginWithAndroidDeviceID::UPFClientLoginWithAndroidDeviceID(const FObje
 {
 }
 
-UPFClientLoginWithAndroidDeviceID* UPFClientLoginWithAndroidDeviceID::LoginWithAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
+UPFClientLoginWithAndroidDeviceID* UPFClientLoginWithAndroidDeviceID::LoginWithAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InCreateAccount, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithAndroidDeviceID* Proxy = NewObject<UPFClientLoginWithAndroidDeviceID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.AndroidDeviceId = InAndroidDeviceId;
 	Proxy->Request.OS = InOS;
 	Proxy->Request.AndroidDevice = InAndroidDevice;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.TitleId = InTitleId;
+	Proxy->Request.EncryptedRequest = InEncryptedRequest;
+	Proxy->Request.PlayerSecret = InPlayerSecret;
 	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 

@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user in using their Google account credentials
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithGoogleAccount* LoginWithGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InServerAuthCode, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
+	static UPFClientLoginWithGoogleAccount* LoginWithGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InServerAuthCode, const bool& InCreateAccount, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

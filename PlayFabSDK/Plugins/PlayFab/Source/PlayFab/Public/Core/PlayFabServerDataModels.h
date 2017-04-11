@@ -3450,7 +3450,7 @@ namespace ServerModels
 		bool ShowLastLogin;
 		// Whether to show the banned until time. Defaults to false
 		bool ShowBannedUntil;
-		// Whether to show statistics, the most recent version of each stat. Defaults to false
+		// Reserved for future development
 		bool ShowStatistics;
 		// Whether to show campaign attributions. Defaults to false
 		bool ShowCampaignAttributions;

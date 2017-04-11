@@ -10,16 +10,18 @@ UPFClientLoginWithIOSDeviceID::UPFClientLoginWithIOSDeviceID(const FObjectInitia
 {
 }
 
-UPFClientLoginWithIOSDeviceID* UPFClientLoginWithIOSDeviceID::LoginWithIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters, const bool& InCreateAccount)
+UPFClientLoginWithIOSDeviceID* UPFClientLoginWithIOSDeviceID::LoginWithIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel, const bool& InCreateAccount, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithIOSDeviceID* Proxy = NewObject<UPFClientLoginWithIOSDeviceID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.DeviceId = InDeviceId;
 	Proxy->Request.OS = InOS;
 	Proxy->Request.DeviceModel = InDeviceModel;
-	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.TitleId = InTitleId;
+	Proxy->Request.EncryptedRequest = InEncryptedRequest;
+	Proxy->Request.PlayerSecret = InPlayerSecret;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

@@ -10,13 +10,15 @@ UPFClientLoginWithTwitch::UPFClientLoginWithTwitch(const FObjectInitializer& Obj
 {
 }
 
-UPFClientLoginWithTwitch* UPFClientLoginWithTwitch::LoginWithTwitch(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
+UPFClientLoginWithTwitch* UPFClientLoginWithTwitch::LoginWithTwitch(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAccessToken, const bool& InCreateAccount, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithTwitch* Proxy = NewObject<UPFClientLoginWithTwitch>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.AccessToken = InAccessToken;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.TitleId = InTitleId;
+	Proxy->Request.EncryptedRequest = InEncryptedRequest;
+	Proxy->Request.PlayerSecret = InPlayerSecret;
 	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 

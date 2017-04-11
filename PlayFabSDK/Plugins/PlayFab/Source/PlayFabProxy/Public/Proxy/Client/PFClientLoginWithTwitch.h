@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user in using a Twitch access token.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithTwitch* LoginWithTwitch(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
+	static UPFClientLoginWithTwitch* LoginWithTwitch(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAccessToken, const bool& InCreateAccount, const FString& InTitleId, const FString& InEncryptedRequest, const FString& InPlayerSecret, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;
