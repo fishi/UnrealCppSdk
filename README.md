@@ -1,9 +1,8 @@
-Unreal 4 C++ SDK for PlayFab README
-========
+# Unreal 4 C++ SDK for PlayFab README
 
 
-1. Overview:
-----
+## 1. Overview:
+
 Unreal 4.9, 4.12, 4.13, 4.14, 4.15 C++ SDKs for PlayFab
 
 The Unreal C++ SDK includes:
@@ -13,8 +12,9 @@ The Unreal C++ SDK includes:
 
 This sdk contains a settings option to set developerSecretKey.  For the security of your title, this must be blank for client builds.
 
-2. Prerequisites:
-----
+
+## 2. Prerequisites:
+
 * Users should be very familiar with the topics covered in our [getting started guide](https://playfab.com/docs/getting-started-with-playfab/).
 
 To connect to the PlayFab service, your machine must be running TLS v1.2 or better.
@@ -23,8 +23,8 @@ To connect to the PlayFab service, your machine must be running TLS v1.2 or bett
 * [Support for SSL/TLS protocols on Windows](http://blogs.msdn.com/b/kaushal/archive/2011/10/02/support-for-ssl-tls-protocols-on-windows.aspx)
 
 
-3. Installation:
-----
+## 3. Installation:
+
 The following instructions apply to each of the three SDKs provided in the Unreal SDK-Collection.
 
 Assumptions
@@ -58,8 +58,8 @@ Fill in the TitleId with the approriate value from your project, found in the Pl
 If this is a server process, you can also fill in the developerSecretKey.  For the security of your title, this must be blank for client builds.
 
 
-4. Troubleshooting:
-----
+## 4. Troubleshooting:
+
 If you experience this error:
 Plugin 'PlayFab' failed to load because module 'PlayFab' could not be found.  Please ensure the plugin is properly installed, otherwise consider disabling the plugin for this project.
 
@@ -80,13 +80,13 @@ Our Developer Success Team can assist with answering any questions as well as pr
 [Forums, Support and Knowledge Base](https://community.playfab.com/index.html)
 
 
-5. Acknowledgements
-----
+## 5. Acknowledgements
+
 The PlayFab Unreal C++ SDK was built by [Phoenix Labs](http://www.phoenixlabs.ca/), and submitted to PlayFab November, 2015
 
 
-6. Copyright and Licensing Information:
-----
+## 6. Copyright and Licensing Information:
+
   Apache License --
   Version 2.0, January 2004
   http://www.apache.org/licenses/
