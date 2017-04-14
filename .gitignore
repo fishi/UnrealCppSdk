@@ -23,6 +23,7 @@ bld/
 [Oo]bj/
 Intermediate/
 Saved/
+Binaries/
 
 # Visual Studo 2015 cache/options directory
 .vs/
@@ -188,15 +189,12 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-# Node.js Tools for Visual Studio
+# Various Visual Studio Files
 .ntvs_analysis.dat
-
-# Visual Studio 6 build log
 *.plg
-
-# Visual Studio 6 workspace options file
 *.opt
-
+*.VC.db
+*.VC.opendb
 
 # Stuff that's specific to PlayFab Unreal project
 *.dll
