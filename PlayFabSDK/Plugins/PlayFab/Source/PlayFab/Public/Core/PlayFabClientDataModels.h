@@ -7329,9 +7329,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7380,9 +7380,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7466,9 +7466,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7513,9 +7513,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7560,9 +7560,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7611,9 +7611,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7666,9 +7666,9 @@ namespace ClientModels
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 	
         FLoginWithKongregateRequest() :
@@ -7752,9 +7752,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7799,9 +7799,9 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -8505,9 +8505,9 @@ namespace ClientModels
 		FString DisplayName;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -8599,9 +8599,9 @@ namespace ClientModels
 		FString DeviceName;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
 		FString EncryptedRequest;
-		// [optional] Player secret that is used to verify API request signatures
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
 		FString PlayerSecret;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -9868,7 +9868,7 @@ namespace ClientModels
 		
 		// Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
-		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character or be null.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
@@ -10038,7 +10038,7 @@ namespace ClientModels
 		
 		// Unique identifier for the shared group.
 		FString SharedGroupId;
-		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character or be null.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
@@ -10098,7 +10098,7 @@ namespace ClientModels
 	struct PLAYFAB_API FUpdateUserDataRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character or be null.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;

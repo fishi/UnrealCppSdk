@@ -5645,45 +5645,6 @@ bool PlayFab::AdminModels::FGetPlayerStatisticVersionsRequest::readFromValue(con
 }
 
 
-void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, JsonWriter& writer)
-{
-    switch(enumVal)
-    {
-        
-        case StatisticVersionArchivalStatusNotScheduled: writer->WriteValue(TEXT("NotScheduled")); break;
-        case StatisticVersionArchivalStatusScheduled: writer->WriteValue(TEXT("Scheduled")); break;
-        case StatisticVersionArchivalStatusQueued: writer->WriteValue(TEXT("Queued")); break;
-        case StatisticVersionArchivalStatusInProgress: writer->WriteValue(TEXT("InProgress")); break;
-        case StatisticVersionArchivalStatusComplete: writer->WriteValue(TEXT("Complete")); break;
-    }
-}
-
-AdminModels::StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchivalStatusFromValue(const TSharedPtr<FJsonValue>& value)
-{
-    static TMap<FString, StatisticVersionArchivalStatus> _StatisticVersionArchivalStatusMap;
-    if (_StatisticVersionArchivalStatusMap.Num() == 0)
-    {
-        // Auto-generate the map on the first use
-        _StatisticVersionArchivalStatusMap.Add(TEXT("NotScheduled"), StatisticVersionArchivalStatusNotScheduled);
-        _StatisticVersionArchivalStatusMap.Add(TEXT("Scheduled"), StatisticVersionArchivalStatusScheduled);
-        _StatisticVersionArchivalStatusMap.Add(TEXT("Queued"), StatisticVersionArchivalStatusQueued);
-        _StatisticVersionArchivalStatusMap.Add(TEXT("InProgress"), StatisticVersionArchivalStatusInProgress);
-        _StatisticVersionArchivalStatusMap.Add(TEXT("Complete"), StatisticVersionArchivalStatusComplete);
-
-    } 
-
-	if(value.IsValid())
-	{
-	    auto output = _StatisticVersionArchivalStatusMap.Find(value->AsString());
-		if (output != nullptr)
-			return *output;
-	}
-
-
-    return StatisticVersionArchivalStatusNotScheduled; // Basically critical fail
-}
-
-
 void PlayFab::AdminModels::writeStatisticVersionStatusEnumJSON(StatisticVersionStatus enumVal, JsonWriter& writer)
 {
     switch(enumVal)
@@ -5744,8 +5705,6 @@ void PlayFab::AdminModels::FPlayerStatisticVersion::writeJSON(JsonWriter& writer
 	
     if(DeactivationTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("DeactivationTime")); writeDatetime(DeactivationTime, writer); }
 	
-    if(ArchivalStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("ArchivalStatus")); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
-	
     if(Status.notNull()) { writer->WriteIdentifierPrefix(TEXT("Status")); writeStatisticVersionStatusEnumJSON(Status, writer); }
 	
     if(ArchiveDownloadUrl.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ArchiveDownloadUrl")); writer->WriteValue(ArchiveDownloadUrl); }
@@ -5795,8 +5754,6 @@ bool PlayFab::AdminModels::FPlayerStatisticVersion::readFromValue(const TSharedP
     {
         DeactivationTime = readDatetime(DeactivationTimeValue);
     }
-    
-    ArchivalStatus = readStatisticVersionArchivalStatusFromValue(obj->TryGetField(TEXT("ArchivalStatus")));
     
     Status = readStatisticVersionStatusFromValue(obj->TryGetField(TEXT("Status")));
     
@@ -11028,6 +10985,45 @@ bool PlayFab::AdminModels::FSetupPushNotificationResult::readFromValue(const TSh
     
     
     return HasSucceeded;
+}
+
+
+void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case StatisticVersionArchivalStatusNotScheduled: writer->WriteValue(TEXT("NotScheduled")); break;
+        case StatisticVersionArchivalStatusScheduled: writer->WriteValue(TEXT("Scheduled")); break;
+        case StatisticVersionArchivalStatusQueued: writer->WriteValue(TEXT("Queued")); break;
+        case StatisticVersionArchivalStatusInProgress: writer->WriteValue(TEXT("InProgress")); break;
+        case StatisticVersionArchivalStatusComplete: writer->WriteValue(TEXT("Complete")); break;
+    }
+}
+
+AdminModels::StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchivalStatusFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, StatisticVersionArchivalStatus> _StatisticVersionArchivalStatusMap;
+    if (_StatisticVersionArchivalStatusMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticVersionArchivalStatusMap.Add(TEXT("NotScheduled"), StatisticVersionArchivalStatusNotScheduled);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("Scheduled"), StatisticVersionArchivalStatusScheduled);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("Queued"), StatisticVersionArchivalStatusQueued);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("InProgress"), StatisticVersionArchivalStatusInProgress);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("Complete"), StatisticVersionArchivalStatusComplete);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _StatisticVersionArchivalStatusMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return StatisticVersionArchivalStatusNotScheduled; // Basically critical fail
 }
 
 

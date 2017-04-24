@@ -543,7 +543,7 @@ namespace PlayFab
         bool RemoveFriend(ClientModels::FRemoveFriendRequest& request, const FRemoveFriendDelegate& SuccessDelegate = FRemoveFriendDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the tag list for a specified user in the friend list of the local user
-         * This operation is not additive. It will completely replace the tag list for the specified user.
+         * This operation is not additive. It will completely replace the tag list for the specified user.  Please note that only users in the PlayFab friends list can be assigned tags. Attempting to set a tag on a friend only included  in the friends list from a social site integration (such as Facebook or Steam) will return the AccountNotFound error.
          */
         bool SetFriendTags(ClientModels::FSetFriendTagsRequest& request, const FSetFriendTagsDelegate& SuccessDelegate = FSetFriendTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

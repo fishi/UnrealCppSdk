@@ -3461,19 +3461,6 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	enum StatisticVersionArchivalStatus
-	{
-		StatisticVersionArchivalStatusNotScheduled,
-		StatisticVersionArchivalStatusScheduled,
-		StatisticVersionArchivalStatusQueued,
-		StatisticVersionArchivalStatusInProgress,
-		StatisticVersionArchivalStatusComplete
-	};
-	
-	void writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, JsonWriter& writer);
-	StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const TSharedPtr<FJsonValue>& value);
-	
-	
 	enum StatisticVersionStatus
 	{
 		StatisticVersionStatusActive,
@@ -3502,8 +3489,6 @@ namespace AdminModels
 		OptionalTime ScheduledDeactivationTime;
 		// [optional] time when the statistic version became inactive due to statistic version incrementing
 		OptionalTime DeactivationTime;
-		// [optional] status of the process of saving player statistic values of the previous version to a downloadable archive
-		Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
 		// [optional] status of the statistic version
 		Boxed<StatisticVersionStatus> Status;
 		// [optional] URL for the downloadable archive of player statistic values, if available
@@ -3517,7 +3502,6 @@ namespace AdminModels
 			ActivationTime(0),
 			ScheduledDeactivationTime(),
 			DeactivationTime(),
-			ArchivalStatus(),
 			Status(),
 			ArchiveDownloadUrl()
 			{}
@@ -3530,7 +3514,6 @@ namespace AdminModels
 			ActivationTime(src.ActivationTime),
 			ScheduledDeactivationTime(src.ScheduledDeactivationTime),
 			DeactivationTime(src.DeactivationTime),
-			ArchivalStatus(src.ArchivalStatus),
 			Status(src.Status),
 			ArchiveDownloadUrl(src.ArchiveDownloadUrl)
 			{}
@@ -5021,7 +5004,7 @@ namespace AdminModels
 		FString Annotation;
 		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
-		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character or be null.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
@@ -7048,6 +7031,19 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum StatisticVersionArchivalStatus
+	{
+		StatisticVersionArchivalStatusNotScheduled,
+		StatisticVersionArchivalStatusScheduled,
+		StatisticVersionArchivalStatusQueued,
+		StatisticVersionArchivalStatusInProgress,
+		StatisticVersionArchivalStatusComplete
+	};
+	
+	void writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, JsonWriter& writer);
+	StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FSubtractUserVirtualCurrencyRequest : public FPlayFabBaseModel
     {
 		
@@ -7612,7 +7608,7 @@ namespace AdminModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character or be null.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
@@ -7678,7 +7674,7 @@ namespace AdminModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character or be null.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
