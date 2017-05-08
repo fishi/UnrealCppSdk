@@ -1112,7 +1112,7 @@ bool UPlayFabClientAPI::LinkWindowsHello(
 {
     
     auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkWindowsHello")), request.toJSONString(),
-        TEXT(""), TEXT(""));
+        TEXT("X-Authorization"), mUserSessionTicket);
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkWindowsHelloResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
@@ -1463,7 +1463,7 @@ bool UPlayFabClientAPI::UnlinkWindowsHello(
 {
     
     auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkWindowsHello")), request.toJSONString(),
-        TEXT(""), TEXT(""));
+        TEXT("X-Authorization"), mUserSessionTicket);
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkWindowsHelloResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
@@ -3543,7 +3543,7 @@ bool UPlayFabClientAPI::ValidateWindowsStoreReceipt(
 {
     
     auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateWindowsStoreReceipt")), request.toJSONString(),
-        TEXT(""), TEXT(""));
+        TEXT("X-Authorization"), mUserSessionTicket);
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateWindowsStoreReceiptResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }

@@ -2135,8 +2135,12 @@ namespace ClientModels
 		int32 Revision;
 		// [optional] The object returned from the CloudScript function, if any
 		FMultitypeVar FunctionResult;
+		// [optional] Flag indicating if the FunctionResult was too large and was subsequently dropped from this event
+		OptionalBool FunctionResultTooLarge;
 		// [optional] Entries logged during the function execution. These include both entries logged in the function code using log.info() and log.error() and error entries for API and HTTP request failures.
 		TArray<FLogStatement> Logs;
+		// [optional] Flag indicating if the logs were too large and were subsequently dropped from this event
+		OptionalBool LogsTooLarge;
 		// undefined
 		double ExecutionTimeSeconds;
 		// Processor time consumed while executing the function. This does not include time spent waiting on API calls or HTTP requests.
@@ -2147,7 +2151,7 @@ namespace ClientModels
 		int32 APIRequestsIssued;
 		// Number of external HTTP requests issued by the CloudScript function
 		int32 HttpRequestsIssued;
-		// [optional] Information about the error, if any, that occured during execution
+		// [optional] Information about the error, if any, that occurred during execution
 		TSharedPtr<FScriptExecutionError> Error;
 	
         FExecuteCloudScriptResult() :
@@ -2155,7 +2159,9 @@ namespace ClientModels
 			FunctionName(),
 			Revision(0),
 			FunctionResult(),
+			FunctionResultTooLarge(),
 			Logs(),
+			LogsTooLarge(),
 			ExecutionTimeSeconds(0),
 			ProcessorTimeSeconds(0),
 			MemoryConsumedBytes(0),
@@ -2169,7 +2175,9 @@ namespace ClientModels
 			FunctionName(src.FunctionName),
 			Revision(src.Revision),
 			FunctionResult(src.FunctionResult),
+			FunctionResultTooLarge(src.FunctionResultTooLarge),
 			Logs(src.Logs),
+			LogsTooLarge(src.LogsTooLarge),
 			ExecutionTimeSeconds(src.ExecutionTimeSeconds),
 			ProcessorTimeSeconds(src.ProcessorTimeSeconds),
 			MemoryConsumedBytes(src.MemoryConsumedBytes),

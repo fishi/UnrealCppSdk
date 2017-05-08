@@ -448,7 +448,7 @@ namespace PlayFab
          */
         bool UpdateCloudScript(AdminModels::FUpdateCloudScriptRequest& request, const FUpdateCloudScriptDelegate& SuccessDelegate = FUpdateCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Delete a content file from the title
+         * Delete a content file from the title. When deleting a file that does not exist, it returns success.
          */
         bool DeleteContent(AdminModels::FDeleteContentRequest& request, const FDeleteContentDelegate& SuccessDelegate = FDeleteContentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

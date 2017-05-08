@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientGetPurchaseResultDelegate OnFailure;
 	
-	// Retrieves a purchase along with its current PlayFab status.
+	// Retrieves a purchase along with its current PlayFab status. Returns inventory items from the purchase that are still active.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Item Management")
 	static UPFClientGetPurchase* GetPurchase(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InOrderId);
 

@@ -1860,6 +1860,8 @@ void PlayFab::AdminModels::FExecuteCloudScriptResult::writeJSON(JsonWriter& writ
 	
     if(FunctionResult.notNull()) { writer->WriteIdentifierPrefix(TEXT("FunctionResult")); FunctionResult.writeJSON(writer); }
 	
+    if(FunctionResultTooLarge.notNull()) { writer->WriteIdentifierPrefix(TEXT("FunctionResultTooLarge")); writer->WriteValue(FunctionResultTooLarge); }
+	
     if(Logs.Num() != 0) 
     {
         writer->WriteArrayStart(TEXT("Logs"));
@@ -1870,6 +1872,8 @@ void PlayFab::AdminModels::FExecuteCloudScriptResult::writeJSON(JsonWriter& writ
         }
         writer->WriteArrayEnd();
      }
+	
+    if(LogsTooLarge.notNull()) { writer->WriteIdentifierPrefix(TEXT("LogsTooLarge")); writer->WriteValue(LogsTooLarge); }
 	
     writer->WriteIdentifierPrefix(TEXT("ExecutionTimeSeconds")); writer->WriteValue(ExecutionTimeSeconds);
 	
@@ -1911,6 +1915,13 @@ bool PlayFab::AdminModels::FExecuteCloudScriptResult::readFromValue(const TShare
         FunctionResult = FMultitypeVar(FunctionResultValue->AsObject());
     }
     
+    const TSharedPtr<FJsonValue> FunctionResultTooLargeValue = obj->TryGetField(TEXT("FunctionResultTooLarge"));
+    if (FunctionResultTooLargeValue.IsValid()&& !FunctionResultTooLargeValue->IsNull())
+    {
+        bool TmpValue;
+        if(FunctionResultTooLargeValue->TryGetBool(TmpValue)) {FunctionResultTooLarge = TmpValue; }
+    }
+    
     {
         const TArray< TSharedPtr<FJsonValue> >&LogsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Logs"));
         for (int32 Idx = 0; Idx < LogsArray.Num(); Idx++)
@@ -1921,6 +1932,13 @@ bool PlayFab::AdminModels::FExecuteCloudScriptResult::readFromValue(const TShare
         }
     }
 
+    
+    const TSharedPtr<FJsonValue> LogsTooLargeValue = obj->TryGetField(TEXT("LogsTooLarge"));
+    if (LogsTooLargeValue.IsValid()&& !LogsTooLargeValue->IsNull())
+    {
+        bool TmpValue;
+        if(LogsTooLargeValue->TryGetBool(TmpValue)) {LogsTooLarge = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ExecutionTimeSecondsValue = obj->TryGetField(TEXT("ExecutionTimeSeconds"));
     if (ExecutionTimeSecondsValue.IsValid()&& !ExecutionTimeSecondsValue->IsNull())

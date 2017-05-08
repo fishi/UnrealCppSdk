@@ -487,7 +487,7 @@ namespace PlayFab
          */
         bool GetCharacterInventory(ClientModels::FGetCharacterInventoryRequest& request, const FGetCharacterInventoryDelegate& SuccessDelegate = FGetCharacterInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves a purchase along with its current PlayFab status.
+         * Retrieves a purchase along with its current PlayFab status. Returns inventory items from the purchase that are still active.
          */
         bool GetPurchase(ClientModels::FGetPurchaseRequest& request, const FGetPurchaseDelegate& SuccessDelegate = FGetPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

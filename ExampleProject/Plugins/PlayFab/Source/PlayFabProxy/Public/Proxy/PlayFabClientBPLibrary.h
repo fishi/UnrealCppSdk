@@ -321,7 +321,9 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientExecuteCloudScriptResult& In
         ,FString& OutFunctionName
         ,int32& OutRevision
+        ,bool& OutFunctionResultTooLarge
         ,TArray<FBPClientLogStatement>& OutLogs
+        ,bool& OutLogsTooLarge
         ,float& OutExecutionTimeSeconds
         ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes

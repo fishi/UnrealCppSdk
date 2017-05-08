@@ -355,7 +355,9 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminExecuteCloudScriptResult& In
         ,FString& OutFunctionName
         ,int32& OutRevision
+        ,bool& OutFunctionResultTooLarge
         ,TArray<FBPAdminLogStatement>& OutLogs
+        ,bool& OutLogsTooLarge
         ,float& OutExecutionTimeSeconds
         ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes

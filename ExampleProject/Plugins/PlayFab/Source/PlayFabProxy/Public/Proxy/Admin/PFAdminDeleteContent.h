@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Delete a content file from the title
+	// Delete a content file from the title. When deleting a file that does not exist, it returns success.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Content")
 	static UPFAdminDeleteContent* DeleteContent(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InKey);
 

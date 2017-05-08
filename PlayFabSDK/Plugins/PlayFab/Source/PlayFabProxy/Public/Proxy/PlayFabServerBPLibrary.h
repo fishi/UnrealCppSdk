@@ -348,7 +348,9 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPServerExecuteCloudScriptResult& In
         ,FString& OutFunctionName
         ,int32& OutRevision
+        ,bool& OutFunctionResultTooLarge
         ,TArray<FBPServerLogStatement>& OutLogs
+        ,bool& OutLogsTooLarge
         ,float& OutExecutionTimeSeconds
         ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes

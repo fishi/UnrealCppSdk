@@ -578,7 +578,9 @@ void UPFAdminProxyLibrary::BreakBPAdminExecuteCloudScriptResult(
 		const FBPAdminExecuteCloudScriptResult& In
         ,FString& OutFunctionName
         ,int32& OutRevision
+        ,bool& OutFunctionResultTooLarge
         ,TArray<FBPAdminLogStatement>& OutLogs
+        ,bool& OutLogsTooLarge
         ,float& OutExecutionTimeSeconds
         ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes
@@ -590,6 +592,7 @@ void UPFAdminProxyLibrary::BreakBPAdminExecuteCloudScriptResult(
     OutFunctionName = In.Data.FunctionName;
 	OutRevision = In.Data.Revision;
 	
+	OutFunctionResultTooLarge = In.Data.FunctionResultTooLarge;
 	for (const PlayFab::AdminModels::FLogStatement& elem : In.Data.Logs)
     {
         FBPAdminLogStatement result;
@@ -597,6 +600,7 @@ void UPFAdminProxyLibrary::BreakBPAdminExecuteCloudScriptResult(
         OutLogs.Add(result);
     }
 
+	OutLogsTooLarge = In.Data.LogsTooLarge;
 	OutExecutionTimeSeconds = In.Data.ExecutionTimeSeconds;
 	OutProcessorTimeSeconds = In.Data.ProcessorTimeSeconds;
 	OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;

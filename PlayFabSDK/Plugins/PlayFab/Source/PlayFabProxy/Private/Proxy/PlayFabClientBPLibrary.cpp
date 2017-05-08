@@ -526,7 +526,9 @@ void UPFClientProxyLibrary::BreakBPClientExecuteCloudScriptResult(
 		const FBPClientExecuteCloudScriptResult& In
         ,FString& OutFunctionName
         ,int32& OutRevision
+        ,bool& OutFunctionResultTooLarge
         ,TArray<FBPClientLogStatement>& OutLogs
+        ,bool& OutLogsTooLarge
         ,float& OutExecutionTimeSeconds
         ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes
@@ -538,6 +540,7 @@ void UPFClientProxyLibrary::BreakBPClientExecuteCloudScriptResult(
     OutFunctionName = In.Data.FunctionName;
 	OutRevision = In.Data.Revision;
 	
+	OutFunctionResultTooLarge = In.Data.FunctionResultTooLarge;
 	for (const PlayFab::ClientModels::FLogStatement& elem : In.Data.Logs)
     {
         FBPClientLogStatement result;
@@ -545,6 +548,7 @@ void UPFClientProxyLibrary::BreakBPClientExecuteCloudScriptResult(
         OutLogs.Add(result);
     }
 
+	OutLogsTooLarge = In.Data.LogsTooLarge;
 	OutExecutionTimeSeconds = In.Data.ExecutionTimeSeconds;
 	OutProcessorTimeSeconds = In.Data.ProcessorTimeSeconds;
 	OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;
