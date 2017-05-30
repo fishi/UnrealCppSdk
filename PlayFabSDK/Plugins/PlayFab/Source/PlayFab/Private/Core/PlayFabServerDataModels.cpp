@@ -7100,6 +7100,7 @@ bool PlayFab::ServerModels::FGetLeaderboardResult::readFromValue(const TSharedPt
 
 PlayFab::ServerModels::FGetPlayerCombinedInfoRequestParams::~FGetPlayerCombinedInfoRequestParams()
 {
+    //if(ProfileConstraints != nullptr) delete ProfileConstraints;
     
 }
 
@@ -7168,6 +7169,10 @@ void PlayFab::ServerModels::FGetPlayerCombinedInfoRequestParams::writeJSON(JsonW
         }
         writer->WriteArrayEnd();
      }
+	
+    writer->WriteIdentifierPrefix(TEXT("GetPlayerProfile")); writer->WriteValue(GetPlayerProfile);
+	
+    if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -7247,6 +7252,19 @@ bool PlayFab::ServerModels::FGetPlayerCombinedInfoRequestParams::readFromValue(c
     }
     
     obj->TryGetStringArrayField(TEXT("PlayerStatisticNames"),PlayerStatisticNames);
+    
+    const TSharedPtr<FJsonValue> GetPlayerProfileValue = obj->TryGetField(TEXT("GetPlayerProfile"));
+    if (GetPlayerProfileValue.IsValid()&& !GetPlayerProfileValue->IsNull())
+    {
+        bool TmpValue;
+        if(GetPlayerProfileValue->TryGetBool(TmpValue)) {GetPlayerProfile = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ProfileConstraintsValue = obj->TryGetField(TEXT("ProfileConstraints"));
+    if (ProfileConstraintsValue.IsValid()&& !ProfileConstraintsValue->IsNull())
+    {
+        ProfileConstraints = MakeShareable(new FPlayerProfileViewConstraints(ProfileConstraintsValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -7344,6 +7362,7 @@ bool PlayFab::ServerModels::FStatisticValue::readFromValue(const TSharedPtr<FJso
 PlayFab::ServerModels::FGetPlayerCombinedInfoResultPayload::~FGetPlayerCombinedInfoResultPayload()
 {
     //if(AccountInfo != nullptr) delete AccountInfo;
+    //if(PlayerProfile != nullptr) delete PlayerProfile;
     
 }
 
@@ -7455,6 +7474,8 @@ void PlayFab::ServerModels::FGetPlayerCombinedInfoResultPayload::writeJSON(JsonW
         }
         writer->WriteArrayEnd();
      }
+	
+    if(PlayerProfile.IsValid()) { writer->WriteIdentifierPrefix(TEXT("PlayerProfile")); PlayerProfile->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -7578,6 +7599,12 @@ bool PlayFab::ServerModels::FGetPlayerCombinedInfoResultPayload::readFromValue(c
     }
 
     
+    const TSharedPtr<FJsonValue> PlayerProfileValue = obj->TryGetField(TEXT("PlayerProfile"));
+    if (PlayerProfileValue.IsValid()&& !PlayerProfileValue->IsNull())
+    {
+        PlayerProfile = MakeShareable(new FPlayerProfileModel(PlayerProfileValue->AsObject()));
+    }
+    
     
     return HasSucceeded;
 }
@@ -7616,6 +7643,77 @@ bool PlayFab::ServerModels::FGetPlayerCombinedInfoResult::readFromValue(const TS
     if (InfoResultPayloadValue.IsValid()&& !InfoResultPayloadValue->IsNull())
     {
         InfoResultPayload = MakeShareable(new FGetPlayerCombinedInfoResultPayload(InfoResultPayloadValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetPlayerProfileRequest::~FGetPlayerProfileRequest()
+{
+    //if(ProfileConstraints != nullptr) delete ProfileConstraints;
+    
+}
+
+void PlayFab::ServerModels::FGetPlayerProfileRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayerProfileRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ProfileConstraintsValue = obj->TryGetField(TEXT("ProfileConstraints"));
+    if (ProfileConstraintsValue.IsValid()&& !ProfileConstraintsValue->IsNull())
+    {
+        ProfileConstraints = MakeShareable(new FPlayerProfileViewConstraints(ProfileConstraintsValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetPlayerProfileResult::~FGetPlayerProfileResult()
+{
+    //if(PlayerProfile != nullptr) delete PlayerProfile;
+    
+}
+
+void PlayFab::ServerModels::FGetPlayerProfileResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayerProfile.IsValid()) { writer->WriteIdentifierPrefix(TEXT("PlayerProfile")); PlayerProfile->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayerProfileResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayerProfileValue = obj->TryGetField(TEXT("PlayerProfile"));
+    if (PlayerProfileValue.IsValid()&& !PlayerProfileValue->IsNull())
+    {
+        PlayerProfile = MakeShareable(new FPlayerProfileModel(PlayerProfileValue->AsObject()));
     }
     
     
@@ -11851,8 +11949,6 @@ void PlayFab::ServerModels::FReportPlayerServerRequest::writeJSON(JsonWriter& wr
 	
     writer->WriteIdentifierPrefix(TEXT("ReporteeId")); writer->WriteValue(ReporteeId);
 	
-    if(TitleId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId); }
-	
     if(Comment.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Comment")); writer->WriteValue(Comment); }
 	
     
@@ -11877,13 +11973,6 @@ bool PlayFab::ServerModels::FReportPlayerServerRequest::readFromValue(const TSha
         if(ReporteeIdValue->TryGetString(TmpValue)) {ReporteeId = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> CommentValue = obj->TryGetField(TEXT("Comment"));
     if (CommentValue.IsValid()&& !CommentValue->IsNull())
     {
@@ -11905,7 +11994,7 @@ void PlayFab::ServerModels::FReportPlayerServerResult::writeJSON(JsonWriter& wri
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("Updated")); writer->WriteValue(Updated);
+    if(Updated.notNull()) { writer->WriteIdentifierPrefix(TEXT("Updated")); writer->WriteValue(Updated); }
 	
     writer->WriteIdentifierPrefix(TEXT("SubmissionsRemaining")); writer->WriteValue(SubmissionsRemaining);
 	

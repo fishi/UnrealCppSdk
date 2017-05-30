@@ -1092,6 +1092,8 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoRequestParams(
         ,TArray<FString>& OutTitleDataKeys
         ,bool& OutGetPlayerStatistics
         ,TArray<FString>& OutPlayerStatisticNames
+        ,bool& OutGetPlayerProfile
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutGetUserAccountInfo = In.Data.GetUserAccountInfo;
@@ -1107,6 +1109,8 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoRequestParams(
 	OutTitleDataKeys = In.Data.TitleDataKeys;
 	OutGetPlayerStatistics = In.Data.GetPlayerStatistics;
 	OutPlayerStatisticNames = In.Data.PlayerStatisticNames;
+	OutGetPlayerProfile = In.Data.GetPlayerProfile;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 
@@ -1130,6 +1134,7 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoResultPayload(
         ,TArray<FBPServerCharacterResult>& OutCharacterList
         ,TArray<FBPServerCharacterInventory>& OutCharacterInventories
         ,TArray<FBPServerStatisticValue>& OutPlayerStatistics
+        ,FBPServerPlayerProfileModel& OutPlayerProfile
 	)
 {
     if (In.Data.AccountInfo.IsValid()) {    OutAccountInfo.Data = *In.Data.AccountInfo;}
@@ -1168,6 +1173,27 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoResultPayload(
         OutPlayerStatistics.Add(result);
     }
 
+	if (In.Data.PlayerProfile.IsValid()) {    OutPlayerProfile.Data = *In.Data.PlayerProfile;}
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerProfileRequest(
+		const FBPServerGetPlayerProfileRequest& In
+        ,FString& OutPlayFabId
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerProfileResult(
+		const FBPServerGetPlayerProfileResult& In
+        ,FBPServerPlayerProfileModel& OutPlayerProfile
+	)
+{
+    if (In.Data.PlayerProfile.IsValid()) {    OutPlayerProfile.Data = *In.Data.PlayerProfile;}
 	
 }
 
@@ -2485,13 +2511,11 @@ void UPFServerProxyLibrary::BreakBPServerReportPlayerServerRequest(
 		const FBPServerReportPlayerServerRequest& In
         ,FString& OutReporterId
         ,FString& OutReporteeId
-        ,FString& OutTitleId
         ,FString& OutComment
 	)
 {
     OutReporterId = In.Data.ReporterId;
 	OutReporteeId = In.Data.ReporteeId;
-	OutTitleId = In.Data.TitleId;
 	OutComment = In.Data.Comment;
 	
 }

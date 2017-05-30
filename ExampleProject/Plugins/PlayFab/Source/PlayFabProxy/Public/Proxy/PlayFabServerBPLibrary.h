@@ -630,6 +630,8 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FString>& OutTitleDataKeys
         ,bool& OutGetPlayerStatistics
         ,TArray<FString>& OutPlayerStatisticNames
+        ,bool& OutGetPlayerProfile
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -649,6 +651,20 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FBPServerCharacterResult>& OutCharacterList
         ,TArray<FBPServerCharacterInventory>& OutCharacterInventories
         ,TArray<FBPServerStatisticValue>& OutPlayerStatistics
+        ,FBPServerPlayerProfileModel& OutPlayerProfile
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetPlayerProfileRequest(
+		const FBPServerGetPlayerProfileRequest& In
+        ,FString& OutPlayFabId
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetPlayerProfileResult(
+		const FBPServerGetPlayerProfileResult& In
+        ,FBPServerPlayerProfileModel& OutPlayerProfile
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1348,7 +1364,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPServerReportPlayerServerRequest& In
         ,FString& OutReporterId
         ,FString& OutReporteeId
-        ,FString& OutTitleId
         ,FString& OutComment
 	);
 	

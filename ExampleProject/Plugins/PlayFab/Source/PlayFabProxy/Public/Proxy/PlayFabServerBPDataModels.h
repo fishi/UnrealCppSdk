@@ -816,6 +816,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerCombinedInfoResultPayloadDelegate, const FBPServerGetPlayerCombinedInfoResultPayload&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerProfileRequest"))
+struct FBPServerGetPlayerProfileRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerProfileRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerProfileRequestDelegate, const FBPServerGetPlayerProfileRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerProfileResult"))
+struct FBPServerGetPlayerProfileResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerProfileResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerProfileResultDelegate, const FBPServerGetPlayerProfileResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerSegmentsResult"))
 struct FBPServerGetPlayerSegmentsResult
 {

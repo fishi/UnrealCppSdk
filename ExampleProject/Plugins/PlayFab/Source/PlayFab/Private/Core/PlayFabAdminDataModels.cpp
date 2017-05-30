@@ -7145,7 +7145,7 @@ void PlayFab::AdminModels::FScheduledTask::writeJSON(JsonWriter& writer) const
     
     if(TaskId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TaskId")); writer->WriteValue(TaskId); }
 	
-    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
 	
     if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
 	

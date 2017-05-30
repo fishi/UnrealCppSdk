@@ -652,6 +652,8 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FString>& OutTitleDataKeys
         ,bool& OutGetPlayerStatistics
         ,TArray<FString>& OutPlayerStatisticNames
+        ,bool& OutGetPlayerProfile
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -671,6 +673,20 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FBPClientCharacterResult>& OutCharacterList
         ,TArray<FBPClientCharacterInventory>& OutCharacterInventories
         ,TArray<FBPClientStatisticValue>& OutPlayerStatistics
+        ,FBPClientPlayerProfileModel& OutPlayerProfile
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayerProfileRequest(
+		const FBPClientGetPlayerProfileRequest& In
+        ,FString& OutPlayFabId
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayerProfileResult(
+		const FBPClientGetPlayerProfileResult& In
+        ,FBPClientPlayerProfileModel& OutPlayerProfile
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -844,7 +860,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutTransactionId
         ,FString& OutTransactionStatus
         ,FDateTime& OutPurchaseDate
-        ,TArray<FBPClientItemInstance>& OutItems
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

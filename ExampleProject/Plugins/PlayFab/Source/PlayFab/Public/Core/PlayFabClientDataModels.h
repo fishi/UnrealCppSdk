@@ -2135,11 +2135,11 @@ namespace ClientModels
 		int32 Revision;
 		// [optional] The object returned from the CloudScript function, if any
 		FMultitypeVar FunctionResult;
-		// [optional] Flag indicating if the FunctionResult was too large and was subsequently dropped from this event
+		// [optional] Flag indicating if the FunctionResult was too large and was subsequently dropped from this event. This only occurs if the total event size is larger than 350KB.
 		OptionalBool FunctionResultTooLarge;
 		// [optional] Entries logged during the function execution. These include both entries logged in the function code using log.info() and log.error() and error entries for API and HTTP request failures.
 		TArray<FLogStatement> Logs;
-		// [optional] Flag indicating if the logs were too large and were subsequently dropped from this event
+		// [optional] Flag indicating if the logs were too large and were subsequently dropped from this event. This only occurs if the total event size is larger than 350KB after the FunctionResult was removed.
 		OptionalBool LogsTooLarge;
 		// undefined
 		double ExecutionTimeSeconds;
@@ -4573,6 +4573,10 @@ namespace ClientModels
 		bool GetPlayerStatistics;
 		// [optional] Specific statistics to retrieve. Leave null to get all keys. Has no effect if GetPlayerStatistics is false
 		TArray<FString> PlayerStatisticNames;
+		// Whether to get player profile. Defaults to false.
+		bool GetPlayerProfile;
+		// [optional] Specifies the properties to return from the player profile. Defaults to returning the player's display name.
+		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
         FGetPlayerCombinedInfoRequestParams() :
 			FPlayFabBaseModel(),
@@ -4588,7 +4592,9 @@ namespace ClientModels
 			GetTitleData(false),
 			TitleDataKeys(),
 			GetPlayerStatistics(false),
-			PlayerStatisticNames()
+			PlayerStatisticNames(),
+			GetPlayerProfile(false),
+			ProfileConstraints(nullptr)
 			{}
 		
 		FGetPlayerCombinedInfoRequestParams(const FGetPlayerCombinedInfoRequestParams& src) :
@@ -4605,7 +4611,9 @@ namespace ClientModels
 			GetTitleData(src.GetTitleData),
 			TitleDataKeys(src.TitleDataKeys),
 			GetPlayerStatistics(src.GetPlayerStatistics),
-			PlayerStatisticNames(src.PlayerStatisticNames)
+			PlayerStatisticNames(src.PlayerStatisticNames),
+			GetPlayerProfile(src.GetPlayerProfile),
+			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
 			{}
 			
 		FGetPlayerCombinedInfoRequestParams(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoRequestParams()
@@ -4712,6 +4720,8 @@ namespace ClientModels
 		TMap<FString, FString> TitleData;
 		// [optional] List of statistics for this player.
 		TArray<FStatisticValue> PlayerStatistics;
+		// [optional] The profile of the players. This profile is not guaranteed to be up-to-date. For a new player, this profile will not exist.
+		TSharedPtr<FPlayerProfileModel> PlayerProfile;
 	
         FGetPlayerCombinedInfoResultPayload() :
 			FPlayFabBaseModel(),
@@ -4726,7 +4736,8 @@ namespace ClientModels
 			CharacterList(),
 			CharacterInventories(),
 			TitleData(),
-			PlayerStatistics()
+			PlayerStatistics(),
+			PlayerProfile(nullptr)
 			{}
 		
 		FGetPlayerCombinedInfoResultPayload(const FGetPlayerCombinedInfoResultPayload& src) :
@@ -4742,7 +4753,8 @@ namespace ClientModels
 			CharacterList(src.CharacterList),
 			CharacterInventories(src.CharacterInventories),
 			TitleData(src.TitleData),
-			PlayerStatistics(src.PlayerStatistics)
+			PlayerStatistics(src.PlayerStatistics),
+			PlayerProfile(src.PlayerProfile.IsValid() ? MakeShareable(new FPlayerProfileModel(*src.PlayerProfile)) : nullptr)
 			{}
 			
 		FGetPlayerCombinedInfoResultPayload(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoResultPayload()
@@ -4782,6 +4794,64 @@ namespace ClientModels
         }
 		
 		~FGetPlayerCombinedInfoResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerProfileRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
+		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
+	
+        FGetPlayerProfileRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			ProfileConstraints(nullptr)
+			{}
+		
+		FGetPlayerProfileRequest(const FGetPlayerProfileRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
+			{}
+			
+		FGetPlayerProfileRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerProfileRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerProfileRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerProfileResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The profile of the player. This profile is not guaranteed to be up-to-date. For a new player, this profile will not exist.
+		TSharedPtr<FPlayerProfileModel> PlayerProfile;
+	
+        FGetPlayerProfileResult() :
+			FPlayFabBaseModel(),
+			PlayerProfile(nullptr)
+			{}
+		
+		FGetPlayerProfileResult(const FGetPlayerProfileResult& src) :
+			FPlayFabBaseModel(),
+			PlayerProfile(src.PlayerProfile.IsValid() ? MakeShareable(new FPlayerProfileModel(*src.PlayerProfile)) : nullptr)
+			{}
+			
+		FGetPlayerProfileResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerProfileResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerProfileResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -5778,8 +5848,6 @@ namespace ClientModels
 		FString TransactionStatus;
 		// Date and time of the purchase.
 		FDateTime PurchaseDate;
-		// [optional] Array of items purchased.
-		TArray<FItemInstance> Items;
 	
         FGetPurchaseResult() :
 			FPlayFabBaseModel(),
@@ -5787,8 +5855,7 @@ namespace ClientModels
 			PaymentProvider(),
 			TransactionId(),
 			TransactionStatus(),
-			PurchaseDate(0),
-			Items()
+			PurchaseDate(0)
 			{}
 		
 		FGetPurchaseResult(const FGetPurchaseResult& src) :
@@ -5797,8 +5864,7 @@ namespace ClientModels
 			PaymentProvider(src.PaymentProvider),
 			TransactionId(src.TransactionId),
 			TransactionStatus(src.TransactionStatus),
-			PurchaseDate(src.PurchaseDate),
-			Items(src.Items)
+			PurchaseDate(src.PurchaseDate)
 			{}
 			
 		FGetPurchaseResult(const TSharedPtr<FJsonObject>& obj) : FGetPurchaseResult()
@@ -8835,14 +8901,14 @@ namespace ClientModels
 	struct PLAYFAB_API FReportPlayerClientResult : public FPlayFabBaseModel
     {
 		
-		// Indicates whether this action completed successfully.
-		bool Updated;
+		// [optional] Deprecated: Always true
+		OptionalBool Updated;
 		// The number of remaining reports which may be filed today.
 		int32 SubmissionsRemaining;
 	
         FReportPlayerClientResult() :
 			FPlayFabBaseModel(),
-			Updated(false),
+			Updated(),
 			SubmissionsRemaining(0)
 			{}
 		

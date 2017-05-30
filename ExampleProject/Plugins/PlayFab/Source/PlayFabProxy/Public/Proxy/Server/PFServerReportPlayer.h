@@ -21,7 +21,7 @@ public:
 	
 	// Submit a report about a player (due to bad bahavior, etc.) on behalf of another player, so that customer service representatives for the title can take action concerning potentially toxic players.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Item Management")
-	static UPFServerReportPlayer* ReportPlayer(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReporterId, const FString& InReporteeId, const FString& InTitleId, const FString& InComment);
+	static UPFServerReportPlayer* ReportPlayer(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReporterId, const FString& InReporteeId, const FString& InComment);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

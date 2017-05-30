@@ -1131,6 +1131,8 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoRequestParams(
         ,TArray<FString>& OutTitleDataKeys
         ,bool& OutGetPlayerStatistics
         ,TArray<FString>& OutPlayerStatisticNames
+        ,bool& OutGetPlayerProfile
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutGetUserAccountInfo = In.Data.GetUserAccountInfo;
@@ -1146,6 +1148,8 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoRequestParams(
 	OutTitleDataKeys = In.Data.TitleDataKeys;
 	OutGetPlayerStatistics = In.Data.GetPlayerStatistics;
 	OutPlayerStatisticNames = In.Data.PlayerStatisticNames;
+	OutGetPlayerProfile = In.Data.GetPlayerProfile;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 
@@ -1169,6 +1173,7 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoResultPayload(
         ,TArray<FBPClientCharacterResult>& OutCharacterList
         ,TArray<FBPClientCharacterInventory>& OutCharacterInventories
         ,TArray<FBPClientStatisticValue>& OutPlayerStatistics
+        ,FBPClientPlayerProfileModel& OutPlayerProfile
 	)
 {
     if (In.Data.AccountInfo.IsValid()) {    OutAccountInfo.Data = *In.Data.AccountInfo;}
@@ -1207,6 +1212,27 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoResultPayload(
         OutPlayerStatistics.Add(result);
     }
 
+	if (In.Data.PlayerProfile.IsValid()) {    OutPlayerProfile.Data = *In.Data.PlayerProfile;}
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerProfileRequest(
+		const FBPClientGetPlayerProfileRequest& In
+        ,FString& OutPlayFabId
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerProfileResult(
+		const FBPClientGetPlayerProfileResult& In
+        ,FBPClientPlayerProfileModel& OutPlayerProfile
+	)
+{
+    if (In.Data.PlayerProfile.IsValid()) {    OutPlayerProfile.Data = *In.Data.PlayerProfile;}
 	
 }
 
@@ -1548,7 +1574,6 @@ void UPFClientProxyLibrary::BreakBPClientGetPurchaseResult(
         ,FString& OutTransactionId
         ,FString& OutTransactionStatus
         ,FDateTime& OutPurchaseDate
-        ,TArray<FBPClientItemInstance>& OutItems
 	)
 {
     OutOrderId = In.Data.OrderId;
@@ -1556,13 +1581,6 @@ void UPFClientProxyLibrary::BreakBPClientGetPurchaseResult(
 	OutTransactionId = In.Data.TransactionId;
 	OutTransactionStatus = In.Data.TransactionStatus;
 	
-	for (const PlayFab::ClientModels::FItemInstance& elem : In.Data.Items)
-    {
-        FBPClientItemInstance result;
-        result.Data = elem;
-        OutItems.Add(result);
-    }
-
 	
 }
 

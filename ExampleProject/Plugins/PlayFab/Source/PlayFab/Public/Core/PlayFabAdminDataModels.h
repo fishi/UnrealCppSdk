@@ -1139,11 +1139,11 @@ namespace AdminModels
 		int32 Revision;
 		// [optional] The object returned from the CloudScript function, if any
 		FMultitypeVar FunctionResult;
-		// [optional] Flag indicating if the FunctionResult was too large and was subsequently dropped from this event
+		// [optional] Flag indicating if the FunctionResult was too large and was subsequently dropped from this event. This only occurs if the total event size is larger than 350KB.
 		OptionalBool FunctionResultTooLarge;
 		// [optional] Entries logged during the function execution. These include both entries logged in the function code using log.info() and log.error() and error entries for API and HTTP request failures.
 		TArray<FLogStatement> Logs;
-		// [optional] Flag indicating if the logs were too large and were subsequently dropped from this event
+		// [optional] Flag indicating if the logs were too large and were subsequently dropped from this event. This only occurs if the total event size is larger than 350KB after the FunctionResult was removed.
 		OptionalBool LogsTooLarge;
 		// undefined
 		double ExecutionTimeSeconds;
@@ -4418,7 +4418,7 @@ namespace AdminModels
 		
 		// [optional] ID of the task
 		FString TaskId;
-		// [optional] Name of the task. This is a unique identifier for tasks in the title.
+		// Name of the task. This is a unique identifier for tasks in the title.
 		FString Name;
 		// [optional] Description the task
 		FString Description;

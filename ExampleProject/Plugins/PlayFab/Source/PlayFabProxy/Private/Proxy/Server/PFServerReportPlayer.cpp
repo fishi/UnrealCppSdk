@@ -10,13 +10,12 @@ UPFServerReportPlayer::UPFServerReportPlayer(const FObjectInitializer& ObjectIni
 {
 }
 
-UPFServerReportPlayer* UPFServerReportPlayer::ReportPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InReporterId, const FString& InReporteeId, const FString& InTitleId, const FString& InComment)
+UPFServerReportPlayer* UPFServerReportPlayer::ReportPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InReporterId, const FString& InReporteeId, const FString& InComment)
 {
 	UPFServerReportPlayer* Proxy = NewObject<UPFServerReportPlayer>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.ReporterId = InReporterId;
 	Proxy->Request.ReporteeId = InReporteeId;
-	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.Comment = InComment;
 	
 
