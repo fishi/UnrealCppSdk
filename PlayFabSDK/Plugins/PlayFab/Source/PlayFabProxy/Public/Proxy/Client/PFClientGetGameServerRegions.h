@@ -20,7 +20,7 @@ public:
 	FBPClientGameServerRegionsResultDelegate OnFailure;
 	
 	//  Get details about the regions hosting game servers matching the given parameters.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Matchmaking")
 	static UPFClientGetGameServerRegions* GetGameServerRegions(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildVersion, const FString& InTitleId);
 
 	// UOnlineBlueprintCallProxyBase interface

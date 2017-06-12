@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Validates with the Apple store that the receipt for an iOS in-app purchase is valid and that it matches the purchased catalog item
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|IOS-Specific APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Platform Specific Methods")
 	static UPFClientValidateIOSReceipt* ValidateIOSReceipt(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReceiptData, const FString& InCurrencyCode, const int32& InPurchasePrice);
 
 	// UOnlineBlueprintCallProxyBase interface

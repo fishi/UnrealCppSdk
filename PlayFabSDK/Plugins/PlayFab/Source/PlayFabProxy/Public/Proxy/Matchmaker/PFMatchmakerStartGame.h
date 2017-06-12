@@ -20,7 +20,7 @@ public:
 	FBPMatchmakerStartGameResponseDelegate OnFailure;
 	
 	// Instructs the PlayFab game server hosting service to instantiate a new Game Server Instance
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking")
 	static UPFMatchmakerStartGame* StartGame(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuild, const FString& InGameMode, const FString& InCustomCommandLineData, const FString& InExternalMatchmakerEventEndpoint);
 
 	// UOnlineBlueprintCallProxyBase interface

@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Validates with Windows that the receipt for an Windows App Store in-app purchase is valid and that it matches the purchased catalog item
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Windows")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Platform Specific Methods")
 	static UPFClientValidateWindowsStoreReceipt* ValidateWindowsStoreReceipt(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReceipt, const FString& InCatalogVersion, const FString& InCurrencyCode, const int32& InPurchasePrice);
 
 	// UOnlineBlueprintCallProxyBase interface

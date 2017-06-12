@@ -20,7 +20,7 @@ public:
 	FBPClientStartGameResultDelegate OnFailure;
 	
 	// Start a new game server with a given configuration, add the current player and return the connection information.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Matchmaking")
 	static UPFClientStartGame* StartGame(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildVersion, const FString& InGameMode, const FString& InStatisticName, const FString& InCharacterId, const FString& InCustomCommandLineData);
 
 	// UOnlineBlueprintCallProxyBase interface

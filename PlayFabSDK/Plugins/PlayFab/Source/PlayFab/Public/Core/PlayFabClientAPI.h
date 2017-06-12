@@ -100,15 +100,10 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetFriendsListDelegate, const ClientModels::FGetFriendsListResult&);
         DECLARE_DELEGATE_OneParam(FRemoveFriendDelegate, const ClientModels::FRemoveFriendResult&);
         DECLARE_DELEGATE_OneParam(FSetFriendTagsDelegate, const ClientModels::FSetFriendTagsResult&);
-        DECLARE_DELEGATE_OneParam(FRegisterForIOSPushNotificationDelegate, const ClientModels::FRegisterForIOSPushNotificationResult&);
-        DECLARE_DELEGATE_OneParam(FRestoreIOSPurchasesDelegate, const ClientModels::FRestoreIOSPurchasesResult&);
-        DECLARE_DELEGATE_OneParam(FValidateIOSReceiptDelegate, const ClientModels::FValidateIOSReceiptResult&);
         DECLARE_DELEGATE_OneParam(FGetCurrentGamesDelegate, const ClientModels::FCurrentGamesResult&);
         DECLARE_DELEGATE_OneParam(FGetGameServerRegionsDelegate, const ClientModels::FGameServerRegionsResult&);
         DECLARE_DELEGATE_OneParam(FMatchmakeDelegate, const ClientModels::FMatchmakeResult&);
         DECLARE_DELEGATE_OneParam(FStartGameDelegate, const ClientModels::FStartGameResult&);
-        DECLARE_DELEGATE_OneParam(FAndroidDevicePushNotificationRegistrationDelegate, const ClientModels::FAndroidDevicePushNotificationRegistrationResult&);
-        DECLARE_DELEGATE_OneParam(FValidateGooglePlayPurchaseDelegate, const ClientModels::FValidateGooglePlayPurchaseResult&);
         DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ClientModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWritePlayerEventDelegate, const ClientModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWriteTitleEventDelegate, const ClientModels::FWriteEventResponse&);
@@ -129,7 +124,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetCharacterDataDelegate, const ClientModels::FGetCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FGetCharacterReadOnlyDataDelegate, const ClientModels::FGetCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCharacterDataDelegate, const ClientModels::FUpdateCharacterDataResult&);
-        DECLARE_DELEGATE_OneParam(FValidateAmazonIAPReceiptDelegate, const ClientModels::FValidateAmazonReceiptResult&);
         DECLARE_DELEGATE_OneParam(FAcceptTradeDelegate, const ClientModels::FAcceptTradeResponse&);
         DECLARE_DELEGATE_OneParam(FCancelTradeDelegate, const ClientModels::FCancelTradeResponse&);
         DECLARE_DELEGATE_OneParam(FGetPlayerTradesDelegate, const ClientModels::FGetPlayerTradesResponse&);
@@ -138,6 +132,12 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAttributeInstallDelegate, const ClientModels::FAttributeInstallResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const ClientModels::FGetPlayerSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerTagsDelegate, const ClientModels::FGetPlayerTagsResult&);
+        DECLARE_DELEGATE_OneParam(FAndroidDevicePushNotificationRegistrationDelegate, const ClientModels::FAndroidDevicePushNotificationRegistrationResult&);
+        DECLARE_DELEGATE_OneParam(FRegisterForIOSPushNotificationDelegate, const ClientModels::FRegisterForIOSPushNotificationResult&);
+        DECLARE_DELEGATE_OneParam(FRestoreIOSPurchasesDelegate, const ClientModels::FRestoreIOSPurchasesResult&);
+        DECLARE_DELEGATE_OneParam(FValidateAmazonIAPReceiptDelegate, const ClientModels::FValidateAmazonReceiptResult&);
+        DECLARE_DELEGATE_OneParam(FValidateGooglePlayPurchaseDelegate, const ClientModels::FValidateGooglePlayPurchaseResult&);
+        DECLARE_DELEGATE_OneParam(FValidateIOSReceiptDelegate, const ClientModels::FValidateIOSReceiptResult&);
         DECLARE_DELEGATE_OneParam(FValidateWindowsStoreReceiptDelegate, const ClientModels::FValidateWindowsReceiptResult&);
 
         UPlayFabClientAPI();
@@ -553,21 +553,6 @@ namespace PlayFab
          */
         bool SetFriendTags(ClientModels::FSetFriendTagsRequest& request, const FSetFriendTagsDelegate& SuccessDelegate = FSetFriendTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Registers the iOS device to receive push notifications
-         * More information can be found on configuring your game for the Apple Push Notification service in the  Apple documentation, here:  https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW9.  The steps to configure and send Push Notifications is described in the PlayFab tutorials, here:  https://api.playfab.com/docs/pushCrashCourse/.
-         */
-        bool RegisterForIOSPushNotification(ClientModels::FRegisterForIOSPushNotificationRequest& request, const FRegisterForIOSPushNotificationDelegate& SuccessDelegate = FRegisterForIOSPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Restores all in-app purchases based on the given restore receipt
-         * The title should obtain a refresh receipt via restoreCompletedTransactions in the SKPaymentQueue  of the Apple StoreKit and pass that in to this call. The resultant receipt contains new receipt instances for all non-consumable  goods previously purchased by the user. This API call iterates through every purchase in the receipt and restores the items if  they still exist in the catalog and can be validated.
-         */
-        bool RestoreIOSPurchases(ClientModels::FRestoreIOSPurchasesRequest& request, const FRestoreIOSPurchasesDelegate& SuccessDelegate = FRestoreIOSPurchasesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Validates with the Apple store that the receipt for an iOS in-app purchase is valid and that it matches the purchased catalog item
-         * The CurrencyCode and PurchasePrice must match the price which was set up for the item in the Apple store. In addition, The ItemId of the inventory in the PlayFab Catalog must match the Product ID as it was set up in the Apple store. This enables the PlayFab service to securely validate that the purchase is for the correct item, in order to prevent uses from passing valid receipts as being for more expensive items (passing a receipt for a 99-cent purchase as being for a $19.99 purchase, for example).
-         */
-        bool ValidateIOSReceipt(ClientModels::FValidateIOSReceiptRequest& request, const FValidateIOSReceiptDelegate& SuccessDelegate = FValidateIOSReceiptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Get details about all current running game servers matching the given parameters.
          */
         bool GetCurrentGames(ClientModels::FCurrentGamesRequest& request, const FGetCurrentGamesDelegate& SuccessDelegate = FGetCurrentGamesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -584,16 +569,6 @@ namespace PlayFab
          * This API must be enabled for use as an option in the game manager website. It is disabled by default.
          */
         bool StartGame(ClientModels::FStartGameRequest& request, const FStartGameDelegate& SuccessDelegate = FStartGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Registers the Android device to receive push notifications
-         * More information can be found on configuring your game for the Google Cloud Messaging service in the Google developer documentation, here:  http://developer.android.com/google/gcm/client.html.  The steps to configure and send Push Notifications is described in the PlayFab tutorials, here:  https://api.playfab.com/docs/pushCrashCourse/.
-         */
-        bool AndroidDevicePushNotificationRegistration(ClientModels::FAndroidDevicePushNotificationRegistrationRequest& request, const FAndroidDevicePushNotificationRegistrationDelegate& SuccessDelegate = FAndroidDevicePushNotificationRegistrationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Validates a Google Play purchase and gives the corresponding item to the player.
-         * The packageName and productId are defined in the GooglePlay store. The productId must match the ItemId of the inventory item in the PlayFab catalog for the title. This enables the PlayFab service to securely validate that the purchase is for the correct item, in order to prevent uses from passing valid receipts as being for more expensive items (passing a receipt for a 99-cent purchase as being for a $19.99 purchase, for example). Each receipt may be validated only once to avoid granting the same item over and over from a single purchase.
-         */
-        bool ValidateGooglePlayPurchase(ClientModels::FValidateGooglePlayPurchaseRequest& request, const FValidateGooglePlayPurchaseDelegate& SuccessDelegate = FValidateGooglePlayPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Writes a character-based event into PlayStream.
          * This API is designed to write a multitude of different client-defined events into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any character-based event. The created event will be locked to the authenticated title and player. 
@@ -686,10 +661,6 @@ namespace PlayFab
          */
         bool UpdateCharacterData(ClientModels::FUpdateCharacterDataRequest& request, const FUpdateCharacterDataDelegate& SuccessDelegate = FUpdateCharacterDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Validates with Amazon that the receipt for an Amazon App Store in-app purchase is valid and that it matches the purchased catalog item
-         */
-        bool ValidateAmazonIAPReceipt(ClientModels::FValidateAmazonReceiptRequest& request, const FValidateAmazonIAPReceiptDelegate& SuccessDelegate = FValidateAmazonIAPReceiptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Accepts an open trade (one that has not yet been accepted or cancelled), if the locally signed-in player is in the  allowed player list for the trade, or it is open to all players. If the call is successful, the offered and accepted items will be swapped  between the two players' inventories.
          */
         bool AcceptTrade(ClientModels::FAcceptTradeRequest& request, const FAcceptTradeDelegate& SuccessDelegate = FAcceptTradeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -723,6 +694,35 @@ namespace PlayFab
          * This API will return a list of canonical tags which includes both namespace and tag's name. If namespace is not provided, the result is a list of all canonical tags. TagName can be used for segmentation and Namespace is limited to 128 characters.
          */
         bool GetPlayerTags(ClientModels::FGetPlayerTagsRequest& request, const FGetPlayerTagsDelegate& SuccessDelegate = FGetPlayerTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Registers the Android device to receive push notifications
+         * More information can be found on configuring your game for the Google Cloud Messaging service in the Google developer documentation, here:  http://developer.android.com/google/gcm/client.html.  The steps to configure and send Push Notifications is described in the PlayFab tutorials, here:  https://api.playfab.com/docs/pushCrashCourse/.
+         */
+        bool AndroidDevicePushNotificationRegistration(ClientModels::FAndroidDevicePushNotificationRegistrationRequest& request, const FAndroidDevicePushNotificationRegistrationDelegate& SuccessDelegate = FAndroidDevicePushNotificationRegistrationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Registers the iOS device to receive push notifications
+         * More information can be found on configuring your game for the Apple Push Notification service in the  Apple documentation, here:  https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW9.  The steps to configure and send Push Notifications is described in the PlayFab tutorials, here:  https://api.playfab.com/docs/pushCrashCourse/.
+         */
+        bool RegisterForIOSPushNotification(ClientModels::FRegisterForIOSPushNotificationRequest& request, const FRegisterForIOSPushNotificationDelegate& SuccessDelegate = FRegisterForIOSPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Restores all in-app purchases based on the given restore receipt
+         * The title should obtain a refresh receipt via restoreCompletedTransactions in the SKPaymentQueue  of the Apple StoreKit and pass that in to this call. The resultant receipt contains new receipt instances for all non-consumable  goods previously purchased by the user. This API call iterates through every purchase in the receipt and restores the items if  they still exist in the catalog and can be validated.
+         */
+        bool RestoreIOSPurchases(ClientModels::FRestoreIOSPurchasesRequest& request, const FRestoreIOSPurchasesDelegate& SuccessDelegate = FRestoreIOSPurchasesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Validates with Amazon that the receipt for an Amazon App Store in-app purchase is valid and that it matches the purchased catalog item
+         */
+        bool ValidateAmazonIAPReceipt(ClientModels::FValidateAmazonReceiptRequest& request, const FValidateAmazonIAPReceiptDelegate& SuccessDelegate = FValidateAmazonIAPReceiptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Validates a Google Play purchase and gives the corresponding item to the player.
+         * The packageName and productId are defined in the GooglePlay store. The productId must match the ItemId of the inventory item in the PlayFab catalog for the title. This enables the PlayFab service to securely validate that the purchase is for the correct item, in order to prevent uses from passing valid receipts as being for more expensive items (passing a receipt for a 99-cent purchase as being for a $19.99 purchase, for example). Each receipt may be validated only once to avoid granting the same item over and over from a single purchase.
+         */
+        bool ValidateGooglePlayPurchase(ClientModels::FValidateGooglePlayPurchaseRequest& request, const FValidateGooglePlayPurchaseDelegate& SuccessDelegate = FValidateGooglePlayPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Validates with the Apple store that the receipt for an iOS in-app purchase is valid and that it matches the purchased catalog item
+         * The CurrencyCode and PurchasePrice must match the price which was set up for the item in the Apple store. In addition, The ItemId of the inventory in the PlayFab Catalog must match the Product ID as it was set up in the Apple store. This enables the PlayFab service to securely validate that the purchase is for the correct item, in order to prevent uses from passing valid receipts as being for more expensive items (passing a receipt for a 99-cent purchase as being for a $19.99 purchase, for example).
+         */
+        bool ValidateIOSReceipt(ClientModels::FValidateIOSReceiptRequest& request, const FValidateIOSReceiptDelegate& SuccessDelegate = FValidateIOSReceiptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Validates with Windows that the receipt for an Windows App Store in-app purchase is valid and that it matches the purchased catalog item
          */
@@ -819,15 +819,10 @@ namespace PlayFab
         void OnGetFriendsListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendsListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetFriendTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetFriendTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnRegisterForIOSPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterForIOSPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnRestoreIOSPurchasesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRestoreIOSPurchasesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnValidateIOSReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateIOSReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCurrentGamesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCurrentGamesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetGameServerRegionsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetGameServerRegionsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnMatchmakeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMatchmakeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnStartGameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FStartGameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnAndroidDevicePushNotificationRegistrationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAndroidDevicePushNotificationRegistrationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateGooglePlayPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWritePlayerEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWritePlayerEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteTitleEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteTitleEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -848,7 +843,6 @@ namespace PlayFab
         void OnGetCharacterDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCharacterReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCharacterDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnValidateAmazonIAPReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateAmazonIAPReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAcceptTradeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAcceptTradeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCancelTradeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCancelTradeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerTradesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTradesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -857,6 +851,12 @@ namespace PlayFab
         void OnAttributeInstallResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAttributeInstallDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnAndroidDevicePushNotificationRegistrationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAndroidDevicePushNotificationRegistrationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRegisterForIOSPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterForIOSPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRestoreIOSPurchasesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRestoreIOSPurchasesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnValidateAmazonIAPReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateAmazonIAPReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateGooglePlayPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnValidateIOSReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateIOSReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnValidateWindowsStoreReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateWindowsStoreReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
         FString mUserSessionTicket;

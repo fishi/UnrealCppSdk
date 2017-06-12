@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Sets the custom data of the indicated Game Server Instance
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking")
 	static UPFServerSetGameServerInstanceData* SetGameServerInstanceData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId, const FString& InGameServerData);
 
 	// UOnlineBlueprintCallProxyBase interface

@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Validates a Google Play purchase and gives the corresponding item to the player.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Android-Specific APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Platform Specific Methods")
 	static UPFClientValidateGooglePlayPurchase* ValidateGooglePlayPurchase(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReceiptJson, const FString& InSignature, const FString& InCurrencyCode, const int32& InPurchasePrice);
 
 	// UOnlineBlueprintCallProxyBase interface

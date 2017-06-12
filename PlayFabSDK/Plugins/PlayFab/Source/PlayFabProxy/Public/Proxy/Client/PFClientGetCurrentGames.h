@@ -20,7 +20,7 @@ public:
 	FBPClientCurrentGamesResultDelegate OnFailure;
 	
 	// Get details about all current running game servers matching the given parameters.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Matchmaking")
 	static UPFClientGetCurrentGames* GetCurrentGames(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildVersion, const FString& InGameMode, const FString& InStatisticName, const FBPClientCollectionFilter& InTagFilter);
 
 	// UOnlineBlueprintCallProxyBase interface

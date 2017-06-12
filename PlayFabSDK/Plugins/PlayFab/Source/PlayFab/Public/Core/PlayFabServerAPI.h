@@ -86,7 +86,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceDataDelegate, const ServerModels::FSetGameServerInstanceDataResult&);
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceStateDelegate, const ServerModels::FSetGameServerInstanceStateResult&);
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceTagsDelegate, const ServerModels::FSetGameServerInstanceTagsResult&);
-        DECLARE_DELEGATE_OneParam(FAwardSteamAchievementDelegate, const ServerModels::FAwardSteamAchievementResult&);
         DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ServerModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWritePlayerEventDelegate, const ServerModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWriteTitleEventDelegate, const ServerModels::FWriteEventResponse&);
@@ -119,6 +118,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetPlayersInSegmentDelegate, const ServerModels::FGetPlayersInSegmentResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerTagsDelegate, const ServerModels::FGetPlayerTagsResult&);
         DECLARE_DELEGATE_OneParam(FRemovePlayerTagDelegate, const ServerModels::FRemovePlayerTagResult&);
+        DECLARE_DELEGATE_OneParam(FAwardSteamAchievementDelegate, const ServerModels::FAwardSteamAchievementResult&);
 
         UPlayFabServerAPI();
         ~UPlayFabServerAPI();
@@ -475,10 +475,6 @@ namespace PlayFab
          */
         bool SetGameServerInstanceTags(ServerModels::FSetGameServerInstanceTagsRequest& request, const FSetGameServerInstanceTagsDelegate& SuccessDelegate = FSetGameServerInstanceTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Awards the specified users the specified Steam achievements
-         */
-        bool AwardSteamAchievement(ServerModels::FAwardSteamAchievementRequest& request, const FAwardSteamAchievementDelegate& SuccessDelegate = FAwardSteamAchievementDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Writes a character-based event into PlayStream.
          * This API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any character-based event. The created event will be locked to the authenticated title. 
          */
@@ -627,6 +623,10 @@ namespace PlayFab
          * This API will trigger a player_tag_removed event and remove a tag with the given TagName and PlayFabID from the corresponding player profile. TagName can be used for segmentation and it is limited to 256 characters
          */
         bool RemovePlayerTag(ServerModels::FRemovePlayerTagRequest& request, const FRemovePlayerTagDelegate& SuccessDelegate = FRemovePlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Awards the specified users the specified Steam achievements
+         */
+        bool AwardSteamAchievement(ServerModels::FAwardSteamAchievementRequest& request, const FAwardSteamAchievementDelegate& SuccessDelegate = FAwardSteamAchievementDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
     private:
         // ------------ Generated result handlers
@@ -705,7 +705,6 @@ namespace PlayFab
         void OnSetGameServerInstanceDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetGameServerInstanceStateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceStateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetGameServerInstanceTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWritePlayerEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWritePlayerEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteTitleEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteTitleEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -738,6 +737,7 @@ namespace PlayFab
         void OnGetPlayersInSegmentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayersInSegmentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemovePlayerTagResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemovePlayerTagDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
     };
 };

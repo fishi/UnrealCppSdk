@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Registers the iOS device to receive push notifications
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|IOS-Specific APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Platform Specific Methods")
 	static UPFClientRegisterForIOSPushNotification* RegisterForIOSPushNotification(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InDeviceToken, const bool& InSendPushNotificationConfirmation, const FString& InConfirmationMessage);
 
 	// UOnlineBlueprintCallProxyBase interface

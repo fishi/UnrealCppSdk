@@ -20,7 +20,7 @@ public:
 	FBPServerRegisterGameResponseDelegate OnFailure;
 	
 	// Inform the matchmaker that a new Game Server Instance is added.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking")
 	static UPFServerRegisterGame* RegisterGame(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InServerHost, const FString& InServerPort, const FString& InBuild, const FString& InGameMode, const FString& InTags);
 
 	// UOnlineBlueprintCallProxyBase interface

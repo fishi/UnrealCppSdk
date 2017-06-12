@@ -20,7 +20,7 @@ public:
 	FBPServerNotifyMatchmakerPlayerLeftResultDelegate OnFailure;
 	
 	// Informs the PlayFab match-making service that the user specified has left the Game Server Instance
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking")
 	static UPFServerNotifyMatchmakerPlayerLeft* NotifyMatchmakerPlayerLeft(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId, const FString& InPlayFabId);
 
 	// UOnlineBlueprintCallProxyBase interface

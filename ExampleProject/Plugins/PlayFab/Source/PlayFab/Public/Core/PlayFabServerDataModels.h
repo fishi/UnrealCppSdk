@@ -3543,7 +3543,7 @@ namespace ServerModels
 		OptionalInt32 Version;
 		// [optional] If true, uses the specified version. If false, gets the most recent version.
 		OptionalBool UseSpecificVersion;
-		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
+		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
         FGetFriendLeaderboardRequest() :
@@ -3724,7 +3724,7 @@ namespace ServerModels
 		FString PlayFabId;
 		// Maximum number of entries to retrieve.
 		int32 MaxResultsCount;
-		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
+		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
 		OptionalInt32 Version;
@@ -3939,9 +3939,9 @@ namespace ServerModels
 		
 		// [optional] ISO 4217 code of the currency used in the purchases
 		FString Currency;
-		// Total value of the purchases in a whole number of 1/100 monetary units. For example 999 indicates nine dollars and ninety-nine cents when Currency is 'USD')
+		// Total value of the purchases in a whole number of 1/100 monetary units. For example, 999 indicates nine dollars and ninety-nine cents when Currency is 'USD')
 		uint32 TotalValue;
-		// [optional] Total value of the purchases in a string representation of decimal monetary units (e.g. '9.99' indicates nine dollars and ninety-nine cents when Currency is 'USD'))
+		// [optional] Total value of the purchases in a string representation of decimal monetary units. For example, '9.99' indicates nine dollars and ninety-nine cents when Currency is 'USD'.
 		FString TotalValueAsDecimal;
 	
         FValueToDateModel() :
@@ -4040,37 +4040,37 @@ namespace ServerModels
 		
 		// [optional] Publisher this player belongs to
 		FString PublisherId;
-		// [optional] Title ID this profile applies to
+		// [optional] Title ID this player profile applies to
 		FString TitleId;
-		// [optional] PlayFab Player ID
+		// [optional] PlayFab player account unique identifier
 		FString PlayerId;
 		// [optional] Player record created
 		OptionalTime Created;
 		// [optional] Player account origination
 		Boxed<LoginIdentityProvider> Origination;
-		// [optional] Last login
+		// [optional] UTC time when the player most recently logged in to the title
 		OptionalTime LastLogin;
 		// [optional] If the player is currently banned, the UTC Date when the ban expires
 		OptionalTime BannedUntil;
-		// [optional] List of geographic locations where the player has logged-in
+		// [optional] List of geographic locations from which the player has logged in to the title
 		TArray<FLocationModel> Locations;
-		// [optional] Player Display Name
+		// [optional] Player display name
 		FString DisplayName;
-		// [optional] Image URL of the player's avatar
+		// [optional] URL of the player's avatar image
 		FString AvatarUrl;
 		// [optional] List of player's tags for segmentation
 		TArray<FTagModel> Tags;
 		// [optional] List of configured end points registered for sending the player push notifications
 		TArray<FPushNotificationRegistrationModel> PushNotificationRegistrations;
-		// [optional] List of third party accounts linked to this player
+		// [optional] List of all authentication systems linked to this player account
 		TArray<FLinkedPlatformAccountModel> LinkedAccounts;
 		// [optional] List of advertising campaigns the player has been attributed to
 		TArray<FAdCampaignAttributionModel> AdCampaignAttributions;
-		// [optional] A sum of player's total purchases across all real-money currencies, converted to US Dollars equivalent
+		// [optional] Sum of the player's purchases made with real-money currencies, converted to US dollars equivalent and represented as a whole number of cents (1/100 USD).              For example, 999 indicates nine dollars and ninety-nine cents.
 		OptionalUint32 TotalValueToDateInUSD;
-		// [optional] List of player's total lifetime real-money purchases by currency
+		// [optional] List of the player's lifetime purchase totals, summed by real-money currency
 		TArray<FValueToDateModel> ValuesToDate;
-		// [optional] List of player's virtual currency balances
+		// [optional] List of the player's virtual currency balances
 		TArray<FVirtualCurrencyBalanceModel> VirtualCurrencyBalances;
 		// [optional] List of leaderboard statistic values for the player
 		TArray<FStatisticModel> Statistics;
@@ -4279,7 +4279,7 @@ namespace ServerModels
 		int32 StartPosition;
 		// Maximum number of entries to retrieve.
 		int32 MaxResultsCount;
-		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
+		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
 		OptionalInt32 Version;
@@ -4612,7 +4612,7 @@ namespace ServerModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. On client, only ShowDisplayName, ShowStatistics, ShowAvatarUrl are allowed.
+		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
         FGetPlayerProfileRequest() :
@@ -6186,7 +6186,7 @@ namespace ServerModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// Non-unique display name of the character being granted.
+		// Non-unique display name of the character being granted (1-20 characters in length).
 		FString CharacterName;
 		// Type of the character being granted; statistics can be sliced based on this value.
 		FString CharacterType;

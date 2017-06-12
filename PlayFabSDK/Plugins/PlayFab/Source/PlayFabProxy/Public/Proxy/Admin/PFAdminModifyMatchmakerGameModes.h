@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Updates the game server mode details for the specified game server executable
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Matchmaking")
 	static UPFAdminModifyMatchmakerGameModes* ModifyMatchmakerGameModes(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildVersion, const TArray<FBPAdminGameModeInfo>& InGameModes);
 
 	// UOnlineBlueprintCallProxyBase interface

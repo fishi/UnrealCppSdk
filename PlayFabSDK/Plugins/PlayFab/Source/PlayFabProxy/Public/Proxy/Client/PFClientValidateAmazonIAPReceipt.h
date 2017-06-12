@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Validates with Amazon that the receipt for an Amazon App Store in-app purchase is valid and that it matches the purchased catalog item
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Amazon-Specific APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Platform Specific Methods")
 	static UPFClientValidateAmazonIAPReceipt* ValidateAmazonIAPReceipt(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReceiptId, const FString& InUserId, const FString& InCatalogVersion, const FString& InCurrencyCode, const int32& InPurchasePrice);
 
 	// UOnlineBlueprintCallProxyBase interface

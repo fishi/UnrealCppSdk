@@ -2536,87 +2536,6 @@ void UPlayFabClientAPI::OnSetFriendTagsResult(FHttpRequestPtr HttpRequest, FHttp
     }
 }
 
-bool UPlayFabClientAPI::RegisterForIOSPushNotification(
-    ClientModels::FRegisterForIOSPushNotificationRequest& request,
-    const FRegisterForIOSPushNotificationDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RegisterForIOSPushNotification")), request.toJSONString(),
-        TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterForIOSPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ClientModels::FRegisterForIOSPushNotificationResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
-bool UPlayFabClientAPI::RestoreIOSPurchases(
-    ClientModels::FRestoreIOSPurchasesRequest& request,
-    const FRestoreIOSPurchasesDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RestoreIOSPurchases")), request.toJSONString(),
-        TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRestoreIOSPurchasesResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabClientAPI::OnRestoreIOSPurchasesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRestoreIOSPurchasesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ClientModels::FRestoreIOSPurchasesResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
-bool UPlayFabClientAPI::ValidateIOSReceipt(
-    ClientModels::FValidateIOSReceiptRequest& request,
-    const FValidateIOSReceiptDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateIOSReceipt")), request.toJSONString(),
-        TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateIOSReceiptResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabClientAPI::OnValidateIOSReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateIOSReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ClientModels::FValidateIOSReceiptResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
 bool UPlayFabClientAPI::GetCurrentGames(
     ClientModels::FCurrentGamesRequest& request,
     const FGetCurrentGamesDelegate& SuccessDelegate,
@@ -2713,60 +2632,6 @@ bool UPlayFabClientAPI::StartGame(
 void UPlayFabClientAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FStartGameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ClientModels::FStartGameResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
-bool UPlayFabClientAPI::AndroidDevicePushNotificationRegistration(
-    ClientModels::FAndroidDevicePushNotificationRegistrationRequest& request,
-    const FAndroidDevicePushNotificationRegistrationDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AndroidDevicePushNotificationRegistration")), request.toJSONString(),
-        TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAndroidDevicePushNotificationRegistrationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ClientModels::FAndroidDevicePushNotificationRegistrationResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
-bool UPlayFabClientAPI::ValidateGooglePlayPurchase(
-    ClientModels::FValidateGooglePlayPurchaseRequest& request,
-    const FValidateGooglePlayPurchaseDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateGooglePlayPurchase")), request.toJSONString(),
-        TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateGooglePlayPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ClientModels::FValidateGooglePlayPurchaseResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -3319,33 +3184,6 @@ void UPlayFabClientAPI::OnUpdateCharacterDataResult(FHttpRequestPtr HttpRequest,
     }
 }
 
-bool UPlayFabClientAPI::ValidateAmazonIAPReceipt(
-    ClientModels::FValidateAmazonReceiptRequest& request,
-    const FValidateAmazonIAPReceiptDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateAmazonIAPReceipt")), request.toJSONString(),
-        TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateAmazonIAPReceiptResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabClientAPI::OnValidateAmazonIAPReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateAmazonIAPReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ClientModels::FValidateAmazonReceiptResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
 bool UPlayFabClientAPI::AcceptTrade(
     ClientModels::FAcceptTradeRequest& request,
     const FAcceptTradeDelegate& SuccessDelegate,
@@ -3551,6 +3389,168 @@ bool UPlayFabClientAPI::GetPlayerTags(
 void UPlayFabClientAPI::OnGetPlayerTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ClientModels::FGetPlayerTagsResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::AndroidDevicePushNotificationRegistration(
+    ClientModels::FAndroidDevicePushNotificationRegistrationRequest& request,
+    const FAndroidDevicePushNotificationRegistrationDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AndroidDevicePushNotificationRegistration")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAndroidDevicePushNotificationRegistrationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FAndroidDevicePushNotificationRegistrationResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::RegisterForIOSPushNotification(
+    ClientModels::FRegisterForIOSPushNotificationRequest& request,
+    const FRegisterForIOSPushNotificationDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RegisterForIOSPushNotification")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterForIOSPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FRegisterForIOSPushNotificationResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::RestoreIOSPurchases(
+    ClientModels::FRestoreIOSPurchasesRequest& request,
+    const FRestoreIOSPurchasesDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RestoreIOSPurchases")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRestoreIOSPurchasesResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnRestoreIOSPurchasesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRestoreIOSPurchasesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FRestoreIOSPurchasesResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::ValidateAmazonIAPReceipt(
+    ClientModels::FValidateAmazonReceiptRequest& request,
+    const FValidateAmazonIAPReceiptDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateAmazonIAPReceipt")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateAmazonIAPReceiptResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnValidateAmazonIAPReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateAmazonIAPReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FValidateAmazonReceiptResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::ValidateGooglePlayPurchase(
+    ClientModels::FValidateGooglePlayPurchaseRequest& request,
+    const FValidateGooglePlayPurchaseDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateGooglePlayPurchase")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateGooglePlayPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FValidateGooglePlayPurchaseResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::ValidateIOSReceipt(
+    ClientModels::FValidateIOSReceiptRequest& request,
+    const FValidateIOSReceiptDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateIOSReceipt")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateIOSReceiptResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnValidateIOSReceiptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateIOSReceiptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FValidateIOSReceiptResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

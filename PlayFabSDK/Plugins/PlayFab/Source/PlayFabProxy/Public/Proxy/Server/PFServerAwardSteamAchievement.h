@@ -20,7 +20,7 @@ public:
 	FBPServerAwardSteamAchievementResultDelegate OnFailure;
 	
 	// Awards the specified users the specified Steam achievements
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Steam-Specific APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Platform Specific Methods")
 	static UPFServerAwardSteamAchievement* AwardSteamAchievement(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FBPServerAwardSteamAchievementItem>& InAchievements);
 
 	// UOnlineBlueprintCallProxyBase interface

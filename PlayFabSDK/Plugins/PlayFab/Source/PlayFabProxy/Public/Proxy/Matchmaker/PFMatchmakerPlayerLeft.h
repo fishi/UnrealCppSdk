@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Informs the PlayFab game server hosting service that the indicated user has left the Game Server Instance specified
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking")
 	static UPFMatchmakerPlayerLeft* PlayerLeft(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId, const FString& InPlayFabId);
 
 	// UOnlineBlueprintCallProxyBase interface

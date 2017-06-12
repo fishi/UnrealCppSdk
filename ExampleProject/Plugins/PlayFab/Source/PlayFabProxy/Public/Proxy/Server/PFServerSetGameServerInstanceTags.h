@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Set custom tags for the specified Game Server Instance
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking")
 	static UPFServerSetGameServerInstanceTags* SetGameServerInstanceTags(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId, const FString& InTags);
 
 	// UOnlineBlueprintCallProxyBase interface

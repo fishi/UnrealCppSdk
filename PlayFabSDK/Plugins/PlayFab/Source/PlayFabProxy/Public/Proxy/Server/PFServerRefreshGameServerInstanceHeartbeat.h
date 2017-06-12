@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Set the state of the indicated Game Server Instance. Also update the heartbeat for the instance.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking")
 	static UPFServerRefreshGameServerInstanceHeartbeat* RefreshGameServerInstanceHeartbeat(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId);
 
 	// UOnlineBlueprintCallProxyBase interface

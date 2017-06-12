@@ -2056,33 +2056,6 @@ void UPlayFabServerAPI::OnSetGameServerInstanceTagsResult(FHttpRequestPtr HttpRe
     }
 }
 
-bool UPlayFabServerAPI::AwardSteamAchievement(
-    ServerModels::FAwardSteamAchievementRequest& request,
-    const FAwardSteamAchievementDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/AwardSteamAchievement")), request.toJSONString(),
-        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnAwardSteamAchievementResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabServerAPI::OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ServerModels::FAwardSteamAchievementResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
 bool UPlayFabServerAPI::WriteCharacterEvent(
     ServerModels::FWriteServerCharacterEventRequest& request,
     const FWriteCharacterEventDelegate& SuccessDelegate,
@@ -2935,6 +2908,33 @@ bool UPlayFabServerAPI::RemovePlayerTag(
 void UPlayFabServerAPI::OnRemovePlayerTagResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemovePlayerTagDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ServerModels::FRemovePlayerTagResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabServerAPI::AwardSteamAchievement(
+    ServerModels::FAwardSteamAchievementRequest& request,
+    const FAwardSteamAchievementDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/AwardSteamAchievement")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnAwardSteamAchievementResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FAwardSteamAchievementResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

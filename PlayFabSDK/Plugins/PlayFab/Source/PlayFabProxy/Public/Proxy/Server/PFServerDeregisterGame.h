@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Inform the matchmaker that a Game Server Instance is removed.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking")
 	static UPFServerDeregisterGame* DeregisterGame(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId);
 
 	// UOnlineBlueprintCallProxyBase interface

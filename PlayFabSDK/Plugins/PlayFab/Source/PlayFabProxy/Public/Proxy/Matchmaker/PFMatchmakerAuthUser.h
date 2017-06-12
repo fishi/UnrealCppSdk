@@ -20,7 +20,7 @@ public:
 	FBPMatchmakerAuthUserResponseDelegate OnFailure;
 	
 	// Validates a user with the PlayFab service
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking")
 	static UPFMatchmakerAuthUser* AuthUser(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAuthorizationTicket);
 
 	// UOnlineBlueprintCallProxyBase interface

@@ -20,7 +20,7 @@ public:
 	FBPAdminGetMatchmakerGameInfoResultDelegate OnFailure;
 	
 	// Retrieves the details for a specific completed session, including links to standard out and standard error logs
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Matchmaking")
 	static UPFAdminGetMatchmakerGameInfo* GetMatchmakerGameInfo(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId);
 
 	// UOnlineBlueprintCallProxyBase interface

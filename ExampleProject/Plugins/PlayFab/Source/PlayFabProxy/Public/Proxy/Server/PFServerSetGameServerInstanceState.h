@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Set the state of the indicated Game Server Instance.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Matchmaking")
 	static UPFServerSetGameServerInstanceState* SetGameServerInstanceState(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InLobbyId);
 
 	// UOnlineBlueprintCallProxyBase interface

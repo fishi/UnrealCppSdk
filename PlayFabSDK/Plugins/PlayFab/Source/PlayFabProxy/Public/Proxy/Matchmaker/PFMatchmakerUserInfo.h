@@ -20,7 +20,7 @@ public:
 	FBPMatchmakerUserInfoResponseDelegate OnFailure;
 	
 	// Retrieves the relevant details for a specified user, which the external match-making service can then use to compute effective matches
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking APIs")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Matchmaker|Matchmaking")
 	static UPFMatchmakerUserInfo* UserInfo(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const int32& InMinCatalogVersion);
 
 	// UOnlineBlueprintCallProxyBase interface
