@@ -21,7 +21,7 @@ public:
 	
 	// Sends an iOS/Android Push Notification to a specific user, if that user's device has been configured for Push Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Account Management")
-	static UPFServerSendPushNotification* SendPushNotification(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InRecipient, const FString& InMessage, const FString& InSubject);
+	static UPFServerSendPushNotification* SendPushNotification(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InRecipient, const FString& InMessage, const FBPServerPushNotificationPackage& InPackage, const FString& InSubject);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

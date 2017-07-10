@@ -470,6 +470,24 @@ void UPFAdminProxyLibrary::BreakBPAdminCreateCloudScriptTaskRequest(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerSharedSecretRequest(
+		const FBPAdminCreatePlayerSharedSecretRequest& In
+        ,FString& OutFriendlyName
+	)
+{
+    OutFriendlyName = In.Data.FriendlyName;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerSharedSecretResult(
+		const FBPAdminCreatePlayerSharedSecretResult& In
+        ,FString& OutSecretKey
+	)
+{
+    OutSecretKey = In.Data.SecretKey;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionRequest(
 		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
         ,FString& OutStatisticName
@@ -513,6 +531,22 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteContentRequest(
 {
     OutKey = In.Data.Key;
 	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminDeletePlayerSharedSecretRequest(
+		const FBPAdminDeletePlayerSharedSecretRequest& In
+        ,FString& OutSecretKey
+	)
+{
+    OutSecretKey = In.Data.SecretKey;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminDeletePlayerSharedSecretResult(
+		const FBPAdminDeletePlayerSharedSecretResult& In
+	)
+{
+    
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminDeleteStoreRequest(
@@ -930,6 +964,28 @@ void UPFAdminProxyLibrary::BreakBPAdminGetPlayerSegmentsResult(
         FBPAdminGetSegmentResult result;
         result.Data = elem;
         OutSegments.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerSharedSecretsRequest(
+		const FBPAdminGetPlayerSharedSecretsRequest& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerSharedSecretsResult(
+		const FBPAdminGetPlayerSharedSecretsResult& In
+        ,TArray<FBPAdminSharedSecret>& OutSharedSecrets
+	)
+{
+    for (const PlayFab::AdminModels::FSharedSecret& elem : In.Data.SharedSecrets)
+    {
+        FBPAdminSharedSecret result;
+        result.Data = elem;
+        OutSharedSecrets.Add(result);
     }
 
 	
@@ -1866,6 +1922,13 @@ void UPFAdminProxyLibrary::BreakBPAdminPushNotificationRegistration(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminPushSetupPlatform(
+		const FBPAdminPushSetupPlatform& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminRandomResultTable(
 		const FBPAdminRandomResultTable& In
         ,FString& OutTableId
@@ -2223,6 +2286,24 @@ void UPFAdminProxyLibrary::BreakBPAdminSendAccountRecoveryEmailResult(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminSetPlayerSecretRequest(
+		const FBPAdminSetPlayerSecretRequest& In
+        ,FString& OutPlayerSecret
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayerSecret = In.Data.PlayerSecret;
+	OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminSetPlayerSecretResult(
+		const FBPAdminSetPlayerSecretResult& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminSetPublishedRevisionRequest(
 		const FBPAdminSetPublishedRevisionRequest& In
         ,int32& OutVersion
@@ -2280,14 +2361,13 @@ void UPFAdminProxyLibrary::BreakBPAdminSetTitleDataResult(
 void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationRequest(
 		const FBPAdminSetupPushNotificationRequest& In
         ,FString& OutName
-        ,FString& OutPlatform
         ,FString& OutKey
         ,FString& OutCredential
         ,bool& OutOverwriteOldARN
 	)
 {
     OutName = In.Data.Name;
-	OutPlatform = In.Data.Platform;
+	
 	OutKey = In.Data.Key;
 	OutCredential = In.Data.Credential;
 	OutOverwriteOldARN = In.Data.OverwriteOldARN;
@@ -2300,6 +2380,19 @@ void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationResult(
 	)
 {
     OutARN = In.Data.ARN;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminSharedSecret(
+		const FBPAdminSharedSecret& In
+        ,FString& OutSecretKey
+        ,FString& OutFriendlyName
+        ,bool& OutDisabled
+	)
+{
+    OutSecretKey = In.Data.SecretKey;
+	OutFriendlyName = In.Data.FriendlyName;
+	OutDisabled = In.Data.Disabled;
 	
 }
 
@@ -2519,6 +2612,26 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptResult(
     OutVersion = In.Data.Version;
 	OutRevision = In.Data.Revision;
 	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdatePlayerSharedSecretRequest(
+		const FBPAdminUpdatePlayerSharedSecretRequest& In
+        ,FString& OutSecretKey
+        ,FString& OutFriendlyName
+        ,bool& OutDisabled
+	)
+{
+    OutSecretKey = In.Data.SecretKey;
+	OutFriendlyName = In.Data.FriendlyName;
+	OutDisabled = In.Data.Disabled;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdatePlayerSharedSecretResult(
+		const FBPAdminUpdatePlayerSharedSecretResult& In
+	)
+{
+    
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdatePlayerStatisticDefinitionRequest(

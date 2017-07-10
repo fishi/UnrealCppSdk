@@ -11,7 +11,12 @@ namespace PlayFab
     class PLAYFAB_API UPlayFabAdminAPI
     {
     public:
+        DECLARE_DELEGATE_OneParam(FCreatePlayerSharedSecretDelegate, const AdminModels::FCreatePlayerSharedSecretResult&);
+        DECLARE_DELEGATE_OneParam(FDeletePlayerSharedSecretDelegate, const AdminModels::FDeletePlayerSharedSecretResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerSharedSecretsDelegate, const AdminModels::FGetPlayerSharedSecretsResult&);
         DECLARE_DELEGATE_OneParam(FGetPolicyDelegate, const AdminModels::FGetPolicyResponse&);
+        DECLARE_DELEGATE_OneParam(FSetPlayerSecretDelegate, const AdminModels::FSetPlayerSecretResult&);
+        DECLARE_DELEGATE_OneParam(FUpdatePlayerSharedSecretDelegate, const AdminModels::FUpdatePlayerSharedSecretResult&);
         DECLARE_DELEGATE_OneParam(FUpdatePolicyDelegate, const AdminModels::FUpdatePolicyResponse&);
         DECLARE_DELEGATE_OneParam(FBanUsersDelegate, const AdminModels::FBanUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetUserAccountInfoDelegate, const AdminModels::FLookupUserAccountInfoResult&);
@@ -114,10 +119,35 @@ namespace PlayFab
 
         // ------------ Generated API calls
         /**
+         * Creates a new Player Shared Secret Key. It may take up to 5 minutes for this key to become generally available after this API returns.
+         * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
+         */
+        bool CreatePlayerSharedSecret(AdminModels::FCreatePlayerSharedSecretRequest& request, const FCreatePlayerSharedSecretDelegate& SuccessDelegate = FCreatePlayerSharedSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Deletes an existing Player Shared Secret Key. It may take up to 5 minutes for this delete to be reflected after this API returns.
+         * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
+         */
+        bool DeletePlayerSharedSecret(AdminModels::FDeletePlayerSharedSecretRequest& request, const FDeletePlayerSharedSecretDelegate& SuccessDelegate = FDeletePlayerSharedSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Returns all Player Shared Secret Keys including disabled and expired.
+         * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
+         */
+        bool GetPlayerSharedSecrets(const FGetPlayerSharedSecretsDelegate& SuccessDelegate = FGetPlayerSharedSecretsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Gets the requested policy.
          * Views the requested policy. Today, the only supported policy is 'ApiPolicy'.
          */
         bool GetPolicy(AdminModels::FGetPolicyRequest& request, const FGetPolicyDelegate& SuccessDelegate = FGetPolicyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Sets or resets the player's secret. Player secrets are used to sign API requests.
+         * APIs that require signatures require that the player have a configured Player Secret Key that is used to sign all requests. Players that don't have a secret will be blocked from making API calls until it is configured. To create a signature header add a SHA256 hashed string containing UTF8 encoded JSON body as it will be sent to the server, the current time in UTC formatted to ISO 8601, and the players secret formatted as 'body.date.secret'. Place the resulting hash into the header X-PlayFab-Signature, along with a header X-PlayFab-Timestamp of the same UTC timestamp used in the signature.
+         */
+        bool SetPlayerSecret(AdminModels::FSetPlayerSecretRequest& request, const FSetPlayerSecretDelegate& SuccessDelegate = FSetPlayerSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Updates a existing Player Shared Secret Key. It may take up to 5 minutes for this update to become generally available after this API returns.
+         * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
+         */
+        bool UpdatePlayerSharedSecret(AdminModels::FUpdatePlayerSharedSecretRequest& request, const FUpdatePlayerSharedSecretDelegate& SuccessDelegate = FUpdatePlayerSharedSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Changes a policy for a title
          * Updates permissions for your title. Policies affect what is allowed to happen on your title. Your policy is a collection of statements that, together, govern particular area for your title. Today, the only allowed policy is called 'ApiPolicy' and it governs what calls players are allowed to make.
@@ -549,7 +579,12 @@ namespace PlayFab
 
     private:
         // ------------ Generated result handlers
+        void OnCreatePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreatePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnDeletePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeletePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerSharedSecretsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSharedSecretsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPolicyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPolicyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetPlayerSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPlayerSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdatePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdatePolicyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePolicyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

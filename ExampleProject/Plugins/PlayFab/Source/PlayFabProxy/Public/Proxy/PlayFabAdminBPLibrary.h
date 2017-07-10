@@ -282,6 +282,18 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCreatePlayerSharedSecretRequest(
+		const FBPAdminCreatePlayerSharedSecretRequest& In
+        ,FString& OutFriendlyName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCreatePlayerSharedSecretResult(
+		const FBPAdminCreatePlayerSharedSecretResult& In
+        ,FString& OutSecretKey
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminCreatePlayerStatisticDefinitionRequest(
 		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
         ,FString& OutStatisticName
@@ -308,6 +320,17 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminDeleteContentRequest(
 		const FBPAdminDeleteContentRequest& In
         ,FString& OutKey
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminDeletePlayerSharedSecretRequest(
+		const FBPAdminDeletePlayerSharedSecretRequest& In
+        ,FString& OutSecretKey
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminDeletePlayerSharedSecretResult(
+		const FBPAdminDeletePlayerSharedSecretResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -541,6 +564,17 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminGetPlayerSegmentsResult(
 		const FBPAdminGetPlayerSegmentsResult& In
         ,TArray<FBPAdminGetSegmentResult>& OutSegments
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerSharedSecretsRequest(
+		const FBPAdminGetPlayerSharedSecretsRequest& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerSharedSecretsResult(
+		const FBPAdminGetPlayerSharedSecretsResult& In
+        ,TArray<FBPAdminSharedSecret>& OutSharedSecrets
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -1038,6 +1072,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminPushSetupPlatform(
+		const FBPAdminPushSetupPlatform& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminRandomResultTable(
 		const FBPAdminRandomResultTable& In
         ,FString& OutTableId
@@ -1246,6 +1285,18 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminSetPlayerSecretRequest(
+		const FBPAdminSetPlayerSecretRequest& In
+        ,FString& OutPlayerSecret
+        ,FString& OutPlayFabId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminSetPlayerSecretResult(
+		const FBPAdminSetPlayerSecretResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminSetPublishedRevisionRequest(
 		const FBPAdminSetPublishedRevisionRequest& In
         ,int32& OutVersion
@@ -1285,7 +1336,6 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminSetupPushNotificationRequest(
 		const FBPAdminSetupPushNotificationRequest& In
         ,FString& OutName
-        ,FString& OutPlatform
         ,FString& OutKey
         ,FString& OutCredential
         ,bool& OutOverwriteOldARN
@@ -1295,6 +1345,14 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminSetupPushNotificationResult(
 		const FBPAdminSetupPushNotificationResult& In
         ,FString& OutARN
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminSharedSecret(
+		const FBPAdminSharedSecret& In
+        ,FString& OutSecretKey
+        ,FString& OutFriendlyName
+        ,bool& OutDisabled
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -1416,6 +1474,19 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminUpdateCloudScriptResult& In
         ,int32& OutVersion
         ,int32& OutRevision
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUpdatePlayerSharedSecretRequest(
+		const FBPAdminUpdatePlayerSharedSecretRequest& In
+        ,FString& OutSecretKey
+        ,FString& OutFriendlyName
+        ,bool& OutDisabled
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUpdatePlayerSharedSecretResult(
+		const FBPAdminUpdatePlayerSharedSecretResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

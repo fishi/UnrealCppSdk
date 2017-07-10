@@ -935,6 +935,19 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetTitlePublicKeyRequest(
+		const FBPClientGetTitlePublicKeyRequest& In
+        ,FString& OutTitleId
+        ,FString& OutTitleSharedSecret
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetTitlePublicKeyResult(
+		const FBPClientGetTitlePublicKeyResult& In
+        ,FString& OutRSAPublicKey
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetTradeStatusRequest(
 		const FBPClientGetTradeStatusRequest& In
         ,FString& OutOfferingPlayerId
@@ -1694,6 +1707,18 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientSetFriendTagsResult(
 		const FBPClientSetFriendTagsResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientSetPlayerSecretRequest(
+		const FBPClientSetPlayerSecretRequest& In
+        ,FString& OutPlayerSecret
+        ,FString& OutEncryptedRequest
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientSetPlayerSecretResult(
+		const FBPClientSetPlayerSecretResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

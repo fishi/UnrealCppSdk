@@ -10,12 +10,13 @@ UPFServerSendPushNotification::UPFServerSendPushNotification(const FObjectInitia
 {
 }
 
-UPFServerSendPushNotification* UPFServerSendPushNotification::SendPushNotification(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InRecipient, const FString& InMessage, const FString& InSubject)
+UPFServerSendPushNotification* UPFServerSendPushNotification::SendPushNotification(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InRecipient, const FString& InMessage, const FBPServerPushNotificationPackage& InPackage, const FString& InSubject)
 {
 	UPFServerSendPushNotification* Proxy = NewObject<UPFServerSendPushNotification>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.Recipient = InRecipient;
 	Proxy->Request.Message = InMessage;
+	*Proxy->Request.Package = InPackage.Data;
 	Proxy->Request.Subject = InSubject;
 	
 

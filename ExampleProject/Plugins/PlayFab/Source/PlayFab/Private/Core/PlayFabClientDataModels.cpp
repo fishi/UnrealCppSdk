@@ -10291,6 +10291,77 @@ bool PlayFab::ClientModels::FGetTitleNewsResult::readFromValue(const TSharedPtr<
 }
 
 
+PlayFab::ClientModels::FGetTitlePublicKeyRequest::~FGetTitlePublicKeyRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetTitlePublicKeyRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleSharedSecret")); writer->WriteValue(TitleSharedSecret);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetTitlePublicKeyRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleSharedSecretValue = obj->TryGetField(TEXT("TitleSharedSecret"));
+    if (TitleSharedSecretValue.IsValid()&& !TitleSharedSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleSharedSecretValue->TryGetString(TmpValue)) {TitleSharedSecret = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetTitlePublicKeyResult::~FGetTitlePublicKeyResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetTitlePublicKeyResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(RSAPublicKey.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("RSAPublicKey")); writer->WriteValue(RSAPublicKey); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetTitlePublicKeyResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> RSAPublicKeyValue = obj->TryGetField(TEXT("RSAPublicKey"));
+    if (RSAPublicKeyValue.IsValid()&& !RSAPublicKeyValue->IsNull())
+    {
+        FString TmpValue;
+        if(RSAPublicKeyValue->TryGetString(TmpValue)) {RSAPublicKey = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FGetTradeStatusRequest::~FGetTradeStatusRequest()
 {
     
@@ -14239,6 +14310,68 @@ void PlayFab::ClientModels::FSetFriendTagsResult::writeJSON(JsonWriter& writer) 
 }
 
 bool PlayFab::ClientModels::FSetFriendTagsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FSetPlayerSecretRequest::~FSetPlayerSecretRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FSetPlayerSecretRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayerSecret.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret); }
+	
+    if(EncryptedRequest.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EncryptedRequest")); writer->WriteValue(EncryptedRequest); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FSetPlayerSecretRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EncryptedRequestValue = obj->TryGetField(TEXT("EncryptedRequest"));
+    if (EncryptedRequestValue.IsValid()&& !EncryptedRequestValue->IsNull())
+    {
+        FString TmpValue;
+        if(EncryptedRequestValue->TryGetString(TmpValue)) {EncryptedRequest = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FSetPlayerSecretResult::~FSetPlayerSecretResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FSetPlayerSecretResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FSetPlayerSecretResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	

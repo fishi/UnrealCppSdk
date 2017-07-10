@@ -10,12 +10,12 @@ UPFAdminSetupPushNotification::UPFAdminSetupPushNotification(const FObjectInitia
 {
 }
 
-UPFAdminSetupPushNotification* UPFAdminSetupPushNotification::SetupPushNotification(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InName, const FString& InPlatform, const FString& InKey, const FString& InCredential, const bool& InOverwriteOldARN)
+UPFAdminSetupPushNotification* UPFAdminSetupPushNotification::SetupPushNotification(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InName, const FString& InKey, const FString& InCredential, const bool& InOverwriteOldARN)
 {
 	UPFAdminSetupPushNotification* Proxy = NewObject<UPFAdminSetupPushNotification>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.Name = InName;
-	Proxy->Request.Platform = InPlatform;
+	
 	Proxy->Request.Key = InKey;
 	Proxy->Request.Credential = InCredential;
 	Proxy->Request.OverwriteOldARN = InOverwriteOldARN;

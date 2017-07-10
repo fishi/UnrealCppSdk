@@ -480,6 +480,8 @@ void PlayFab::MatchmakerModels::FRegisterGameRequest::writeJSON(JsonWriter& writ
 {
     writer->WriteObjectStart();
     
+    if(LobbyId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("LobbyId")); writer->WriteValue(LobbyId); }
+	
     writer->WriteIdentifierPrefix(TEXT("ServerHost")); writer->WriteValue(ServerHost);
 	
     writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort);
@@ -509,6 +511,13 @@ bool PlayFab::MatchmakerModels::FRegisterGameRequest::readFromValue(const TShare
 {
 	bool HasSucceeded = true; 
 	
+    const TSharedPtr<FJsonValue> LobbyIdValue = obj->TryGetField(TEXT("LobbyId"));
+    if (LobbyIdValue.IsValid()&& !LobbyIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIdValue->TryGetString(TmpValue)) {LobbyId = TmpValue; }
+    }
+    
     const TSharedPtr<FJsonValue> ServerHostValue = obj->TryGetField(TEXT("ServerHost"));
     if (ServerHostValue.IsValid()&& !ServerHostValue->IsNull())
     {

@@ -12,6 +12,7 @@ namespace PlayFab
     {
     public:
         DECLARE_DELEGATE_OneParam(FGetPhotonAuthenticationTokenDelegate, const ClientModels::FGetPhotonAuthenticationTokenResult&);
+        DECLARE_DELEGATE_OneParam(FGetTitlePublicKeyDelegate, const ClientModels::FGetTitlePublicKeyResult&);
         DECLARE_DELEGATE_OneParam(FGetWindowsHelloChallengeDelegate, const ClientModels::FGetWindowsHelloChallengeResponse&);
         DECLARE_DELEGATE_OneParam(FLoginWithAndroidDeviceIDDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FLoginWithCustomIDDelegate, const ClientModels::FLoginResult&);
@@ -27,6 +28,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLoginWithWindowsHelloDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FRegisterPlayFabUserDelegate, const ClientModels::FRegisterPlayFabUserResult&);
         DECLARE_DELEGATE_OneParam(FRegisterWithWindowsHelloDelegate, const ClientModels::FLoginResult&);
+        DECLARE_DELEGATE_OneParam(FSetPlayerSecretDelegate, const ClientModels::FSetPlayerSecretResult&);
         DECLARE_DELEGATE_OneParam(FAddGenericIDDelegate, const ClientModels::FAddGenericIDResult&);
         DECLARE_DELEGATE_OneParam(FAddUsernamePasswordDelegate, const ClientModels::FAddUsernamePasswordResult&);
         DECLARE_DELEGATE_OneParam(FGetAccountInfoDelegate, const ClientModels::FGetAccountInfoResult&);
@@ -157,6 +159,11 @@ namespace PlayFab
          */
         bool GetPhotonAuthenticationToken(ClientModels::FGetPhotonAuthenticationTokenRequest& request, const FGetPhotonAuthenticationTokenDelegate& SuccessDelegate = FGetPhotonAuthenticationTokenDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Returns the title's base 64 encoded RSA CSP blob.
+         * An RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header. For example if Client/LoginWithCustomId requires signature headers but the player does not have an account yet follow these steps: 1) Call Client/GetTitlePublicKey with one of the title's shared secrets. 2) Convert the Base64 encoded CSP blob to a byte array and create an RSA signing object. 3) Encrypt the UTF8 encoded JSON body of the registration request and place the Base64 encoded result into the EncryptedRequest and with the TitleId field, all other fields can be left empty when performing the API request. 4) Client receives authentication token as normal. Future requests to LoginWithCustomId will require the X-PlayFab-Signature header.
+         */
+        bool GetTitlePublicKey(ClientModels::FGetTitlePublicKeyRequest& request, const FGetTitlePublicKeyDelegate& SuccessDelegate = FGetTitlePublicKeyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Requests a challenge from the server to be signed by Windows Hello Passport service to authenticate.
          * Requires the SHA256 hash of the user's public key.
          */
@@ -230,6 +237,11 @@ namespace PlayFab
          * PublicKey must be generated using the Windows Hello Passport service.
          */
         bool RegisterWithWindowsHello(ClientModels::FRegisterWithWindowsHelloRequest& request, const FRegisterWithWindowsHelloDelegate& SuccessDelegate = FRegisterWithWindowsHelloDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Sets the player's secret if it is not already set. Player secrets are used to sign API requests. To reset a player's secret use the Admin or Server API method SetPlayerSecret.
+         * APIs that require signatures require that the player have a configured Player Secret Key that is used to sign all requests. Players that don't have a secret will be blocked from making API calls until it is configured. To create a signature header add a SHA256 hashed string containing UTF8 encoded JSON body as it will be sent to the server, the current time in UTC formatted to ISO 8601, and the players secret formatted as 'body.date.secret'. Place the resulting hash into the header X-PlayFab-Signature, along with a header X-PlayFab-Timestamp of the same UTC timestamp used in the signature.
+         */
+        bool SetPlayerSecret(ClientModels::FSetPlayerSecretRequest& request, const FSetPlayerSecretDelegate& SuccessDelegate = FSetPlayerSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab ID lookup of any arbitrary service identifier a title wants to add. This identifier should never be used as authentication credentials, as the intent is that it is easily accessible by other players.
          */
@@ -731,6 +743,7 @@ namespace PlayFab
     private:
         // ------------ Generated result handlers
         void OnGetPhotonAuthenticationTokenResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPhotonAuthenticationTokenDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetTitlePublicKeyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitlePublicKeyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetWindowsHelloChallengeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetWindowsHelloChallengeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithAndroidDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithAndroidDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithCustomIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithCustomIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -746,6 +759,7 @@ namespace PlayFab
         void OnLoginWithWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterPlayFabUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterWithWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterWithWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetPlayerSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPlayerSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddGenericIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddGenericIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddUsernamePasswordResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUsernamePasswordDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

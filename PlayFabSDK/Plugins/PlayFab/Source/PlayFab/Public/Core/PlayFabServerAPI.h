@@ -12,6 +12,7 @@ namespace PlayFab
     {
     public:
         DECLARE_DELEGATE_OneParam(FAuthenticateSessionTicketDelegate, const ServerModels::FAuthenticateSessionTicketResult&);
+        DECLARE_DELEGATE_OneParam(FSetPlayerSecretDelegate, const ServerModels::FSetPlayerSecretResult&);
         DECLARE_DELEGATE_OneParam(FBanUsersDelegate, const ServerModels::FBanUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerProfileDelegate, const ServerModels::FGetPlayerProfileResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromFacebookIDsDelegate, const ServerModels::FGetPlayFabIDsFromFacebookIDsResult&);
@@ -134,6 +135,11 @@ namespace PlayFab
          * Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
          */
         bool AuthenticateSessionTicket(ServerModels::FAuthenticateSessionTicketRequest& request, const FAuthenticateSessionTicketDelegate& SuccessDelegate = FAuthenticateSessionTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Sets the player's secret if it is not already set. Player secrets are used to sign API requests. To reset a player's secret use the Admin or Server API method SetPlayerSecret.
+         * APIs that require signatures require that the player have a configured Player Secret Key that is used to sign all requests. Players that don't have a secret will be blocked from making API calls until it is configured. To create a signature header add a SHA256 hashed string containing UTF8 encoded JSON body as it will be sent to the server, the current time in UTC formatted to ISO 8601, and the players secret formatted as 'body.date.secret'. Place the resulting hash into the header X-PlayFab-Signature, along with a header X-PlayFab-Timestamp of the same UTC timestamp used in the signature.
+         */
+        bool SetPlayerSecret(ServerModels::FSetPlayerSecretRequest& request, const FSetPlayerSecretDelegate& SuccessDelegate = FSetPlayerSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Bans users by PlayFab ID with optional IP address, or MAC address for the provided game.
          * The existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so use this feature with caution. Returns information about the new bans.
@@ -631,6 +637,7 @@ namespace PlayFab
     private:
         // ------------ Generated result handlers
         void OnAuthenticateSessionTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAuthenticateSessionTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetPlayerSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPlayerSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerProfileResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerProfileDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromFacebookIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

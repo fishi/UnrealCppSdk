@@ -2881,6 +2881,68 @@ bool PlayFab::AdminModels::FCreateCloudScriptTaskRequest::readFromValue(const TS
 }
 
 
+PlayFab::AdminModels::FCreatePlayerSharedSecretRequest::~FCreatePlayerSharedSecretRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FCreatePlayerSharedSecretRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(FriendlyName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("FriendlyName")); writer->WriteValue(FriendlyName); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCreatePlayerSharedSecretRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> FriendlyNameValue = obj->TryGetField(TEXT("FriendlyName"));
+    if (FriendlyNameValue.IsValid()&& !FriendlyNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendlyNameValue->TryGetString(TmpValue)) {FriendlyName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FCreatePlayerSharedSecretResult::~FCreatePlayerSharedSecretResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FCreatePlayerSharedSecretResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(SecretKey.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SecretKey")); writer->WriteValue(SecretKey); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCreatePlayerSharedSecretResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SecretKeyValue = obj->TryGetField(TEXT("SecretKey"));
+    if (SecretKeyValue.IsValid()&& !SecretKeyValue->IsNull())
+    {
+        FString TmpValue;
+        if(SecretKeyValue->TryGetString(TmpValue)) {SecretKey = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 void PlayFab::AdminModels::writeStatisticResetIntervalOptionEnumJSON(StatisticResetIntervalOption enumVal, JsonWriter& writer)
 {
     switch(enumVal)
@@ -3485,6 +3547,59 @@ bool PlayFab::AdminModels::FDeleteContentRequest::readFromValue(const TSharedPtr
         if(KeyValue->TryGetString(TmpValue)) {Key = TmpValue; }
     }
     
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FDeletePlayerSharedSecretRequest::~FDeletePlayerSharedSecretRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeletePlayerSharedSecretRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(SecretKey.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SecretKey")); writer->WriteValue(SecretKey); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeletePlayerSharedSecretRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SecretKeyValue = obj->TryGetField(TEXT("SecretKey"));
+    if (SecretKeyValue.IsValid()&& !SecretKeyValue->IsNull())
+    {
+        FString TmpValue;
+        if(SecretKeyValue->TryGetString(TmpValue)) {SecretKey = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FDeletePlayerSharedSecretResult::~FDeletePlayerSharedSecretResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeletePlayerSharedSecretResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeletePlayerSharedSecretResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
     
     return HasSucceeded;
 }
@@ -4824,6 +4939,121 @@ bool PlayFab::AdminModels::FGetPlayerSegmentsResult::readFromValue(const TShared
             TSharedPtr<FJsonValue> CurrentItem = SegmentsArray[Idx];
             
             Segments.Add(FGetSegmentResult(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerSharedSecretsRequest::~FGetPlayerSharedSecretsRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerSharedSecretsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerSharedSecretsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FSharedSecret::~FSharedSecret()
+{
+    
+}
+
+void PlayFab::AdminModels::FSharedSecret::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(SecretKey.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SecretKey")); writer->WriteValue(SecretKey); }
+	
+    if(FriendlyName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("FriendlyName")); writer->WriteValue(FriendlyName); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Disabled")); writer->WriteValue(Disabled);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FSharedSecret::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SecretKeyValue = obj->TryGetField(TEXT("SecretKey"));
+    if (SecretKeyValue.IsValid()&& !SecretKeyValue->IsNull())
+    {
+        FString TmpValue;
+        if(SecretKeyValue->TryGetString(TmpValue)) {SecretKey = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> FriendlyNameValue = obj->TryGetField(TEXT("FriendlyName"));
+    if (FriendlyNameValue.IsValid()&& !FriendlyNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendlyNameValue->TryGetString(TmpValue)) {FriendlyName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DisabledValue = obj->TryGetField(TEXT("Disabled"));
+    if (DisabledValue.IsValid()&& !DisabledValue->IsNull())
+    {
+        bool TmpValue;
+        if(DisabledValue->TryGetBool(TmpValue)) {Disabled = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerSharedSecretsResult::~FGetPlayerSharedSecretsResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerSharedSecretsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(SharedSecrets.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("SharedSecrets"));
+    
+        for (const FSharedSecret& item : SharedSecrets)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerSharedSecretsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&SharedSecretsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("SharedSecrets"));
+        for (int32 Idx = 0; Idx < SharedSecretsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = SharedSecretsArray[Idx];
+            
+            SharedSecrets.Add(FSharedSecret(CurrentItem->AsObject()));
         }
     }
 
@@ -9785,6 +10015,41 @@ bool PlayFab::AdminModels::FModifyUserVirtualCurrencyResult::readFromValue(const
 }
 
 
+void PlayFab::AdminModels::writePushSetupPlatformEnumJSON(PushSetupPlatform enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case PushSetupPlatformGCM: writer->WriteValue(TEXT("GCM")); break;
+        case PushSetupPlatformAPNS: writer->WriteValue(TEXT("APNS")); break;
+        case PushSetupPlatformAPNS_SANDBOX: writer->WriteValue(TEXT("APNS_SANDBOX")); break;
+    }
+}
+
+AdminModels::PushSetupPlatform PlayFab::AdminModels::readPushSetupPlatformFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, PushSetupPlatform> _PushSetupPlatformMap;
+    if (_PushSetupPlatformMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _PushSetupPlatformMap.Add(TEXT("GCM"), PushSetupPlatformGCM);
+        _PushSetupPlatformMap.Add(TEXT("APNS"), PushSetupPlatformAPNS);
+        _PushSetupPlatformMap.Add(TEXT("APNS_SANDBOX"), PushSetupPlatformAPNS_SANDBOX);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _PushSetupPlatformMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return PushSetupPlatformGCM; // Basically critical fail
+}
+
+
 PlayFab::AdminModels::FRandomResultTable::~FRandomResultTable()
 {
     
@@ -10722,6 +10987,68 @@ bool PlayFab::AdminModels::FSendAccountRecoveryEmailResult::readFromValue(const 
 }
 
 
+PlayFab::AdminModels::FSetPlayerSecretRequest::~FSetPlayerSecretRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FSetPlayerSecretRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayerSecret")); writer->WriteValue(PlayerSecret);
+	
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FSetPlayerSecretRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayerSecretValue = obj->TryGetField(TEXT("PlayerSecret"));
+    if (PlayerSecretValue.IsValid()&& !PlayerSecretValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerSecretValue->TryGetString(TmpValue)) {PlayerSecret = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FSetPlayerSecretResult::~FSetPlayerSecretResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FSetPlayerSecretResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FSetPlayerSecretResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FSetPublishedRevisionRequest::~FSetPublishedRevisionRequest()
 {
     
@@ -10919,7 +11246,7 @@ void PlayFab::AdminModels::FSetupPushNotificationRequest::writeJSON(JsonWriter& 
     
     writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
 	
-    writer->WriteIdentifierPrefix(TEXT("Platform")); writer->WriteValue(Platform);
+    writer->WriteIdentifierPrefix(TEXT("Platform")); writePushSetupPlatformEnumJSON(Platform, writer);
 	
     if(Key.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Key")); writer->WriteValue(Key); }
 	
@@ -10942,12 +11269,7 @@ bool PlayFab::AdminModels::FSetupPushNotificationRequest::readFromValue(const TS
         if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> PlatformValue = obj->TryGetField(TEXT("Platform"));
-    if (PlatformValue.IsValid()&& !PlatformValue->IsNull())
-    {
-        FString TmpValue;
-        if(PlatformValue->TryGetString(TmpValue)) {Platform = TmpValue; }
-    }
+    Platform = readPushSetupPlatformFromValue(obj->TryGetField(TEXT("Platform")));
     
     const TSharedPtr<FJsonValue> KeyValue = obj->TryGetField(TEXT("Key"));
     if (KeyValue.IsValid()&& !KeyValue->IsNull())
@@ -11445,6 +11767,77 @@ bool PlayFab::AdminModels::FUpdateCloudScriptResult::readFromValue(const TShared
         if(RevisionValue->TryGetNumber(TmpValue)) {Revision = TmpValue; }
     }
     
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdatePlayerSharedSecretRequest::~FUpdatePlayerSharedSecretRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdatePlayerSharedSecretRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(SecretKey.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SecretKey")); writer->WriteValue(SecretKey); }
+	
+    if(FriendlyName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("FriendlyName")); writer->WriteValue(FriendlyName); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Disabled")); writer->WriteValue(Disabled);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdatePlayerSharedSecretRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SecretKeyValue = obj->TryGetField(TEXT("SecretKey"));
+    if (SecretKeyValue.IsValid()&& !SecretKeyValue->IsNull())
+    {
+        FString TmpValue;
+        if(SecretKeyValue->TryGetString(TmpValue)) {SecretKey = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> FriendlyNameValue = obj->TryGetField(TEXT("FriendlyName"));
+    if (FriendlyNameValue.IsValid()&& !FriendlyNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendlyNameValue->TryGetString(TmpValue)) {FriendlyName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DisabledValue = obj->TryGetField(TEXT("Disabled"));
+    if (DisabledValue.IsValid()&& !DisabledValue->IsNull())
+    {
+        bool TmpValue;
+        if(DisabledValue->TryGetBool(TmpValue)) {Disabled = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdatePlayerSharedSecretResult::~FUpdatePlayerSharedSecretResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdatePlayerSharedSecretResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdatePlayerSharedSecretResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
     
     return HasSucceeded;
 }

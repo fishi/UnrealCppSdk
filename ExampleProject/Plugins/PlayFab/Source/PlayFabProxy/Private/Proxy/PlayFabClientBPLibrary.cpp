@@ -1710,6 +1710,26 @@ void UPFClientProxyLibrary::BreakBPClientGetTitleNewsResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetTitlePublicKeyRequest(
+		const FBPClientGetTitlePublicKeyRequest& In
+        ,FString& OutTitleId
+        ,FString& OutTitleSharedSecret
+	)
+{
+    OutTitleId = In.Data.TitleId;
+	OutTitleSharedSecret = In.Data.TitleSharedSecret;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetTitlePublicKeyResult(
+		const FBPClientGetTitlePublicKeyResult& In
+        ,FString& OutRSAPublicKey
+	)
+{
+    OutRSAPublicKey = In.Data.RSAPublicKey;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetTradeStatusRequest(
 		const FBPClientGetTradeStatusRequest& In
         ,FString& OutOfferingPlayerId
@@ -3032,6 +3052,24 @@ void UPFClientProxyLibrary::BreakBPClientSetFriendTagsRequest(
 
 void UPFClientProxyLibrary::BreakBPClientSetFriendTagsResult(
 		const FBPClientSetFriendTagsResult& In
+	)
+{
+    
+}
+
+void UPFClientProxyLibrary::BreakBPClientSetPlayerSecretRequest(
+		const FBPClientSetPlayerSecretRequest& In
+        ,FString& OutPlayerSecret
+        ,FString& OutEncryptedRequest
+	)
+{
+    OutPlayerSecret = In.Data.PlayerSecret;
+	OutEncryptedRequest = In.Data.EncryptedRequest;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientSetPlayerSecretResult(
+		const FBPClientSetPlayerSecretResult& In
 	)
 {
     

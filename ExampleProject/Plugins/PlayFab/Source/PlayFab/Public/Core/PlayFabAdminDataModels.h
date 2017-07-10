@@ -1688,6 +1688,60 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FCreatePlayerSharedSecretRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Friendly name for this key
+		FString FriendlyName;
+	
+        FCreatePlayerSharedSecretRequest() :
+			FPlayFabBaseModel(),
+			FriendlyName()
+			{}
+		
+		FCreatePlayerSharedSecretRequest(const FCreatePlayerSharedSecretRequest& src) :
+			FPlayFabBaseModel(),
+			FriendlyName(src.FriendlyName)
+			{}
+			
+		FCreatePlayerSharedSecretRequest(const TSharedPtr<FJsonObject>& obj) : FCreatePlayerSharedSecretRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCreatePlayerSharedSecretRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCreatePlayerSharedSecretResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The player shared secret to use when calling Client/GetTitlePublicKey
+		FString SecretKey;
+	
+        FCreatePlayerSharedSecretResult() :
+			FPlayFabBaseModel(),
+			SecretKey()
+			{}
+		
+		FCreatePlayerSharedSecretResult(const FCreatePlayerSharedSecretResult& src) :
+			FPlayFabBaseModel(),
+			SecretKey(src.SecretKey)
+			{}
+			
+		FCreatePlayerSharedSecretResult(const TSharedPtr<FJsonObject>& obj) : FCreatePlayerSharedSecretResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCreatePlayerSharedSecretResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum StatisticResetIntervalOption
 	{
 		StatisticResetIntervalOptionNever,
@@ -2033,6 +2087,56 @@ namespace AdminModels
         }
 		
 		~FDeleteContentRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FDeletePlayerSharedSecretRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] The shared secret key to delete
+		FString SecretKey;
+	
+        FDeletePlayerSharedSecretRequest() :
+			FPlayFabBaseModel(),
+			SecretKey()
+			{}
+		
+		FDeletePlayerSharedSecretRequest(const FDeletePlayerSharedSecretRequest& src) :
+			FPlayFabBaseModel(),
+			SecretKey(src.SecretKey)
+			{}
+			
+		FDeletePlayerSharedSecretRequest(const TSharedPtr<FJsonObject>& obj) : FDeletePlayerSharedSecretRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeletePlayerSharedSecretRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FDeletePlayerSharedSecretResult : public FPlayFabBaseModel
+    {
+		
+	
+        FDeletePlayerSharedSecretResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FDeletePlayerSharedSecretResult(const FDeletePlayerSharedSecretResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FDeletePlayerSharedSecretResult(const TSharedPtr<FJsonObject>& obj) : FDeletePlayerSharedSecretResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeletePlayerSharedSecretResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3003,6 +3107,91 @@ namespace AdminModels
         }
 		
 		~FGetPlayerSegmentsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerSharedSecretsRequest : public FPlayFabBaseModel
+    {
+		
+	
+        FGetPlayerSharedSecretsRequest() :
+			FPlayFabBaseModel()
+			{}
+		
+		FGetPlayerSharedSecretsRequest(const FGetPlayerSharedSecretsRequest& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FGetPlayerSharedSecretsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerSharedSecretsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerSharedSecretsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSharedSecret : public FPlayFabBaseModel
+    {
+		
+		// [optional] The player shared secret to use when calling Client/GetTitlePublicKey
+		FString SecretKey;
+		// [optional] Friendly name for this key
+		FString FriendlyName;
+		// Flag to indicate if this key is disabled
+		bool Disabled;
+	
+        FSharedSecret() :
+			FPlayFabBaseModel(),
+			SecretKey(),
+			FriendlyName(),
+			Disabled(false)
+			{}
+		
+		FSharedSecret(const FSharedSecret& src) :
+			FPlayFabBaseModel(),
+			SecretKey(src.SecretKey),
+			FriendlyName(src.FriendlyName),
+			Disabled(src.Disabled)
+			{}
+			
+		FSharedSecret(const TSharedPtr<FJsonObject>& obj) : FSharedSecret()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSharedSecret();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerSharedSecretsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The player shared secret to use when calling Client/GetTitlePublicKey
+		TArray<FSharedSecret> SharedSecrets;
+	
+        FGetPlayerSharedSecretsResult() :
+			FPlayFabBaseModel(),
+			SharedSecrets()
+			{}
+		
+		FGetPlayerSharedSecretsResult(const FGetPlayerSharedSecretsResult& src) :
+			FPlayFabBaseModel(),
+			SharedSecrets(src.SharedSecrets)
+			{}
+			
+		FGetPlayerSharedSecretsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerSharedSecretsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerSharedSecretsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -6078,6 +6267,17 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum PushSetupPlatform
+	{
+		PushSetupPlatformGCM,
+		PushSetupPlatformAPNS,
+		PushSetupPlatformAPNS_SANDBOX
+	};
+	
+	void writePushSetupPlatformEnumJSON(PushSetupPlatform enumVal, JsonWriter& writer);
+	PushSetupPlatform readPushSetupPlatformFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FRandomResultTable : public FPlayFabBaseModel
     {
 		
@@ -6807,6 +7007,60 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FSetPlayerSecretRequest : public FPlayFabBaseModel
+    {
+		
+		// Player secret that is used to verify API request signatures (Enterprise Only).
+		FString PlayerSecret;
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+	
+        FSetPlayerSecretRequest() :
+			FPlayFabBaseModel(),
+			PlayerSecret(),
+			PlayFabId()
+			{}
+		
+		FSetPlayerSecretRequest(const FSetPlayerSecretRequest& src) :
+			FPlayFabBaseModel(),
+			PlayerSecret(src.PlayerSecret),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FSetPlayerSecretRequest(const TSharedPtr<FJsonObject>& obj) : FSetPlayerSecretRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetPlayerSecretRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetPlayerSecretResult : public FPlayFabBaseModel
+    {
+		
+	
+        FSetPlayerSecretResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FSetPlayerSecretResult(const FSetPlayerSecretResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FSetPlayerSecretResult(const TSharedPtr<FJsonObject>& obj) : FSetPlayerSecretResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetPlayerSecretResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FSetPublishedRevisionRequest : public FPlayFabBaseModel
     {
 		
@@ -6975,7 +7229,7 @@ namespace AdminModels
 		// name of the application sending the message (application names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, hyphens, and periods, and must be between 1 and 256 characters long)
 		FString Name;
 		// supported notification platforms are Apple Push Notification Service (APNS and APNS_SANDBOX) for iOS and Google Cloud Messaging (GCM) for Android
-		FString Platform;
+		PushSetupPlatform Platform;
 		// [optional] for APNS, this is the PlatformPrincipal (SSL Certificate)
 		FString Key;
 		// Credential is the Private Key for APNS/APNS_SANDBOX, and the API Key for GCM
@@ -7311,6 +7565,64 @@ namespace AdminModels
         }
 		
 		~FUpdateCloudScriptResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePlayerSharedSecretRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] The shared secret key to update
+		FString SecretKey;
+		// [optional] Friendly name for this key
+		FString FriendlyName;
+		// Disable or Enable this key
+		bool Disabled;
+	
+        FUpdatePlayerSharedSecretRequest() :
+			FPlayFabBaseModel(),
+			SecretKey(),
+			FriendlyName(),
+			Disabled(false)
+			{}
+		
+		FUpdatePlayerSharedSecretRequest(const FUpdatePlayerSharedSecretRequest& src) :
+			FPlayFabBaseModel(),
+			SecretKey(src.SecretKey),
+			FriendlyName(src.FriendlyName),
+			Disabled(src.Disabled)
+			{}
+			
+		FUpdatePlayerSharedSecretRequest(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerSharedSecretRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePlayerSharedSecretRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePlayerSharedSecretResult : public FPlayFabBaseModel
+    {
+		
+	
+        FUpdatePlayerSharedSecretResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUpdatePlayerSharedSecretResult(const FUpdatePlayerSharedSecretResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUpdatePlayerSharedSecretResult(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerSharedSecretResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePlayerSharedSecretResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

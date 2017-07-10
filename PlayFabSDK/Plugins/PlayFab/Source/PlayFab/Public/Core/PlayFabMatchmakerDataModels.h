@@ -326,6 +326,8 @@ namespace MatchmakerModels
 	struct PLAYFAB_API FRegisterGameRequest : public FPlayFabBaseModel
     {
 		
+		// [optional] Previous lobby id if re-registering an existing game.
+		FString LobbyId;
 		// IP address of the Game Server Instance.
 		FString ServerHost;
 		// Port number for communication with the Game Server Instance.
@@ -341,6 +343,7 @@ namespace MatchmakerModels
 	
         FRegisterGameRequest() :
 			FPlayFabBaseModel(),
+			LobbyId(),
 			ServerHost(),
 			ServerPort(),
 			Build(),
@@ -351,6 +354,7 @@ namespace MatchmakerModels
 		
 		FRegisterGameRequest(const FRegisterGameRequest& src) :
 			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId),
 			ServerHost(src.ServerHost),
 			ServerPort(src.ServerPort),
 			Build(src.Build),
@@ -373,7 +377,7 @@ namespace MatchmakerModels
 	struct PLAYFAB_API FRegisterGameResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique identifier generated for the Game Server Instance that is registered.
+		// [optional] Unique identifier generated for the Game Server Instance that is registered. If LobbyId is specified in request and the game still exists in PlayFab, the LobbyId in request is returned. Otherwise a new lobby id will be returned.
 		FString LobbyId;
 	
         FRegisterGameResponse() :

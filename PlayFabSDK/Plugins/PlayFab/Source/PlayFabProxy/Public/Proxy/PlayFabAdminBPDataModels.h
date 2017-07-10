@@ -326,6 +326,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreateCloudScriptTaskRequestDelegate, const FBPAdminCreateCloudScriptTaskRequest&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCreatePlayerSharedSecretRequest"))
+struct FBPAdminCreatePlayerSharedSecretRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FCreatePlayerSharedSecretRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerSharedSecretRequestDelegate, const FBPAdminCreatePlayerSharedSecretRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCreatePlayerSharedSecretResult"))
+struct FBPAdminCreatePlayerSharedSecretResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FCreatePlayerSharedSecretResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerSharedSecretResultDelegate, const FBPAdminCreatePlayerSharedSecretResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCreatePlayerStatisticDefinitionRequest"))
 struct FBPAdminCreatePlayerStatisticDefinitionRequest
 {
@@ -375,6 +395,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteContentRequestDelegate, const FBPAdminDeleteContentRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeletePlayerSharedSecretRequest"))
+struct FBPAdminDeletePlayerSharedSecretRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FDeletePlayerSharedSecretRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerSharedSecretRequestDelegate, const FBPAdminDeletePlayerSharedSecretRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeletePlayerSharedSecretResult"))
+struct FBPAdminDeletePlayerSharedSecretResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FDeletePlayerSharedSecretResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerSharedSecretResultDelegate, const FBPAdminDeletePlayerSharedSecretResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeleteStoreRequest"))
 struct FBPAdminDeleteStoreRequest
@@ -715,6 +755,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerSegmentsResultDelegate, const FBPAdminGetPlayerSegmentsResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayerSharedSecretsRequest"))
+struct FBPAdminGetPlayerSharedSecretsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPlayerSharedSecretsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerSharedSecretsRequestDelegate, const FBPAdminGetPlayerSharedSecretsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayerSharedSecretsResult"))
+struct FBPAdminGetPlayerSharedSecretsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPlayerSharedSecretsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerSharedSecretsResultDelegate, const FBPAdminGetPlayerSharedSecretsResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayersInSegmentRequest"))
 struct FBPAdminGetPlayersInSegmentRequest
@@ -1366,6 +1426,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminPushNotificationRegistrationDelegate, const FBPAdminPushNotificationRegistration&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminPushSetupPlatform"))
+struct FBPAdminPushSetupPlatform
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::PushSetupPlatform Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminPushSetupPlatformDelegate, const FBPAdminPushSetupPlatform&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRandomResultTable"))
 struct FBPAdminRandomResultTable
 {
@@ -1696,6 +1766,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSendAccountRecoveryEmailResultDelegate, const FBPAdminSendAccountRecoveryEmailResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSetPlayerSecretRequest"))
+struct FBPAdminSetPlayerSecretRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FSetPlayerSecretRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetPlayerSecretRequestDelegate, const FBPAdminSetPlayerSecretRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSetPlayerSecretResult"))
+struct FBPAdminSetPlayerSecretResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FSetPlayerSecretResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetPlayerSecretResultDelegate, const FBPAdminSetPlayerSecretResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSetPublishedRevisionRequest"))
 struct FBPAdminSetPublishedRevisionRequest
 {
@@ -1775,6 +1865,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetupPushNotificationResultDelegate, const FBPAdminSetupPushNotificationResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSharedSecret"))
+struct FBPAdminSharedSecret
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FSharedSecret Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSharedSecretDelegate, const FBPAdminSharedSecret&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSourceType"))
 struct FBPAdminSourceType
@@ -1955,6 +2055,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdateCloudScriptResultDelegate, const FBPAdminUpdateCloudScriptResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdatePlayerSharedSecretRequest"))
+struct FBPAdminUpdatePlayerSharedSecretRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdatePlayerSharedSecretRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdatePlayerSharedSecretRequestDelegate, const FBPAdminUpdatePlayerSharedSecretRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdatePlayerSharedSecretResult"))
+struct FBPAdminUpdatePlayerSharedSecretResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdatePlayerSharedSecretResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdatePlayerSharedSecretResultDelegate, const FBPAdminUpdatePlayerSharedSecretResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdatePlayerStatisticDefinitionRequest"))
 struct FBPAdminUpdatePlayerStatisticDefinitionRequest

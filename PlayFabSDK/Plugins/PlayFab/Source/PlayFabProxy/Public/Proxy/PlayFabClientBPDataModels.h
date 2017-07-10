@@ -1266,6 +1266,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetTitleNewsResultDelegate, const FBPClientGetTitleNewsResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetTitlePublicKeyRequest"))
+struct FBPClientGetTitlePublicKeyRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetTitlePublicKeyRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetTitlePublicKeyRequestDelegate, const FBPClientGetTitlePublicKeyRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetTitlePublicKeyResult"))
+struct FBPClientGetTitlePublicKeyResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetTitlePublicKeyResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetTitlePublicKeyResultDelegate, const FBPClientGetTitlePublicKeyResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetTradeStatusRequest"))
 struct FBPClientGetTradeStatusRequest
 {
@@ -2215,6 +2235,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientSetFriendTagsResultDelegate, const FBPClientSetFriendTagsResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientSetPlayerSecretRequest"))
+struct FBPClientSetPlayerSecretRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FSetPlayerSecretRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientSetPlayerSecretRequestDelegate, const FBPClientSetPlayerSecretRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientSetPlayerSecretResult"))
+struct FBPClientSetPlayerSecretResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FSetPlayerSecretResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientSetPlayerSecretResultDelegate, const FBPClientSetPlayerSecretResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientSharedGroupDataRecord"))
 struct FBPClientSharedGroupDataRecord

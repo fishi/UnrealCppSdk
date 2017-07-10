@@ -3601,9 +3601,9 @@ namespace ClientModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
-		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		// [optional] If set to false, Version is considered null. If true, uses the specified Version
 		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
@@ -4102,9 +4102,9 @@ namespace ClientModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
-		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		// [optional] If set to false, Version is considered null. If true, uses the specified Version
 		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
@@ -4277,9 +4277,9 @@ namespace ClientModels
 		FString StatisticName;
 		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
 		OptionalInt32 MaxResultsCount;
-		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		// [optional] If set to false, Version is considered null. If true, uses the specified Version
 		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
@@ -4417,9 +4417,9 @@ namespace ClientModels
 		int32 StartPosition;
 		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
 		OptionalInt32 MaxResultsCount;
-		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		// [optional] If set to false, Version is considered null. If true, uses the specified Version
 		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
@@ -6340,6 +6340,64 @@ namespace ClientModels
         }
 		
 		~FGetTitleNewsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTitlePublicKeyRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
+		FString TitleId;
+		// The shared secret key for this title
+		FString TitleSharedSecret;
+	
+        FGetTitlePublicKeyRequest() :
+			FPlayFabBaseModel(),
+			TitleId(),
+			TitleSharedSecret()
+			{}
+		
+		FGetTitlePublicKeyRequest(const FGetTitlePublicKeyRequest& src) :
+			FPlayFabBaseModel(),
+			TitleId(src.TitleId),
+			TitleSharedSecret(src.TitleSharedSecret)
+			{}
+			
+		FGetTitlePublicKeyRequest(const TSharedPtr<FJsonObject>& obj) : FGetTitlePublicKeyRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTitlePublicKeyRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTitlePublicKeyResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Base64 encoded RSA CSP byte array blob containing the title's public RSA key
+		FString RSAPublicKey;
+	
+        FGetTitlePublicKeyResult() :
+			FPlayFabBaseModel(),
+			RSAPublicKey()
+			{}
+		
+		FGetTitlePublicKeyResult(const FGetTitlePublicKeyResult& src) :
+			FPlayFabBaseModel(),
+			RSAPublicKey(src.RSAPublicKey)
+			{}
+			
+		FGetTitlePublicKeyResult(const TSharedPtr<FJsonObject>& obj) : FGetTitlePublicKeyResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTitlePublicKeyResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -9082,6 +9140,60 @@ namespace ClientModels
         }
 		
 		~FSetFriendTagsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetPlayerSecretRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Player secret that is used to verify API request signatures (Enterprise Only).
+		FString PlayerSecret;
+		// [optional] Base64 encoded body that is encrypted with the Title's public RSA key (Enterprise Only).
+		FString EncryptedRequest;
+	
+        FSetPlayerSecretRequest() :
+			FPlayFabBaseModel(),
+			PlayerSecret(),
+			EncryptedRequest()
+			{}
+		
+		FSetPlayerSecretRequest(const FSetPlayerSecretRequest& src) :
+			FPlayFabBaseModel(),
+			PlayerSecret(src.PlayerSecret),
+			EncryptedRequest(src.EncryptedRequest)
+			{}
+			
+		FSetPlayerSecretRequest(const TSharedPtr<FJsonObject>& obj) : FSetPlayerSecretRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetPlayerSecretRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetPlayerSecretResult : public FPlayFabBaseModel
+    {
+		
+	
+        FSetPlayerSecretResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FSetPlayerSecretResult(const FSetPlayerSecretResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FSetPlayerSecretResult(const TSharedPtr<FJsonObject>& obj) : FSetPlayerSecretResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetPlayerSecretResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

@@ -1576,6 +1576,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerStatisticVersionDelegate, const FBPServerPlayerStatisticVersion&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPushNotificationPackage"))
+struct FBPServerPushNotificationPackage
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPushNotificationPackage Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPushNotificationPackageDelegate, const FBPServerPushNotificationPackage&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPushNotificationPlatform"))
 struct FBPServerPushNotificationPlatform
 {
@@ -1955,6 +1965,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceTagsResultDelegate, const FBPServerSetGameServerInstanceTagsResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetPlayerSecretRequest"))
+struct FBPServerSetPlayerSecretRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSetPlayerSecretRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetPlayerSecretRequestDelegate, const FBPServerSetPlayerSecretRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetPlayerSecretResult"))
+struct FBPServerSetPlayerSecretResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSetPlayerSecretResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetPlayerSecretResultDelegate, const FBPServerSetPlayerSecretResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetPublisherDataRequest"))
 struct FBPServerSetPublisherDataRequest

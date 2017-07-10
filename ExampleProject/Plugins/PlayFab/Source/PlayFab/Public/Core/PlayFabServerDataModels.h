@@ -3539,9 +3539,9 @@ namespace ServerModels
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
-		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		// [optional] If set to false, Version is considered null. If true, uses the specified Version
 		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
@@ -3726,9 +3726,9 @@ namespace ServerModels
 		int32 MaxResultsCount;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
-		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		// [optional] If set to false, Version is considered null. If true, uses the specified Version
 		OptionalBool UseSpecificVersion;
 	
         FGetLeaderboardAroundUserRequest() :
@@ -4281,9 +4281,9 @@ namespace ServerModels
 		int32 MaxResultsCount;
 		// [optional] If non-null, this determines which properties of the profile to return. If null, playfab will only include display names. For API calls from the client, only ShowDisplayName, ShowAvatarUrl are allowed at this time.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
-		// [optional] The version of the leaderboard to get, when UseSpecificVersion is true.
+		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If true, uses the specified version. If false, gets the most recent version.
+		// [optional] If set to false, Version is considered null. If true, uses the specified Version
 		OptionalBool UseSpecificVersion;
 	
         FGetLeaderboardRequest() :
@@ -7017,6 +7017,53 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FPushNotificationPackage : public FPlayFabBaseModel
+    {
+		
+		// [optional] If set, represents a timestamp for when the device should display the message. Local format should be formatted as: yyyy-MM-dd HH:mm:ss or UTC timestamp formatted as yyyy-MM-ddTHH:mm:ssZ. Delivery is not delayed, scheduling is expected to be handled by the device.
+		FString ScheduleDate;
+		// Title/Subject of the message
+		FString Title;
+		// Content of the message
+		FString Message;
+		// [optional] Icon file to display with the message
+		FString Icon;
+		// [optional] Sound file to play with the message
+		FString Sound;
+		// [optional] Arbitrary string that will be delivered with the message. Suggested use: JSON formatted object
+		FString CustomData;
+	
+        FPushNotificationPackage() :
+			FPlayFabBaseModel(),
+			ScheduleDate(),
+			Title(),
+			Message(),
+			Icon(),
+			Sound(),
+			CustomData()
+			{}
+		
+		FPushNotificationPackage(const FPushNotificationPackage& src) :
+			FPlayFabBaseModel(),
+			ScheduleDate(src.ScheduleDate),
+			Title(src.Title),
+			Message(src.Message),
+			Icon(src.Icon),
+			Sound(src.Sound),
+			CustomData(src.CustomData)
+			{}
+			
+		FPushNotificationPackage(const TSharedPtr<FJsonObject>& obj) : FPushNotificationPackage()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPushNotificationPackage();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FRedeemCouponRequest : public FPlayFabBaseModel
     {
 		
@@ -7217,6 +7264,8 @@ namespace ServerModels
 	struct PLAYFAB_API FRegisterGameRequest : public FPlayFabBaseModel
     {
 		
+		// [optional] Previous lobby id if re-registering an existing game.
+		FString LobbyId;
 		// IP address of the Game Server Instance.
 		FString ServerHost;
 		// Port number for communication with the Game Server Instance.
@@ -7232,6 +7281,7 @@ namespace ServerModels
 	
         FRegisterGameRequest() :
 			FPlayFabBaseModel(),
+			LobbyId(),
 			ServerHost(),
 			ServerPort(),
 			Build(),
@@ -7242,6 +7292,7 @@ namespace ServerModels
 		
 		FRegisterGameRequest(const FRegisterGameRequest& src) :
 			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId),
 			ServerHost(src.ServerHost),
 			ServerPort(src.ServerPort),
 			Build(src.Build),
@@ -7264,7 +7315,7 @@ namespace ServerModels
 	struct PLAYFAB_API FRegisterGameResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique identifier generated for the Game Server Instance that is registered.
+		// [optional] Unique identifier generated for the Game Server Instance that is registered. If LobbyId is specified in request and the game still exists in PlayFab, the LobbyId in request is returned. Otherwise a new lobby id will be returned.
 		FString LobbyId;
 	
         FRegisterGameResponse() :
@@ -7664,8 +7715,10 @@ namespace ServerModels
 		
 		// PlayFabId of the recipient of the push notification.
 		FString Recipient;
-		// Text of message to send.
+		// [optional] Text of message to send.
 		FString Message;
+		// [optional] Defines all possible push attributes like message, title, icon, etc
+		TSharedPtr<FPushNotificationPackage> Package;
 		// [optional] Subject of message to send (may not be displayed in all platforms.
 		FString Subject;
 	
@@ -7673,6 +7726,7 @@ namespace ServerModels
 			FPlayFabBaseModel(),
 			Recipient(),
 			Message(),
+			Package(nullptr),
 			Subject()
 			{}
 		
@@ -7680,6 +7734,7 @@ namespace ServerModels
 			FPlayFabBaseModel(),
 			Recipient(src.Recipient),
 			Message(src.Message),
+			Package(src.Package.IsValid() ? MakeShareable(new FPushNotificationPackage(*src.Package)) : nullptr),
 			Subject(src.Subject)
 			{}
 			
@@ -7909,6 +7964,60 @@ namespace ServerModels
         }
 		
 		~FSetGameServerInstanceTagsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetPlayerSecretRequest : public FPlayFabBaseModel
+    {
+		
+		// Player secret that is used to verify API request signatures (Enterprise Only).
+		FString PlayerSecret;
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+	
+        FSetPlayerSecretRequest() :
+			FPlayFabBaseModel(),
+			PlayerSecret(),
+			PlayFabId()
+			{}
+		
+		FSetPlayerSecretRequest(const FSetPlayerSecretRequest& src) :
+			FPlayFabBaseModel(),
+			PlayerSecret(src.PlayerSecret),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FSetPlayerSecretRequest(const TSharedPtr<FJsonObject>& obj) : FSetPlayerSecretRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetPlayerSecretRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetPlayerSecretResult : public FPlayFabBaseModel
+    {
+		
+	
+        FSetPlayerSecretResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FSetPlayerSecretResult(const FSetPlayerSecretResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FSetPlayerSecretResult(const TSharedPtr<FJsonObject>& obj) : FSetPlayerSecretResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetPlayerSecretResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

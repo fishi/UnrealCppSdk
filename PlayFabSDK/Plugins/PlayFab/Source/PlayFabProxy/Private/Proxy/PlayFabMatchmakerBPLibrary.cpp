@@ -120,13 +120,15 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerRegion(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerRegisterGameRequest(
 		const FBPMatchmakerRegisterGameRequest& In
+        ,FString& OutLobbyId
         ,FString& OutServerHost
         ,FString& OutServerPort
         ,FString& OutBuild
         ,FString& OutGameMode
 	)
 {
-    OutServerHost = In.Data.ServerHost;
+    OutLobbyId = In.Data.LobbyId;
+	OutServerHost = In.Data.ServerHost;
 	OutServerPort = In.Data.ServerPort;
 	OutBuild = In.Data.Build;
 	

@@ -89,6 +89,7 @@ class UPFMatchmakerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerRegisterGameRequest(
 		const FBPMatchmakerRegisterGameRequest& In
+        ,FString& OutLobbyId
         ,FString& OutServerHost
         ,FString& OutServerPort
         ,FString& OutBuild

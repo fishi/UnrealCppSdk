@@ -2311,6 +2311,25 @@ void UPFServerProxyLibrary::BreakBPServerPlayerStatisticVersion(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerPushNotificationPackage(
+		const FBPServerPushNotificationPackage& In
+        ,FString& OutScheduleDate
+        ,FString& OutTitle
+        ,FString& OutMessage
+        ,FString& OutIcon
+        ,FString& OutSound
+        ,FString& OutCustomData
+	)
+{
+    OutScheduleDate = In.Data.ScheduleDate;
+	OutTitle = In.Data.Title;
+	OutMessage = In.Data.Message;
+	OutIcon = In.Data.Icon;
+	OutSound = In.Data.Sound;
+	OutCustomData = In.Data.CustomData;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerPushNotificationPlatform(
 		const FBPServerPushNotificationPlatform& In
 	)
@@ -2436,13 +2455,15 @@ void UPFServerProxyLibrary::BreakBPServerRegion(
 
 void UPFServerProxyLibrary::BreakBPServerRegisterGameRequest(
 		const FBPServerRegisterGameRequest& In
+        ,FString& OutLobbyId
         ,FString& OutServerHost
         ,FString& OutServerPort
         ,FString& OutBuild
         ,FString& OutGameMode
 	)
 {
-    OutServerHost = In.Data.ServerHost;
+    OutLobbyId = In.Data.LobbyId;
+	OutServerHost = In.Data.ServerHost;
 	OutServerPort = In.Data.ServerPort;
 	OutBuild = In.Data.Build;
 	
@@ -2635,11 +2656,13 @@ void UPFServerProxyLibrary::BreakBPServerSendPushNotificationRequest(
 		const FBPServerSendPushNotificationRequest& In
         ,FString& OutRecipient
         ,FString& OutMessage
+        ,FBPServerPushNotificationPackage& OutPackage
         ,FString& OutSubject
 	)
 {
     OutRecipient = In.Data.Recipient;
 	OutMessage = In.Data.Message;
+	if (In.Data.Package.IsValid()) {    OutPackage.Data = *In.Data.Package;}
 	OutSubject = In.Data.Subject;
 	
 }
@@ -2711,6 +2734,24 @@ void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceTagsRequest(
 
 void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceTagsResult(
 		const FBPServerSetGameServerInstanceTagsResult& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerSetPlayerSecretRequest(
+		const FBPServerSetPlayerSecretRequest& In
+        ,FString& OutPlayerSecret
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayerSecret = In.Data.PlayerSecret;
+	OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerSetPlayerSecretResult(
+		const FBPServerSetPlayerSecretResult& In
 	)
 {
     

@@ -10,10 +10,11 @@ UPFServerRegisterGame::UPFServerRegisterGame(const FObjectInitializer& ObjectIni
 {
 }
 
-UPFServerRegisterGame* UPFServerRegisterGame::RegisterGame(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InServerHost, const FString& InServerPort, const FString& InBuild, const FString& InGameMode, const FString& InTags)
+UPFServerRegisterGame* UPFServerRegisterGame::RegisterGame(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InLobbyId, const FString& InServerHost, const FString& InServerPort, const FString& InBuild, const FString& InGameMode, const FString& InTags)
 {
 	UPFServerRegisterGame* Proxy = NewObject<UPFServerRegisterGame>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
+	Proxy->Request.LobbyId = InLobbyId;
 	Proxy->Request.ServerHost = InServerHost;
 	Proxy->Request.ServerPort = InServerPort;
 	Proxy->Request.Build = InBuild;

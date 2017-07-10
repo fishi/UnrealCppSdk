@@ -1243,6 +1243,17 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerPushNotificationPackage(
+		const FBPServerPushNotificationPackage& In
+        ,FString& OutScheduleDate
+        ,FString& OutTitle
+        ,FString& OutMessage
+        ,FString& OutIcon
+        ,FString& OutSound
+        ,FString& OutCustomData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerPushNotificationPlatform(
 		const FBPServerPushNotificationPlatform& In
 	);
@@ -1316,6 +1327,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerRegisterGameRequest(
 		const FBPServerRegisterGameRequest& In
+        ,FString& OutLobbyId
         ,FString& OutServerHost
         ,FString& OutServerPort
         ,FString& OutBuild
@@ -1436,6 +1448,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPServerSendPushNotificationRequest& In
         ,FString& OutRecipient
         ,FString& OutMessage
+        ,FBPServerPushNotificationPackage& OutPackage
         ,FString& OutSubject
 	);
 	
@@ -1484,6 +1497,18 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerSetGameServerInstanceTagsResult(
 		const FBPServerSetGameServerInstanceTagsResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetPlayerSecretRequest(
+		const FBPServerSetPlayerSecretRequest& In
+        ,FString& OutPlayerSecret
+        ,FString& OutPlayFabId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetPlayerSecretResult(
+		const FBPServerSetPlayerSecretResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
