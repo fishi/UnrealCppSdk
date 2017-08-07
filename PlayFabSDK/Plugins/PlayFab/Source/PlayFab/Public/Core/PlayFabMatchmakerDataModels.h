@@ -203,9 +203,9 @@ namespace MatchmakerModels
 	struct PLAYFAB_API FPlayerJoinedRequest : public FPlayFabBaseModel
     {
 		
-		// Unique identifier of the Game Server Instance the user is joining.
+		// Unique identifier of the Game Server Instance the user is joining. This must be a Game Server Instance started with the Matchmaker/StartGame API.
 		FString LobbyId;
-		// PlayFab unique identifier for the user joining.
+		// PlayFab unique identifier for the player joining.
 		FString PlayFabId;
 	
         FPlayerJoinedRequest() :
@@ -257,9 +257,9 @@ namespace MatchmakerModels
 	struct PLAYFAB_API FPlayerLeftRequest : public FPlayFabBaseModel
     {
 		
-		// Unique identifier of the Game Server Instance the user is leaving.
+		// Unique identifier of the Game Server Instance the user is leaving. This must be a Game Server Instance started with the Matchmaker/StartGame API.
 		FString LobbyId;
-		// PlayFab unique identifier for the user leaving.
+		// PlayFab unique identifier for the player leaving.
 		FString PlayFabId;
 	
         FPlayerLeftRequest() :

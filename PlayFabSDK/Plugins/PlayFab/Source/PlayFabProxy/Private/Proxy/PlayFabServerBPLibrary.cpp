@@ -435,6 +435,18 @@ void UPFServerProxyLibrary::BreakBPServerConsumeItemResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerContactEmailInfo(
+		const FBPServerContactEmailInfo& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	)
+{
+    OutName = In.Data.Name;
+	OutEmailAddress = In.Data.EmailAddress;
+	
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerContinentCode(
 		const FBPServerContinentCode& In
 	)
@@ -532,6 +544,13 @@ void UPFServerProxyLibrary::BreakBPServerDeregisterGameRequest(
 
 void UPFServerProxyLibrary::BreakBPServerDeregisterGameResponse(
 		const FBPServerDeregisterGameResponse& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerEmailVerificationStatus(
+		const FBPServerEmailVerificationStatus& In
 	)
 {
     
@@ -2104,6 +2123,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
         ,TArray<FBPServerPushNotificationRegistration>& OutPushNotificationRegistrations
         ,TArray<FBPServerPlayerLinkedAccount>& OutLinkedAccounts
         ,TArray<FBPServerPlayerStatistic>& OutPlayerStatistics
+        ,TArray<FBPServerContactEmailInfo>& OutContactEmailAddresses
 	)
 {
     OutPlayerId = In.Data.PlayerId;
@@ -2147,6 +2167,13 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
         FBPServerPlayerStatistic result;
         result.Data = elem;
         OutPlayerStatistics.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FContactEmailInfo& elem : In.Data.ContactEmailAddresses)
+    {
+        FBPServerContactEmailInfo result;
+        result.Data = elem;
+        OutContactEmailAddresses.Add(result);
     }
 
 	

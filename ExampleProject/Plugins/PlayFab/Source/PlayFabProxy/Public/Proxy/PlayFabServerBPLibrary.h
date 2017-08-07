@@ -257,6 +257,13 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerContactEmailInfo(
+		const FBPServerContactEmailInfo& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerContinentCode(
 		const FBPServerContinentCode& In
 	);
@@ -323,6 +330,11 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerDeregisterGameResponse(
 		const FBPServerDeregisterGameResponse& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerEmailVerificationStatus(
+		const FBPServerEmailVerificationStatus& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1179,6 +1191,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FBPServerPushNotificationRegistration>& OutPushNotificationRegistrations
         ,TArray<FBPServerPlayerLinkedAccount>& OutLinkedAccounts
         ,TArray<FBPServerPlayerStatistic>& OutPlayerStatistics
+        ,TArray<FBPServerContactEmailInfo>& OutContactEmailAddresses
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

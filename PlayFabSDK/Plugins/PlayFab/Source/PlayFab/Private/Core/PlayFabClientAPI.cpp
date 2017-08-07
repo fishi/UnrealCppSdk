@@ -21,11 +21,6 @@ FString UPlayFabClientAPI::GetBuildIdentifier() const
     return PlayFabSettings::buildIdentifier;
 }
 
-void UPlayFabClientAPI::SetTitleId(const FString& titleId)
-{
-    PlayFabSettings::titleId = titleId;
-}
-
 bool UPlayFabClientAPI::SetAdvertId(const FString& advertisingIdType, const FString& advertisingIdValue)
 {
     // TODO: Work on exposing PlayFabSettings::AD_TYPE_X vars, for now, just validate against them

@@ -409,6 +409,18 @@ void UPFAdminProxyLibrary::BreakBPAdminConditionals(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminContactEmailInfo(
+		const FBPAdminContactEmailInfo& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	)
+{
+    OutName = In.Data.Name;
+	OutEmailAddress = In.Data.EmailAddress;
+	
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminContentInfo(
 		const FBPAdminContentInfo& In
         ,FString& OutKey
@@ -533,6 +545,22 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteContentRequest(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminDeletePlayerRequest(
+		const FBPAdminDeletePlayerRequest& In
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminDeletePlayerResult(
+		const FBPAdminDeletePlayerResult& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminDeletePlayerSharedSecretRequest(
 		const FBPAdminDeletePlayerSharedSecretRequest& In
         ,FString& OutSecretKey
@@ -596,6 +624,13 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteUsersResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminEffectType(
 		const FBPAdminEffectType& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminEmailVerificationStatus(
+		const FBPAdminEmailVerificationStatus& In
 	)
 {
     
@@ -1807,6 +1842,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
         ,TArray<FBPAdminPushNotificationRegistration>& OutPushNotificationRegistrations
         ,TArray<FBPAdminPlayerLinkedAccount>& OutLinkedAccounts
         ,TArray<FBPAdminPlayerStatistic>& OutPlayerStatistics
+        ,TArray<FBPAdminContactEmailInfo>& OutContactEmailAddresses
 	)
 {
     OutPlayerId = In.Data.PlayerId;
@@ -1850,6 +1886,13 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
         FBPAdminPlayerStatistic result;
         result.Data = elem;
         OutPlayerStatistics.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FContactEmailInfo& elem : In.Data.ContactEmailAddresses)
+    {
+        FBPAdminContactEmailInfo result;
+        result.Data = elem;
+        OutContactEmailAddresses.Add(result);
     }
 
 	

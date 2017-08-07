@@ -1911,6 +1911,52 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum EmailVerificationStatus
+	{
+		EmailVerificationStatusUnverified,
+		EmailVerificationStatusPending,
+		EmailVerificationStatusConfirmed
+	};
+	
+	void writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, JsonWriter& writer);
+	EmailVerificationStatus readEmailVerificationStatusFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FContactEmailInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the email info data
+		FString Name;
+		// [optional] The email address
+		FString EmailAddress;
+		// [optional] The verification status of the email
+		Boxed<EmailVerificationStatus> VerificationStatus;
+	
+        FContactEmailInfo() :
+			FPlayFabBaseModel(),
+			Name(),
+			EmailAddress(),
+			VerificationStatus()
+			{}
+		
+		FContactEmailInfo(const FContactEmailInfo& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			EmailAddress(src.EmailAddress),
+			VerificationStatus(src.VerificationStatus)
+			{}
+			
+		FContactEmailInfo(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FContactEmailInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum ContinentCode
 	{
 		ContinentCodeAF,
@@ -4924,6 +4970,8 @@ namespace ServerModels
 		TArray<FPlayerLinkedAccount> LinkedAccounts;
 		// [optional] Array of player statistics
 		TArray<FPlayerStatistic> PlayerStatistics;
+		// [optional] Array of contact email addresses associated with the player
+		TArray<FContactEmailInfo> ContactEmailAddresses;
 	
         FPlayerProfile() :
 			FPlayFabBaseModel(),
@@ -4945,7 +4993,8 @@ namespace ServerModels
 			AdCampaignAttributions(),
 			PushNotificationRegistrations(),
 			LinkedAccounts(),
-			PlayerStatistics()
+			PlayerStatistics(),
+			ContactEmailAddresses()
 			{}
 		
 		FPlayerProfile(const FPlayerProfile& src) :
@@ -4968,7 +5017,8 @@ namespace ServerModels
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
 			LinkedAccounts(src.LinkedAccounts),
-			PlayerStatistics(src.PlayerStatistics)
+			PlayerStatistics(src.PlayerStatistics),
+			ContactEmailAddresses(src.ContactEmailAddresses)
 			{}
 			
 		FPlayerProfile(const TSharedPtr<FJsonObject>& obj) : FPlayerProfile()

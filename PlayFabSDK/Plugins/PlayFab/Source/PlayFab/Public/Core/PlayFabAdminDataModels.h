@@ -1295,6 +1295,52 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum EmailVerificationStatus
+	{
+		EmailVerificationStatusUnverified,
+		EmailVerificationStatusPending,
+		EmailVerificationStatusConfirmed
+	};
+	
+	void writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, JsonWriter& writer);
+	EmailVerificationStatus readEmailVerificationStatusFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FContactEmailInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the email info data
+		FString Name;
+		// [optional] The email address
+		FString EmailAddress;
+		// [optional] The verification status of the email
+		Boxed<EmailVerificationStatus> VerificationStatus;
+	
+        FContactEmailInfo() :
+			FPlayFabBaseModel(),
+			Name(),
+			EmailAddress(),
+			VerificationStatus()
+			{}
+		
+		FContactEmailInfo(const FContactEmailInfo& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			EmailAddress(src.EmailAddress),
+			VerificationStatus(src.VerificationStatus)
+			{}
+			
+		FContactEmailInfo(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FContactEmailInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FContentInfo : public FPlayFabBaseModel
     {
 		
@@ -2087,6 +2133,56 @@ namespace AdminModels
         }
 		
 		~FDeleteContentRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FDeletePlayerRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+	
+        FDeletePlayerRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId()
+			{}
+		
+		FDeletePlayerRequest(const FDeletePlayerRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FDeletePlayerRequest(const TSharedPtr<FJsonObject>& obj) : FDeletePlayerRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeletePlayerRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FDeletePlayerResult : public FPlayFabBaseModel
+    {
+		
+	
+        FDeletePlayerResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FDeletePlayerResult(const FDeletePlayerResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FDeletePlayerResult(const TSharedPtr<FJsonObject>& obj) : FDeletePlayerResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeletePlayerResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3461,6 +3557,8 @@ namespace AdminModels
 		TArray<FPlayerLinkedAccount> LinkedAccounts;
 		// [optional] Array of player statistics
 		TArray<FPlayerStatistic> PlayerStatistics;
+		// [optional] Array of contact email addresses associated with the player
+		TArray<FContactEmailInfo> ContactEmailAddresses;
 	
         FPlayerProfile() :
 			FPlayFabBaseModel(),
@@ -3482,7 +3580,8 @@ namespace AdminModels
 			AdCampaignAttributions(),
 			PushNotificationRegistrations(),
 			LinkedAccounts(),
-			PlayerStatistics()
+			PlayerStatistics(),
+			ContactEmailAddresses()
 			{}
 		
 		FPlayerProfile(const FPlayerProfile& src) :
@@ -3505,7 +3604,8 @@ namespace AdminModels
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
 			LinkedAccounts(src.LinkedAccounts),
-			PlayerStatistics(src.PlayerStatistics)
+			PlayerStatistics(src.PlayerStatistics),
+			ContactEmailAddresses(src.ContactEmailAddresses)
 			{}
 			
 		FPlayerProfile(const TSharedPtr<FJsonObject>& obj) : FPlayerProfile()

@@ -276,6 +276,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminConditionalsDelegate, const FBPAdminConditionals&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminContactEmailInfo"))
+struct FBPAdminContactEmailInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FContactEmailInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminContactEmailInfoDelegate, const FBPAdminContactEmailInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminContentInfo"))
 struct FBPAdminContentInfo
 {
@@ -396,6 +406,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteContentRequestDelegate, const FBPAdminDeleteContentRequest&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeletePlayerRequest"))
+struct FBPAdminDeletePlayerRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FDeletePlayerRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerRequestDelegate, const FBPAdminDeletePlayerRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeletePlayerResult"))
+struct FBPAdminDeletePlayerResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FDeletePlayerResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerResultDelegate, const FBPAdminDeletePlayerResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeletePlayerSharedSecretRequest"))
 struct FBPAdminDeletePlayerSharedSecretRequest
 {
@@ -475,6 +505,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminEffectTypeDelegate, const FBPAdminEffectType&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminEmailVerificationStatus"))
+struct FBPAdminEmailVerificationStatus
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::EmailVerificationStatus Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminEmailVerificationStatusDelegate, const FBPAdminEmailVerificationStatus&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminEmptyResult"))
 struct FBPAdminEmptyResult

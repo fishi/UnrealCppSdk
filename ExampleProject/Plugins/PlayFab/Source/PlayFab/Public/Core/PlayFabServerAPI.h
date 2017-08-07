@@ -582,7 +582,7 @@ namespace PlayFab
          */
         bool GetCharacterReadOnlyData(ServerModels::FGetCharacterDataRequest& request, const FGetCharacterReadOnlyDataDelegate& SuccessDelegate = FGetCharacterReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Updates the title-specific custom data for the user's chjaracter which is readable and writable by the client
+         * Updates the title-specific custom data for the user's character which is readable and writable by the client
          * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart  from those specified in the call.
          */
         bool UpdateCharacterData(ServerModels::FUpdateCharacterDataRequest& request, const FUpdateCharacterDataDelegate& SuccessDelegate = FUpdateCharacterDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());

@@ -19,6 +19,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdatePlayerSharedSecretDelegate, const AdminModels::FUpdatePlayerSharedSecretResult&);
         DECLARE_DELEGATE_OneParam(FUpdatePolicyDelegate, const AdminModels::FUpdatePolicyResponse&);
         DECLARE_DELEGATE_OneParam(FBanUsersDelegate, const AdminModels::FBanUsersResult&);
+        DECLARE_DELEGATE_OneParam(FDeletePlayerDelegate, const AdminModels::FDeletePlayerResult&);
         DECLARE_DELEGATE_OneParam(FGetUserAccountInfoDelegate, const AdminModels::FLookupUserAccountInfoResult&);
         DECLARE_DELEGATE_OneParam(FGetUserBansDelegate, const AdminModels::FGetUserBansResult&);
         DECLARE_DELEGATE_OneParam(FResetUsersDelegate, const AdminModels::FBlankResult&);
@@ -158,6 +159,11 @@ namespace PlayFab
          * The existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so use this feature with caution. Returns information about the new bans.
          */
         bool BanUsers(AdminModels::FBanUsersRequest& request, const FBanUsersDelegate& SuccessDelegate = FBanUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Removes a user's player account from a title and deletes all associated data
+         * Deletes all data associated with the player, including statistics, custom data, inventory, purchases, virtual currency balances,                  characters and shared group memberships. Removes the player from all leaderboards and player search indexes. Does not delete PlayStream event history associated with the player.                 Note, this API queues the player for deletion and returns immediately. It may take several minutes or more before all player data is fully deleted.
+         */
+        bool DeletePlayer(AdminModels::FDeletePlayerRequest& request, const FDeletePlayerDelegate& SuccessDelegate = FDeletePlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the relevant details for a specified user, based upon a match against a supplied unique identifier
          * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
@@ -587,6 +593,7 @@ namespace PlayFab
         void OnUpdatePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdatePolicyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePolicyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnDeletePlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeletePlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

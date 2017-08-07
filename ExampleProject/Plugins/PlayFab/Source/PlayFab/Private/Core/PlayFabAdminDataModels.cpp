@@ -2131,6 +2131,85 @@ bool PlayFab::AdminModels::FCloudScriptVersionStatus::readFromValue(const TShare
 }
 
 
+void PlayFab::AdminModels::writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case EmailVerificationStatusUnverified: writer->WriteValue(TEXT("Unverified")); break;
+        case EmailVerificationStatusPending: writer->WriteValue(TEXT("Pending")); break;
+        case EmailVerificationStatusConfirmed: writer->WriteValue(TEXT("Confirmed")); break;
+    }
+}
+
+AdminModels::EmailVerificationStatus PlayFab::AdminModels::readEmailVerificationStatusFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, EmailVerificationStatus> _EmailVerificationStatusMap;
+    if (_EmailVerificationStatusMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _EmailVerificationStatusMap.Add(TEXT("Unverified"), EmailVerificationStatusUnverified);
+        _EmailVerificationStatusMap.Add(TEXT("Pending"), EmailVerificationStatusPending);
+        _EmailVerificationStatusMap.Add(TEXT("Confirmed"), EmailVerificationStatusConfirmed);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _EmailVerificationStatusMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return EmailVerificationStatusUnverified; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FContactEmailInfo::~FContactEmailInfo()
+{
+    
+}
+
+void PlayFab::AdminModels::FContactEmailInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+	
+    if(EmailAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EmailAddress")); writer->WriteValue(EmailAddress); }
+	
+    if(VerificationStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("VerificationStatus")); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FContactEmailInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EmailAddressValue = obj->TryGetField(TEXT("EmailAddress"));
+    if (EmailAddressValue.IsValid()&& !EmailAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailAddressValue->TryGetString(TmpValue)) {EmailAddress = TmpValue; }
+    }
+    
+    VerificationStatus = readEmailVerificationStatusFromValue(obj->TryGetField(TEXT("VerificationStatus")));
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FContentInfo::~FContentInfo()
 {
     
@@ -3547,6 +3626,59 @@ bool PlayFab::AdminModels::FDeleteContentRequest::readFromValue(const TSharedPtr
         if(KeyValue->TryGetString(TmpValue)) {Key = TmpValue; }
     }
     
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FDeletePlayerRequest::~FDeletePlayerRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeletePlayerRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeletePlayerRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FDeletePlayerResult::~FDeletePlayerResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeletePlayerResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeletePlayerResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
     
     return HasSucceeded;
 }
@@ -5542,6 +5674,17 @@ void PlayFab::AdminModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
         writer->WriteArrayEnd();
      }
 	
+    if(ContactEmailAddresses.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("ContactEmailAddresses"));
+    
+        for (const FContactEmailInfo& item : ContactEmailAddresses)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     
     writer->WriteObjectEnd();
 }
@@ -5694,6 +5837,17 @@ bool PlayFab::AdminModels::FPlayerProfile::readFromValue(const TSharedPtr<FJsonO
             TSharedPtr<FJsonValue> CurrentItem = PlayerStatisticsArray[Idx];
             
             PlayerStatistics.Add(FPlayerStatistic(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&ContactEmailAddressesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ContactEmailAddresses"));
+        for (int32 Idx = 0; Idx < ContactEmailAddressesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ContactEmailAddressesArray[Idx];
+            
+            ContactEmailAddresses.Add(FContactEmailInfo(CurrentItem->AsObject()));
         }
     }
 

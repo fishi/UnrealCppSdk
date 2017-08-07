@@ -244,6 +244,13 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminContactEmailInfo(
+		const FBPAdminContactEmailInfo& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminContentInfo(
 		const FBPAdminContentInfo& In
         ,FString& OutKey
@@ -323,6 +330,17 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminDeletePlayerRequest(
+		const FBPAdminDeletePlayerRequest& In
+        ,FString& OutPlayFabId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminDeletePlayerResult(
+		const FBPAdminDeletePlayerResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminDeletePlayerSharedSecretRequest(
 		const FBPAdminDeletePlayerSharedSecretRequest& In
         ,FString& OutSecretKey
@@ -366,6 +384,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminEffectType(
 		const FBPAdminEffectType& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminEmailVerificationStatus(
+		const FBPAdminEmailVerificationStatus& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -1030,6 +1053,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FBPAdminPushNotificationRegistration>& OutPushNotificationRegistrations
         ,TArray<FBPAdminPlayerLinkedAccount>& OutLinkedAccounts
         ,TArray<FBPAdminPlayerStatistic>& OutPlayerStatistics
+        ,TArray<FBPAdminContactEmailInfo>& OutContactEmailAddresses
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

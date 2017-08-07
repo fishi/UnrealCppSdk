@@ -296,6 +296,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerConsumeItemResultDelegate, const FBPServerConsumeItemResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerContactEmailInfo"))
+struct FBPServerContactEmailInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FContactEmailInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerContactEmailInfoDelegate, const FBPServerContactEmailInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerContinentCode"))
 struct FBPServerContinentCode
 {
@@ -415,6 +425,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerDeregisterGameResponseDelegate, const FBPServerDeregisterGameResponse&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerEmailVerificationStatus"))
+struct FBPServerEmailVerificationStatus
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::EmailVerificationStatus Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEmailVerificationStatusDelegate, const FBPServerEmailVerificationStatus&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerEmptyResult"))
 struct FBPServerEmptyResult
