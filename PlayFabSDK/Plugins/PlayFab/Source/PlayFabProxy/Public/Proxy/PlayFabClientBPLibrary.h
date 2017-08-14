@@ -350,6 +350,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FBPClientUserFacebookInfo& OutFacebookInfo
         ,FBPClientUserSteamInfo& OutSteamInfo
         ,FBPClientUserGameCenterInfo& OutGameCenterInfo
+        ,FBPClientPlayerProfileModel& OutProfile
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -543,6 +544,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientGetFriendsListRequest& In
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
+        ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

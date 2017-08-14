@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves the current friend list for the local user, constrained to users who have PlayFab accounts. Friends from linked accounts (Facebook, Steam) are also included. You may optionally exclude some linked services' friends.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Friend List Management")
-	static UPFClientGetFriendsList* GetFriendsList(UObject* WorldContextObject, class APlayerController* PlayerController, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends);
+	static UPFClientGetFriendsList* GetFriendsList(UObject* WorldContextObject, class APlayerController* PlayerController, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const FBPClientPlayerProfileViewConstraints& InProfileConstraints);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

@@ -8129,7 +8129,7 @@ namespace AdminModels
 		
 		// PlayFab unique identifier of the user whose title specific display name is to be changed
 		FString PlayFabId;
-		// new title display name for the user - must be between 3 and 25 characters
+		// New title display name for the user - must be between 3 and 25 characters
 		FString DisplayName;
 	
         FUpdateUserTitleDisplayNameRequest() :

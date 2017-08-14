@@ -10,13 +10,14 @@ UPFServerGetFriendsList::UPFServerGetFriendsList(const FObjectInitializer& Objec
 {
 }
 
-UPFServerGetFriendsList* UPFServerGetFriendsList::GetFriendsList(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends)
+UPFServerGetFriendsList* UPFServerGetFriendsList::GetFriendsList(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const FBPServerPlayerProfileViewConstraints& InProfileConstraints)
 {
 	UPFServerGetFriendsList* Proxy = NewObject<UPFServerGetFriendsList>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
 	Proxy->Request.IncludeSteamFriends = InIncludeSteamFriends;
 	Proxy->Request.IncludeFacebookFriends = InIncludeFacebookFriends;
+	*Proxy->Request.ProfileConstraints = InProfileConstraints.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

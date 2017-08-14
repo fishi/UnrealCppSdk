@@ -657,6 +657,7 @@ void UPFServerProxyLibrary::BreakBPServerFriendInfo(
         ,FBPServerUserFacebookInfo& OutFacebookInfo
         ,FBPServerUserSteamInfo& OutSteamInfo
         ,FBPServerUserGameCenterInfo& OutGameCenterInfo
+        ,FBPServerPlayerProfileModel& OutProfile
 	)
 {
     OutFriendPlayFabId = In.Data.FriendPlayFabId;
@@ -667,6 +668,7 @@ void UPFServerProxyLibrary::BreakBPServerFriendInfo(
 	if (In.Data.FacebookInfo.IsValid()) {    OutFacebookInfo.Data = *In.Data.FacebookInfo;}
 	if (In.Data.SteamInfo.IsValid()) {    OutSteamInfo.Data = *In.Data.SteamInfo;}
 	if (In.Data.GameCenterInfo.IsValid()) {    OutGameCenterInfo.Data = *In.Data.GameCenterInfo;}
+	if (In.Data.Profile.IsValid()) {    OutProfile.Data = *In.Data.Profile;}
 	
 }
 
@@ -926,11 +928,13 @@ void UPFServerProxyLibrary::BreakBPServerGetFriendsListRequest(
         ,FString& OutPlayFabId
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
 	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
 

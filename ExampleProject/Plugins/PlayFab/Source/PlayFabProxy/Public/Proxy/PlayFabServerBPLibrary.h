@@ -398,6 +398,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FBPServerUserFacebookInfo& OutFacebookInfo
         ,FBPServerUserSteamInfo& OutSteamInfo
         ,FBPServerUserGameCenterInfo& OutGameCenterInfo
+        ,FBPServerPlayerProfileModel& OutProfile
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -543,6 +544,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutPlayFabId
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
+        ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
