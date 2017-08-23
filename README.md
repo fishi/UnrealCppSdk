@@ -1,5 +1,12 @@
 # Unreal 4 C++ SDK for PlayFab README
 
+!!WARNING!!
+
+THIS SDK HAS BEEN DISCONTINUED!
+
+Please switch to the [UnrealBlueprintSDK](https://github.com/PlayFab/UnrealBlueprintSDK) using our [Upgrade Guide](https://github.com/PlayFab/UnrealBlueprintSDK/blob/master/UnrealCppSdkUpgradeGuide.md)
+
+This repository will be made private and/or deleted at an unspecified point in the future.  It is also no longer updated with the latest PlayFab API changes, and it does not support Unreal versions greater than 4.15 (meaning it's two versions out of date).
 
 ## 1. Overview:
 
