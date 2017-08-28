@@ -326,6 +326,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientConsumeItemResultDelegate, const FBPClientConsumeItemResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientContactEmailInfoModel"))
+struct FBPClientContactEmailInfoModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FContactEmailInfoModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientContactEmailInfoModelDelegate, const FBPClientContactEmailInfoModel&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientContainer_Dictionary_String_String"))
 struct FBPClientContainer_Dictionary_String_String
 {

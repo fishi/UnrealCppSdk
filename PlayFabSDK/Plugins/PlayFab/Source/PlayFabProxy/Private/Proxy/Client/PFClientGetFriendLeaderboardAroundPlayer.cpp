@@ -10,7 +10,7 @@ UPFClientGetFriendLeaderboardAroundPlayer::UPFClientGetFriendLeaderboardAroundPl
 {
 }
 
-UPFClientGetFriendLeaderboardAroundPlayer* UPFClientGetFriendLeaderboardAroundPlayer::GetFriendLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InMaxResultsCount, const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const int32& InVersion, const bool& InUseSpecificVersion, const FBPClientPlayerProfileViewConstraints& InProfileConstraints)
+UPFClientGetFriendLeaderboardAroundPlayer* UPFClientGetFriendLeaderboardAroundPlayer::GetFriendLeaderboardAroundPlayer(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InMaxResultsCount, const FString& InPlayFabId, const bool& InIncludeSteamFriends, const bool& InIncludeFacebookFriends, const int32& InVersion, const FBPClientPlayerProfileViewConstraints& InProfileConstraints)
 {
 	UPFClientGetFriendLeaderboardAroundPlayer* Proxy = NewObject<UPFClientGetFriendLeaderboardAroundPlayer>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -20,7 +20,6 @@ UPFClientGetFriendLeaderboardAroundPlayer* UPFClientGetFriendLeaderboardAroundPl
 	Proxy->Request.IncludeSteamFriends = InIncludeSteamFriends;
 	Proxy->Request.IncludeFacebookFriends = InIncludeFacebookFriends;
 	Proxy->Request.Version = InVersion;
-	Proxy->Request.UseSpecificVersion = InUseSpecificVersion;
 	*Proxy->Request.ProfileConstraints = InProfileConstraints.Data;
 	
 

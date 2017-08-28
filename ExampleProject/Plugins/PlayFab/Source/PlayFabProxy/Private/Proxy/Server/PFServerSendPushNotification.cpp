@@ -19,6 +19,7 @@ UPFServerSendPushNotification* UPFServerSendPushNotification::SendPushNotificati
 	*Proxy->Request.Package = InPackage.Data;
 	Proxy->Request.Subject = InSubject;
 	
+	
 
  	//Proxy->WorldContextObject = WorldContextObject;
 	return Proxy;

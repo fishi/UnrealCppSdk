@@ -447,6 +447,17 @@ void UPFServerProxyLibrary::BreakBPServerContactEmailInfo(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerContactEmailInfoModel(
+		const FBPServerContactEmailInfoModel& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	)
+{
+    OutName = In.Data.Name;
+	OutEmailAddress = In.Data.EmailAddress;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerContinentCode(
 		const FBPServerContinentCode& In
 	)
@@ -907,7 +918,6 @@ void UPFServerProxyLibrary::BreakBPServerGetFriendLeaderboardRequest(
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
@@ -918,7 +928,6 @@ void UPFServerProxyLibrary::BreakBPServerGetFriendLeaderboardRequest(
 	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
 	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
 	OutVersion = In.Data.Version;
-	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
@@ -992,7 +1001,6 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardAroundUserRequest(
         ,int32& OutMaxResultsCount
         ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -1000,7 +1008,6 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardAroundUserRequest(
 	OutMaxResultsCount = In.Data.MaxResultsCount;
 	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	OutVersion = In.Data.Version;
-	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	
 }
 
@@ -1058,7 +1065,6 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardRequest(
         ,int32& OutMaxResultsCount
         ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -1066,7 +1072,6 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardRequest(
 	OutMaxResultsCount = In.Data.MaxResultsCount;
 	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	OutVersion = In.Data.Version;
-	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	
 }
 
@@ -2197,6 +2202,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileModel(
         ,TArray<FBPServerTagModel>& OutTags
         ,TArray<FBPServerPushNotificationRegistrationModel>& OutPushNotificationRegistrations
         ,TArray<FBPServerLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPServerContactEmailInfoModel>& OutContactEmailAddresses
         ,TArray<FBPServerAdCampaignAttributionModel>& OutAdCampaignAttributions
         ,int32& OutTotalValueToDateInUSD
         ,TArray<FBPServerValueToDateModel>& OutValuesToDate
@@ -2239,6 +2245,13 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileModel(
         FBPServerLinkedPlatformAccountModel result;
         result.Data = elem;
         OutLinkedAccounts.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FContactEmailInfoModel& elem : In.Data.ContactEmailAddresses)
+    {
+        FBPServerContactEmailInfoModel result;
+        result.Data = elem;
+        OutContactEmailAddresses.Add(result);
     }
 
 	for (const PlayFab::ServerModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
@@ -2284,6 +2297,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileViewConstraints(
         ,bool& OutShowCampaignAttributions
         ,bool& OutShowPushNotificationRegistrations
         ,bool& OutShowLinkedAccounts
+        ,bool& OutShowContactEmailAddresses
         ,bool& OutShowTotalValueToDateInUsd
         ,bool& OutShowValuesToDate
         ,bool& OutShowTags
@@ -2300,6 +2314,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileViewConstraints(
 	OutShowCampaignAttributions = In.Data.ShowCampaignAttributions;
 	OutShowPushNotificationRegistrations = In.Data.ShowPushNotificationRegistrations;
 	OutShowLinkedAccounts = In.Data.ShowLinkedAccounts;
+	OutShowContactEmailAddresses = In.Data.ShowContactEmailAddresses;
 	OutShowTotalValueToDateInUsd = In.Data.ShowTotalValueToDateInUsd;
 	OutShowValuesToDate = In.Data.ShowValuesToDate;
 	OutShowTags = In.Data.ShowTags;
@@ -2574,12 +2589,10 @@ void UPFServerProxyLibrary::BreakBPServerReportPlayerServerRequest(
 
 void UPFServerProxyLibrary::BreakBPServerReportPlayerServerResult(
 		const FBPServerReportPlayerServerResult& In
-        ,bool& OutUpdated
         ,int32& OutSubmissionsRemaining
 	)
 {
-    OutUpdated = In.Data.Updated;
-	OutSubmissionsRemaining = In.Data.SubmissionsRemaining;
+    OutSubmissionsRemaining = In.Data.SubmissionsRemaining;
 	
 }
 
@@ -2695,6 +2708,7 @@ void UPFServerProxyLibrary::BreakBPServerSendPushNotificationRequest(
 	OutMessage = In.Data.Message;
 	if (In.Data.Package.IsValid()) {    OutPackage.Data = *In.Data.Package;}
 	OutSubject = In.Data.Subject;
+	
 	
 }
 

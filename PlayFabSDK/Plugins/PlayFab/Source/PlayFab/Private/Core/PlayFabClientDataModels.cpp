@@ -2116,6 +2116,46 @@ bool PlayFab::ClientModels::FConsumeItemResult::readFromValue(const TSharedPtr<F
 }
 
 
+PlayFab::ClientModels::FContactEmailInfoModel::~FContactEmailInfoModel()
+{
+    
+}
+
+void PlayFab::ClientModels::FContactEmailInfoModel::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+	
+    if(EmailAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EmailAddress")); writer->WriteValue(EmailAddress); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FContactEmailInfoModel::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EmailAddressValue = obj->TryGetField(TEXT("EmailAddress"));
+    if (EmailAddressValue.IsValid()&& !EmailAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailAddressValue->TryGetString(TmpValue)) {EmailAddress = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 void PlayFab::ClientModels::writeContinentCodeEnumJSON(ContinentCode enumVal, JsonWriter& writer)
 {
     switch(enumVal)
@@ -3273,7 +3313,9 @@ void PlayFab::ClientModels::FGameInfo::writeJSON(JsonWriter& writer) const
 	
     writer->WriteIdentifierPrefix(TEXT("RunTime")); writer->WriteValue(static_cast<int64>(RunTime));
 	
-    if(GameServerState.notNull()) { writer->WriteIdentifierPrefix(TEXT("GameServerState")); writeGameInstanceStateEnumJSON(GameServerState, writer); }
+    if(GameServerState.notNull()) { writer->WriteIdentifierPrefix(TEXT("GameServerState")); writer->WriteValue(GameServerState); }
+	
+    if(GameServerStateEnum.notNull()) { writer->WriteIdentifierPrefix(TEXT("GameServerStateEnum")); writeGameInstanceStateEnumJSON(GameServerStateEnum, writer); }
 	
     if(GameServerData.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GameServerData")); writer->WriteValue(GameServerData); }
 	
@@ -3348,7 +3390,14 @@ bool PlayFab::ClientModels::FGameInfo::readFromValue(const TSharedPtr<FJsonObjec
         if(RunTimeValue->TryGetNumber(TmpValue)) {RunTime = TmpValue; }
     }
     
-    GameServerState = readGameInstanceStateFromValue(obj->TryGetField(TEXT("GameServerState")));
+    const TSharedPtr<FJsonValue> GameServerStateValue = obj->TryGetField(TEXT("GameServerState"));
+    if (GameServerStateValue.IsValid()&& !GameServerStateValue->IsNull())
+    {
+        int32 TmpValue;
+        if(GameServerStateValue->TryGetNumber(TmpValue)) {GameServerState = TmpValue; }
+    }
+    
+    GameServerStateEnum = readGameInstanceStateFromValue(obj->TryGetField(TEXT("GameServerStateEnum")));
     
     const TSharedPtr<FJsonValue> GameServerDataValue = obj->TryGetField(TEXT("GameServerData"));
     if (GameServerDataValue.IsValid()&& !GameServerDataValue->IsNull())
@@ -4449,6 +4498,17 @@ void PlayFab::ClientModels::FPlayerProfileModel::writeJSON(JsonWriter& writer) c
         writer->WriteArrayEnd();
      }
 	
+    if(ContactEmailAddresses.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("ContactEmailAddresses"));
+    
+        for (const FContactEmailInfoModel& item : ContactEmailAddresses)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     if(AdCampaignAttributions.Num() != 0) 
     {
         writer->WriteArrayStart(TEXT("AdCampaignAttributions"));
@@ -4598,6 +4658,17 @@ bool PlayFab::ClientModels::FPlayerProfileModel::readFromValue(const TSharedPtr<
             TSharedPtr<FJsonValue> CurrentItem = LinkedAccountsArray[Idx];
             
             LinkedAccounts.Add(FLinkedPlatformAccountModel(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&ContactEmailAddressesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ContactEmailAddresses"));
+        for (int32 Idx = 0; Idx < ContactEmailAddressesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ContactEmailAddressesArray[Idx];
+            
+            ContactEmailAddresses.Add(FContactEmailInfoModel(CurrentItem->AsObject()));
         }
     }
 
@@ -6451,6 +6522,8 @@ void PlayFab::ClientModels::FPlayerProfileViewConstraints::writeJSON(JsonWriter&
 	
     writer->WriteIdentifierPrefix(TEXT("ShowLinkedAccounts")); writer->WriteValue(ShowLinkedAccounts);
 	
+    writer->WriteIdentifierPrefix(TEXT("ShowContactEmailAddresses")); writer->WriteValue(ShowContactEmailAddresses);
+	
     writer->WriteIdentifierPrefix(TEXT("ShowTotalValueToDateInUsd")); writer->WriteValue(ShowTotalValueToDateInUsd);
 	
     writer->WriteIdentifierPrefix(TEXT("ShowValuesToDate")); writer->WriteValue(ShowValuesToDate);
@@ -6532,6 +6605,13 @@ bool PlayFab::ClientModels::FPlayerProfileViewConstraints::readFromValue(const T
         if(ShowLinkedAccountsValue->TryGetBool(TmpValue)) {ShowLinkedAccounts = TmpValue; }
     }
     
+    const TSharedPtr<FJsonValue> ShowContactEmailAddressesValue = obj->TryGetField(TEXT("ShowContactEmailAddresses"));
+    if (ShowContactEmailAddressesValue.IsValid()&& !ShowContactEmailAddressesValue->IsNull())
+    {
+        bool TmpValue;
+        if(ShowContactEmailAddressesValue->TryGetBool(TmpValue)) {ShowContactEmailAddresses = TmpValue; }
+    }
+    
     const TSharedPtr<FJsonValue> ShowTotalValueToDateInUsdValue = obj->TryGetField(TEXT("ShowTotalValueToDateInUsd"));
     if (ShowTotalValueToDateInUsdValue.IsValid()&& !ShowTotalValueToDateInUsdValue->IsNull())
     {
@@ -6594,8 +6674,6 @@ void PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerRequest::writeJSON(
 	
     if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
-	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
     
@@ -6646,13 +6724,6 @@ bool PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerRequest::readFromVa
     {
         int32 TmpValue;
         if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> UseSpecificVersionValue = obj->TryGetField(TEXT("UseSpecificVersion"));
-    if (UseSpecificVersionValue.IsValid()&& !UseSpecificVersionValue->IsNull())
-    {
-        bool TmpValue;
-        if(UseSpecificVersionValue->TryGetBool(TmpValue)) {UseSpecificVersion = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ProfileConstraintsValue = obj->TryGetField(TEXT("ProfileConstraints"));
@@ -6816,8 +6887,6 @@ void PlayFab::ClientModels::FGetFriendLeaderboardRequest::writeJSON(JsonWriter& 
 	
     if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
-	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
     
@@ -6868,13 +6937,6 @@ bool PlayFab::ClientModels::FGetFriendLeaderboardRequest::readFromValue(const TS
     {
         int32 TmpValue;
         if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> UseSpecificVersionValue = obj->TryGetField(TEXT("UseSpecificVersion"));
-    if (UseSpecificVersionValue.IsValid()&& !UseSpecificVersionValue->IsNull())
-    {
-        bool TmpValue;
-        if(UseSpecificVersionValue->TryGetBool(TmpValue)) {UseSpecificVersion = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ProfileConstraintsValue = obj->TryGetField(TEXT("ProfileConstraints"));
@@ -7101,8 +7163,6 @@ void PlayFab::ClientModels::FGetLeaderboardAroundPlayerRequest::writeJSON(JsonWr
 	
     if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
-	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
     
@@ -7139,13 +7199,6 @@ bool PlayFab::ClientModels::FGetLeaderboardAroundPlayerRequest::readFromValue(co
     {
         int32 TmpValue;
         if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> UseSpecificVersionValue = obj->TryGetField(TEXT("UseSpecificVersion"));
-    if (UseSpecificVersionValue.IsValid()&& !UseSpecificVersionValue->IsNull())
-    {
-        bool TmpValue;
-        if(UseSpecificVersionValue->TryGetBool(TmpValue)) {UseSpecificVersion = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ProfileConstraintsValue = obj->TryGetField(TEXT("ProfileConstraints"));
@@ -7322,8 +7375,6 @@ void PlayFab::ClientModels::FGetLeaderboardRequest::writeJSON(JsonWriter& writer
 	
     if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
 	
-    if(UseSpecificVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("UseSpecificVersion")); writer->WriteValue(UseSpecificVersion); }
-	
     if(ProfileConstraints.IsValid()) { writer->WriteIdentifierPrefix(TEXT("ProfileConstraints")); ProfileConstraints->writeJSON(writer); }
 	
     
@@ -7360,13 +7411,6 @@ bool PlayFab::ClientModels::FGetLeaderboardRequest::readFromValue(const TSharedP
     {
         int32 TmpValue;
         if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> UseSpecificVersionValue = obj->TryGetField(TEXT("UseSpecificVersion"));
-    if (UseSpecificVersionValue.IsValid()&& !UseSpecificVersionValue->IsNull())
-    {
-        bool TmpValue;
-        if(UseSpecificVersionValue->TryGetBool(TmpValue)) {UseSpecificVersion = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ProfileConstraintsValue = obj->TryGetField(TEXT("ProfileConstraints"));
@@ -14125,8 +14169,6 @@ void PlayFab::ClientModels::FReportPlayerClientResult::writeJSON(JsonWriter& wri
 {
     writer->WriteObjectStart();
     
-    if(Updated.notNull()) { writer->WriteIdentifierPrefix(TEXT("Updated")); writer->WriteValue(Updated); }
-	
     writer->WriteIdentifierPrefix(TEXT("SubmissionsRemaining")); writer->WriteValue(SubmissionsRemaining);
 	
     
@@ -14137,13 +14179,6 @@ bool PlayFab::ClientModels::FReportPlayerClientResult::readFromValue(const TShar
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> UpdatedValue = obj->TryGetField(TEXT("Updated"));
-    if (UpdatedValue.IsValid()&& !UpdatedValue->IsNull())
-    {
-        bool TmpValue;
-        if(UpdatedValue->TryGetBool(TmpValue)) {Updated = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> SubmissionsRemainingValue = obj->TryGetField(TEXT("SubmissionsRemaining"));
     if (SubmissionsRemainingValue.IsValid()&& !SubmissionsRemainingValue->IsNull())
     {

@@ -1957,6 +1957,37 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FContactEmailInfoModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the email info data
+		FString Name;
+		// [optional] The email address
+		FString EmailAddress;
+	
+        FContactEmailInfoModel() :
+			FPlayFabBaseModel(),
+			Name(),
+			EmailAddress()
+			{}
+		
+		FContactEmailInfoModel(const FContactEmailInfoModel& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			EmailAddress(src.EmailAddress)
+			{}
+			
+		FContactEmailInfoModel(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfoModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FContactEmailInfoModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum ContinentCode
 	{
 		ContinentCodeAF,
@@ -3074,6 +3105,8 @@ namespace ServerModels
 		TArray<FPushNotificationRegistrationModel> PushNotificationRegistrations;
 		// [optional] List of all authentication systems linked to this player account
 		TArray<FLinkedPlatformAccountModel> LinkedAccounts;
+		// [optional] List of all contact email info associated with the player account
+		TArray<FContactEmailInfoModel> ContactEmailAddresses;
 		// [optional] List of advertising campaigns the player has been attributed to
 		TArray<FAdCampaignAttributionModel> AdCampaignAttributions;
 		// [optional] Sum of the player's purchases made with real-money currencies, converted to US dollars equivalent and represented as a whole number of cents (1/100 USD).              For example, 999 indicates nine dollars and ninety-nine cents.
@@ -3100,6 +3133,7 @@ namespace ServerModels
 			Tags(),
 			PushNotificationRegistrations(),
 			LinkedAccounts(),
+			ContactEmailAddresses(),
 			AdCampaignAttributions(),
 			TotalValueToDateInUSD(),
 			ValuesToDate(),
@@ -3122,6 +3156,7 @@ namespace ServerModels
 			Tags(src.Tags),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
 			LinkedAccounts(src.LinkedAccounts),
+			ContactEmailAddresses(src.ContactEmailAddresses),
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
 			ValuesToDate(src.ValuesToDate),
@@ -3884,6 +3919,8 @@ namespace ServerModels
 		bool ShowPushNotificationRegistrations;
 		// Whether to show the linked accounts. Defaults to false
 		bool ShowLinkedAccounts;
+		// Whether to show contact email addresses. Defaults to false
+		bool ShowContactEmailAddresses;
 		// Whether to show the total value to date in usd. Defaults to false
 		bool ShowTotalValueToDateInUsd;
 		// Whether to show the values to date. Defaults to false
@@ -3906,6 +3943,7 @@ namespace ServerModels
 			ShowCampaignAttributions(false),
 			ShowPushNotificationRegistrations(false),
 			ShowLinkedAccounts(false),
+			ShowContactEmailAddresses(false),
 			ShowTotalValueToDateInUsd(false),
 			ShowValuesToDate(false),
 			ShowTags(false),
@@ -3924,6 +3962,7 @@ namespace ServerModels
 			ShowCampaignAttributions(src.ShowCampaignAttributions),
 			ShowPushNotificationRegistrations(src.ShowPushNotificationRegistrations),
 			ShowLinkedAccounts(src.ShowLinkedAccounts),
+			ShowContactEmailAddresses(src.ShowContactEmailAddresses),
 			ShowTotalValueToDateInUsd(src.ShowTotalValueToDateInUsd),
 			ShowValuesToDate(src.ShowValuesToDate),
 			ShowTags(src.ShowTags),
@@ -3959,8 +3998,6 @@ namespace ServerModels
 		OptionalBool IncludeFacebookFriends;
 		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If set to false, Version is considered null. If true, uses the specified Version
-		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the resulting player profiles to return. For API calls from the client, only the allowed client profile properties for the title may be requested. These allowed properties are configured in the Game Manager "Client Profile Options" tab in the "Settings" section.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -3973,7 +4010,6 @@ namespace ServerModels
 			IncludeSteamFriends(),
 			IncludeFacebookFriends(),
 			Version(),
-			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -3986,7 +4022,6 @@ namespace ServerModels
 			IncludeSteamFriends(src.IncludeSteamFriends),
 			IncludeFacebookFriends(src.IncludeFacebookFriends),
 			Version(src.Version),
-			UseSpecificVersion(src.UseSpecificVersion),
 			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
 			{}
 			
@@ -4150,8 +4185,6 @@ namespace ServerModels
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If set to false, Version is considered null. If true, uses the specified Version
-		OptionalBool UseSpecificVersion;
 	
         FGetLeaderboardAroundUserRequest() :
 			FPlayFabBaseModel(),
@@ -4159,8 +4192,7 @@ namespace ServerModels
 			PlayFabId(),
 			MaxResultsCount(0),
 			ProfileConstraints(nullptr),
-			Version(),
-			UseSpecificVersion()
+			Version()
 			{}
 		
 		FGetLeaderboardAroundUserRequest(const FGetLeaderboardAroundUserRequest& src) :
@@ -4169,8 +4201,7 @@ namespace ServerModels
 			PlayFabId(src.PlayFabId),
 			MaxResultsCount(src.MaxResultsCount),
 			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
-			Version(src.Version),
-			UseSpecificVersion(src.UseSpecificVersion)
+			Version(src.Version)
 			{}
 			
 		FGetLeaderboardAroundUserRequest(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardAroundUserRequest()
@@ -4337,8 +4368,6 @@ namespace ServerModels
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If set to false, Version is considered null. If true, uses the specified Version
-		OptionalBool UseSpecificVersion;
 	
         FGetLeaderboardRequest() :
 			FPlayFabBaseModel(),
@@ -4346,8 +4375,7 @@ namespace ServerModels
 			StartPosition(0),
 			MaxResultsCount(0),
 			ProfileConstraints(nullptr),
-			Version(),
-			UseSpecificVersion()
+			Version()
 			{}
 		
 		FGetLeaderboardRequest(const FGetLeaderboardRequest& src) :
@@ -4356,8 +4384,7 @@ namespace ServerModels
 			StartPosition(src.StartPosition),
 			MaxResultsCount(src.MaxResultsCount),
 			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
-			Version(src.Version),
-			UseSpecificVersion(src.UseSpecificVersion)
+			Version(src.Version)
 			{}
 			
 		FGetLeaderboardRequest(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardRequest()
@@ -7574,20 +7601,16 @@ namespace ServerModels
 	struct PLAYFAB_API FReportPlayerServerResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Deprecated: Always true
-		OptionalBool Updated;
 		// The number of remaining reports which may be filed today by this reporting player.
 		int32 SubmissionsRemaining;
 	
         FReportPlayerServerResult() :
 			FPlayFabBaseModel(),
-			Updated(),
 			SubmissionsRemaining(0)
 			{}
 		
 		FReportPlayerServerResult(const FReportPlayerServerResult& src) :
 			FPlayFabBaseModel(),
-			Updated(src.Updated),
 			SubmissionsRemaining(src.SubmissionsRemaining)
 			{}
 			
@@ -7775,17 +7798,20 @@ namespace ServerModels
 		FString Recipient;
 		// [optional] Text of message to send.
 		FString Message;
-		// [optional] Defines all possible push attributes like message, title, icon, etc
+		// [optional] Defines all possible push attributes like message, title, icon, etc. Not supported for iOS devices.
 		TSharedPtr<FPushNotificationPackage> Package;
-		// [optional] Subject of message to send (may not be displayed in all platforms.
+		// [optional] Subject of message to send (may not be displayed in all platforms. Not supported for Android devices (use Package instead).
 		FString Subject;
+		// [optional] Platforms that should receive the message. If omitted, we will send to all available platforms.
+		TArray<PushNotificationPlatform> TargetPlatforms;
 	
         FSendPushNotificationRequest() :
 			FPlayFabBaseModel(),
 			Recipient(),
 			Message(),
 			Package(nullptr),
-			Subject()
+			Subject(),
+			TargetPlatforms()
 			{}
 		
 		FSendPushNotificationRequest(const FSendPushNotificationRequest& src) :
@@ -7793,7 +7819,8 @@ namespace ServerModels
 			Recipient(src.Recipient),
 			Message(src.Message),
 			Package(src.Package.IsValid() ? MakeShareable(new FPushNotificationPackage(*src.Package)) : nullptr),
-			Subject(src.Subject)
+			Subject(src.Subject),
+			TargetPlatforms(src.TargetPlatforms)
 			{}
 			
 		FSendPushNotificationRequest(const TSharedPtr<FJsonObject>& obj) : FSendPushNotificationRequest()

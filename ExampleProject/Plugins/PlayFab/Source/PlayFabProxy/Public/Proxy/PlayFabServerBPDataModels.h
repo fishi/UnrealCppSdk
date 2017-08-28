@@ -306,6 +306,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerContactEmailInfoDelegate, const FBPServerContactEmailInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerContactEmailInfoModel"))
+struct FBPServerContactEmailInfoModel
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FContactEmailInfoModel Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerContactEmailInfoModelDelegate, const FBPServerContactEmailInfoModel&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerContinentCode"))
 struct FBPServerContinentCode
 {

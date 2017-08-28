@@ -255,6 +255,13 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientContactEmailInfoModel(
+		const FBPClientContactEmailInfoModel& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientContainer_Dictionary_String_String(
 		const FBPClientContainer_Dictionary_String_String& In
 	);
@@ -370,6 +377,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutMaxPlayers
         ,TArray<FString>& OutPlayerUserIds
         ,int32& OutRunTime
+        ,int32& OutGameServerState
         ,FString& OutGameServerData
         ,FDateTime& OutLastHeartbeat
         ,FString& OutServerHostname
@@ -514,7 +522,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
@@ -535,7 +542,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
@@ -575,7 +581,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutStatisticName
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
@@ -607,7 +612,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutStartPosition
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
@@ -1480,6 +1484,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FBPClientTagModel>& OutTags
         ,TArray<FBPClientPushNotificationRegistrationModel>& OutPushNotificationRegistrations
         ,TArray<FBPClientLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPClientContactEmailInfoModel>& OutContactEmailAddresses
         ,TArray<FBPClientAdCampaignAttributionModel>& OutAdCampaignAttributions
         ,int32& OutTotalValueToDateInUSD
         ,TArray<FBPClientValueToDateModel>& OutValuesToDate
@@ -1499,6 +1504,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutShowCampaignAttributions
         ,bool& OutShowPushNotificationRegistrations
         ,bool& OutShowLinkedAccounts
+        ,bool& OutShowContactEmailAddresses
         ,bool& OutShowTotalValueToDateInUsd
         ,bool& OutShowValuesToDate
         ,bool& OutShowTags
@@ -1664,7 +1670,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientReportPlayerClientResult(
 		const FBPClientReportPlayerClientResult& In
-        ,bool& OutUpdated
         ,int32& OutSubmissionsRemaining
 	);
 	

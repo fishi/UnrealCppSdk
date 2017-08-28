@@ -264,6 +264,13 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerContactEmailInfoModel(
+		const FBPServerContactEmailInfoModel& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerContinentCode(
 		const FBPServerContinentCode& In
 	);
@@ -534,7 +541,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
 	);
 	
@@ -577,7 +583,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutMaxResultsCount
         ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -610,7 +615,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutMaxResultsCount
         ,FBPServerPlayerProfileViewConstraints& OutProfileConstraints
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1211,6 +1215,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FBPServerTagModel>& OutTags
         ,TArray<FBPServerPushNotificationRegistrationModel>& OutPushNotificationRegistrations
         ,TArray<FBPServerLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPServerContactEmailInfoModel>& OutContactEmailAddresses
         ,TArray<FBPServerAdCampaignAttributionModel>& OutAdCampaignAttributions
         ,int32& OutTotalValueToDateInUSD
         ,TArray<FBPServerValueToDateModel>& OutValuesToDate
@@ -1230,6 +1235,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutShowCampaignAttributions
         ,bool& OutShowPushNotificationRegistrations
         ,bool& OutShowLinkedAccounts
+        ,bool& OutShowContactEmailAddresses
         ,bool& OutShowTotalValueToDateInUsd
         ,bool& OutShowValuesToDate
         ,bool& OutShowTags
@@ -1397,7 +1403,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerReportPlayerServerResult(
 		const FBPServerReportPlayerServerResult& In
-        ,bool& OutUpdated
         ,int32& OutSubmissionsRemaining
 	);
 	

@@ -10,7 +10,7 @@ UPFServerGetLeaderboardAroundUser::UPFServerGetLeaderboardAroundUser(const FObje
 {
 }
 
-UPFServerGetLeaderboardAroundUser* UPFServerGetLeaderboardAroundUser::GetLeaderboardAroundUser(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const FString& InPlayFabId, const int32& InMaxResultsCount, const FBPServerPlayerProfileViewConstraints& InProfileConstraints, const int32& InVersion, const bool& InUseSpecificVersion)
+UPFServerGetLeaderboardAroundUser* UPFServerGetLeaderboardAroundUser::GetLeaderboardAroundUser(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const FString& InPlayFabId, const int32& InMaxResultsCount, const FBPServerPlayerProfileViewConstraints& InProfileConstraints, const int32& InVersion)
 {
 	UPFServerGetLeaderboardAroundUser* Proxy = NewObject<UPFServerGetLeaderboardAroundUser>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -19,7 +19,6 @@ UPFServerGetLeaderboardAroundUser* UPFServerGetLeaderboardAroundUser::GetLeaderb
 	Proxy->Request.MaxResultsCount = InMaxResultsCount;
 	*Proxy->Request.ProfileConstraints = InProfileConstraints.Data;
 	Proxy->Request.Version = InVersion;
-	Proxy->Request.UseSpecificVersion = InUseSpecificVersion;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

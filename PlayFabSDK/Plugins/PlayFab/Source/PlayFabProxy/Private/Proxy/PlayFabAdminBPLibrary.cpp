@@ -66,6 +66,19 @@ void UPFAdminProxyLibrary::BreakBPAdminAdCampaignAttribution(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminAdCampaignAttributionModel(
+		const FBPAdminAdCampaignAttributionModel& In
+        ,FString& OutPlatform
+        ,FString& OutCampaignId
+        ,FDateTime& OutAttributedAt
+	)
+{
+    OutPlatform = In.Data.Platform;
+	OutCampaignId = In.Data.CampaignId;
+	
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminAddNewsRequest(
 		const FBPAdminAddNewsRequest& In
         ,FDateTime& OutTimestamp
@@ -418,6 +431,17 @@ void UPFAdminProxyLibrary::BreakBPAdminContactEmailInfo(
     OutName = In.Data.Name;
 	OutEmailAddress = In.Data.EmailAddress;
 	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminContactEmailInfoModel(
+		const FBPAdminContactEmailInfoModel& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	)
+{
+    OutName = In.Data.Name;
+	OutEmailAddress = In.Data.EmailAddress;
 	
 }
 
@@ -986,6 +1010,26 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesResult(
         OutGameModes.Add(result);
     }
 
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerProfileRequest(
+		const FBPAdminGetPlayerProfileRequest& In
+        ,FString& OutPlayFabId
+        ,FBPAdminPlayerProfileViewConstraints& OutProfileConstraints
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerProfileResult(
+		const FBPAdminGetPlayerProfileResult& In
+        ,FBPAdminPlayerProfileModel& OutPlayerProfile
+	)
+{
+    if (In.Data.PlayerProfile.IsValid()) {    OutPlayerProfile.Data = *In.Data.PlayerProfile;}
 	
 }
 
@@ -1595,6 +1639,20 @@ void UPFAdminProxyLibrary::BreakBPAdminItemInstance(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminLinkedPlatformAccountModel(
+		const FBPAdminLinkedPlatformAccountModel& In
+        ,FString& OutPlatformUserId
+        ,FString& OutUsername
+        ,FString& OutEmail
+	)
+{
+    
+	OutPlatformUserId = In.Data.PlatformUserId;
+	OutUsername = In.Data.Username;
+	OutEmail = In.Data.Email;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminListBuildsRequest(
 		const FBPAdminListBuildsRequest& In
 	)
@@ -1636,6 +1694,21 @@ void UPFAdminProxyLibrary::BreakBPAdminListVirtualCurrencyTypesResult(
         OutVirtualCurrencies.Add(result);
     }
 
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminLocationModel(
+		const FBPAdminLocationModel& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
+	)
+{
+    
+	
+	OutCity = In.Data.City;
+	OutLatitude = In.Data.Latitude;
+	OutLongitude = In.Data.Longitude;
 	
 }
 
@@ -1898,6 +1971,141 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminPlayerProfileModel(
+		const FBPAdminPlayerProfileModel& In
+        ,FString& OutPublisherId
+        ,FString& OutTitleId
+        ,FString& OutPlayerId
+        ,FDateTime& OutCreated
+        ,FDateTime& OutLastLogin
+        ,FDateTime& OutBannedUntil
+        ,TArray<FBPAdminLocationModel>& OutLocations
+        ,FString& OutDisplayName
+        ,FString& OutAvatarUrl
+        ,TArray<FBPAdminTagModel>& OutTags
+        ,TArray<FBPAdminPushNotificationRegistrationModel>& OutPushNotificationRegistrations
+        ,TArray<FBPAdminLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPAdminContactEmailInfoModel>& OutContactEmailAddresses
+        ,TArray<FBPAdminAdCampaignAttributionModel>& OutAdCampaignAttributions
+        ,int32& OutTotalValueToDateInUSD
+        ,TArray<FBPAdminValueToDateModel>& OutValuesToDate
+        ,TArray<FBPAdminVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
+        ,TArray<FBPAdminStatisticModel>& OutStatistics
+	)
+{
+    OutPublisherId = In.Data.PublisherId;
+	OutTitleId = In.Data.TitleId;
+	OutPlayerId = In.Data.PlayerId;
+	
+	
+	
+	
+	for (const PlayFab::AdminModels::FLocationModel& elem : In.Data.Locations)
+    {
+        FBPAdminLocationModel result;
+        result.Data = elem;
+        OutLocations.Add(result);
+    }
+
+	OutDisplayName = In.Data.DisplayName;
+	OutAvatarUrl = In.Data.AvatarUrl;
+	for (const PlayFab::AdminModels::FTagModel& elem : In.Data.Tags)
+    {
+        FBPAdminTagModel result;
+        result.Data = elem;
+        OutTags.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FPushNotificationRegistrationModel& elem : In.Data.PushNotificationRegistrations)
+    {
+        FBPAdminPushNotificationRegistrationModel result;
+        result.Data = elem;
+        OutPushNotificationRegistrations.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FLinkedPlatformAccountModel& elem : In.Data.LinkedAccounts)
+    {
+        FBPAdminLinkedPlatformAccountModel result;
+        result.Data = elem;
+        OutLinkedAccounts.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FContactEmailInfoModel& elem : In.Data.ContactEmailAddresses)
+    {
+        FBPAdminContactEmailInfoModel result;
+        result.Data = elem;
+        OutContactEmailAddresses.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
+    {
+        FBPAdminAdCampaignAttributionModel result;
+        result.Data = elem;
+        OutAdCampaignAttributions.Add(result);
+    }
+
+	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
+	for (const PlayFab::AdminModels::FValueToDateModel& elem : In.Data.ValuesToDate)
+    {
+        FBPAdminValueToDateModel result;
+        result.Data = elem;
+        OutValuesToDate.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FVirtualCurrencyBalanceModel& elem : In.Data.VirtualCurrencyBalances)
+    {
+        FBPAdminVirtualCurrencyBalanceModel result;
+        result.Data = elem;
+        OutVirtualCurrencyBalances.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FStatisticModel& elem : In.Data.Statistics)
+    {
+        FBPAdminStatisticModel result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPlayerProfileViewConstraints(
+		const FBPAdminPlayerProfileViewConstraints& In
+        ,bool& OutShowDisplayName
+        ,bool& OutShowCreated
+        ,bool& OutShowOrigination
+        ,bool& OutShowLastLogin
+        ,bool& OutShowBannedUntil
+        ,bool& OutShowStatistics
+        ,bool& OutShowCampaignAttributions
+        ,bool& OutShowPushNotificationRegistrations
+        ,bool& OutShowLinkedAccounts
+        ,bool& OutShowContactEmailAddresses
+        ,bool& OutShowTotalValueToDateInUsd
+        ,bool& OutShowValuesToDate
+        ,bool& OutShowTags
+        ,bool& OutShowLocations
+        ,bool& OutShowAvatarUrl
+	)
+{
+    OutShowDisplayName = In.Data.ShowDisplayName;
+	OutShowCreated = In.Data.ShowCreated;
+	OutShowOrigination = In.Data.ShowOrigination;
+	OutShowLastLogin = In.Data.ShowLastLogin;
+	OutShowBannedUntil = In.Data.ShowBannedUntil;
+	OutShowStatistics = In.Data.ShowStatistics;
+	OutShowCampaignAttributions = In.Data.ShowCampaignAttributions;
+	OutShowPushNotificationRegistrations = In.Data.ShowPushNotificationRegistrations;
+	OutShowLinkedAccounts = In.Data.ShowLinkedAccounts;
+	OutShowContactEmailAddresses = In.Data.ShowContactEmailAddresses;
+	OutShowTotalValueToDateInUsd = In.Data.ShowTotalValueToDateInUsd;
+	OutShowValuesToDate = In.Data.ShowValuesToDate;
+	OutShowTags = In.Data.ShowTags;
+	OutShowLocations = In.Data.ShowLocations;
+	OutShowAvatarUrl = In.Data.ShowAvatarUrl;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminPlayerStatistic(
 		const FBPAdminPlayerStatistic& In
         ,FString& OutId
@@ -1957,6 +2165,16 @@ void UPFAdminProxyLibrary::BreakBPAdminPushNotificationPlatform(
 
 void UPFAdminProxyLibrary::BreakBPAdminPushNotificationRegistration(
 		const FBPAdminPushNotificationRegistration& In
+        ,FString& OutNotificationEndpointARN
+	)
+{
+    
+	OutNotificationEndpointARN = In.Data.NotificationEndpointARN;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPushNotificationRegistrationModel(
+		const FBPAdminPushNotificationRegistrationModel& In
         ,FString& OutNotificationEndpointARN
 	)
 {
@@ -2453,6 +2671,19 @@ void UPFAdminProxyLibrary::BreakBPAdminStatisticAggregationMethod(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminStatisticModel(
+		const FBPAdminStatisticModel& In
+        ,FString& OutName
+        ,int32& OutVersion
+        ,int32& OutValue
+	)
+{
+    OutName = In.Data.Name;
+	OutVersion = In.Data.Version;
+	OutValue = In.Data.Value;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminStatisticResetIntervalOption(
 		const FBPAdminStatisticResetIntervalOption& In
 	)
@@ -2510,6 +2741,15 @@ void UPFAdminProxyLibrary::BreakBPAdminSubtractUserVirtualCurrencyRequest(
     OutPlayFabId = In.Data.PlayFabId;
 	OutVirtualCurrency = In.Data.VirtualCurrency;
 	OutAmount = In.Data.Amount;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminTagModel(
+		const FBPAdminTagModel& In
+        ,FString& OutTagValue
+	)
+{
+    OutTagValue = In.Data.TagValue;
 	
 }
 
@@ -3075,6 +3315,30 @@ void UPFAdminProxyLibrary::BreakBPAdminUserXboxInfo(
 	)
 {
     OutXboxUserId = In.Data.XboxUserId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminValueToDateModel(
+		const FBPAdminValueToDateModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
+        ,FString& OutTotalValueAsDecimal
+	)
+{
+    OutCurrency = In.Data.Currency;
+	OutTotalValue = In.Data.TotalValue;
+	OutTotalValueAsDecimal = In.Data.TotalValueAsDecimal;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminVirtualCurrencyBalanceModel(
+		const FBPAdminVirtualCurrencyBalanceModel& In
+        ,FString& OutCurrency
+        ,int32& OutTotalValue
+	)
+{
+    OutCurrency = In.Data.Currency;
+	OutTotalValue = In.Data.TotalValue;
 	
 }
 

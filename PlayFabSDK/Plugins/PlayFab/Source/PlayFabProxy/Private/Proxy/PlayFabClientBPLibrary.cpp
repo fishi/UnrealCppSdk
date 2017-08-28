@@ -418,6 +418,17 @@ void UPFClientProxyLibrary::BreakBPClientConsumeItemResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientContactEmailInfoModel(
+		const FBPClientContactEmailInfoModel& In
+        ,FString& OutName
+        ,FString& OutEmailAddress
+	)
+{
+    OutName = In.Data.Name;
+	OutEmailAddress = In.Data.EmailAddress;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientContainer_Dictionary_String_String(
 		const FBPClientContainer_Dictionary_String_String& In
 	)
@@ -614,6 +625,7 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
         ,int32& OutMaxPlayers
         ,TArray<FString>& OutPlayerUserIds
         ,int32& OutRunTime
+        ,int32& OutGameServerState
         ,FString& OutGameServerData
         ,FDateTime& OutLastHeartbeat
         ,FString& OutServerHostname
@@ -628,6 +640,7 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
 	OutMaxPlayers = In.Data.MaxPlayers;
 	OutPlayerUserIds = In.Data.PlayerUserIds;
 	OutRunTime = In.Data.RunTime;
+	OutGameServerState = In.Data.GameServerState;
 	
 	OutGameServerData = In.Data.GameServerData;
 	
@@ -874,7 +887,6 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundPlayerRequest
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
@@ -884,7 +896,6 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundPlayerRequest
 	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
 	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
 	OutVersion = In.Data.Version;
-	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
@@ -916,7 +927,6 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardRequest(
         ,bool& OutIncludeSteamFriends
         ,bool& OutIncludeFacebookFriends
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
@@ -926,7 +936,6 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardRequest(
 	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
 	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
 	OutVersion = In.Data.Version;
-	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
@@ -995,7 +1004,6 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundPlayerRequest(
         ,FString& OutStatisticName
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
@@ -1003,7 +1011,6 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundPlayerRequest(
 	OutStatisticName = In.Data.StatisticName;
 	OutMaxResultsCount = In.Data.MaxResultsCount;
 	OutVersion = In.Data.Version;
-	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
@@ -1059,7 +1066,6 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardRequest(
         ,int32& OutStartPosition
         ,int32& OutMaxResultsCount
         ,int32& OutVersion
-        ,bool& OutUseSpecificVersion
         ,FBPClientPlayerProfileViewConstraints& OutProfileConstraints
 	)
 {
@@ -1067,7 +1073,6 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardRequest(
 	OutStartPosition = In.Data.StartPosition;
 	OutMaxResultsCount = In.Data.MaxResultsCount;
 	OutVersion = In.Data.Version;
-	OutUseSpecificVersion = In.Data.UseSpecificVersion;
 	if (In.Data.ProfileConstraints.IsValid()) {    OutProfileConstraints.Data = *In.Data.ProfileConstraints;}
 	
 }
@@ -2613,6 +2618,7 @@ void UPFClientProxyLibrary::BreakBPClientPlayerProfileModel(
         ,TArray<FBPClientTagModel>& OutTags
         ,TArray<FBPClientPushNotificationRegistrationModel>& OutPushNotificationRegistrations
         ,TArray<FBPClientLinkedPlatformAccountModel>& OutLinkedAccounts
+        ,TArray<FBPClientContactEmailInfoModel>& OutContactEmailAddresses
         ,TArray<FBPClientAdCampaignAttributionModel>& OutAdCampaignAttributions
         ,int32& OutTotalValueToDateInUSD
         ,TArray<FBPClientValueToDateModel>& OutValuesToDate
@@ -2655,6 +2661,13 @@ void UPFClientProxyLibrary::BreakBPClientPlayerProfileModel(
         FBPClientLinkedPlatformAccountModel result;
         result.Data = elem;
         OutLinkedAccounts.Add(result);
+    }
+
+	for (const PlayFab::ClientModels::FContactEmailInfoModel& elem : In.Data.ContactEmailAddresses)
+    {
+        FBPClientContactEmailInfoModel result;
+        result.Data = elem;
+        OutContactEmailAddresses.Add(result);
     }
 
 	for (const PlayFab::ClientModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
@@ -2700,6 +2713,7 @@ void UPFClientProxyLibrary::BreakBPClientPlayerProfileViewConstraints(
         ,bool& OutShowCampaignAttributions
         ,bool& OutShowPushNotificationRegistrations
         ,bool& OutShowLinkedAccounts
+        ,bool& OutShowContactEmailAddresses
         ,bool& OutShowTotalValueToDateInUsd
         ,bool& OutShowValuesToDate
         ,bool& OutShowTags
@@ -2716,6 +2730,7 @@ void UPFClientProxyLibrary::BreakBPClientPlayerProfileViewConstraints(
 	OutShowCampaignAttributions = In.Data.ShowCampaignAttributions;
 	OutShowPushNotificationRegistrations = In.Data.ShowPushNotificationRegistrations;
 	OutShowLinkedAccounts = In.Data.ShowLinkedAccounts;
+	OutShowContactEmailAddresses = In.Data.ShowContactEmailAddresses;
 	OutShowTotalValueToDateInUsd = In.Data.ShowTotalValueToDateInUsd;
 	OutShowValuesToDate = In.Data.ShowValuesToDate;
 	OutShowTags = In.Data.ShowTags;
@@ -2987,12 +3002,10 @@ void UPFClientProxyLibrary::BreakBPClientReportPlayerClientRequest(
 
 void UPFClientProxyLibrary::BreakBPClientReportPlayerClientResult(
 		const FBPClientReportPlayerClientResult& In
-        ,bool& OutUpdated
         ,int32& OutSubmissionsRemaining
 	)
 {
-    OutUpdated = In.Data.Updated;
-	OutSubmissionsRemaining = In.Data.SubmissionsRemaining;
+    OutSubmissionsRemaining = In.Data.SubmissionsRemaining;
 	
 }
 

@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPServerGetSharedGroupDataResultDelegate OnFailure;
 	
-	// Retrieves data stored in a shared group object, as well as the list of members in the group. The server can access all public and private group data.
+	// Retrieves data stored in a shared group object, as well as the list of members in the group.  The server can access all public and private group data. Shared Groups are designed for sharing data between a very  small number of players, please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Shared Group Data")
 	static UPFServerGetSharedGroupData* GetSharedGroupData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InSharedGroupId, const TArray<FString>& InKeys, const bool& InGetMembers);
 

@@ -1312,6 +1312,37 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FContactEmailInfoModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the email info data
+		FString Name;
+		// [optional] The email address
+		FString EmailAddress;
+	
+        FContactEmailInfoModel() :
+			FPlayFabBaseModel(),
+			Name(),
+			EmailAddress()
+			{}
+		
+		FContactEmailInfoModel(const FContactEmailInfoModel& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			EmailAddress(src.EmailAddress)
+			{}
+			
+		FContactEmailInfoModel(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfoModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FContactEmailInfoModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum ContinentCode
 	{
 		ContinentCodeAF,
@@ -1896,7 +1927,9 @@ namespace ClientModels
 		// duration in seconds this server has been running
 		uint32 RunTime;
 		// [optional] game specific string denoting server configuration
-		Boxed<GameInstanceState> GameServerState;
+		OptionalInt32 GameServerState;
+		// [optional] game specific string denoting server configuration
+		Boxed<GameInstanceState> GameServerStateEnum;
 		// [optional] game session custom data
 		FString GameServerData;
 		// [optional] game session tags
@@ -1919,6 +1952,7 @@ namespace ClientModels
 			PlayerUserIds(),
 			RunTime(0),
 			GameServerState(),
+			GameServerStateEnum(),
 			GameServerData(),
 			Tags(),
 			LastHeartbeat(),
@@ -1937,6 +1971,7 @@ namespace ClientModels
 			PlayerUserIds(src.PlayerUserIds),
 			RunTime(src.RunTime),
 			GameServerState(src.GameServerState),
+			GameServerStateEnum(src.GameServerStateEnum),
 			GameServerData(src.GameServerData),
 			Tags(src.Tags),
 			LastHeartbeat(src.LastHeartbeat),
@@ -2640,6 +2675,8 @@ namespace ClientModels
 		TArray<FPushNotificationRegistrationModel> PushNotificationRegistrations;
 		// [optional] List of all authentication systems linked to this player account
 		TArray<FLinkedPlatformAccountModel> LinkedAccounts;
+		// [optional] List of all contact email info associated with the player account
+		TArray<FContactEmailInfoModel> ContactEmailAddresses;
 		// [optional] List of advertising campaigns the player has been attributed to
 		TArray<FAdCampaignAttributionModel> AdCampaignAttributions;
 		// [optional] Sum of the player's purchases made with real-money currencies, converted to US dollars equivalent and represented as a whole number of cents (1/100 USD).              For example, 999 indicates nine dollars and ninety-nine cents.
@@ -2666,6 +2703,7 @@ namespace ClientModels
 			Tags(),
 			PushNotificationRegistrations(),
 			LinkedAccounts(),
+			ContactEmailAddresses(),
 			AdCampaignAttributions(),
 			TotalValueToDateInUSD(),
 			ValuesToDate(),
@@ -2688,6 +2726,7 @@ namespace ClientModels
 			Tags(src.Tags),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
 			LinkedAccounts(src.LinkedAccounts),
+			ContactEmailAddresses(src.ContactEmailAddresses),
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
 			ValuesToDate(src.ValuesToDate),
@@ -3902,6 +3941,8 @@ namespace ClientModels
 		bool ShowPushNotificationRegistrations;
 		// Whether to show the linked accounts. Defaults to false
 		bool ShowLinkedAccounts;
+		// Whether to show contact email addresses. Defaults to false
+		bool ShowContactEmailAddresses;
 		// Whether to show the total value to date in usd. Defaults to false
 		bool ShowTotalValueToDateInUsd;
 		// Whether to show the values to date. Defaults to false
@@ -3924,6 +3965,7 @@ namespace ClientModels
 			ShowCampaignAttributions(false),
 			ShowPushNotificationRegistrations(false),
 			ShowLinkedAccounts(false),
+			ShowContactEmailAddresses(false),
 			ShowTotalValueToDateInUsd(false),
 			ShowValuesToDate(false),
 			ShowTags(false),
@@ -3942,6 +3984,7 @@ namespace ClientModels
 			ShowCampaignAttributions(src.ShowCampaignAttributions),
 			ShowPushNotificationRegistrations(src.ShowPushNotificationRegistrations),
 			ShowLinkedAccounts(src.ShowLinkedAccounts),
+			ShowContactEmailAddresses(src.ShowContactEmailAddresses),
 			ShowTotalValueToDateInUsd(src.ShowTotalValueToDateInUsd),
 			ShowValuesToDate(src.ShowValuesToDate),
 			ShowTags(src.ShowTags),
@@ -3975,8 +4018,6 @@ namespace ClientModels
 		OptionalBool IncludeFacebookFriends;
 		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If set to false, Version is considered null. If true, uses the specified Version
-		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the resulting player profiles to return. For API calls from the client, only the allowed client profile properties for the title may be requested. These allowed properties are configured in the Game Manager "Client Profile Options" tab in the "Settings" section.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -3988,7 +4029,6 @@ namespace ClientModels
 			IncludeSteamFriends(),
 			IncludeFacebookFriends(),
 			Version(),
-			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -4000,7 +4040,6 @@ namespace ClientModels
 			IncludeSteamFriends(src.IncludeSteamFriends),
 			IncludeFacebookFriends(src.IncludeFacebookFriends),
 			Version(src.Version),
-			UseSpecificVersion(src.UseSpecificVersion),
 			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
 			{}
 			
@@ -4108,8 +4147,6 @@ namespace ClientModels
 		OptionalBool IncludeFacebookFriends;
 		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If set to false, Version is considered null. If true, uses the specified Version
-		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the resulting player profiles to return. For API calls from the client, only the allowed client profile properties for the title may be requested. These allowed properties are configured in the Game Manager "Client Profile Options" tab in the "Settings" section.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -4121,7 +4158,6 @@ namespace ClientModels
 			IncludeSteamFriends(),
 			IncludeFacebookFriends(),
 			Version(),
-			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -4133,7 +4169,6 @@ namespace ClientModels
 			IncludeSteamFriends(src.IncludeSteamFriends),
 			IncludeFacebookFriends(src.IncludeFacebookFriends),
 			Version(src.Version),
-			UseSpecificVersion(src.UseSpecificVersion),
 			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
 			{}
 			
@@ -4287,8 +4322,6 @@ namespace ClientModels
 		OptionalInt32 MaxResultsCount;
 		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If set to false, Version is considered null. If true, uses the specified Version
-		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the resulting player profiles to return. For API calls from the client, only the allowed client profile properties for the title may be requested. These allowed properties are configured in the Game Manager "Client Profile Options" tab in the "Settings" section.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -4298,7 +4331,6 @@ namespace ClientModels
 			StatisticName(),
 			MaxResultsCount(),
 			Version(),
-			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -4308,7 +4340,6 @@ namespace ClientModels
 			StatisticName(src.StatisticName),
 			MaxResultsCount(src.MaxResultsCount),
 			Version(src.Version),
-			UseSpecificVersion(src.UseSpecificVersion),
 			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
 			{}
 			
@@ -4427,8 +4458,6 @@ namespace ClientModels
 		OptionalInt32 MaxResultsCount;
 		// [optional] The version of the leaderboard to get.
 		OptionalInt32 Version;
-		// [optional] If set to false, Version is considered null. If true, uses the specified Version
-		OptionalBool UseSpecificVersion;
 		// [optional] If non-null, this determines which properties of the resulting player profiles to return. For API calls from the client, only the allowed client profile properties for the title may be requested. These allowed properties are configured in the Game Manager "Client Profile Options" tab in the "Settings" section.
 		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
 	
@@ -4438,7 +4467,6 @@ namespace ClientModels
 			StartPosition(0),
 			MaxResultsCount(),
 			Version(),
-			UseSpecificVersion(),
 			ProfileConstraints(nullptr)
 			{}
 		
@@ -4448,7 +4476,6 @@ namespace ClientModels
 			StartPosition(src.StartPosition),
 			MaxResultsCount(src.MaxResultsCount),
 			Version(src.Version),
-			UseSpecificVersion(src.UseSpecificVersion),
 			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
 			{}
 			
@@ -8967,20 +8994,16 @@ namespace ClientModels
 	struct PLAYFAB_API FReportPlayerClientResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Deprecated: Always true
-		OptionalBool Updated;
 		// The number of remaining reports which may be filed today.
 		int32 SubmissionsRemaining;
 	
         FReportPlayerClientResult() :
 			FPlayFabBaseModel(),
-			Updated(),
 			SubmissionsRemaining(0)
 			{}
 		
 		FReportPlayerClientResult(const FReportPlayerClientResult& src) :
 			FPlayFabBaseModel(),
-			Updated(src.Updated),
 			SubmissionsRemaining(src.SubmissionsRemaining)
 			{}
 			

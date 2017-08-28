@@ -218,6 +218,41 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FAdCampaignAttributionModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Attribution network name
+		FString Platform;
+		// [optional] Attribution campaign identifier
+		FString CampaignId;
+		// UTC time stamp of attribution
+		FDateTime AttributedAt;
+	
+        FAdCampaignAttributionModel() :
+			FPlayFabBaseModel(),
+			Platform(),
+			CampaignId(),
+			AttributedAt(0)
+			{}
+		
+		FAdCampaignAttributionModel(const FAdCampaignAttributionModel& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			CampaignId(src.CampaignId),
+			AttributedAt(src.AttributedAt)
+			{}
+			
+		FAdCampaignAttributionModel(const TSharedPtr<FJsonObject>& obj) : FAdCampaignAttributionModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAdCampaignAttributionModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAddNewsRequest : public FPlayFabBaseModel
     {
 		
@@ -1336,6 +1371,37 @@ namespace AdminModels
         }
 		
 		~FContactEmailInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FContactEmailInfoModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the email info data
+		FString Name;
+		// [optional] The email address
+		FString EmailAddress;
+	
+        FContactEmailInfoModel() :
+			FPlayFabBaseModel(),
+			Name(),
+			EmailAddress()
+			{}
+		
+		FContactEmailInfoModel(const FContactEmailInfoModel& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			EmailAddress(src.EmailAddress)
+			{}
+			
+		FContactEmailInfoModel(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfoModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FContactEmailInfoModel();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3181,6 +3247,519 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FPlayerProfileViewConstraints : public FPlayFabBaseModel
+    {
+		
+		// Whether to show the display name. Defaults to false
+		bool ShowDisplayName;
+		// Whether to show the created date. Defaults to false
+		bool ShowCreated;
+		// Whether to show origination. Defaults to false
+		bool ShowOrigination;
+		// Whether to show the last login time. Defaults to false
+		bool ShowLastLogin;
+		// Whether to show the banned until time. Defaults to false
+		bool ShowBannedUntil;
+		// Reserved for future development
+		bool ShowStatistics;
+		// Whether to show campaign attributions. Defaults to false
+		bool ShowCampaignAttributions;
+		// Whether to show push notification registrations. Defaults to false
+		bool ShowPushNotificationRegistrations;
+		// Whether to show the linked accounts. Defaults to false
+		bool ShowLinkedAccounts;
+		// Whether to show contact email addresses. Defaults to false
+		bool ShowContactEmailAddresses;
+		// Whether to show the total value to date in usd. Defaults to false
+		bool ShowTotalValueToDateInUsd;
+		// Whether to show the values to date. Defaults to false
+		bool ShowValuesToDate;
+		// Whether to show tags. Defaults to false
+		bool ShowTags;
+		// Whether to show player's locations. Defaults to false
+		bool ShowLocations;
+		// Whether to show player's avatar URL. Defaults to false
+		bool ShowAvatarUrl;
+	
+        FPlayerProfileViewConstraints() :
+			FPlayFabBaseModel(),
+			ShowDisplayName(false),
+			ShowCreated(false),
+			ShowOrigination(false),
+			ShowLastLogin(false),
+			ShowBannedUntil(false),
+			ShowStatistics(false),
+			ShowCampaignAttributions(false),
+			ShowPushNotificationRegistrations(false),
+			ShowLinkedAccounts(false),
+			ShowContactEmailAddresses(false),
+			ShowTotalValueToDateInUsd(false),
+			ShowValuesToDate(false),
+			ShowTags(false),
+			ShowLocations(false),
+			ShowAvatarUrl(false)
+			{}
+		
+		FPlayerProfileViewConstraints(const FPlayerProfileViewConstraints& src) :
+			FPlayFabBaseModel(),
+			ShowDisplayName(src.ShowDisplayName),
+			ShowCreated(src.ShowCreated),
+			ShowOrigination(src.ShowOrigination),
+			ShowLastLogin(src.ShowLastLogin),
+			ShowBannedUntil(src.ShowBannedUntil),
+			ShowStatistics(src.ShowStatistics),
+			ShowCampaignAttributions(src.ShowCampaignAttributions),
+			ShowPushNotificationRegistrations(src.ShowPushNotificationRegistrations),
+			ShowLinkedAccounts(src.ShowLinkedAccounts),
+			ShowContactEmailAddresses(src.ShowContactEmailAddresses),
+			ShowTotalValueToDateInUsd(src.ShowTotalValueToDateInUsd),
+			ShowValuesToDate(src.ShowValuesToDate),
+			ShowTags(src.ShowTags),
+			ShowLocations(src.ShowLocations),
+			ShowAvatarUrl(src.ShowAvatarUrl)
+			{}
+			
+		FPlayerProfileViewConstraints(const TSharedPtr<FJsonObject>& obj) : FPlayerProfileViewConstraints()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerProfileViewConstraints();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerProfileRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] If non-null, this determines which properties of the resulting player profiles to return. For API calls from the client, only the allowed client profile properties for the title may be requested. These allowed properties are configured in the Game Manager "Client Profile Options" tab in the "Settings" section.
+		TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
+	
+        FGetPlayerProfileRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			ProfileConstraints(nullptr)
+			{}
+		
+		FGetPlayerProfileRequest(const FGetPlayerProfileRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr)
+			{}
+			
+		FGetPlayerProfileRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerProfileRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerProfileRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum LoginIdentityProvider
+	{
+		LoginIdentityProviderUnknown,
+		LoginIdentityProviderPlayFab,
+		LoginIdentityProviderCustom,
+		LoginIdentityProviderGameCenter,
+		LoginIdentityProviderGooglePlay,
+		LoginIdentityProviderSteam,
+		LoginIdentityProviderXBoxLive,
+		LoginIdentityProviderPSN,
+		LoginIdentityProviderKongregate,
+		LoginIdentityProviderFacebook,
+		LoginIdentityProviderIOSDevice,
+		LoginIdentityProviderAndroidDevice,
+		LoginIdentityProviderTwitch,
+		LoginIdentityProviderWindowsHello
+	};
+	
+	void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, JsonWriter& writer);
+	LoginIdentityProvider readLoginIdentityProviderFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FLocationModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] The two-character continent code for this location
+		Boxed<ContinentCode> pfContinentCode;
+		// [optional] The two-character ISO 3166-1 country code for the country associated with the location
+		Boxed<CountryCode> pfCountryCode;
+		// [optional] City name.
+		FString City;
+		// [optional] Latitude coordinate of the geographic location.
+		OptionalDouble Latitude;
+		// [optional] Longitude coordinate of the geographic location.
+		OptionalDouble Longitude;
+	
+        FLocationModel() :
+			FPlayFabBaseModel(),
+			pfContinentCode(),
+			pfCountryCode(),
+			City(),
+			Latitude(),
+			Longitude()
+			{}
+		
+		FLocationModel(const FLocationModel& src) :
+			FPlayFabBaseModel(),
+			pfContinentCode(src.pfContinentCode),
+			pfCountryCode(src.pfCountryCode),
+			City(src.City),
+			Latitude(src.Latitude),
+			Longitude(src.Longitude)
+			{}
+			
+		FLocationModel(const TSharedPtr<FJsonObject>& obj) : FLocationModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLocationModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FTagModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Full value of the tag, including namespace
+		FString TagValue;
+	
+        FTagModel() :
+			FPlayFabBaseModel(),
+			TagValue()
+			{}
+		
+		FTagModel(const FTagModel& src) :
+			FPlayFabBaseModel(),
+			TagValue(src.TagValue)
+			{}
+			
+		FTagModel(const TSharedPtr<FJsonObject>& obj) : FTagModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FTagModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum PushNotificationPlatform
+	{
+		PushNotificationPlatformApplePushNotificationService,
+		PushNotificationPlatformGoogleCloudMessaging
+	};
+	
+	void writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer);
+	PushNotificationPlatform readPushNotificationPlatformFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FPushNotificationRegistrationModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Push notification platform
+		Boxed<PushNotificationPlatform> Platform;
+		// [optional] Notification configured endpoint
+		FString NotificationEndpointARN;
+	
+        FPushNotificationRegistrationModel() :
+			FPlayFabBaseModel(),
+			Platform(),
+			NotificationEndpointARN()
+			{}
+		
+		FPushNotificationRegistrationModel(const FPushNotificationRegistrationModel& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			NotificationEndpointARN(src.NotificationEndpointARN)
+			{}
+			
+		FPushNotificationRegistrationModel(const TSharedPtr<FJsonObject>& obj) : FPushNotificationRegistrationModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPushNotificationRegistrationModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLinkedPlatformAccountModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Authentication platform
+		Boxed<LoginIdentityProvider> Platform;
+		// [optional] Unique account identifier of the user on the platform
+		FString PlatformUserId;
+		// [optional] Linked account username of the user on the platform, if available
+		FString Username;
+		// [optional] Linked account email of the user on the platform, if available
+		FString Email;
+	
+        FLinkedPlatformAccountModel() :
+			FPlayFabBaseModel(),
+			Platform(),
+			PlatformUserId(),
+			Username(),
+			Email()
+			{}
+		
+		FLinkedPlatformAccountModel(const FLinkedPlatformAccountModel& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			PlatformUserId(src.PlatformUserId),
+			Username(src.Username),
+			Email(src.Email)
+			{}
+			
+		FLinkedPlatformAccountModel(const TSharedPtr<FJsonObject>& obj) : FLinkedPlatformAccountModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLinkedPlatformAccountModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FValueToDateModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] ISO 4217 code of the currency used in the purchases
+		FString Currency;
+		// Total value of the purchases in a whole number of 1/100 monetary units. For example, 999 indicates nine dollars and ninety-nine cents when Currency is 'USD')
+		uint32 TotalValue;
+		// [optional] Total value of the purchases in a string representation of decimal monetary units. For example, '9.99' indicates nine dollars and ninety-nine cents when Currency is 'USD'.
+		FString TotalValueAsDecimal;
+	
+        FValueToDateModel() :
+			FPlayFabBaseModel(),
+			Currency(),
+			TotalValue(0),
+			TotalValueAsDecimal()
+			{}
+		
+		FValueToDateModel(const FValueToDateModel& src) :
+			FPlayFabBaseModel(),
+			Currency(src.Currency),
+			TotalValue(src.TotalValue),
+			TotalValueAsDecimal(src.TotalValueAsDecimal)
+			{}
+			
+		FValueToDateModel(const TSharedPtr<FJsonObject>& obj) : FValueToDateModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FValueToDateModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FVirtualCurrencyBalanceModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Name of the virtual currency
+		FString Currency;
+		// Balance of the virtual currency
+		int32 TotalValue;
+	
+        FVirtualCurrencyBalanceModel() :
+			FPlayFabBaseModel(),
+			Currency(),
+			TotalValue(0)
+			{}
+		
+		FVirtualCurrencyBalanceModel(const FVirtualCurrencyBalanceModel& src) :
+			FPlayFabBaseModel(),
+			Currency(src.Currency),
+			TotalValue(src.TotalValue)
+			{}
+			
+		FVirtualCurrencyBalanceModel(const TSharedPtr<FJsonObject>& obj) : FVirtualCurrencyBalanceModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FVirtualCurrencyBalanceModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FStatisticModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Statistic name
+		FString Name;
+		// Statistic version (0 if not a versioned statistic)
+		int32 Version;
+		// Statistic value
+		int32 Value;
+	
+        FStatisticModel() :
+			FPlayFabBaseModel(),
+			Name(),
+			Version(0),
+			Value(0)
+			{}
+		
+		FStatisticModel(const FStatisticModel& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			Version(src.Version),
+			Value(src.Value)
+			{}
+			
+		FStatisticModel(const TSharedPtr<FJsonObject>& obj) : FStatisticModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStatisticModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerProfileModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Publisher this player belongs to
+		FString PublisherId;
+		// [optional] Title ID this player profile applies to
+		FString TitleId;
+		// [optional] PlayFab player account unique identifier
+		FString PlayerId;
+		// [optional] Player record created
+		OptionalTime Created;
+		// [optional] Player account origination
+		Boxed<LoginIdentityProvider> Origination;
+		// [optional] UTC time when the player most recently logged in to the title
+		OptionalTime LastLogin;
+		// [optional] If the player is currently banned, the UTC Date when the ban expires
+		OptionalTime BannedUntil;
+		// [optional] List of geographic locations from which the player has logged in to the title
+		TArray<FLocationModel> Locations;
+		// [optional] Player display name
+		FString DisplayName;
+		// [optional] URL of the player's avatar image
+		FString AvatarUrl;
+		// [optional] List of player's tags for segmentation
+		TArray<FTagModel> Tags;
+		// [optional] List of configured end points registered for sending the player push notifications
+		TArray<FPushNotificationRegistrationModel> PushNotificationRegistrations;
+		// [optional] List of all authentication systems linked to this player account
+		TArray<FLinkedPlatformAccountModel> LinkedAccounts;
+		// [optional] List of all contact email info associated with the player account
+		TArray<FContactEmailInfoModel> ContactEmailAddresses;
+		// [optional] List of advertising campaigns the player has been attributed to
+		TArray<FAdCampaignAttributionModel> AdCampaignAttributions;
+		// [optional] Sum of the player's purchases made with real-money currencies, converted to US dollars equivalent and represented as a whole number of cents (1/100 USD).              For example, 999 indicates nine dollars and ninety-nine cents.
+		OptionalUint32 TotalValueToDateInUSD;
+		// [optional] List of the player's lifetime purchase totals, summed by real-money currency
+		TArray<FValueToDateModel> ValuesToDate;
+		// [optional] List of the player's virtual currency balances
+		TArray<FVirtualCurrencyBalanceModel> VirtualCurrencyBalances;
+		// [optional] List of leaderboard statistic values for the player
+		TArray<FStatisticModel> Statistics;
+	
+        FPlayerProfileModel() :
+			FPlayFabBaseModel(),
+			PublisherId(),
+			TitleId(),
+			PlayerId(),
+			Created(),
+			Origination(),
+			LastLogin(),
+			BannedUntil(),
+			Locations(),
+			DisplayName(),
+			AvatarUrl(),
+			Tags(),
+			PushNotificationRegistrations(),
+			LinkedAccounts(),
+			ContactEmailAddresses(),
+			AdCampaignAttributions(),
+			TotalValueToDateInUSD(),
+			ValuesToDate(),
+			VirtualCurrencyBalances(),
+			Statistics()
+			{}
+		
+		FPlayerProfileModel(const FPlayerProfileModel& src) :
+			FPlayFabBaseModel(),
+			PublisherId(src.PublisherId),
+			TitleId(src.TitleId),
+			PlayerId(src.PlayerId),
+			Created(src.Created),
+			Origination(src.Origination),
+			LastLogin(src.LastLogin),
+			BannedUntil(src.BannedUntil),
+			Locations(src.Locations),
+			DisplayName(src.DisplayName),
+			AvatarUrl(src.AvatarUrl),
+			Tags(src.Tags),
+			PushNotificationRegistrations(src.PushNotificationRegistrations),
+			LinkedAccounts(src.LinkedAccounts),
+			ContactEmailAddresses(src.ContactEmailAddresses),
+			AdCampaignAttributions(src.AdCampaignAttributions),
+			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
+			ValuesToDate(src.ValuesToDate),
+			VirtualCurrencyBalances(src.VirtualCurrencyBalances),
+			Statistics(src.Statistics)
+			{}
+			
+		FPlayerProfileModel(const TSharedPtr<FJsonObject>& obj) : FPlayerProfileModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerProfileModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerProfileResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The profile of the player. This profile is not guaranteed to be up-to-date. For a new player, this profile will not exist.
+		TSharedPtr<FPlayerProfileModel> PlayerProfile;
+	
+        FGetPlayerProfileResult() :
+			FPlayFabBaseModel(),
+			PlayerProfile(nullptr)
+			{}
+		
+		FGetPlayerProfileResult(const FGetPlayerProfileResult& src) :
+			FPlayFabBaseModel(),
+			PlayerProfile(src.PlayerProfile.IsValid() ? MakeShareable(new FPlayerProfileModel(*src.PlayerProfile)) : nullptr)
+			{}
+			
+		FGetPlayerProfileResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerProfileResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerProfileResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPlayerSegmentsResult : public FPlayFabBaseModel
     {
 		
@@ -3332,28 +3911,6 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	enum LoginIdentityProvider
-	{
-		LoginIdentityProviderUnknown,
-		LoginIdentityProviderPlayFab,
-		LoginIdentityProviderCustom,
-		LoginIdentityProviderGameCenter,
-		LoginIdentityProviderGooglePlay,
-		LoginIdentityProviderSteam,
-		LoginIdentityProviderXBoxLive,
-		LoginIdentityProviderPSN,
-		LoginIdentityProviderKongregate,
-		LoginIdentityProviderFacebook,
-		LoginIdentityProviderIOSDevice,
-		LoginIdentityProviderAndroidDevice,
-		LoginIdentityProviderTwitch,
-		LoginIdentityProviderWindowsHello
-	};
-	
-	void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, JsonWriter& writer);
-	LoginIdentityProvider readLoginIdentityProviderFromValue(const TSharedPtr<FJsonValue>& value);
-	
-	
 	struct PLAYFAB_API FPlayerLocation : public FPlayFabBaseModel
     {
 		
@@ -3396,16 +3953,6 @@ namespace AdminModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
-	
-	enum PushNotificationPlatform
-	{
-		PushNotificationPlatformApplePushNotificationService,
-		PushNotificationPlatformGoogleCloudMessaging
-	};
-	
-	void writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer);
-	PushNotificationPlatform readPushNotificationPlatformFromValue(const TSharedPtr<FJsonValue>& value);
-	
 	
 	struct PLAYFAB_API FPushNotificationRegistration : public FPlayFabBaseModel
     {

@@ -10,7 +10,7 @@ UPFServerGetLeaderboard::UPFServerGetLeaderboard(const FObjectInitializer& Objec
 {
 }
 
-UPFServerGetLeaderboard* UPFServerGetLeaderboard::GetLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount, const FBPServerPlayerProfileViewConstraints& InProfileConstraints, const int32& InVersion, const bool& InUseSpecificVersion)
+UPFServerGetLeaderboard* UPFServerGetLeaderboard::GetLeaderboard(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStatisticName, const int32& InStartPosition, const int32& InMaxResultsCount, const FBPServerPlayerProfileViewConstraints& InProfileConstraints, const int32& InVersion)
 {
 	UPFServerGetLeaderboard* Proxy = NewObject<UPFServerGetLeaderboard>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -19,7 +19,6 @@ UPFServerGetLeaderboard* UPFServerGetLeaderboard::GetLeaderboard(UObject* WorldC
 	Proxy->Request.MaxResultsCount = InMaxResultsCount;
 	*Proxy->Request.ProfileConstraints = InProfileConstraints.Data;
 	Proxy->Request.Version = InVersion;
-	Proxy->Request.UseSpecificVersion = InUseSpecificVersion;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;
