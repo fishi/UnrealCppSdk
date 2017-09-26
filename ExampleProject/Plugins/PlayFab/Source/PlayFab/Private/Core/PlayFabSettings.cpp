@@ -1,4 +1,3 @@
-#include "PlayFabPrivatePCH.h"
 #include "PlayFabSettings.h"
 
 namespace PlayFab
@@ -8,11 +7,11 @@ namespace PlayFab
     const FString PlayFabSettings::versionString = "UE4SDK-0.0.170828";
 
     bool PlayFabSettings::useDevelopmentEnvironment = false;
-	FString PlayFabSettings::serverURL;
-	FString PlayFabSettings::developmentEnvironmentURL = ".playfabsandbox.com";
-	FString PlayFabSettings::productionEnvironmentURL = ".playfabapi.com";
-	FString PlayFabSettings::titleId;
-	FString PlayFabSettings::developerSecretKey;
+    FString PlayFabSettings::serverURL;
+    FString PlayFabSettings::developmentEnvironmentURL = ".playfabsandbox.com";
+    FString PlayFabSettings::productionEnvironmentURL = ".playfabapi.com";
+    FString PlayFabSettings::titleId;
+    FString PlayFabSettings::developerSecretKey;
     FString PlayFabSettings::advertisingIdType;
     FString PlayFabSettings::advertisingIdValue;
 

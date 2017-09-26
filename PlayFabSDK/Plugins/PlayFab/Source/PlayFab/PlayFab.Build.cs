@@ -1,38 +1,36 @@
+// #define PF_UNREAL_OLD_4_14_TO_4_15
+
 using UnrealBuildTool;
 
 public class PlayFab : ModuleRules
 {
-    public PlayFab(TargetInfo Target)
+#if PF_UNREAL_OLD_4_14_TO_4_15
+        public PlayFab(TargetInfo Target)
+#else
+    public PlayFab(ReadOnlyTargetRules ROTargetRules) : base(ROTargetRules)
+#endif
     {
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
         PublicIncludePaths.AddRange(new string[] {
             "PlayFab/Public"
         });
 
         PrivateIncludePaths.AddRange(new string[] {
-            "PlayFab/Private",
+            "PlayFab/Private"
         });
-
-        PublicIncludePathModuleNames.AddRange(new string[] { "Json" });
 
         PublicDependencyModuleNames.AddRange(new string[]{
             "Core",
             "CoreUObject",
-            "Engine",
-            "InputCore",
             "HTTP",
-            "Json",
-            "OnlineSubsystemUtils"
+            "Json"
         });
-
-        PrivateDependencyModuleNames.AddRange(new string[] { });
-
-        DynamicallyLoadedModuleNames.AddRange(new string[] { });
 
         if (UEBuildConfiguration.bBuildEditor == true)
         {
-            PublicDependencyModuleNames.AddRange(new string[] {
-                "UnrealEd",
-                "Settings",
+            PrivateDependencyModuleNames.AddRange(new string[] {
+                "Settings"
             });
         }
     }
