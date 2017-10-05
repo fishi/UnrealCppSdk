@@ -84,7 +84,7 @@ Our Developer Success Team can assist with answering any questions as well as pr
 ## 5. Acknowledgements
 
 The PlayFab Unreal C++ SDK was built by [Phoenix Labs](http://www.phoenixlabs.ca/), and submitted to PlayFab November, 2015
-On September 2017, Montana Tuska rebuilt this plugin, adding support for 4.17, and other major improvements.
+On September 2017, Montana Tuska rebuilt this plugin, adding support for 4.17 and other major improvements, on September, 2017.
 
 Montana Tuska also makes and supports another plugin which combines the Unreal OnlineSubsystem, and the PlayFab API. You can see it on his [GitLab repo](https://gitlab.com/mtuska/OnlineSubsystemPlayFab)
 
