@@ -98,6 +98,19 @@ public:
 	, FString InVirtualCurrency
 );
 
+    // AdvancedPushPlatformMsg
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
+    static FBPServerAdvancedPushPlatformMsg MakeBPServerAdvancedPushPlatformMsg(
+    FString InJson
+	, EBPServerPushNotificationPlatform InPlatform
+);
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+    static void BreakBPServerAdvancedPushPlatformMsg(
+    const FBPServerAdvancedPushPlatformMsg& In
+	, FString& OutJson
+	, EBPServerPushNotificationPlatform& OutPlatform
+);
+
     // AuthenticateSessionTicketRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
     static FBPServerAuthenticateSessionTicketRequest MakeBPServerAuthenticateSessionTicketRequest(
@@ -1647,7 +1660,8 @@ public:
     // PushNotificationPackage
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
     static FBPServerPushNotificationPackage MakeBPServerPushNotificationPackage(
-    FString InCustomData
+    int32 InBadge
+	, FString InCustomData
 	, FString InIcon
 	, FString InMessage
 	, FString InScheduleDate
@@ -1657,6 +1671,7 @@ public:
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
     static void BreakBPServerPushNotificationPackage(
     const FBPServerPushNotificationPackage& In
+	, int32& OutBadge
 	, FString& OutCustomData
 	, FString& OutIcon
 	, FString& OutMessage
@@ -1878,7 +1893,8 @@ public:
     // SendPushNotificationRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
     static FBPServerSendPushNotificationRequest MakeBPServerSendPushNotificationRequest(
-    FString InMessage
+    TArray<FBPServerAdvancedPushPlatformMsg> InAdvancedPlatformDelivery
+	, FString InMessage
 	, FBPServerPushNotificationPackage InPackage
 	, FString InRecipient
 	, FString InSubject

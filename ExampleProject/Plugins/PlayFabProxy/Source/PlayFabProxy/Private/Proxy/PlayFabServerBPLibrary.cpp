@@ -152,6 +152,29 @@ FBPServerAddUserVirtualCurrencyRequest UPFServerProxyLibrary::MakeBPServerAddUse
     return Out;
 }
 
+// AdvancedPushPlatformMsg
+FBPServerAdvancedPushPlatformMsg UPFServerProxyLibrary::MakeBPServerAdvancedPushPlatformMsg(
+    FString InJson
+	, EBPServerPushNotificationPlatform InPlatform
+    )
+{
+    FBPServerAdvancedPushPlatformMsg Out = FBPServerAdvancedPushPlatformMsg();
+    Out.Data.Json = InJson;
+	Out.Data.Platform = static_cast<PlayFab::ServerModels::PushNotificationPlatform>(static_cast<uint8>(InPlatform));
+	
+    return Out;
+}
+void UPFServerProxyLibrary::BreakBPServerAdvancedPushPlatformMsg(
+    const FBPServerAdvancedPushPlatformMsg& In
+	, FString& OutJson
+	, EBPServerPushNotificationPlatform& OutPlatform
+ )
+{
+    OutJson = In.Data.Json;
+	OutPlatform = static_cast<EBPServerPushNotificationPlatform>(static_cast<uint8>(In.Data.Platform));
+	
+}
+
 // AuthenticateSessionTicketRequest
 FBPServerAuthenticateSessionTicketRequest UPFServerProxyLibrary::MakeBPServerAuthenticateSessionTicketRequest(
     FString InSessionTicket
@@ -3161,7 +3184,8 @@ void UPFServerProxyLibrary::BreakBPServerPlayerStatisticVersion(
 
 // PushNotificationPackage
 FBPServerPushNotificationPackage UPFServerProxyLibrary::MakeBPServerPushNotificationPackage(
-    FString InCustomData
+    int32 InBadge
+	, FString InCustomData
 	, FString InIcon
 	, FString InMessage
 	, FString InScheduleDate
@@ -3170,7 +3194,8 @@ FBPServerPushNotificationPackage UPFServerProxyLibrary::MakeBPServerPushNotifica
     )
 {
     FBPServerPushNotificationPackage Out = FBPServerPushNotificationPackage();
-    Out.Data.CustomData = InCustomData;
+    Out.Data.Badge = InBadge;
+	Out.Data.CustomData = InCustomData;
 	Out.Data.Icon = InIcon;
 	Out.Data.Message = InMessage;
 	Out.Data.ScheduleDate = InScheduleDate;
@@ -3181,6 +3206,7 @@ FBPServerPushNotificationPackage UPFServerProxyLibrary::MakeBPServerPushNotifica
 }
 void UPFServerProxyLibrary::BreakBPServerPushNotificationPackage(
     const FBPServerPushNotificationPackage& In
+	, int32& OutBadge
 	, FString& OutCustomData
 	, FString& OutIcon
 	, FString& OutMessage
@@ -3189,7 +3215,8 @@ void UPFServerProxyLibrary::BreakBPServerPushNotificationPackage(
 	, FString& OutTitle
  )
 {
-    OutCustomData = In.Data.CustomData;
+    OutBadge = In.Data.Badge;
+	OutCustomData = In.Data.CustomData;
 	OutIcon = In.Data.Icon;
 	OutMessage = In.Data.Message;
 	OutScheduleDate = In.Data.ScheduleDate;
@@ -3564,7 +3591,8 @@ void UPFServerProxyLibrary::BreakBPServerScriptExecutionError(
 
 // SendPushNotificationRequest
 FBPServerSendPushNotificationRequest UPFServerProxyLibrary::MakeBPServerSendPushNotificationRequest(
-    FString InMessage
+    TArray<FBPServerAdvancedPushPlatformMsg> InAdvancedPlatformDelivery
+	, FString InMessage
 	, FBPServerPushNotificationPackage InPackage
 	, FString InRecipient
 	, FString InSubject
@@ -3572,7 +3600,11 @@ FBPServerSendPushNotificationRequest UPFServerProxyLibrary::MakeBPServerSendPush
     )
 {
     FBPServerSendPushNotificationRequest Out = FBPServerSendPushNotificationRequest();
-    Out.Data.Message = InMessage;
+    for (const FBPServerAdvancedPushPlatformMsg& elem : InAdvancedPlatformDelivery)
+	{
+		Out.Data.AdvancedPlatformDelivery.Add(elem.Data);
+	}
+	Out.Data.Message = InMessage;
 	Out.Data.Package = MakeShareable(new PlayFab::ServerModels::FPushNotificationPackage(InPackage.Data));
 	Out.Data.Recipient = InRecipient;
 	Out.Data.Subject = InSubject;

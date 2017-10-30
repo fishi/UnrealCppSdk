@@ -97,6 +97,16 @@ public:
     PlayFab::ServerModels::FAddUserVirtualCurrencyRequest Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerAdvancedPushPlatformMsg", HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAdvancedPushPlatformMsg"))
+struct FBPServerAdvancedPushPlatformMsg
+{
+    GENERATED_BODY()
+public:
+    FBPServerAdvancedPushPlatformMsg() {};
+    FBPServerAdvancedPushPlatformMsg(PlayFab::ServerModels::FAdvancedPushPlatformMsg InData) : Data(InData) {};
+    PlayFab::ServerModels::FAdvancedPushPlatformMsg Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerAuthenticateSessionTicketRequest"))
 struct FBPServerAuthenticateSessionTicketRequest
 {

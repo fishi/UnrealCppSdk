@@ -405,6 +405,79 @@ bool PlayFab::ServerModels::FAddUserVirtualCurrencyRequest::readFromValue(const 
 }
 
 
+void PlayFab::ServerModels::writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case PushNotificationPlatformApplePushNotificationService: writer->WriteValue(TEXT("ApplePushNotificationService")); break;
+        case PushNotificationPlatformGoogleCloudMessaging: writer->WriteValue(TEXT("GoogleCloudMessaging")); break;
+    }
+}
+
+ServerModels::PushNotificationPlatform PlayFab::ServerModels::readPushNotificationPlatformFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    return readPushNotificationPlatformFromValue(value.IsValid() ? value->AsString() : "");
+}
+
+ServerModels::PushNotificationPlatform PlayFab::ServerModels::readPushNotificationPlatformFromValue(const FString& value)
+{
+    static TMap<FString, PushNotificationPlatform> _PushNotificationPlatformMap;
+    if (_PushNotificationPlatformMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _PushNotificationPlatformMap.Add(TEXT("ApplePushNotificationService"), PushNotificationPlatformApplePushNotificationService);
+        _PushNotificationPlatformMap.Add(TEXT("GoogleCloudMessaging"), PushNotificationPlatformGoogleCloudMessaging);
+
+    } 
+
+    if(!value.IsEmpty())
+    {
+        auto output = _PushNotificationPlatformMap.Find(value);
+        if (output != nullptr)
+            return *output;
+    }
+
+
+    return PushNotificationPlatformApplePushNotificationService; // Basically critical fail
+}
+
+
+PlayFab::ServerModels::FAdvancedPushPlatformMsg::~FAdvancedPushPlatformMsg()
+{
+    
+}
+
+void PlayFab::ServerModels::FAdvancedPushPlatformMsg::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Json")); writer->WriteValue(Json);
+    
+    writer->WriteIdentifierPrefix(TEXT("Platform")); writePushNotificationPlatformEnumJSON(Platform, writer);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FAdvancedPushPlatformMsg::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> JsonValue = obj->TryGetField(TEXT("Json"));
+    if (JsonValue.IsValid()&& !JsonValue->IsNull())
+    {
+        FString TmpValue;
+        if(JsonValue->TryGetString(TmpValue)) {Json = TmpValue; }
+    }
+    
+    Platform = readPushNotificationPlatformFromValue(obj->TryGetField(TEXT("Platform")));
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FAuthenticateSessionTicketRequest::~FAuthenticateSessionTicketRequest()
 {
     
@@ -4722,44 +4795,6 @@ bool PlayFab::ServerModels::FMembershipModel::readFromValue(const TSharedPtr<FJs
     
     
     return HasSucceeded;
-}
-
-
-void PlayFab::ServerModels::writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer)
-{
-    switch(enumVal)
-    {
-        
-        case PushNotificationPlatformApplePushNotificationService: writer->WriteValue(TEXT("ApplePushNotificationService")); break;
-        case PushNotificationPlatformGoogleCloudMessaging: writer->WriteValue(TEXT("GoogleCloudMessaging")); break;
-    }
-}
-
-ServerModels::PushNotificationPlatform PlayFab::ServerModels::readPushNotificationPlatformFromValue(const TSharedPtr<FJsonValue>& value)
-{
-    return readPushNotificationPlatformFromValue(value.IsValid() ? value->AsString() : "");
-}
-
-ServerModels::PushNotificationPlatform PlayFab::ServerModels::readPushNotificationPlatformFromValue(const FString& value)
-{
-    static TMap<FString, PushNotificationPlatform> _PushNotificationPlatformMap;
-    if (_PushNotificationPlatformMap.Num() == 0)
-    {
-        // Auto-generate the map on the first use
-        _PushNotificationPlatformMap.Add(TEXT("ApplePushNotificationService"), PushNotificationPlatformApplePushNotificationService);
-        _PushNotificationPlatformMap.Add(TEXT("GoogleCloudMessaging"), PushNotificationPlatformGoogleCloudMessaging);
-
-    } 
-
-    if(!value.IsEmpty())
-    {
-        auto output = _PushNotificationPlatformMap.Find(value);
-        if (output != nullptr)
-            return *output;
-    }
-
-
-    return PushNotificationPlatformApplePushNotificationService; // Basically critical fail
 }
 
 
@@ -11637,6 +11672,8 @@ void PlayFab::ServerModels::FPushNotificationPackage::writeJSON(JsonWriter& writ
 {
     writer->WriteObjectStart();
     
+    writer->WriteIdentifierPrefix(TEXT("Badge")); writer->WriteValue(Badge);
+    
     if(CustomData.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CustomData")); writer->WriteValue(CustomData); }
     
     if(Icon.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Icon")); writer->WriteValue(Icon); }
@@ -11656,6 +11693,13 @@ void PlayFab::ServerModels::FPushNotificationPackage::writeJSON(JsonWriter& writ
 bool PlayFab::ServerModels::FPushNotificationPackage::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
     bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> BadgeValue = obj->TryGetField(TEXT("Badge"));
+    if (BadgeValue.IsValid()&& !BadgeValue->IsNull())
+    {
+        int32 TmpValue;
+        if(BadgeValue->TryGetNumber(TmpValue)) {Badge = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CustomDataValue = obj->TryGetField(TEXT("CustomData"));
     if (CustomDataValue.IsValid()&& !CustomDataValue->IsNull())
@@ -12600,6 +12644,17 @@ void PlayFab::ServerModels::FSendPushNotificationRequest::writeJSON(JsonWriter& 
 {
     writer->WriteObjectStart();
     
+    if(AdvancedPlatformDelivery.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("AdvancedPlatformDelivery"));
+    
+        for (const FAdvancedPushPlatformMsg& item : AdvancedPlatformDelivery)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+    
     if(Message.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Message")); writer->WriteValue(Message); }
     
     if(Package.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Package")); Package->writeJSON(writer); }
@@ -12626,6 +12681,17 @@ void PlayFab::ServerModels::FSendPushNotificationRequest::writeJSON(JsonWriter& 
 bool PlayFab::ServerModels::FSendPushNotificationRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
     bool HasSucceeded = true; 
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&AdvancedPlatformDeliveryArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("AdvancedPlatformDelivery"));
+        for (int32 Idx = 0; Idx < AdvancedPlatformDeliveryArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = AdvancedPlatformDeliveryArray[Idx];
+            
+            AdvancedPlatformDelivery.Add(FAdvancedPushPlatformMsg(CurrentItem->AsObject()));
+        }
+    }
+
     
     const TSharedPtr<FJsonValue> MessageValue = obj->TryGetField(TEXT("Message"));
     if (MessageValue.IsValid()&& !MessageValue->IsNull())
