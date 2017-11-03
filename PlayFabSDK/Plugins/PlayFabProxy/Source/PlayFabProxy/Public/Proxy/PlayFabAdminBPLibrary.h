@@ -411,12 +411,14 @@ public:
     static FBPAdminContactEmailInfoModel MakeBPAdminContactEmailInfoModel(
     FString InEmailAddress
 	, FString InName
+	, EBPAdminEmailVerificationStatus InVerificationStatus
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
     static void BreakBPAdminContactEmailInfoModel(
     const FBPAdminContactEmailInfoModel& In
 	, FString& OutEmailAddress
 	, FString& OutName
+	, EBPAdminEmailVerificationStatus& OutVerificationStatus
 );
 
     // ContentInfo
@@ -538,6 +540,17 @@ public:
     FBPAdminNameIdentifier InIdentifier
 );
 
+    // DeleteTitleRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+    static FBPAdminDeleteTitleRequest MakeBPAdminDeleteTitleRequest(
+    );
+
+    // DeleteTitleResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+    static void BreakBPAdminDeleteTitleResult(
+    const FBPAdminDeleteTitleResult& In
+);
+
     // DeleteUsersRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
     static FBPAdminDeleteUsersRequest MakeBPAdminDeleteUsersRequest(
@@ -591,32 +604,12 @@ public:
 	, bool& OutStartOpen
 );
 
-    // GetActionGroupResult
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-    static void BreakBPAdminGetActionGroupResult(
-    const FBPAdminGetActionGroupResult& In
-	, FString& OutId
-	, FString& OutName
-);
-
     // GetActionsOnPlayersInSegmentTaskInstanceResult
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
     static void BreakBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult(
     const FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult& In
 	, FBPAdminActionsOnPlayersInSegmentTaskParameter& OutParameter
 	, FBPAdminActionsOnPlayersInSegmentTaskSummary& OutSummary
-);
-
-    // GetAllActionGroupsRequest
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
-    static FBPAdminGetAllActionGroupsRequest MakeBPAdminGetAllActionGroupsRequest(
-    );
-
-    // GetAllActionGroupsResult
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-    static void BreakBPAdminGetAllActionGroupsResult(
-    const FBPAdminGetAllActionGroupsResult& In
-	, TArray<FBPAdminGetActionGroupResult>& OutActionGroups
 );
 
     // GetAllSegmentsRequest
@@ -1716,12 +1709,6 @@ public:
     const FBPAdminResetCharacterStatisticsResult& In
 );
 
-    // ResetUsersRequest
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
-    static FBPAdminResetUsersRequest MakeBPAdminResetUsersRequest(
-    TArray<FBPAdminUserCredentials> InUsers
-);
-
     // ResetUserStatisticsRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
     static FBPAdminResetUserStatisticsRequest MakeBPAdminResetUserStatisticsRequest(
@@ -2302,17 +2289,6 @@ public:
     static void BreakBPAdminUserAndroidDeviceInfo(
     const FBPAdminUserAndroidDeviceInfo& In
 	, FString& OutAndroidDeviceId
-);
-
-    // UserCredentials
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
-    static FBPAdminUserCredentials MakeBPAdminUserCredentials(
-    FString InUsername
-);
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-    static void BreakBPAdminUserCredentials(
-    const FBPAdminUserCredentials& In
-	, FString& OutUsername
 );
 
     // UserCustomIdInfo

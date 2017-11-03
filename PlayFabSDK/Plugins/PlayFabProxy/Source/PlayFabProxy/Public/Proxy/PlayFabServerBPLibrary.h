@@ -374,12 +374,14 @@ public:
     static FBPServerContactEmailInfoModel MakeBPServerContactEmailInfoModel(
     FString InEmailAddress
 	, FString InName
+	, EBPServerEmailVerificationStatus InVerificationStatus
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
     static void BreakBPServerContactEmailInfoModel(
     const FBPServerContactEmailInfoModel& In
 	, FString& OutEmailAddress
 	, FString& OutName
+	, EBPServerEmailVerificationStatus& OutVerificationStatus
 );
 
     // CreateSharedGroupRequest
@@ -532,26 +534,6 @@ public:
 	, TArray<FString>& OutTags
 	, FString& OutTitleDisplayName
 	, FString& OutUsername
-);
-
-    // GetActionGroupResult
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-    static void BreakBPServerGetActionGroupResult(
-    const FBPServerGetActionGroupResult& In
-	, FString& OutId
-	, FString& OutName
-);
-
-    // GetAllActionGroupsRequest
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
-    static FBPServerGetAllActionGroupsRequest MakeBPServerGetAllActionGroupsRequest(
-    );
-
-    // GetAllActionGroupsResult
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-    static void BreakBPServerGetAllActionGroupsResult(
-    const FBPServerGetAllActionGroupsResult& In
-	, TArray<FBPServerGetActionGroupResult>& OutActionGroups
 );
 
     // GetAllSegmentsRequest
@@ -1767,6 +1749,7 @@ public:
 	, FString InLobbyId
 	, EBPServerRegion InRegion
 	, FString InServerHost
+	, FString InServerIPV6Address
 	, FString InServerPort
 	, TMap<FString, FString> InTags
 );

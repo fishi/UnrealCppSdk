@@ -29,7 +29,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FDeregisterGameDelegate, const ServerModels::FDeregisterGameResponse&);
         DECLARE_DELEGATE_OneParam(FEvaluateRandomResultTableDelegate, const ServerModels::FEvaluateRandomResultTableResult&);
         DECLARE_DELEGATE_OneParam(FExecuteCloudScriptDelegate, const ServerModels::FExecuteCloudScriptResult&);
-        DECLARE_DELEGATE_OneParam(FGetAllActionGroupsDelegate, const ServerModels::FGetAllActionGroupsResult&);
         DECLARE_DELEGATE_OneParam(FGetAllSegmentsDelegate, const ServerModels::FGetAllSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetAllUsersCharactersDelegate, const ServerModels::FListUsersCharactersResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const ServerModels::FGetCatalogItemsResult&);
@@ -202,10 +201,6 @@ namespace PlayFab
          * Executes a CloudScript function, with the 'currentPlayerId' variable set to the specified PlayFabId parameter value.
          */
         bool ExecuteCloudScript(ServerModels::FExecuteCloudScriptServerRequest& request, const FExecuteCloudScriptDelegate& SuccessDelegate = FExecuteCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieve a list of all PlayStream actions groups.
-         */
-        bool GetAllActionGroups(const FGetAllActionGroupsDelegate& SuccessDelegate = FGetAllActionGroupsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
          * Request has no paramaters.
@@ -529,11 +524,11 @@ namespace PlayFab
          */
         bool SetTitleInternalData(ServerModels::FSetTitleDataRequest& request, const FSetTitleInternalDataDelegate& SuccessDelegate = FSetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Decrements the character's balance of the specified virtual currency by the stated amount
+         * Decrements the character's balance of the specified virtual currency by the stated amount. It is possible to make a VC balance negative with this API.
          */
         bool SubtractCharacterVirtualCurrency(ServerModels::FSubtractCharacterVirtualCurrencyRequest& request, const FSubtractCharacterVirtualCurrencyDelegate& SuccessDelegate = FSubtractCharacterVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Decrements the user's balance of the specified virtual currency by the stated amount
+         * Decrements the user's balance of the specified virtual currency by the stated amount. It is possible to make a VC balance negative with this API.
          */
         bool SubtractUserVirtualCurrency(ServerModels::FSubtractUserVirtualCurrencyRequest& request, const FSubtractUserVirtualCurrencyDelegate& SuccessDelegate = FSubtractUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -654,7 +649,6 @@ namespace PlayFab
         void OnDeregisterGameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeregisterGameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnEvaluateRandomResultTableResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FEvaluateRandomResultTableDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnExecuteCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExecuteCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetAllActionGroupsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllActionGroupsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllUsersCharactersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllUsersCharactersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

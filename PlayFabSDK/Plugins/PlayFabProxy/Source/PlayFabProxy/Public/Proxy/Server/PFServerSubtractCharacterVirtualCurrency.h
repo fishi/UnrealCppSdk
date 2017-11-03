@@ -17,7 +17,7 @@ public:
     UPROPERTY(BlueprintAssignable)
         FBPServerModifyCharacterVirtualCurrencyResultDelegate OnSuccess;
 
-    // Decrements the character's balance of the specified virtual currency by the stated amount
+    // Decrements the character's balance of the specified virtual currency by the stated amount. It is possible to make a VC balance negative with this API.
     UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "PlayFab|Server|Player Item Management")
         static UPFServerSubtractCharacterVirtualCurrency* SubtractCharacterVirtualCurrency(class APlayerController* PlayerController, const FBPServerSubtractCharacterVirtualCurrencyRequest& InSubtractCharacterVirtualCurrencyRequest);
 

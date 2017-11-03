@@ -359,12 +359,14 @@ public:
     static FBPClientContactEmailInfoModel MakeBPClientContactEmailInfoModel(
     FString InEmailAddress
 	, FString InName
+	, EBPClientEmailVerificationStatus InVerificationStatus
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
     static void BreakBPClientContactEmailInfoModel(
     const FBPClientContactEmailInfoModel& In
 	, FString& OutEmailAddress
 	, FString& OutName
+	, EBPClientEmailVerificationStatus& OutVerificationStatus
 );
 
     // Container_Dictionary_String_String
@@ -503,7 +505,6 @@ public:
     FString InBuildVersion
 	, FString InGameMode
 	, FString InGameServerData
-	, int32 InGameServerState
 	, EBPClientGameInstanceState InGameServerStateEnum
 	, FDateTime InLastHeartbeat
 	, FString InLobbyID
@@ -512,6 +513,7 @@ public:
 	, EBPClientRegion InRegion
 	, int32 InRunTime
 	, FString InServerHostname
+	, FString InServerIPV6Address
 	, int32 InServerPort
 	, FString InStatisticName
 	, TMap<FString, FString> InTags
@@ -522,7 +524,6 @@ public:
 	, FString& OutBuildVersion
 	, FString& OutGameMode
 	, FString& OutGameServerData
-	, int32& OutGameServerState
 	, EBPClientGameInstanceState& OutGameServerStateEnum
 	, FDateTime& OutLastHeartbeat
 	, FString& OutLobbyID
@@ -531,6 +532,7 @@ public:
 	, EBPClientRegion& OutRegion
 	, int32& OutRunTime
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
 	, FString& OutStatisticName
 	, TMap<FString, FString>& OutTags
@@ -1664,6 +1666,7 @@ public:
 	, FString& OutLobbyID
 	, int32& OutPollWaitTimeMS
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
 	, EBPClientMatchmakeStatus& OutStatus
 	, FString& OutTicket
@@ -2159,6 +2162,7 @@ public:
 	, FString& OutLobbyID
 	, FString& OutPassword
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
 	, FString& OutTicket
 );

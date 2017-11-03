@@ -682,11 +682,13 @@ void UPFClientProxyLibrary::BreakBPClientConsumeItemResult(
 FBPClientContactEmailInfoModel UPFClientProxyLibrary::MakeBPClientContactEmailInfoModel(
     FString InEmailAddress
 	, FString InName
+	, EBPClientEmailVerificationStatus InVerificationStatus
     )
 {
     FBPClientContactEmailInfoModel Out = FBPClientContactEmailInfoModel();
     Out.Data.EmailAddress = InEmailAddress;
 	Out.Data.Name = InName;
+	Out.Data.VerificationStatus = static_cast<PlayFab::ClientModels::EmailVerificationStatus>(static_cast<uint8>(InVerificationStatus));
 	
     return Out;
 }
@@ -694,10 +696,12 @@ void UPFClientProxyLibrary::BreakBPClientContactEmailInfoModel(
     const FBPClientContactEmailInfoModel& In
 	, FString& OutEmailAddress
 	, FString& OutName
+	, EBPClientEmailVerificationStatus& OutVerificationStatus
  )
 {
     OutEmailAddress = In.Data.EmailAddress;
 	OutName = In.Data.Name;
+	if (In.Data.VerificationStatus.notNull()) {OutVerificationStatus = static_cast<EBPClientEmailVerificationStatus>(static_cast<uint8>(In.Data.VerificationStatus.mValue));}
 	
 }
 
@@ -943,7 +947,6 @@ FBPClientGameInfo UPFClientProxyLibrary::MakeBPClientGameInfo(
     FString InBuildVersion
 	, FString InGameMode
 	, FString InGameServerData
-	, int32 InGameServerState
 	, EBPClientGameInstanceState InGameServerStateEnum
 	, FDateTime InLastHeartbeat
 	, FString InLobbyID
@@ -952,6 +955,7 @@ FBPClientGameInfo UPFClientProxyLibrary::MakeBPClientGameInfo(
 	, EBPClientRegion InRegion
 	, int32 InRunTime
 	, FString InServerHostname
+	, FString InServerIPV6Address
 	, int32 InServerPort
 	, FString InStatisticName
 	, TMap<FString, FString> InTags
@@ -961,7 +965,6 @@ FBPClientGameInfo UPFClientProxyLibrary::MakeBPClientGameInfo(
     Out.Data.BuildVersion = InBuildVersion;
 	Out.Data.GameMode = InGameMode;
 	Out.Data.GameServerData = InGameServerData;
-	Out.Data.GameServerState = InGameServerState;
 	Out.Data.GameServerStateEnum = static_cast<PlayFab::ClientModels::GameInstanceState>(static_cast<uint8>(InGameServerStateEnum));
 	Out.Data.LastHeartbeat = InLastHeartbeat;
 	Out.Data.LobbyID = InLobbyID;
@@ -970,6 +973,7 @@ FBPClientGameInfo UPFClientProxyLibrary::MakeBPClientGameInfo(
 	Out.Data.pfRegion = static_cast<PlayFab::ClientModels::Region>(static_cast<uint8>(InRegion));
 	Out.Data.RunTime = InRunTime;
 	Out.Data.ServerHostname = InServerHostname;
+	Out.Data.ServerIPV6Address = InServerIPV6Address;
 	Out.Data.ServerPort = InServerPort;
 	Out.Data.StatisticName = InStatisticName;
 	Out.Data.Tags = InTags;
@@ -981,7 +985,6 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
 	, FString& OutBuildVersion
 	, FString& OutGameMode
 	, FString& OutGameServerData
-	, int32& OutGameServerState
 	, EBPClientGameInstanceState& OutGameServerStateEnum
 	, FDateTime& OutLastHeartbeat
 	, FString& OutLobbyID
@@ -990,6 +993,7 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
 	, EBPClientRegion& OutRegion
 	, int32& OutRunTime
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
 	, FString& OutStatisticName
 	, TMap<FString, FString>& OutTags
@@ -998,7 +1002,6 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
     OutBuildVersion = In.Data.BuildVersion;
 	OutGameMode = In.Data.GameMode;
 	OutGameServerData = In.Data.GameServerData;
-	OutGameServerState = In.Data.GameServerState;
 	if (In.Data.GameServerStateEnum.notNull()) {OutGameServerStateEnum = static_cast<EBPClientGameInstanceState>(static_cast<uint8>(In.Data.GameServerStateEnum.mValue));}
 	OutLastHeartbeat = In.Data.LastHeartbeat;
 	OutLobbyID = In.Data.LobbyID;
@@ -1007,6 +1010,7 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
 	if (In.Data.pfRegion.notNull()) {OutRegion = static_cast<EBPClientRegion>(static_cast<uint8>(In.Data.pfRegion.mValue));}
 	OutRunTime = In.Data.RunTime;
 	OutServerHostname = In.Data.ServerHostname;
+	OutServerIPV6Address = In.Data.ServerIPV6Address;
 	OutServerPort = In.Data.ServerPort;
 	OutStatisticName = In.Data.StatisticName;
 	OutTags = In.Data.Tags;
@@ -3073,6 +3077,7 @@ void UPFClientProxyLibrary::BreakBPClientMatchmakeResult(
 	, FString& OutLobbyID
 	, int32& OutPollWaitTimeMS
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
 	, EBPClientMatchmakeStatus& OutStatus
 	, FString& OutTicket
@@ -3082,6 +3087,7 @@ void UPFClientProxyLibrary::BreakBPClientMatchmakeResult(
 	OutLobbyID = In.Data.LobbyID;
 	OutPollWaitTimeMS = In.Data.PollWaitTimeMS;
 	OutServerHostname = In.Data.ServerHostname;
+	OutServerIPV6Address = In.Data.ServerIPV6Address;
 	OutServerPort = In.Data.ServerPort;
 	if (In.Data.Status.notNull()) {OutStatus = static_cast<EBPClientMatchmakeStatus>(static_cast<uint8>(In.Data.Status.mValue));}
 	OutTicket = In.Data.Ticket;
@@ -4022,6 +4028,7 @@ void UPFClientProxyLibrary::BreakBPClientStartGameResult(
 	, FString& OutLobbyID
 	, FString& OutPassword
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
 	, FString& OutTicket
  )
@@ -4030,6 +4037,7 @@ void UPFClientProxyLibrary::BreakBPClientStartGameResult(
 	OutLobbyID = In.Data.LobbyID;
 	OutPassword = In.Data.Password;
 	OutServerHostname = In.Data.ServerHostname;
+	OutServerIPV6Address = In.Data.ServerIPV6Address;
 	OutServerPort = In.Data.ServerPort;
 	OutTicket = In.Data.Ticket;
 	

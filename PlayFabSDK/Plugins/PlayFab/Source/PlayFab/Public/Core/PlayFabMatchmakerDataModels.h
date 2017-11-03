@@ -336,8 +336,10 @@ namespace MatchmakerModels
         FString LobbyId;
         // Region in which the Game Server Instance is running. For matchmaking using non-AWS region names, set this to any AWS region and use Tags (below) to specify your custom region.
         Region pfRegion;
-        // IP address of the Game Server Instance.
+        // IPV4 address of the Game Server Instance.
         FString ServerHost;
+        // [optional] IPV6 address of the Game Server Instance.
+        FString ServerIPV6Address;
         // Port number for communication with the Game Server Instance.
         FString ServerPort;
         // [optional] Tags for the Game Server Instance
@@ -350,6 +352,7 @@ namespace MatchmakerModels
             LobbyId(),
             pfRegion(),
             ServerHost(),
+            ServerIPV6Address(),
             ServerPort(),
             Tags()
             {}
@@ -361,6 +364,7 @@ namespace MatchmakerModels
             LobbyId(src.LobbyId),
             pfRegion(src.pfRegion),
             ServerHost(src.ServerHost),
+            ServerIPV6Address(src.ServerIPV6Address),
             ServerPort(src.ServerPort),
             Tags(src.Tags)
             {}
@@ -451,8 +455,10 @@ namespace MatchmakerModels
         
         // [optional] Unique identifier for the game/lobby in the new Game Server Instance.
         FString GameID;
-        // [optional] IP address of the new Game Server Instance.
+        // [optional] IPV4 address of the new Game Server Instance.
         FString ServerHostname;
+        // [optional] IPV6 address of the new Game Server Instance.
+        FString ServerIPV6Address;
         // Port number for communication with the Game Server Instance.
         uint32 ServerPort;
 
@@ -460,6 +466,7 @@ namespace MatchmakerModels
             FPlayFabBaseModel(),
             GameID(),
             ServerHostname(),
+            ServerIPV6Address(),
             ServerPort(0)
             {}
 
@@ -467,6 +474,7 @@ namespace MatchmakerModels
             FPlayFabBaseModel(),
             GameID(src.GameID),
             ServerHostname(src.ServerHostname),
+            ServerIPV6Address(src.ServerIPV6Address),
             ServerPort(src.ServerPort)
             {}
 

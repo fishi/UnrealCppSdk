@@ -462,21 +462,21 @@ void UPlayFabAdminAPI::OnDeleteTaskResult(FHttpRequestPtr HttpRequest, FHttpResp
     }
 }
 
-bool UPlayFabAdminAPI::DeleteUsers(
-    AdminModels::FDeleteUsersRequest& request,
-    const FDeleteUsersDelegate& SuccessDelegate,
+bool UPlayFabAdminAPI::DeleteTitle(
+    
+    const FDeleteTitleDelegate& SuccessDelegate,
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/DeleteUsers")), request.toJSONString(),
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/DeleteTitle")), TEXT("{}"),
         TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnDeleteUsersResult, SuccessDelegate, ErrorDelegate);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnDeleteTitleResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
-void UPlayFabAdminAPI::OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+void UPlayFabAdminAPI::OnDeleteTitleResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteTitleDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
-    AdminModels::FDeleteUsersResult outResult;
+    AdminModels::FDeleteTitleResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -504,33 +504,6 @@ bool UPlayFabAdminAPI::GetActionsOnPlayersInSegmentTaskInstance(
 void UPlayFabAdminAPI::OnGetActionsOnPlayersInSegmentTaskInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetActionsOnPlayersInSegmentTaskInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
-bool UPlayFabAdminAPI::GetAllActionGroups(
-    
-    const FGetAllActionGroupsDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/GetAllActionGroups")), TEXT("{}"),
-        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnGetAllActionGroupsResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabAdminAPI::OnGetAllActionGroupsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllActionGroupsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    AdminModels::FGetAllActionGroupsResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -1773,33 +1746,6 @@ bool UPlayFabAdminAPI::ResetCharacterStatistics(
 void UPlayFabAdminAPI::OnResetCharacterStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetCharacterStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FResetCharacterStatisticsResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
-bool UPlayFabAdminAPI::ResetUsers(
-    AdminModels::FResetUsersRequest& request,
-    const FResetUsersDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/ResetUsers")), request.toJSONString(),
-        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnResetUsersResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabAdminAPI::OnResetUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    AdminModels::FBlankResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

@@ -614,7 +614,7 @@ namespace PlayFab
          */
         bool StartPurchase(ClientModels::FStartPurchaseRequest& request, const FStartPurchaseDelegate& SuccessDelegate = FStartPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Decrements the user's balance of the specified virtual currency by the stated amount
+         * Decrements the user's balance of the specified virtual currency by the stated amount. It is possible to make a VC balance negative with this API.
          * This API must be enabled for use as an option in the game manager website. It is disabled by default.
          */
         bool SubtractUserVirtualCurrency(ClientModels::FSubtractUserVirtualCurrencyRequest& request, const FSubtractUserVirtualCurrencyDelegate& SuccessDelegate = FSubtractUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());

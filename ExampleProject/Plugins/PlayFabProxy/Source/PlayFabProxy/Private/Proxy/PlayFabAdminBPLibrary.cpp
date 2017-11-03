@@ -767,11 +767,13 @@ void UPFAdminProxyLibrary::BreakBPAdminContactEmailInfo(
 FBPAdminContactEmailInfoModel UPFAdminProxyLibrary::MakeBPAdminContactEmailInfoModel(
     FString InEmailAddress
 	, FString InName
+	, EBPAdminEmailVerificationStatus InVerificationStatus
     )
 {
     FBPAdminContactEmailInfoModel Out = FBPAdminContactEmailInfoModel();
     Out.Data.EmailAddress = InEmailAddress;
 	Out.Data.Name = InName;
+	Out.Data.VerificationStatus = static_cast<PlayFab::AdminModels::EmailVerificationStatus>(static_cast<uint8>(InVerificationStatus));
 	
     return Out;
 }
@@ -779,10 +781,12 @@ void UPFAdminProxyLibrary::BreakBPAdminContactEmailInfoModel(
     const FBPAdminContactEmailInfoModel& In
 	, FString& OutEmailAddress
 	, FString& OutName
+	, EBPAdminEmailVerificationStatus& OutVerificationStatus
  )
 {
     OutEmailAddress = In.Data.EmailAddress;
 	OutName = In.Data.Name;
+	if (In.Data.VerificationStatus.notNull()) {OutVerificationStatus = static_cast<EBPAdminEmailVerificationStatus>(static_cast<uint8>(In.Data.VerificationStatus.mValue));}
 	
 }
 
@@ -988,6 +992,23 @@ FBPAdminDeleteTaskRequest UPFAdminProxyLibrary::MakeBPAdminDeleteTaskRequest(
     return Out;
 }
 
+// DeleteTitleRequest
+FBPAdminDeleteTitleRequest UPFAdminProxyLibrary::MakeBPAdminDeleteTitleRequest(
+        )
+{
+    FBPAdminDeleteTitleRequest Out = FBPAdminDeleteTitleRequest();
+    
+    return Out;
+}
+
+// DeleteTitleResult
+void UPFAdminProxyLibrary::BreakBPAdminDeleteTitleResult(
+    const FBPAdminDeleteTitleResult& In
+ )
+{
+    
+}
+
 // DeleteUsersRequest
 FBPAdminDeleteUsersRequest UPFAdminProxyLibrary::MakeBPAdminDeleteUsersRequest(
     TArray<FString> InPlayFabIds
@@ -1083,18 +1104,6 @@ void UPFAdminProxyLibrary::BreakBPAdminGameModeInfo(
 	
 }
 
-// GetActionGroupResult
-void UPFAdminProxyLibrary::BreakBPAdminGetActionGroupResult(
-    const FBPAdminGetActionGroupResult& In
-	, FString& OutId
-	, FString& OutName
- )
-{
-    OutId = In.Data.Id;
-	OutName = In.Data.Name;
-	
-}
-
 // GetActionsOnPlayersInSegmentTaskInstanceResult
 void UPFAdminProxyLibrary::BreakBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult(
     const FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult& In
@@ -1104,28 +1113,6 @@ void UPFAdminProxyLibrary::BreakBPAdminGetActionsOnPlayersInSegmentTaskInstanceR
 {
     if (In.Data.Parameter.IsValid()) {OutParameter.Data = *In.Data.Parameter;}
 	if (In.Data.Summary.IsValid()) {OutSummary.Data = *In.Data.Summary;}
-	
-}
-
-// GetAllActionGroupsRequest
-FBPAdminGetAllActionGroupsRequest UPFAdminProxyLibrary::MakeBPAdminGetAllActionGroupsRequest(
-        )
-{
-    FBPAdminGetAllActionGroupsRequest Out = FBPAdminGetAllActionGroupsRequest();
-    
-    return Out;
-}
-
-// GetAllActionGroupsResult
-void UPFAdminProxyLibrary::BreakBPAdminGetAllActionGroupsResult(
-    const FBPAdminGetAllActionGroupsResult& In
-	, TArray<FBPAdminGetActionGroupResult>& OutActionGroups
- )
-{
-    for (const PlayFab::AdminModels::FGetActionGroupResult& elem : In.Data.ActionGroups)
-	{
-		OutActionGroups.Add(FBPAdminGetActionGroupResult(elem));
-	}
 	
 }
 
@@ -3257,20 +3244,6 @@ void UPFAdminProxyLibrary::BreakBPAdminResetCharacterStatisticsResult(
     
 }
 
-// ResetUsersRequest
-FBPAdminResetUsersRequest UPFAdminProxyLibrary::MakeBPAdminResetUsersRequest(
-    TArray<FBPAdminUserCredentials> InUsers
-    )
-{
-    FBPAdminResetUsersRequest Out = FBPAdminResetUsersRequest();
-    for (const FBPAdminUserCredentials& elem : InUsers)
-	{
-		Out.Data.Users.Add(elem.Data);
-	}
-	
-    return Out;
-}
-
 // ResetUserStatisticsRequest
 FBPAdminResetUserStatisticsRequest UPFAdminProxyLibrary::MakeBPAdminResetUserStatisticsRequest(
     FString InPlayFabId
@@ -4334,25 +4307,6 @@ void UPFAdminProxyLibrary::BreakBPAdminUserAndroidDeviceInfo(
  )
 {
     OutAndroidDeviceId = In.Data.AndroidDeviceId;
-	
-}
-
-// UserCredentials
-FBPAdminUserCredentials UPFAdminProxyLibrary::MakeBPAdminUserCredentials(
-    FString InUsername
-    )
-{
-    FBPAdminUserCredentials Out = FBPAdminUserCredentials();
-    Out.Data.Username = InUsername;
-	
-    return Out;
-}
-void UPFAdminProxyLibrary::BreakBPAdminUserCredentials(
-    const FBPAdminUserCredentials& In
-	, FString& OutUsername
- )
-{
-    OutUsername = In.Data.Username;
 	
 }
 

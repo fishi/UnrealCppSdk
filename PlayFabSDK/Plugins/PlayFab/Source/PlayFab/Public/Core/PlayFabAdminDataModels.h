@@ -1389,17 +1389,21 @@ namespace AdminModels
         FString EmailAddress;
         // [optional] The name of the email info data
         FString Name;
+        // [optional] The verification status of the email
+        Boxed<EmailVerificationStatus> VerificationStatus;
 
         FContactEmailInfoModel() :
             FPlayFabBaseModel(),
             EmailAddress(),
-            Name()
+            Name(),
+            VerificationStatus()
             {}
 
         FContactEmailInfoModel(const FContactEmailInfoModel& src) :
             FPlayFabBaseModel(),
             EmailAddress(src.EmailAddress),
-            Name(src.Name)
+            Name(src.Name),
+            VerificationStatus(src.VerificationStatus)
             {}
 
         FContactEmailInfoModel(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfoModel()
@@ -2396,6 +2400,52 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    struct PLAYFAB_API FDeleteTitleRequest : public FPlayFabBaseModel
+    {
+        
+
+        FDeleteTitleRequest() :
+            FPlayFabBaseModel()
+            {}
+
+        FDeleteTitleRequest(const FDeleteTitleRequest& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FDeleteTitleRequest(const TSharedPtr<FJsonObject>& obj) : FDeleteTitleRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FDeleteTitleRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FDeleteTitleResult : public FPlayFabBaseModel
+    {
+        
+
+        FDeleteTitleResult() :
+            FPlayFabBaseModel()
+            {}
+
+        FDeleteTitleResult(const FDeleteTitleResult& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FDeleteTitleResult(const TSharedPtr<FJsonObject>& obj) : FDeleteTitleResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FDeleteTitleResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
     struct PLAYFAB_API FDeleteUsersRequest : public FPlayFabBaseModel
     {
         
@@ -2523,37 +2573,6 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
-    struct PLAYFAB_API FGetActionGroupResult : public FPlayFabBaseModel
-    {
-        
-        // [optional] Action Group ID
-        FString Id;
-        // Action Group name
-        FString Name;
-
-        FGetActionGroupResult() :
-            FPlayFabBaseModel(),
-            Id(),
-            Name()
-            {}
-
-        FGetActionGroupResult(const FGetActionGroupResult& src) :
-            FPlayFabBaseModel(),
-            Id(src.Id),
-            Name(src.Name)
-            {}
-
-        FGetActionGroupResult(const TSharedPtr<FJsonObject>& obj) : FGetActionGroupResult()
-        {
-            readFromValue(obj);
-        }
-
-        ~FGetActionGroupResult();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
     struct PLAYFAB_API FGetActionsOnPlayersInSegmentTaskInstanceResult : public FPlayFabBaseModel
     {
         
@@ -2580,56 +2599,6 @@ namespace AdminModels
         }
 
         ~FGetActionsOnPlayersInSegmentTaskInstanceResult();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
-    struct PLAYFAB_API FGetAllActionGroupsRequest : public FPlayFabBaseModel
-    {
-        
-
-        FGetAllActionGroupsRequest() :
-            FPlayFabBaseModel()
-            {}
-
-        FGetAllActionGroupsRequest(const FGetAllActionGroupsRequest& src) :
-            FPlayFabBaseModel()
-            {}
-
-        FGetAllActionGroupsRequest(const TSharedPtr<FJsonObject>& obj) : FGetAllActionGroupsRequest()
-        {
-            readFromValue(obj);
-        }
-
-        ~FGetAllActionGroupsRequest();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
-    struct PLAYFAB_API FGetAllActionGroupsResult : public FPlayFabBaseModel
-    {
-        
-        // List of Action Groups.
-        TArray<FGetActionGroupResult> ActionGroups;
-
-        FGetAllActionGroupsResult() :
-            FPlayFabBaseModel(),
-            ActionGroups()
-            {}
-
-        FGetAllActionGroupsResult(const FGetAllActionGroupsResult& src) :
-            FPlayFabBaseModel(),
-            ActionGroups(src.ActionGroups)
-            {}
-
-        FGetAllActionGroupsResult(const TSharedPtr<FJsonObject>& obj) : FGetAllActionGroupsResult()
-        {
-            readFromValue(obj);
-        }
-
-        ~FGetAllActionGroupsResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3025,7 +2994,7 @@ namespace AdminModels
     struct PLAYFAB_API FGetContentUploadUrlResult : public FPlayFabBaseModel
     {
         
-        // [optional] URL for uploading content via HTTP PUT method. The URL will expire in 1 hour.
+        // [optional] URL for uploading content via HTTP PUT method. The URL will expire in approximately one hour.
         FString URL;
 
         FGetContentUploadUrlResult() :
@@ -4630,7 +4599,7 @@ namespace AdminModels
         FString Action;
         // [optional] Additional conditions to be applied for API Resources.
         TSharedPtr<FApiCondition> ApiConditions;
-        // [optional] A comment about the statement. Intended solely for bookeeping and debugging.
+        // [optional] A comment about the statement. Intended solely for bookkeeping and debugging.
         FString Comment;
         // The effect this statement will have. It could be either Allow or Deny
         EffectType Effect;
@@ -7339,60 +7308,6 @@ namespace AdminModels
         }
 
         ~FResetCharacterStatisticsResult();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
-    struct PLAYFAB_API FUserCredentials : public FPlayFabBaseModel
-    {
-        
-        // Username of user to reset
-        FString Username;
-
-        FUserCredentials() :
-            FPlayFabBaseModel(),
-            Username()
-            {}
-
-        FUserCredentials(const FUserCredentials& src) :
-            FPlayFabBaseModel(),
-            Username(src.Username)
-            {}
-
-        FUserCredentials(const TSharedPtr<FJsonObject>& obj) : FUserCredentials()
-        {
-            readFromValue(obj);
-        }
-
-        ~FUserCredentials();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
-    struct PLAYFAB_API FResetUsersRequest : public FPlayFabBaseModel
-    {
-        
-        // Array of users to reset
-        TArray<FUserCredentials> Users;
-
-        FResetUsersRequest() :
-            FPlayFabBaseModel(),
-            Users()
-            {}
-
-        FResetUsersRequest(const FResetUsersRequest& src) :
-            FPlayFabBaseModel(),
-            Users(src.Users)
-            {}
-
-        FResetUsersRequest(const TSharedPtr<FJsonObject>& obj) : FResetUsersRequest()
-        {
-            readFromValue(obj);
-        }
-
-        ~FResetUsersRequest();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

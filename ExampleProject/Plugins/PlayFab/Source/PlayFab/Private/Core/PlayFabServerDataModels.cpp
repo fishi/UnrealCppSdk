@@ -3089,6 +3089,8 @@ void PlayFab::ServerModels::FContactEmailInfoModel::writeJSON(JsonWriter& writer
     
     if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
     
+    if(VerificationStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("VerificationStatus")); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
+    
     
     writer->WriteObjectEnd();
 }
@@ -3110,6 +3112,8 @@ bool PlayFab::ServerModels::FContactEmailInfoModel::readFromValue(const TSharedP
         FString TmpValue;
         if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
     }
+    
+    VerificationStatus = readEmailVerificationStatusFromValue(obj->TryGetField(TEXT("VerificationStatus")));
     
     
     return HasSucceeded;
@@ -5468,111 +5472,6 @@ ServerModels::GameInstanceState PlayFab::ServerModels::readGameInstanceStateFrom
 
 
     return GameInstanceStateOpen; // Basically critical fail
-}
-
-
-PlayFab::ServerModels::FGetActionGroupResult::~FGetActionGroupResult()
-{
-    
-}
-
-void PlayFab::ServerModels::FGetActionGroupResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    if(Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
-    
-    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ServerModels::FGetActionGroupResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
-    if (IdValue.IsValid()&& !IdValue->IsNull())
-    {
-        FString TmpValue;
-        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
-    if (NameValue.IsValid()&& !NameValue->IsNull())
-    {
-        FString TmpValue;
-        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ServerModels::FGetAllActionGroupsRequest::~FGetAllActionGroupsRequest()
-{
-    
-}
-
-void PlayFab::ServerModels::FGetAllActionGroupsRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ServerModels::FGetAllActionGroupsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ServerModels::FGetAllActionGroupsResult::~FGetAllActionGroupsResult()
-{
-    
-}
-
-void PlayFab::ServerModels::FGetAllActionGroupsResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-        writer->WriteArrayStart(TEXT("ActionGroups"));
-    
-        for (const FGetActionGroupResult& item : ActionGroups)
-        {
-            item.writeJSON(writer);
-        }
-        writer->WriteArrayEnd();
-    
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ServerModels::FGetAllActionGroupsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    {
-        const TArray< TSharedPtr<FJsonValue> >&ActionGroupsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ActionGroups"));
-        for (int32 Idx = 0; Idx < ActionGroupsArray.Num(); Idx++)
-        {
-            TSharedPtr<FJsonValue> CurrentItem = ActionGroupsArray[Idx];
-            
-            ActionGroups.Add(FGetActionGroupResult(CurrentItem->AsObject()));
-        }
-    }
-
-    
-    
-    return HasSucceeded;
 }
 
 
@@ -12059,6 +11958,8 @@ void PlayFab::ServerModels::FRegisterGameRequest::writeJSON(JsonWriter& writer) 
     
     writer->WriteIdentifierPrefix(TEXT("ServerHost")); writer->WriteValue(ServerHost);
     
+    if(ServerIPV6Address.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerIPV6Address")); writer->WriteValue(ServerIPV6Address); }
+    
     writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort);
     
     if(Tags.Num() != 0) 
@@ -12108,6 +12009,13 @@ bool PlayFab::ServerModels::FRegisterGameRequest::readFromValue(const TSharedPtr
     {
         FString TmpValue;
         if(ServerHostValue->TryGetString(TmpValue)) {ServerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerIPV6AddressValue = obj->TryGetField(TEXT("ServerIPV6Address"));
+    if (ServerIPV6AddressValue.IsValid()&& !ServerIPV6AddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerIPV6AddressValue->TryGetString(TmpValue)) {ServerIPV6Address = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));

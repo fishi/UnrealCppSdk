@@ -114,6 +114,7 @@ public:
 	, FString InLobbyId
 	, EBPMatchmakerRegion InRegion
 	, FString InServerHost
+	, FString InServerIPV6Address
 	, FString InServerPort
 	, TMap<FString, FString> InTags
 );
@@ -141,6 +142,7 @@ public:
     const FBPMatchmakerStartGameResponse& In
 	, FString& OutGameID
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
 );
 

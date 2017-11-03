@@ -923,36 +923,6 @@ enum class EBPServerGameInstanceState : uint8
     GameInstanceState_Closed UMETA(DisplayName = "Closed")
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetActionGroupResult"))
-struct FBPServerGetActionGroupResult
-{
-    GENERATED_BODY()
-public:
-    FBPServerGetActionGroupResult() {};
-    FBPServerGetActionGroupResult(PlayFab::ServerModels::FGetActionGroupResult InData) : Data(InData) {};
-    PlayFab::ServerModels::FGetActionGroupResult Data;
-};
-
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerGetAllActionGroupsRequest"))
-struct FBPServerGetAllActionGroupsRequest
-{
-    GENERATED_BODY()
-public:
-    FBPServerGetAllActionGroupsRequest() {};
-    FBPServerGetAllActionGroupsRequest(PlayFab::ServerModels::FGetAllActionGroupsRequest InData) : Data(InData) {};
-    PlayFab::ServerModels::FGetAllActionGroupsRequest Data;
-};
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetAllActionGroupsResult"))
-struct FBPServerGetAllActionGroupsResult
-{
-    GENERATED_BODY()
-public:
-    FBPServerGetAllActionGroupsResult() {};
-    FBPServerGetAllActionGroupsResult(PlayFab::ServerModels::FGetAllActionGroupsResult InData) : Data(InData) {};
-    PlayFab::ServerModels::FGetAllActionGroupsResult Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerGetAllSegmentsRequest"))
 struct FBPServerGetAllSegmentsRequest
 {
@@ -3045,8 +3015,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEmptyResultDelegate, const 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEvaluateRandomResultTableRequestDelegate, const FBPServerEvaluateRandomResultTableRequest&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEvaluateRandomResultTableResultDelegate, const FBPServerEvaluateRandomResultTableResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerExecuteCloudScriptResultDelegate, const FBPServerExecuteCloudScriptResult&, Result);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetActionGroupResultDelegate, const FBPServerGetActionGroupResult&, Result);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetAllActionGroupsResultDelegate, const FBPServerGetAllActionGroupsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetAllSegmentsResultDelegate, const FBPServerGetAllSegmentsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCatalogItemsResultDelegate, const FBPServerGetCatalogItemsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCharacterDataResultDelegate, const FBPServerGetCharacterDataResult&, Result);

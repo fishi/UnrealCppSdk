@@ -171,6 +171,7 @@ FBPMatchmakerRegisterGameRequest UPFMatchmakerProxyLibrary::MakeBPMatchmakerRegi
 	, FString InLobbyId
 	, EBPMatchmakerRegion InRegion
 	, FString InServerHost
+	, FString InServerIPV6Address
 	, FString InServerPort
 	, TMap<FString, FString> InTags
     )
@@ -181,6 +182,7 @@ FBPMatchmakerRegisterGameRequest UPFMatchmakerProxyLibrary::MakeBPMatchmakerRegi
 	Out.Data.LobbyId = InLobbyId;
 	Out.Data.pfRegion = static_cast<PlayFab::MatchmakerModels::Region>(static_cast<uint8>(InRegion));
 	Out.Data.ServerHost = InServerHost;
+	Out.Data.ServerIPV6Address = InServerIPV6Address;
 	Out.Data.ServerPort = InServerPort;
 	Out.Data.Tags = InTags;
 	
@@ -221,11 +223,13 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerStartGameResponse(
     const FBPMatchmakerStartGameResponse& In
 	, FString& OutGameID
 	, FString& OutServerHostname
+	, FString& OutServerIPV6Address
 	, int32& OutServerPort
  )
 {
     OutGameID = In.Data.GameID;
 	OutServerHostname = In.Data.ServerHostname;
+	OutServerIPV6Address = In.Data.ServerIPV6Address;
 	OutServerPort = In.Data.ServerPort;
 	
 }

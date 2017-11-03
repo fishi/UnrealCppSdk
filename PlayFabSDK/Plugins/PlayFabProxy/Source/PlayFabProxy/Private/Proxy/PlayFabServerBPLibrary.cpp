@@ -693,11 +693,13 @@ void UPFServerProxyLibrary::BreakBPServerContactEmailInfo(
 FBPServerContactEmailInfoModel UPFServerProxyLibrary::MakeBPServerContactEmailInfoModel(
     FString InEmailAddress
 	, FString InName
+	, EBPServerEmailVerificationStatus InVerificationStatus
     )
 {
     FBPServerContactEmailInfoModel Out = FBPServerContactEmailInfoModel();
     Out.Data.EmailAddress = InEmailAddress;
 	Out.Data.Name = InName;
+	Out.Data.VerificationStatus = static_cast<PlayFab::ServerModels::EmailVerificationStatus>(static_cast<uint8>(InVerificationStatus));
 	
     return Out;
 }
@@ -705,10 +707,12 @@ void UPFServerProxyLibrary::BreakBPServerContactEmailInfoModel(
     const FBPServerContactEmailInfoModel& In
 	, FString& OutEmailAddress
 	, FString& OutName
+	, EBPServerEmailVerificationStatus& OutVerificationStatus
  )
 {
     OutEmailAddress = In.Data.EmailAddress;
 	OutName = In.Data.Name;
+	if (In.Data.VerificationStatus.notNull()) {OutVerificationStatus = static_cast<EBPServerEmailVerificationStatus>(static_cast<uint8>(In.Data.VerificationStatus.mValue));}
 	
 }
 
@@ -975,40 +979,6 @@ void UPFServerProxyLibrary::BreakBPServerFriendInfo(
 	OutTags = In.Data.Tags;
 	OutTitleDisplayName = In.Data.TitleDisplayName;
 	OutUsername = In.Data.Username;
-	
-}
-
-// GetActionGroupResult
-void UPFServerProxyLibrary::BreakBPServerGetActionGroupResult(
-    const FBPServerGetActionGroupResult& In
-	, FString& OutId
-	, FString& OutName
- )
-{
-    OutId = In.Data.Id;
-	OutName = In.Data.Name;
-	
-}
-
-// GetAllActionGroupsRequest
-FBPServerGetAllActionGroupsRequest UPFServerProxyLibrary::MakeBPServerGetAllActionGroupsRequest(
-        )
-{
-    FBPServerGetAllActionGroupsRequest Out = FBPServerGetAllActionGroupsRequest();
-    
-    return Out;
-}
-
-// GetAllActionGroupsResult
-void UPFServerProxyLibrary::BreakBPServerGetAllActionGroupsResult(
-    const FBPServerGetAllActionGroupsResult& In
-	, TArray<FBPServerGetActionGroupResult>& OutActionGroups
- )
-{
-    for (const PlayFab::ServerModels::FGetActionGroupResult& elem : In.Data.ActionGroups)
-	{
-		OutActionGroups.Add(FBPServerGetActionGroupResult(elem));
-	}
 	
 }
 
@@ -3371,6 +3341,7 @@ FBPServerRegisterGameRequest UPFServerProxyLibrary::MakeBPServerRegisterGameRequ
 	, FString InLobbyId
 	, EBPServerRegion InRegion
 	, FString InServerHost
+	, FString InServerIPV6Address
 	, FString InServerPort
 	, TMap<FString, FString> InTags
     )
@@ -3381,6 +3352,7 @@ FBPServerRegisterGameRequest UPFServerProxyLibrary::MakeBPServerRegisterGameRequ
 	Out.Data.LobbyId = InLobbyId;
 	Out.Data.pfRegion = static_cast<PlayFab::ServerModels::Region>(static_cast<uint8>(InRegion));
 	Out.Data.ServerHost = InServerHost;
+	Out.Data.ServerIPV6Address = InServerIPV6Address;
 	Out.Data.ServerPort = InServerPort;
 	Out.Data.Tags = InTags;
 	

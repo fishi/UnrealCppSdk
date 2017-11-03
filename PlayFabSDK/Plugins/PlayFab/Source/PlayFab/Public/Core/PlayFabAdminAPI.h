@@ -29,9 +29,8 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FDeletePlayerSharedSecretDelegate, const AdminModels::FDeletePlayerSharedSecretResult&);
         DECLARE_DELEGATE_OneParam(FDeleteStoreDelegate, const AdminModels::FDeleteStoreResult&);
         DECLARE_DELEGATE_OneParam(FDeleteTaskDelegate, const AdminModels::FEmptyResult&);
-        DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const AdminModels::FDeleteUsersResult&);
+        DECLARE_DELEGATE_OneParam(FDeleteTitleDelegate, const AdminModels::FDeleteTitleResult&);
         DECLARE_DELEGATE_OneParam(FGetActionsOnPlayersInSegmentTaskInstanceDelegate, const AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult&);
-        DECLARE_DELEGATE_OneParam(FGetAllActionGroupsDelegate, const AdminModels::FGetAllActionGroupsResult&);
         DECLARE_DELEGATE_OneParam(FGetAllSegmentsDelegate, const AdminModels::FGetAllSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const AdminModels::FGetCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FGetCloudScriptRevisionDelegate, const AdminModels::FGetCloudScriptRevisionResult&);
@@ -78,7 +77,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRemoveServerBuildDelegate, const AdminModels::FRemoveServerBuildResult&);
         DECLARE_DELEGATE_OneParam(FRemoveVirtualCurrencyTypesDelegate, const AdminModels::FBlankResult&);
         DECLARE_DELEGATE_OneParam(FResetCharacterStatisticsDelegate, const AdminModels::FResetCharacterStatisticsResult&);
-        DECLARE_DELEGATE_OneParam(FResetUsersDelegate, const AdminModels::FBlankResult&);
         DECLARE_DELEGATE_OneParam(FResetUserStatisticsDelegate, const AdminModels::FResetUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FResolvePurchaseDisputeDelegate, const AdminModels::FResolvePurchaseDisputeResponse&);
         DECLARE_DELEGATE_OneParam(FRevokeAllBansForUserDelegate, const AdminModels::FRevokeAllBansForUserResult&);
@@ -198,19 +196,15 @@ namespace PlayFab
          */
         bool DeleteTask(AdminModels::FDeleteTaskRequest& request, const FDeleteTaskDelegate& SuccessDelegate = FDeleteTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics. This method does not remove the player's event history, login history, inventory items, nor virtual currencies.
-         * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.
+         * Permanently deletes a title and all associated configuration
+         * Deletes all data associated with the title, including catalog, virtual currencies, leaderboard statistics, Cloud Script revisions,                 segment definitions, event rules, tasks, add-ons, secret keys, data encryption keys, and permission policies.                  Removes the title from its studio and removes all associated developer roles and permissions.                  Does not delete PlayStream event history associated with the title.                 Note, this API queues the title for deletion and returns immediately. It may take several hours or more before all title data is fully deleted.                 All player accounts in the title must be deleted before deleting the title. If any player accounts exist, the API will return a 'TitleContainsUserAccounts' error.                                 Until the title data is fully deleted, attempts to call APIs with the title will fail with the 'TitleDeleted' error.
          */
-        bool DeleteUsers(AdminModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        bool DeleteTitle(const FDeleteTitleDelegate& SuccessDelegate = FDeleteTitleDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Get information about a ActionsOnPlayersInSegment task instance.
          * The result includes detail information that's specific to an ActionsOnPlayersInSegment task. To get a list of task instances with generic basic information, use GetTaskInstances.
          */
         bool GetActionsOnPlayersInSegmentTaskInstance(AdminModels::FGetTaskInstanceRequest& request, const FGetActionsOnPlayersInSegmentTaskInstanceDelegate& SuccessDelegate = FGetActionsOnPlayersInSegmentTaskInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieve a list of all PlayStream actions groups.
-         */
-        bool GetAllActionGroups(const FGetAllActionGroupsDelegate& SuccessDelegate = FGetAllActionGroupsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
          * Request has no paramaters.
@@ -424,11 +418,6 @@ namespace PlayFab
          */
         bool ResetCharacterStatistics(AdminModels::FResetCharacterStatisticsRequest& request, const FResetCharacterStatisticsDelegate& SuccessDelegate = FResetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Resets all title-specific information about a particular account, including user data, virtual currency balances, inventory, purchase history, and statistics
-         * This method is intended for use with test accounts, to allow a developer to reset and test a game experience from the start. Note that in order to reset an account, you must know the username. If the account does not have a username, you must add one with AddUsernamePassword in the client API prior to calling this method.
-         */
-        bool ResetUsers(AdminModels::FResetUsersRequest& request, const FResetUsersDelegate& SuccessDelegate = FResetUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Completely removes all statistics for the specified user, for the current game
          * Note that this action cannot be un-done. All statistics for this user will be deleted, removing the user from all leaderboards for the game.
          */
@@ -603,9 +592,8 @@ namespace PlayFab
         void OnDeletePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeletePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteStoreResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteStoreDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnDeleteTitleResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteTitleDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetActionsOnPlayersInSegmentTaskInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetActionsOnPlayersInSegmentTaskInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetAllActionGroupsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllActionGroupsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCloudScriptRevisionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptRevisionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -652,7 +640,6 @@ namespace PlayFab
         void OnRemoveServerBuildResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveServerBuildDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetCharacterStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetCharacterStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnResetUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResolvePurchaseDisputeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResolvePurchaseDisputeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRevokeAllBansForUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeAllBansForUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

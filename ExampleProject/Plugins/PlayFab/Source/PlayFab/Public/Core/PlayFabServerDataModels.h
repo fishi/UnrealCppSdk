@@ -1896,17 +1896,21 @@ namespace ServerModels
         FString EmailAddress;
         // [optional] The name of the email info data
         FString Name;
+        // [optional] The verification status of the email
+        Boxed<EmailVerificationStatus> VerificationStatus;
 
         FContactEmailInfoModel() :
             FPlayFabBaseModel(),
             EmailAddress(),
-            Name()
+            Name(),
+            VerificationStatus()
             {}
 
         FContactEmailInfoModel(const FContactEmailInfoModel& src) :
             FPlayFabBaseModel(),
             EmailAddress(src.EmailAddress),
-            Name(src.Name)
+            Name(src.Name),
+            VerificationStatus(src.VerificationStatus)
             {}
 
         FContactEmailInfoModel(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfoModel()
@@ -3285,87 +3289,6 @@ namespace ServerModels
     PLAYFAB_API GameInstanceState readGameInstanceStateFromValue(const FString& value);
 
     
-    struct PLAYFAB_API FGetActionGroupResult : public FPlayFabBaseModel
-    {
-        
-        // [optional] Action Group ID
-        FString Id;
-        // Action Group name
-        FString Name;
-
-        FGetActionGroupResult() :
-            FPlayFabBaseModel(),
-            Id(),
-            Name()
-            {}
-
-        FGetActionGroupResult(const FGetActionGroupResult& src) :
-            FPlayFabBaseModel(),
-            Id(src.Id),
-            Name(src.Name)
-            {}
-
-        FGetActionGroupResult(const TSharedPtr<FJsonObject>& obj) : FGetActionGroupResult()
-        {
-            readFromValue(obj);
-        }
-
-        ~FGetActionGroupResult();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
-    struct PLAYFAB_API FGetAllActionGroupsRequest : public FPlayFabBaseModel
-    {
-        
-
-        FGetAllActionGroupsRequest() :
-            FPlayFabBaseModel()
-            {}
-
-        FGetAllActionGroupsRequest(const FGetAllActionGroupsRequest& src) :
-            FPlayFabBaseModel()
-            {}
-
-        FGetAllActionGroupsRequest(const TSharedPtr<FJsonObject>& obj) : FGetAllActionGroupsRequest()
-        {
-            readFromValue(obj);
-        }
-
-        ~FGetAllActionGroupsRequest();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
-    struct PLAYFAB_API FGetAllActionGroupsResult : public FPlayFabBaseModel
-    {
-        
-        // List of Action Groups.
-        TArray<FGetActionGroupResult> ActionGroups;
-
-        FGetAllActionGroupsResult() :
-            FPlayFabBaseModel(),
-            ActionGroups()
-            {}
-
-        FGetAllActionGroupsResult(const FGetAllActionGroupsResult& src) :
-            FPlayFabBaseModel(),
-            ActionGroups(src.ActionGroups)
-            {}
-
-        FGetAllActionGroupsResult(const TSharedPtr<FJsonObject>& obj) : FGetAllActionGroupsResult()
-        {
-            readFromValue(obj);
-        }
-
-        ~FGetAllActionGroupsResult();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
     struct PLAYFAB_API FGetAllSegmentsRequest : public FPlayFabBaseModel
     {
         
@@ -3885,7 +3808,7 @@ namespace ServerModels
         FString HttpMethod;
         // Key of the content item to fetch, usually formatted as a path, e.g. images/a.png
         FString Key;
-        // [optional] True if download through CDN. CDN provides better download bandwidth and time. However, if you want latest, non-cached version of the content, set this to false. Default is true.
+        // [optional] True to download through CDN. CDN provides higher download bandwidth and lower latency. However, if you want the latest, non-cached version of the content during development, set this to false. Default is true.
         Boxed<bool> ThruCDN;
 
         FGetContentDownloadUrlRequest() :
@@ -3916,7 +3839,7 @@ namespace ServerModels
     struct PLAYFAB_API FGetContentDownloadUrlResult : public FPlayFabBaseModel
     {
         
-        // [optional] URL for downloading content via HTTP GET or HEAD method. The URL will expire in 1 hour.
+        // [optional] URL for downloading content via HTTP GET or HEAD method. The URL will expire in approximately one hour.
         FString URL;
 
         FGetContentDownloadUrlResult() :
@@ -7410,8 +7333,10 @@ namespace ServerModels
         FString LobbyId;
         // Region in which the Game Server Instance is running. For matchmaking using non-AWS region names, set this to any AWS region and use Tags (below) to specify your custom region.
         Region pfRegion;
-        // IP address of the Game Server Instance.
+        // IPV4 address of the Game Server Instance.
         FString ServerHost;
+        // [optional] IPV6 address of the Game Server Instance.
+        FString ServerIPV6Address;
         // Port number for communication with the Game Server Instance.
         FString ServerPort;
         // [optional] Tags for the Game Server Instance
@@ -7424,6 +7349,7 @@ namespace ServerModels
             LobbyId(),
             pfRegion(),
             ServerHost(),
+            ServerIPV6Address(),
             ServerPort(),
             Tags()
             {}
@@ -7435,6 +7361,7 @@ namespace ServerModels
             LobbyId(src.LobbyId),
             pfRegion(src.pfRegion),
             ServerHost(src.ServerHost),
+            ServerIPV6Address(src.ServerIPV6Address),
             ServerPort(src.ServerPort),
             Tags(src.Tags)
             {}

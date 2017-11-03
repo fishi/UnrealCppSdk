@@ -898,6 +898,26 @@ public:
     PlayFab::AdminModels::FDeleteTaskRequest Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminDeleteTitleRequest"))
+struct FBPAdminDeleteTitleRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminDeleteTitleRequest() {};
+    FBPAdminDeleteTitleRequest(PlayFab::AdminModels::FDeleteTitleRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FDeleteTitleRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeleteTitleResult"))
+struct FBPAdminDeleteTitleResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminDeleteTitleResult() {};
+    FBPAdminDeleteTitleResult(PlayFab::AdminModels::FDeleteTitleResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FDeleteTitleResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminDeleteUsersRequest"))
 struct FBPAdminDeleteUsersRequest
 {
@@ -973,16 +993,6 @@ public:
     PlayFab::AdminModels::FGameModeInfo Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetActionGroupResult"))
-struct FBPAdminGetActionGroupResult
-{
-    GENERATED_BODY()
-public:
-    FBPAdminGetActionGroupResult() {};
-    FBPAdminGetActionGroupResult(PlayFab::AdminModels::FGetActionGroupResult InData) : Data(InData) {};
-    PlayFab::AdminModels::FGetActionGroupResult Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult"))
 struct FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult
 {
@@ -991,26 +1001,6 @@ public:
     FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult() {};
     FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult(PlayFab::AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult InData) : Data(InData) {};
     PlayFab::AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult Data;
-};
-
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminGetAllActionGroupsRequest"))
-struct FBPAdminGetAllActionGroupsRequest
-{
-    GENERATED_BODY()
-public:
-    FBPAdminGetAllActionGroupsRequest() {};
-    FBPAdminGetAllActionGroupsRequest(PlayFab::AdminModels::FGetAllActionGroupsRequest InData) : Data(InData) {};
-    PlayFab::AdminModels::FGetAllActionGroupsRequest Data;
-};
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetAllActionGroupsResult"))
-struct FBPAdminGetAllActionGroupsResult
-{
-    GENERATED_BODY()
-public:
-    FBPAdminGetAllActionGroupsResult() {};
-    FBPAdminGetAllActionGroupsResult(PlayFab::AdminModels::FGetAllActionGroupsResult InData) : Data(InData) {};
-    PlayFab::AdminModels::FGetAllActionGroupsResult Data;
 };
 
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminGetAllSegmentsRequest"))
@@ -2099,16 +2089,6 @@ public:
     PlayFab::AdminModels::FResetCharacterStatisticsResult Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminResetUsersRequest"))
-struct FBPAdminResetUsersRequest
-{
-    GENERATED_BODY()
-public:
-    FBPAdminResetUsersRequest() {};
-    FBPAdminResetUsersRequest(PlayFab::AdminModels::FResetUsersRequest InData) : Data(InData) {};
-    PlayFab::AdminModels::FResetUsersRequest Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminResetUserStatisticsRequest"))
 struct FBPAdminResetUserStatisticsRequest
 {
@@ -2814,16 +2794,6 @@ public:
     PlayFab::AdminModels::FUserAndroidDeviceInfo Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminUserCredentials", HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserCredentials"))
-struct FBPAdminUserCredentials
-{
-    GENERATED_BODY()
-public:
-    FBPAdminUserCredentials() {};
-    FBPAdminUserCredentials(PlayFab::AdminModels::FUserCredentials InData) : Data(InData) {};
-    PlayFab::AdminModels::FUserCredentials Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminUserCustomIdInfo", HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserCustomIdInfo"))
 struct FBPAdminUserCustomIdInfo
 {
@@ -3035,12 +3005,11 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreateTaskResultDelegate, co
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerResultDelegate, const FBPAdminDeletePlayerResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeletePlayerSharedSecretResultDelegate, const FBPAdminDeletePlayerSharedSecretResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteStoreResultDelegate, const FBPAdminDeleteStoreResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteTitleResultDelegate, const FBPAdminDeleteTitleResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteUsersResultDelegate, const FBPAdminDeleteUsersResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminEmptyResultDelegate, const FBPAdminEmptyResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminExecuteCloudScriptResultDelegate, const FBPAdminExecuteCloudScriptResult&, Result);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetActionGroupResultDelegate, const FBPAdminGetActionGroupResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResultDelegate, const FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult&, Result);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetAllActionGroupsResultDelegate, const FBPAdminGetAllActionGroupsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetAllSegmentsResultDelegate, const FBPAdminGetAllSegmentsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetCatalogItemsResultDelegate, const FBPAdminGetCatalogItemsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetCloudScriptRevisionResultDelegate, const FBPAdminGetCloudScriptRevisionResult&, Result);

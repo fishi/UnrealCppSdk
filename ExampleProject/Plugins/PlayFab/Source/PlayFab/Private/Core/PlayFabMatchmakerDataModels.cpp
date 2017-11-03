@@ -494,6 +494,8 @@ void PlayFab::MatchmakerModels::FRegisterGameRequest::writeJSON(JsonWriter& writ
     
     writer->WriteIdentifierPrefix(TEXT("ServerHost")); writer->WriteValue(ServerHost);
     
+    if(ServerIPV6Address.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerIPV6Address")); writer->WriteValue(ServerIPV6Address); }
+    
     writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort);
     
     if(Tags.Num() != 0) 
@@ -543,6 +545,13 @@ bool PlayFab::MatchmakerModels::FRegisterGameRequest::readFromValue(const TShare
     {
         FString TmpValue;
         if(ServerHostValue->TryGetString(TmpValue)) {ServerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerIPV6AddressValue = obj->TryGetField(TEXT("ServerIPV6Address"));
+    if (ServerIPV6AddressValue.IsValid()&& !ServerIPV6AddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerIPV6AddressValue->TryGetString(TmpValue)) {ServerIPV6Address = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));
@@ -673,6 +682,8 @@ void PlayFab::MatchmakerModels::FStartGameResponse::writeJSON(JsonWriter& writer
     
     if(ServerHostname.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerHostname")); writer->WriteValue(ServerHostname); }
     
+    if(ServerIPV6Address.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerIPV6Address")); writer->WriteValue(ServerIPV6Address); }
+    
     writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(static_cast<int64>(ServerPort));
     
     
@@ -695,6 +706,13 @@ bool PlayFab::MatchmakerModels::FStartGameResponse::readFromValue(const TSharedP
     {
         FString TmpValue;
         if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerIPV6AddressValue = obj->TryGetField(TEXT("ServerIPV6Address"));
+    if (ServerIPV6AddressValue.IsValid()&& !ServerIPV6AddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerIPV6AddressValue->TryGetString(TmpValue)) {ServerIPV6Address = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));

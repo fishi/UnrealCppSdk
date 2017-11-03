@@ -2295,6 +2295,8 @@ void PlayFab::AdminModels::FContactEmailInfoModel::writeJSON(JsonWriter& writer)
     
     if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
     
+    if(VerificationStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("VerificationStatus")); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
+    
     
     writer->WriteObjectEnd();
 }
@@ -2316,6 +2318,8 @@ bool PlayFab::AdminModels::FContactEmailInfoModel::readFromValue(const TSharedPt
         FString TmpValue;
         if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
     }
+    
+    VerificationStatus = readEmailVerificationStatusFromValue(obj->TryGetField(TEXT("VerificationStatus")));
     
     
     return HasSucceeded;
@@ -3967,6 +3971,50 @@ bool PlayFab::AdminModels::FDeleteTaskRequest::readFromValue(const TSharedPtr<FJ
 }
 
 
+PlayFab::AdminModels::FDeleteTitleRequest::~FDeleteTitleRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeleteTitleRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeleteTitleRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FDeleteTitleResult::~FDeleteTitleResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeleteTitleResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeleteTitleResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FDeleteUsersRequest::~FDeleteUsersRequest()
 {
     
@@ -4150,46 +4198,6 @@ bool PlayFab::AdminModels::FGameModeInfo::readFromValue(const TSharedPtr<FJsonOb
 }
 
 
-PlayFab::AdminModels::FGetActionGroupResult::~FGetActionGroupResult()
-{
-    
-}
-
-void PlayFab::AdminModels::FGetActionGroupResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    if(Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
-    
-    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FGetActionGroupResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
-    if (IdValue.IsValid()&& !IdValue->IsNull())
-    {
-        FString TmpValue;
-        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
-    if (NameValue.IsValid()&& !NameValue->IsNull())
-    {
-        FString TmpValue;
-        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
 PlayFab::AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult::~FGetActionsOnPlayersInSegmentTaskInstanceResult()
 {
     //if(Parameter != nullptr) delete Parameter;
@@ -4224,71 +4232,6 @@ bool PlayFab::AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult::read
     {
         Summary = MakeShareable(new FActionsOnPlayersInSegmentTaskSummary(SummaryValue->AsObject()));
     }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::AdminModels::FGetAllActionGroupsRequest::~FGetAllActionGroupsRequest()
-{
-    
-}
-
-void PlayFab::AdminModels::FGetAllActionGroupsRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FGetAllActionGroupsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::AdminModels::FGetAllActionGroupsResult::~FGetAllActionGroupsResult()
-{
-    
-}
-
-void PlayFab::AdminModels::FGetAllActionGroupsResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-        writer->WriteArrayStart(TEXT("ActionGroups"));
-    
-        for (const FGetActionGroupResult& item : ActionGroups)
-        {
-            item.writeJSON(writer);
-        }
-        writer->WriteArrayEnd();
-    
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FGetAllActionGroupsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    {
-        const TArray< TSharedPtr<FJsonValue> >&ActionGroupsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ActionGroups"));
-        for (int32 Idx = 0; Idx < ActionGroupsArray.Num(); Idx++)
-        {
-            TSharedPtr<FJsonValue> CurrentItem = ActionGroupsArray[Idx];
-            
-            ActionGroups.Add(FGetActionGroupResult(CurrentItem->AsObject()));
-        }
-    }
-
     
     
     return HasSucceeded;
@@ -11823,80 +11766,6 @@ void PlayFab::AdminModels::FResetCharacterStatisticsResult::writeJSON(JsonWriter
 bool PlayFab::AdminModels::FResetCharacterStatisticsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
     bool HasSucceeded = true; 
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::AdminModels::FUserCredentials::~FUserCredentials()
-{
-    
-}
-
-void PlayFab::AdminModels::FUserCredentials::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    writer->WriteIdentifierPrefix(TEXT("Username")); writer->WriteValue(Username);
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FUserCredentials::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-    {
-        FString TmpValue;
-        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::AdminModels::FResetUsersRequest::~FResetUsersRequest()
-{
-    
-}
-
-void PlayFab::AdminModels::FResetUsersRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-        writer->WriteArrayStart(TEXT("Users"));
-    
-        for (const FUserCredentials& item : Users)
-        {
-            item.writeJSON(writer);
-        }
-        writer->WriteArrayEnd();
-    
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FResetUsersRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    {
-        const TArray< TSharedPtr<FJsonValue> >&UsersArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Users"));
-        for (int32 Idx = 0; Idx < UsersArray.Num(); Idx++)
-        {
-            TSharedPtr<FJsonValue> CurrentItem = UsersArray[Idx];
-            
-            Users.Add(FUserCredentials(CurrentItem->AsObject()));
-        }
-    }
-
     
     
     return HasSucceeded;

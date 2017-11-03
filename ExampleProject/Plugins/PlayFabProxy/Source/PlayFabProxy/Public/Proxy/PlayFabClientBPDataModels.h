@@ -818,6 +818,14 @@ public:
     PlayFab::ClientModels::FCurrentGamesResult Data;
 };
 
+UENUM(BlueprintType)
+enum class EBPClientEmailVerificationStatus : uint8
+{
+    EmailVerificationStatus_Unverified UMETA(DisplayName = "Unverified"),
+    EmailVerificationStatus_Pending UMETA(DisplayName = "Pending"),
+    EmailVerificationStatus_Confirmed UMETA(DisplayName = "Confirmed")
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientEmptyResult"))
 struct FBPClientEmptyResult
 {

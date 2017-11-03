@@ -2125,6 +2125,46 @@ bool PlayFab::ClientModels::FConsumeItemResult::readFromValue(const TSharedPtr<F
 }
 
 
+void PlayFab::ClientModels::writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case EmailVerificationStatusUnverified: writer->WriteValue(TEXT("Unverified")); break;
+        case EmailVerificationStatusPending: writer->WriteValue(TEXT("Pending")); break;
+        case EmailVerificationStatusConfirmed: writer->WriteValue(TEXT("Confirmed")); break;
+    }
+}
+
+ClientModels::EmailVerificationStatus PlayFab::ClientModels::readEmailVerificationStatusFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    return readEmailVerificationStatusFromValue(value.IsValid() ? value->AsString() : "");
+}
+
+ClientModels::EmailVerificationStatus PlayFab::ClientModels::readEmailVerificationStatusFromValue(const FString& value)
+{
+    static TMap<FString, EmailVerificationStatus> _EmailVerificationStatusMap;
+    if (_EmailVerificationStatusMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _EmailVerificationStatusMap.Add(TEXT("Unverified"), EmailVerificationStatusUnverified);
+        _EmailVerificationStatusMap.Add(TEXT("Pending"), EmailVerificationStatusPending);
+        _EmailVerificationStatusMap.Add(TEXT("Confirmed"), EmailVerificationStatusConfirmed);
+
+    } 
+
+    if(!value.IsEmpty())
+    {
+        auto output = _EmailVerificationStatusMap.Find(value);
+        if (output != nullptr)
+            return *output;
+    }
+
+
+    return EmailVerificationStatusUnverified; // Basically critical fail
+}
+
+
 PlayFab::ClientModels::FContactEmailInfoModel::~FContactEmailInfoModel()
 {
     
@@ -2137,6 +2177,8 @@ void PlayFab::ClientModels::FContactEmailInfoModel::writeJSON(JsonWriter& writer
     if(EmailAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EmailAddress")); writer->WriteValue(EmailAddress); }
     
     if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+    
+    if(VerificationStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("VerificationStatus")); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
     
     
     writer->WriteObjectEnd();
@@ -2159,6 +2201,8 @@ bool PlayFab::ClientModels::FContactEmailInfoModel::readFromValue(const TSharedP
         FString TmpValue;
         if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
     }
+    
+    VerificationStatus = readEmailVerificationStatusFromValue(obj->TryGetField(TEXT("VerificationStatus")));
     
     
     return HasSucceeded;
@@ -3328,8 +3372,6 @@ void PlayFab::ClientModels::FGameInfo::writeJSON(JsonWriter& writer) const
     
     if(GameServerData.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GameServerData")); writer->WriteValue(GameServerData); }
     
-    if(GameServerState.notNull()) { writer->WriteIdentifierPrefix(TEXT("GameServerState")); writer->WriteValue(GameServerState); }
-    
     if(GameServerStateEnum.notNull()) { writer->WriteIdentifierPrefix(TEXT("GameServerStateEnum")); writeGameInstanceStateEnumJSON(GameServerStateEnum, writer); }
     
     if(LastHeartbeat.notNull()) { writer->WriteIdentifierPrefix(TEXT("LastHeartbeat")); writeDatetime(LastHeartbeat, writer); }
@@ -3354,6 +3396,8 @@ void PlayFab::ClientModels::FGameInfo::writeJSON(JsonWriter& writer) const
     writer->WriteIdentifierPrefix(TEXT("RunTime")); writer->WriteValue(static_cast<int64>(RunTime));
     
     if(ServerHostname.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerHostname")); writer->WriteValue(ServerHostname); }
+    
+    if(ServerIPV6Address.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerIPV6Address")); writer->WriteValue(ServerIPV6Address); }
     
     if(ServerPort.notNull()) { writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort); }
     
@@ -3399,13 +3443,6 @@ bool PlayFab::ClientModels::FGameInfo::readFromValue(const TSharedPtr<FJsonObjec
         if(GameServerDataValue->TryGetString(TmpValue)) {GameServerData = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> GameServerStateValue = obj->TryGetField(TEXT("GameServerState"));
-    if (GameServerStateValue.IsValid()&& !GameServerStateValue->IsNull())
-    {
-        int32 TmpValue;
-        if(GameServerStateValue->TryGetNumber(TmpValue)) {GameServerState = TmpValue; }
-    }
-    
     GameServerStateEnum = readGameInstanceStateFromValue(obj->TryGetField(TEXT("GameServerStateEnum")));
     
     const TSharedPtr<FJsonValue> LastHeartbeatValue = obj->TryGetField(TEXT("LastHeartbeat"));
@@ -3444,6 +3481,13 @@ bool PlayFab::ClientModels::FGameInfo::readFromValue(const TSharedPtr<FJsonObjec
     {
         FString TmpValue;
         if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerIPV6AddressValue = obj->TryGetField(TEXT("ServerIPV6Address"));
+    if (ServerIPV6AddressValue.IsValid()&& !ServerIPV6AddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerIPV6AddressValue->TryGetString(TmpValue)) {ServerIPV6Address = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));
@@ -13166,6 +13210,8 @@ void PlayFab::ClientModels::FMatchmakeResult::writeJSON(JsonWriter& writer) cons
     
     if(ServerHostname.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerHostname")); writer->WriteValue(ServerHostname); }
     
+    if(ServerIPV6Address.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerIPV6Address")); writer->WriteValue(ServerIPV6Address); }
+    
     if(ServerPort.notNull()) { writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort); }
     
     if(Status.notNull()) { writer->WriteIdentifierPrefix(TEXT("Status")); writeMatchmakeStatusEnumJSON(Status, writer); }
@@ -13206,6 +13252,13 @@ bool PlayFab::ClientModels::FMatchmakeResult::readFromValue(const TSharedPtr<FJs
     {
         FString TmpValue;
         if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerIPV6AddressValue = obj->TryGetField(TEXT("ServerIPV6Address"));
+    if (ServerIPV6AddressValue.IsValid()&& !ServerIPV6AddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerIPV6AddressValue->TryGetString(TmpValue)) {ServerIPV6Address = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));
@@ -14841,6 +14894,8 @@ void PlayFab::ClientModels::FStartGameResult::writeJSON(JsonWriter& writer) cons
     
     if(ServerHostname.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerHostname")); writer->WriteValue(ServerHostname); }
     
+    if(ServerIPV6Address.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerIPV6Address")); writer->WriteValue(ServerIPV6Address); }
+    
     if(ServerPort.notNull()) { writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort); }
     
     if(Ticket.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Ticket")); writer->WriteValue(Ticket); }
@@ -14879,6 +14934,13 @@ bool PlayFab::ClientModels::FStartGameResult::readFromValue(const TSharedPtr<FJs
     {
         FString TmpValue;
         if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerIPV6AddressValue = obj->TryGetField(TEXT("ServerIPV6Address"));
+    if (ServerIPV6AddressValue.IsValid()&& !ServerIPV6AddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerIPV6AddressValue->TryGetString(TmpValue)) {ServerIPV6Address = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));

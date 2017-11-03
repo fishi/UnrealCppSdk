@@ -1315,6 +1315,18 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    enum EmailVerificationStatus
+    {
+        EmailVerificationStatusUnverified,
+        EmailVerificationStatusPending,
+        EmailVerificationStatusConfirmed
+    };
+
+    PLAYFAB_API void writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, JsonWriter& writer);
+    PLAYFAB_API EmailVerificationStatus readEmailVerificationStatusFromValue(const TSharedPtr<FJsonValue>& value);
+    PLAYFAB_API EmailVerificationStatus readEmailVerificationStatusFromValue(const FString& value);
+
+    
     struct PLAYFAB_API FContactEmailInfoModel : public FPlayFabBaseModel
     {
         
@@ -1322,17 +1334,21 @@ namespace ClientModels
         FString EmailAddress;
         // [optional] The name of the email info data
         FString Name;
+        // [optional] The verification status of the email
+        Boxed<EmailVerificationStatus> VerificationStatus;
 
         FContactEmailInfoModel() :
             FPlayFabBaseModel(),
             EmailAddress(),
-            Name()
+            Name(),
+            VerificationStatus()
             {}
 
         FContactEmailInfoModel(const FContactEmailInfoModel& src) :
             FPlayFabBaseModel(),
             EmailAddress(src.EmailAddress),
-            Name(src.Name)
+            Name(src.Name),
+            VerificationStatus(src.VerificationStatus)
             {}
 
         FContactEmailInfoModel(const TSharedPtr<FJsonObject>& obj) : FContactEmailInfoModel()
@@ -1925,8 +1941,6 @@ namespace ClientModels
         // [optional] game session custom data
         FString GameServerData;
         // [optional] game specific string denoting server configuration
-        Boxed<int32> GameServerState;
-        // [optional] game specific string denoting server configuration
         Boxed<GameInstanceState> GameServerStateEnum;
         // [optional] last heartbeat of the game server instance, used in external game server provider mode
         Boxed<FDateTime> LastHeartbeat;
@@ -1940,8 +1954,10 @@ namespace ClientModels
         Boxed<Region> pfRegion;
         // duration in seconds this server has been running
         uint32 RunTime;
-        // [optional] IP address of the server
+        // [optional] IPV4 address of the server
         FString ServerHostname;
+        // [optional] IPV6 address of the server
+        FString ServerIPV6Address;
         // [optional] port number to use for non-http communications with the server
         Boxed<int32> ServerPort;
         // [optional] stastic used to match this game in player statistic matchmaking
@@ -1954,7 +1970,6 @@ namespace ClientModels
             BuildVersion(),
             GameMode(),
             GameServerData(),
-            GameServerState(),
             GameServerStateEnum(),
             LastHeartbeat(),
             LobbyID(),
@@ -1963,6 +1978,7 @@ namespace ClientModels
             pfRegion(),
             RunTime(0),
             ServerHostname(),
+            ServerIPV6Address(),
             ServerPort(),
             StatisticName(),
             Tags()
@@ -1973,7 +1989,6 @@ namespace ClientModels
             BuildVersion(src.BuildVersion),
             GameMode(src.GameMode),
             GameServerData(src.GameServerData),
-            GameServerState(src.GameServerState),
             GameServerStateEnum(src.GameServerStateEnum),
             LastHeartbeat(src.LastHeartbeat),
             LobbyID(src.LobbyID),
@@ -1982,6 +1997,7 @@ namespace ClientModels
             pfRegion(src.pfRegion),
             RunTime(src.RunTime),
             ServerHostname(src.ServerHostname),
+            ServerIPV6Address(src.ServerIPV6Address),
             ServerPort(src.ServerPort),
             StatisticName(src.StatisticName),
             Tags(src.Tags)
@@ -3993,7 +4009,7 @@ namespace ClientModels
         FString HttpMethod;
         // Key of the content item to fetch, usually formatted as a path, e.g. images/a.png
         FString Key;
-        // [optional] True if download through CDN. CDN provides better download bandwidth and time. However, if you want latest, non-cached version of the content, set this to false. Default is true.
+        // [optional] True to download through CDN. CDN provides higher download bandwidth and lower latency. However, if you want the latest, non-cached version of the content during development, set this to false. Default is true.
         Boxed<bool> ThruCDN;
 
         FGetContentDownloadUrlRequest() :
@@ -4024,7 +4040,7 @@ namespace ClientModels
     struct PLAYFAB_API FGetContentDownloadUrlResult : public FPlayFabBaseModel
     {
         
-        // [optional] URL for downloading content via HTTP GET or HEAD method. The URL will expire in 1 hour.
+        // [optional] URL for downloading content via HTTP GET or HEAD method. The URL will expire in approximately one hour.
         FString URL;
 
         FGetContentDownloadUrlResult() :
@@ -8258,8 +8274,10 @@ namespace ClientModels
         FString LobbyID;
         // [optional] time in milliseconds the application is configured to wait on matchmaking results
         Boxed<int32> PollWaitTimeMS;
-        // [optional] IP address of the server
+        // [optional] IPV4 address of the server
         FString ServerHostname;
+        // [optional] IPV6 address of the server
+        FString ServerIPV6Address;
         // [optional] port number to use for non-http communications with the server
         Boxed<int32> ServerPort;
         // [optional] result of match making process
@@ -8273,6 +8291,7 @@ namespace ClientModels
             LobbyID(),
             PollWaitTimeMS(),
             ServerHostname(),
+            ServerIPV6Address(),
             ServerPort(),
             Status(),
             Ticket()
@@ -8284,6 +8303,7 @@ namespace ClientModels
             LobbyID(src.LobbyID),
             PollWaitTimeMS(src.PollWaitTimeMS),
             ServerHostname(src.ServerHostname),
+            ServerIPV6Address(src.ServerIPV6Address),
             ServerPort(src.ServerPort),
             Status(src.Status),
             Ticket(src.Ticket)
@@ -8513,15 +8533,15 @@ namespace ClientModels
         FString ProviderToken;
         // [optional] URL to the purchase provider page that details the purchase.
         FString PurchaseConfirmationPageURL;
-        // [optional] Real world currency for the transaction.
+        // [optional] Currency for the transaction, may be a virtual currency or real money.
         FString PurchaseCurrency;
-        // Real world cost of the transaction.
+        // Cost of the transaction.
         uint32 PurchasePrice;
         // [optional] Status of the transaction.
         Boxed<TransactionStatus> Status;
-        // [optional] Virtual currency cost of the transaction.
+        // [optional] Virtual currencies granted by the transaction, if any.
         TMap<FString, int32> VCAmount;
-        // [optional] Current virtual currency totals for the user.
+        // [optional] Current virtual currency balances for the user.
         TMap<FString, int32> VirtualCurrency;
 
         FPayForPurchaseResult() :
@@ -9425,8 +9445,10 @@ namespace ClientModels
         FString LobbyID;
         // [optional] password required to log into the server
         FString Password;
-        // [optional] server IP address
+        // [optional] server IPV4 address
         FString ServerHostname;
+        // [optional] server IPV6 address
+        FString ServerIPV6Address;
         // [optional] port on the server to be used for communication
         Boxed<int32> ServerPort;
         // [optional] unique identifier for the server
@@ -9438,6 +9460,7 @@ namespace ClientModels
             LobbyID(),
             Password(),
             ServerHostname(),
+            ServerIPV6Address(),
             ServerPort(),
             Ticket()
             {}
@@ -9448,6 +9471,7 @@ namespace ClientModels
             LobbyID(src.LobbyID),
             Password(src.Password),
             ServerHostname(src.ServerHostname),
+            ServerIPV6Address(src.ServerIPV6Address),
             ServerPort(src.ServerPort),
             Ticket(src.Ticket)
             {}

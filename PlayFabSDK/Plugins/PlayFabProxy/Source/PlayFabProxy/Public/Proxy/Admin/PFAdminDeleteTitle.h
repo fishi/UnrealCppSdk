@@ -6,10 +6,10 @@
 #include "Core/PlayFabAdminAPI.h"
 #include "Core/PlayFabAdminDataModels.h"
 #include "Proxy/PlayFabAdminBPDataModels.h"
-#include "PFAdminResetUsers.generated.h"
+#include "PFAdminDeleteTitle.generated.h"
 
 UCLASS(MinimalAPI)
-class UPFAdminResetUsers : public UPlayFabProxyBase
+class UPFAdminDeleteTitle : public UPlayFabProxyBase
 {
     GENERATED_UCLASS_BODY()
 public:
@@ -17,17 +17,17 @@ public:
     UPROPERTY(BlueprintAssignable)
         FEmptyPlayFabDelegate OnSuccess; 
 
-    // Resets all title-specific information about a particular account, including user data, virtual currency balances, inventory, purchase history, and statistics
+    // Permanently deletes a title and all associated configuration
     UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "PlayFab|Admin|Account Management")
-        static UPFAdminResetUsers* ResetUsers(class APlayerController* PlayerController, const FBPAdminResetUsersRequest& InResetUsersRequest);
+        static UPFAdminDeleteTitle* DeleteTitle(class APlayerController* PlayerController);
 
     // UOnlineBlueprintCallProxyBase interface
     virtual void Activate() override;
     // End of UOnlineBlueprintCallProxyBase interface
 
 private:
-    FBPAdminResetUsersRequest Request;
-    PlayFab::UPlayFabAdminAPI::FResetUsersDelegate SuccessDelegate;
+    
+    PlayFab::UPlayFabAdminAPI::FDeleteTitleDelegate SuccessDelegate;
 
-    void OnSuccessCallback(const PlayFab::AdminModels::FBlankResult& Result);
+    void OnSuccessCallback(const PlayFab::AdminModels::FDeleteTitleResult& Result);
 };
