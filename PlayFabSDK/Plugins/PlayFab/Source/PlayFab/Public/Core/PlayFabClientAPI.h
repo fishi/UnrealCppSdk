@@ -16,6 +16,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAcceptTradeDelegate, const ClientModels::FAcceptTradeResponse&);
         DECLARE_DELEGATE_OneParam(FAddFriendDelegate, const ClientModels::FAddFriendResult&);
         DECLARE_DELEGATE_OneParam(FAddGenericIDDelegate, const ClientModels::FAddGenericIDResult&);
+        DECLARE_DELEGATE_OneParam(FAddOrUpdateContactEmailDelegate, const ClientModels::FAddOrUpdateContactEmailResult&);
         DECLARE_DELEGATE_OneParam(FAddSharedGroupMembersDelegate, const ClientModels::FAddSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FAddUsernamePasswordDelegate, const ClientModels::FAddUsernamePasswordResult&);
         DECLARE_DELEGATE_OneParam(FAddUserVirtualCurrencyDelegate, const ClientModels::FModifyUserVirtualCurrencyResult&);
@@ -105,6 +106,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRegisterForIOSPushNotificationDelegate, const ClientModels::FRegisterForIOSPushNotificationResult&);
         DECLARE_DELEGATE_OneParam(FRegisterPlayFabUserDelegate, const ClientModels::FRegisterPlayFabUserResult&);
         DECLARE_DELEGATE_OneParam(FRegisterWithWindowsHelloDelegate, const ClientModels::FLoginResult&);
+        DECLARE_DELEGATE_OneParam(FRemoveContactEmailDelegate, const ClientModels::FRemoveContactEmailResult&);
         DECLARE_DELEGATE_OneParam(FRemoveFriendDelegate, const ClientModels::FRemoveFriendResult&);
         DECLARE_DELEGATE_OneParam(FRemoveGenericIDDelegate, const ClientModels::FRemoveGenericIDResult&);
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ClientModels::FRemoveSharedGroupMembersResult&);
@@ -168,6 +170,11 @@ namespace PlayFab
          * Adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab ID lookup of any arbitrary service identifier a title wants to add. This identifier should never be used as authentication credentials, as the intent is that it is easily accessible by other players.
          */
         bool AddGenericID(ClientModels::FAddGenericIDRequest& request, const FAddGenericIDDelegate& SuccessDelegate = FAddGenericIDDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Adds or updates a contact email to the player's profile
+         * This API updates an existing contact email in the player's profile based on an email name associated with the email. In the case that an email name is not found associated with an email, it instead adds a new email to the list of contact emails in the player's profile.
+         */
+        bool AddOrUpdateContactEmail(ClientModels::FAddOrUpdateContactEmailRequest& request, const FAddOrUpdateContactEmailDelegate& SuccessDelegate = FAddOrUpdateContactEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Adds users to the set of those able to update both the shared data, as well as the set of users  in the group. Only users in the group can add new members. Shared Groups are designed for sharing data between a very  small number of players, please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
          */
@@ -568,6 +575,11 @@ namespace PlayFab
          */
         bool RegisterWithWindowsHello(ClientModels::FRegisterWithWindowsHelloRequest& request, const FRegisterWithWindowsHelloDelegate& SuccessDelegate = FRegisterWithWindowsHelloDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Removes a contact email from the player's profile
+         * This API removes an existing contact email in the player's profile based on an email name associated with the email.
+         */
+        bool RemoveContactEmail(const FRemoveContactEmailDelegate& SuccessDelegate = FRemoveContactEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Removes a specified user from the friend list of the local user
          */
         bool RemoveFriend(ClientModels::FRemoveFriendRequest& request, const FRemoveFriendDelegate& SuccessDelegate = FRemoveFriendDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -747,6 +759,7 @@ namespace PlayFab
         void OnAcceptTradeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAcceptTradeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddGenericIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddGenericIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnAddOrUpdateContactEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddOrUpdateContactEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddUsernamePasswordResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUsernamePasswordDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -836,6 +849,7 @@ namespace PlayFab
         void OnRegisterForIOSPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterForIOSPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterPlayFabUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterWithWindowsHelloResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterWithWindowsHelloDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRemoveContactEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveContactEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveGenericIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveGenericIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

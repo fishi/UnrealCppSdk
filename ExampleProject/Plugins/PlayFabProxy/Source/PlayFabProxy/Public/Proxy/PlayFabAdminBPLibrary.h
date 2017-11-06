@@ -754,6 +754,20 @@ public:
 	, TArray<FBPAdminGameModeInfo>& OutGameModes
 );
 
+    // GetPlayerIdFromAuthTokenRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+    static FBPAdminGetPlayerIdFromAuthTokenRequest MakeBPAdminGetPlayerIdFromAuthTokenRequest(
+    FString InToken
+	, EBPAdminAuthTokenType InTokenType
+);
+
+    // GetPlayerIdFromAuthTokenResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+    static void BreakBPAdminGetPlayerIdFromAuthTokenResult(
+    const FBPAdminGetPlayerIdFromAuthTokenResult& In
+	, FString& OutPlayFabId
+);
+
     // GetPlayerProfileRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
     static FBPAdminGetPlayerProfileRequest MakeBPAdminGetPlayerProfileRequest(
@@ -1707,6 +1721,19 @@ public:
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
     static void BreakBPAdminResetCharacterStatisticsResult(
     const FBPAdminResetCharacterStatisticsResult& In
+);
+
+    // ResetPasswordRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+    static FBPAdminResetPasswordRequest MakeBPAdminResetPasswordRequest(
+    FString InPassword
+	, FString InToken
+);
+
+    // ResetPasswordResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+    static void BreakBPAdminResetPasswordResult(
+    const FBPAdminResetPasswordResult& In
 );
 
     // ResetUserStatisticsRequest

@@ -1369,6 +1369,29 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesResult(
 	
 }
 
+// GetPlayerIdFromAuthTokenRequest
+FBPAdminGetPlayerIdFromAuthTokenRequest UPFAdminProxyLibrary::MakeBPAdminGetPlayerIdFromAuthTokenRequest(
+    FString InToken
+	, EBPAdminAuthTokenType InTokenType
+    )
+{
+    FBPAdminGetPlayerIdFromAuthTokenRequest Out = FBPAdminGetPlayerIdFromAuthTokenRequest();
+    Out.Data.Token = InToken;
+	Out.Data.TokenType = static_cast<PlayFab::AdminModels::AuthTokenType>(static_cast<uint8>(InTokenType));
+	
+    return Out;
+}
+
+// GetPlayerIdFromAuthTokenResult
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerIdFromAuthTokenResult(
+    const FBPAdminGetPlayerIdFromAuthTokenResult& In
+	, FString& OutPlayFabId
+ )
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
 // GetPlayerProfileRequest
 FBPAdminGetPlayerProfileRequest UPFAdminProxyLibrary::MakeBPAdminGetPlayerProfileRequest(
     FString InPlayFabId
@@ -3239,6 +3262,27 @@ FBPAdminResetCharacterStatisticsRequest UPFAdminProxyLibrary::MakeBPAdminResetCh
 // ResetCharacterStatisticsResult
 void UPFAdminProxyLibrary::BreakBPAdminResetCharacterStatisticsResult(
     const FBPAdminResetCharacterStatisticsResult& In
+ )
+{
+    
+}
+
+// ResetPasswordRequest
+FBPAdminResetPasswordRequest UPFAdminProxyLibrary::MakeBPAdminResetPasswordRequest(
+    FString InPassword
+	, FString InToken
+    )
+{
+    FBPAdminResetPasswordRequest Out = FBPAdminResetPasswordRequest();
+    Out.Data.Password = InPassword;
+	Out.Data.Token = InToken;
+	
+    return Out;
+}
+
+// ResetPasswordResult
+void UPFAdminProxyLibrary::BreakBPAdminResetPasswordResult(
+    const FBPAdminResetPasswordResult& In
  )
 {
     

@@ -77,6 +77,26 @@ public:
     PlayFab::ClientModels::FAddGenericIDResult Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientAddOrUpdateContactEmailRequest"))
+struct FBPClientAddOrUpdateContactEmailRequest
+{
+    GENERATED_BODY()
+public:
+    FBPClientAddOrUpdateContactEmailRequest() {};
+    FBPClientAddOrUpdateContactEmailRequest(PlayFab::ClientModels::FAddOrUpdateContactEmailRequest InData) : Data(InData) {};
+    PlayFab::ClientModels::FAddOrUpdateContactEmailRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientAddOrUpdateContactEmailResult"))
+struct FBPClientAddOrUpdateContactEmailResult
+{
+    GENERATED_BODY()
+public:
+    FBPClientAddOrUpdateContactEmailResult() {};
+    FBPClientAddOrUpdateContactEmailResult(PlayFab::ClientModels::FAddOrUpdateContactEmailResult InData) : Data(InData) {};
+    PlayFab::ClientModels::FAddOrUpdateContactEmailResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientAddSharedGroupMembersRequest"))
 struct FBPClientAddSharedGroupMembersRequest
 {
@@ -2521,6 +2541,26 @@ public:
     PlayFab::ClientModels::FRegisterWithWindowsHelloRequest Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientRemoveContactEmailRequest"))
+struct FBPClientRemoveContactEmailRequest
+{
+    GENERATED_BODY()
+public:
+    FBPClientRemoveContactEmailRequest() {};
+    FBPClientRemoveContactEmailRequest(PlayFab::ClientModels::FRemoveContactEmailRequest InData) : Data(InData) {};
+    PlayFab::ClientModels::FRemoveContactEmailRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientRemoveContactEmailResult"))
+struct FBPClientRemoveContactEmailResult
+{
+    GENERATED_BODY()
+public:
+    FBPClientRemoveContactEmailResult() {};
+    FBPClientRemoveContactEmailResult(PlayFab::ClientModels::FRemoveContactEmailResult InData) : Data(InData) {};
+    PlayFab::ClientModels::FRemoveContactEmailResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientRemoveFriendRequest"))
 struct FBPClientRemoveFriendRequest
 {
@@ -3644,6 +3684,7 @@ public:
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAcceptTradeResponseDelegate, const FBPClientAcceptTradeResponse&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAddFriendResultDelegate, const FBPClientAddFriendResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAddGenericIDResultDelegate, const FBPClientAddGenericIDResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAddOrUpdateContactEmailResultDelegate, const FBPClientAddOrUpdateContactEmailResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAddSharedGroupMembersResultDelegate, const FBPClientAddSharedGroupMembersResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAddUsernamePasswordResultDelegate, const FBPClientAddUsernamePasswordResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAndroidDevicePushNotificationRegistrationResultDelegate, const FBPClientAndroidDevicePushNotificationRegistrationResult&, Result);
@@ -3720,6 +3761,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientPurchaseItemResultDelegate,
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRedeemCouponResultDelegate, const FBPClientRedeemCouponResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRegisterForIOSPushNotificationResultDelegate, const FBPClientRegisterForIOSPushNotificationResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRegisterPlayFabUserResultDelegate, const FBPClientRegisterPlayFabUserResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRemoveContactEmailResultDelegate, const FBPClientRemoveContactEmailResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRemoveFriendResultDelegate, const FBPClientRemoveFriendResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRemoveGenericIDResultDelegate, const FBPClientRemoveGenericIDResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRemoveSharedGroupMembersResultDelegate, const FBPClientRemoveSharedGroupMembersResult&, Result);

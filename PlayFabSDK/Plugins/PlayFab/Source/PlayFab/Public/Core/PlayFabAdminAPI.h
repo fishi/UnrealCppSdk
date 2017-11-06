@@ -41,6 +41,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetDataReportDelegate, const AdminModels::FGetDataReportResult&);
         DECLARE_DELEGATE_OneParam(FGetMatchmakerGameInfoDelegate, const AdminModels::FGetMatchmakerGameInfoResult&);
         DECLARE_DELEGATE_OneParam(FGetMatchmakerGameModesDelegate, const AdminModels::FGetMatchmakerGameModesResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerIdFromAuthTokenDelegate, const AdminModels::FGetPlayerIdFromAuthTokenResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const AdminModels::FGetPlayerSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerSharedSecretsDelegate, const AdminModels::FGetPlayerSharedSecretsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayersInSegmentDelegate, const AdminModels::FGetPlayersInSegmentResult&);
@@ -77,6 +78,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRemoveServerBuildDelegate, const AdminModels::FRemoveServerBuildResult&);
         DECLARE_DELEGATE_OneParam(FRemoveVirtualCurrencyTypesDelegate, const AdminModels::FBlankResult&);
         DECLARE_DELEGATE_OneParam(FResetCharacterStatisticsDelegate, const AdminModels::FResetCharacterStatisticsResult&);
+        DECLARE_DELEGATE_OneParam(FResetPasswordDelegate, const AdminModels::FResetPasswordResult&);
         DECLARE_DELEGATE_OneParam(FResetUserStatisticsDelegate, const AdminModels::FResetUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FResolvePurchaseDisputeDelegate, const AdminModels::FResolvePurchaseDisputeResponse&);
         DECLARE_DELEGATE_OneParam(FRevokeAllBansForUserDelegate, const AdminModels::FRevokeAllBansForUserResult&);
@@ -250,6 +252,11 @@ namespace PlayFab
          */
         bool GetMatchmakerGameModes(AdminModels::FGetMatchmakerGameModesRequest& request, const FGetMatchmakerGameModesDelegate& SuccessDelegate = FGetMatchmakerGameModesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Gets a player's ID from an auth token.
+         * Gets a player ID from an auth token. The token expires after 30 minutes and cannot be used to look up a player when expired.
+         */
+        bool GetPlayerIdFromAuthToken(AdminModels::FGetPlayerIdFromAuthTokenRequest& request, const FGetPlayerIdFromAuthTokenDelegate& SuccessDelegate = FGetPlayerIdFromAuthTokenDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * List all segments that a player currently belongs to at this moment in time.
          */
         bool GetPlayerSegments(AdminModels::FGetPlayersSegmentsRequest& request, const FGetPlayerSegmentsDelegate& SuccessDelegate = FGetPlayerSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -417,6 +424,11 @@ namespace PlayFab
          * Note that this action cannot be un-done. All statistics for this  character will be deleted, removing the user from all leaderboards for the game.
          */
         bool ResetCharacterStatistics(AdminModels::FResetCharacterStatisticsRequest& request, const FResetCharacterStatisticsDelegate& SuccessDelegate = FResetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Reset a player's password for a given title.
+         * Resets a player's password taking in a new password based and validating the user based off of a token sent to the playerto their email. The token expires after 30 minutes.
+         */
+        bool ResetPassword(AdminModels::FResetPasswordRequest& request, const FResetPasswordDelegate& SuccessDelegate = FResetPasswordDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Completely removes all statistics for the specified user, for the current game
          * Note that this action cannot be un-done. All statistics for this user will be deleted, removing the user from all leaderboards for the game.
@@ -604,6 +616,7 @@ namespace PlayFab
         void OnGetDataReportResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetDataReportDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetMatchmakerGameInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetMatchmakerGameInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetMatchmakerGameModesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetMatchmakerGameModesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerIdFromAuthTokenResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerIdFromAuthTokenDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerSharedSecretsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSharedSecretsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayersInSegmentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayersInSegmentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -640,6 +653,7 @@ namespace PlayFab
         void OnRemoveServerBuildResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveServerBuildDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetCharacterStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetCharacterStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnResetPasswordResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetPasswordDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResolvePurchaseDisputeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResolvePurchaseDisputeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRevokeAllBansForUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeAllBansForUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

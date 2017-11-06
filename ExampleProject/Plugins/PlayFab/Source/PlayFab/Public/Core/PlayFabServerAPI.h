@@ -90,6 +90,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRevokeAllBansForUserDelegate, const ServerModels::FRevokeAllBansForUserResult&);
         DECLARE_DELEGATE_OneParam(FRevokeBansDelegate, const ServerModels::FRevokeBansResult&);
         DECLARE_DELEGATE_OneParam(FRevokeInventoryItemDelegate, const ServerModels::FRevokeInventoryResult&);
+        DECLARE_DELEGATE_OneParam(FSendCustomAccountRecoveryEmailDelegate, const ServerModels::FSendCustomAccountRecoveryEmailResult&);
         DECLARE_DELEGATE_OneParam(FSendPushNotificationDelegate, const ServerModels::FSendPushNotificationResult&);
         DECLARE_DELEGATE_OneParam(FSetFriendTagsDelegate, const ServerModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceDataDelegate, const ServerModels::FSetGameServerInstanceDataResult&);
@@ -483,6 +484,11 @@ namespace PlayFab
          */
         bool RevokeInventoryItem(ServerModels::FRevokeInventoryItemRequest& request, const FRevokeInventoryItemDelegate& SuccessDelegate = FRevokeInventoryItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Forces an email to be sent to the registered contact email address for the user's account based on an account recovery email template
+         * PlayFab accounts which have valid email address or username will be able to receive a password reset email using this API.The email sent must be an account recovery email template. The username or email can be passed in to send the email
+         */
+        bool SendCustomAccountRecoveryEmail(ServerModels::FSendCustomAccountRecoveryEmailRequest& request, const FSendCustomAccountRecoveryEmailDelegate& SuccessDelegate = FSendCustomAccountRecoveryEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Sends an iOS/Android Push Notification to a specific user, if that user's device has been configured for Push Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
          */
         bool SendPushNotification(ServerModels::FSendPushNotificationRequest& request, const FSendPushNotificationDelegate& SuccessDelegate = FSendPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -710,6 +716,7 @@ namespace PlayFab
         void OnRevokeAllBansForUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeAllBansForUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRevokeBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRevokeInventoryItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeInventoryItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSendCustomAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendCustomAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetFriendTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetFriendTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetGameServerInstanceDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

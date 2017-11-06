@@ -73,6 +73,18 @@ public:
     const FBPClientAddGenericIDResult& In
 );
 
+    // AddOrUpdateContactEmailRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
+    static FBPClientAddOrUpdateContactEmailRequest MakeBPClientAddOrUpdateContactEmailRequest(
+    FString InEmailAddress
+);
+
+    // AddOrUpdateContactEmailResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+    static void BreakBPClientAddOrUpdateContactEmailResult(
+    const FBPClientAddOrUpdateContactEmailResult& In
+);
+
     // AddSharedGroupMembersRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
     static FBPClientAddSharedGroupMembersRequest MakeBPClientAddSharedGroupMembersRequest(
@@ -2008,6 +2020,17 @@ public:
 	, FString InPlayerSecret
 	, FString InPublicKey
 	, FString InUserName
+);
+
+    // RemoveContactEmailRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
+    static FBPClientRemoveContactEmailRequest MakeBPClientRemoveContactEmailRequest(
+    );
+
+    // RemoveContactEmailResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+    static void BreakBPClientRemoveContactEmailResult(
+    const FBPClientRemoveContactEmailResult& In
 );
 
     // RemoveFriendRequest

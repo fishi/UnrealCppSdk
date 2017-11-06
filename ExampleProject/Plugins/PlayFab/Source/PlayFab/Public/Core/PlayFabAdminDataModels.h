@@ -659,6 +659,16 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    enum AuthTokenType
+    {
+        AuthTokenTypeEmail
+    };
+
+    PLAYFAB_API void writeAuthTokenTypeEnumJSON(AuthTokenType enumVal, JsonWriter& writer);
+    PLAYFAB_API AuthTokenType readAuthTokenTypeFromValue(const TSharedPtr<FJsonValue>& value);
+    PLAYFAB_API AuthTokenType readAuthTokenTypeFromValue(const FString& value);
+
+    
     struct PLAYFAB_API FBanInfo : public FPlayFabBaseModel
     {
         
@@ -3223,6 +3233,64 @@ namespace AdminModels
         }
 
         ~FGetMatchmakerGameModesResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FGetPlayerIdFromAuthTokenRequest : public FPlayFabBaseModel
+    {
+        
+        // The auth token of the player requesting the password reset.
+        FString Token;
+        // The type of auth token of the player requesting the password reset.
+        AuthTokenType TokenType;
+
+        FGetPlayerIdFromAuthTokenRequest() :
+            FPlayFabBaseModel(),
+            Token(),
+            TokenType()
+            {}
+
+        FGetPlayerIdFromAuthTokenRequest(const FGetPlayerIdFromAuthTokenRequest& src) :
+            FPlayFabBaseModel(),
+            Token(src.Token),
+            TokenType(src.TokenType)
+            {}
+
+        FGetPlayerIdFromAuthTokenRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerIdFromAuthTokenRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FGetPlayerIdFromAuthTokenRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FGetPlayerIdFromAuthTokenResult : public FPlayFabBaseModel
+    {
+        
+        // [optional] The player ID from the token passed in
+        FString PlayFabId;
+
+        FGetPlayerIdFromAuthTokenResult() :
+            FPlayFabBaseModel(),
+            PlayFabId()
+            {}
+
+        FGetPlayerIdFromAuthTokenResult(const FGetPlayerIdFromAuthTokenResult& src) :
+            FPlayFabBaseModel(),
+            PlayFabId(src.PlayFabId)
+            {}
+
+        FGetPlayerIdFromAuthTokenResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerIdFromAuthTokenResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FGetPlayerIdFromAuthTokenResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7308,6 +7376,60 @@ namespace AdminModels
         }
 
         ~FResetCharacterStatisticsResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FResetPasswordRequest : public FPlayFabBaseModel
+    {
+        
+        // The new password for the player.
+        FString Password;
+        // The token of the player requesting the password reset.
+        FString Token;
+
+        FResetPasswordRequest() :
+            FPlayFabBaseModel(),
+            Password(),
+            Token()
+            {}
+
+        FResetPasswordRequest(const FResetPasswordRequest& src) :
+            FPlayFabBaseModel(),
+            Password(src.Password),
+            Token(src.Token)
+            {}
+
+        FResetPasswordRequest(const TSharedPtr<FJsonObject>& obj) : FResetPasswordRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FResetPasswordRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FResetPasswordResult : public FPlayFabBaseModel
+    {
+        
+
+        FResetPasswordResult() :
+            FPlayFabBaseModel()
+            {}
+
+        FResetPasswordResult(const FResetPasswordResult& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FResetPasswordResult(const TSharedPtr<FJsonObject>& obj) : FResetPasswordResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FResetPasswordResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

@@ -2277,6 +2277,26 @@ public:
     PlayFab::ServerModels::FScriptExecutionError Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerSendCustomAccountRecoveryEmailRequest"))
+struct FBPServerSendCustomAccountRecoveryEmailRequest
+{
+    GENERATED_BODY()
+public:
+    FBPServerSendCustomAccountRecoveryEmailRequest() {};
+    FBPServerSendCustomAccountRecoveryEmailRequest(PlayFab::ServerModels::FSendCustomAccountRecoveryEmailRequest InData) : Data(InData) {};
+    PlayFab::ServerModels::FSendCustomAccountRecoveryEmailRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSendCustomAccountRecoveryEmailResult"))
+struct FBPServerSendCustomAccountRecoveryEmailResult
+{
+    GENERATED_BODY()
+public:
+    FBPServerSendCustomAccountRecoveryEmailResult() {};
+    FBPServerSendCustomAccountRecoveryEmailResult(PlayFab::ServerModels::FSendCustomAccountRecoveryEmailResult InData) : Data(InData) {};
+    PlayFab::ServerModels::FSendCustomAccountRecoveryEmailResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerSendPushNotificationRequest"))
 struct FBPServerSendPushNotificationRequest
 {
@@ -3073,6 +3093,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerResultTableNodeDelegate, co
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeAllBansForUserResultDelegate, const FBPServerRevokeAllBansForUserResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeBansResultDelegate, const FBPServerRevokeBansResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeInventoryResultDelegate, const FBPServerRevokeInventoryResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSendCustomAccountRecoveryEmailResultDelegate, const FBPServerSendCustomAccountRecoveryEmailResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSendPushNotificationResultDelegate, const FBPServerSendPushNotificationResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceDataResultDelegate, const FBPServerSetGameServerInstanceDataResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceStateResultDelegate, const FBPServerSetGameServerInstanceStateResult&, Result);

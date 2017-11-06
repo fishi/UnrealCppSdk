@@ -147,6 +147,12 @@ public:
     PlayFab::AdminModels::FApiCondition Data;
 };
 
+UENUM(BlueprintType)
+enum class EBPAdminAuthTokenType : uint8
+{
+    AuthTokenType_Email UMETA(DisplayName = "Email")
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminBanInfo", HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminBanInfo"))
 struct FBPAdminBanInfo
 {
@@ -1193,6 +1199,26 @@ public:
     PlayFab::AdminModels::FGetMatchmakerGameModesResult Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminGetPlayerIdFromAuthTokenRequest"))
+struct FBPAdminGetPlayerIdFromAuthTokenRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminGetPlayerIdFromAuthTokenRequest() {};
+    FBPAdminGetPlayerIdFromAuthTokenRequest(PlayFab::AdminModels::FGetPlayerIdFromAuthTokenRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FGetPlayerIdFromAuthTokenRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayerIdFromAuthTokenResult"))
+struct FBPAdminGetPlayerIdFromAuthTokenResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminGetPlayerIdFromAuthTokenResult() {};
+    FBPAdminGetPlayerIdFromAuthTokenResult(PlayFab::AdminModels::FGetPlayerIdFromAuthTokenResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FGetPlayerIdFromAuthTokenResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminGetPlayerProfileRequest"))
 struct FBPAdminGetPlayerProfileRequest
 {
@@ -2087,6 +2113,26 @@ public:
     FBPAdminResetCharacterStatisticsResult() {};
     FBPAdminResetCharacterStatisticsResult(PlayFab::AdminModels::FResetCharacterStatisticsResult InData) : Data(InData) {};
     PlayFab::AdminModels::FResetCharacterStatisticsResult Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminResetPasswordRequest"))
+struct FBPAdminResetPasswordRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminResetPasswordRequest() {};
+    FBPAdminResetPasswordRequest(PlayFab::AdminModels::FResetPasswordRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FResetPasswordRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminResetPasswordResult"))
+struct FBPAdminResetPasswordResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminResetPasswordResult() {};
+    FBPAdminResetPasswordResult(PlayFab::AdminModels::FResetPasswordResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FResetPasswordResult Data;
 };
 
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminResetUserStatisticsRequest"))
@@ -3020,6 +3066,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetContentUploadUrlResultDel
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetDataReportResultDelegate, const FBPAdminGetDataReportResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetMatchmakerGameInfoResultDelegate, const FBPAdminGetMatchmakerGameInfoResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetMatchmakerGameModesResultDelegate, const FBPAdminGetMatchmakerGameModesResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerIdFromAuthTokenResultDelegate, const FBPAdminGetPlayerIdFromAuthTokenResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerProfileResultDelegate, const FBPAdminGetPlayerProfileResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerSegmentsResultDelegate, const FBPAdminGetPlayerSegmentsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerSharedSecretsResultDelegate, const FBPAdminGetPlayerSharedSecretsResult&, Result);
@@ -3055,6 +3102,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRefundPurchaseResponseDelega
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRemovePlayerTagResultDelegate, const FBPAdminRemovePlayerTagResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRemoveServerBuildResultDelegate, const FBPAdminRemoveServerBuildResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResetCharacterStatisticsResultDelegate, const FBPAdminResetCharacterStatisticsResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResetPasswordResultDelegate, const FBPAdminResetPasswordResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResetUserStatisticsResultDelegate, const FBPAdminResetUserStatisticsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResolvePurchaseDisputeResponseDelegate, const FBPAdminResolvePurchaseDisputeResponse&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResultTableNodeDelegate, const FBPAdminResultTableNode&, Result);

@@ -2109,6 +2109,33 @@ void UPlayFabServerAPI::OnRevokeInventoryItemResult(FHttpRequestPtr HttpRequest,
     }
 }
 
+bool UPlayFabServerAPI::SendCustomAccountRecoveryEmail(
+    ServerModels::FSendCustomAccountRecoveryEmailRequest& request,
+    const FSendCustomAccountRecoveryEmailDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/SendCustomAccountRecoveryEmail")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnSendCustomAccountRecoveryEmailResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnSendCustomAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendCustomAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FSendCustomAccountRecoveryEmailResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabServerAPI::SendPushNotification(
     ServerModels::FSendPushNotificationRequest& request,
     const FSendPushNotificationDelegate& SuccessDelegate,

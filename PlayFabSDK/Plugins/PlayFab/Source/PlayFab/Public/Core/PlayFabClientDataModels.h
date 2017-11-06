@@ -345,6 +345,56 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    struct PLAYFAB_API FAddOrUpdateContactEmailRequest : public FPlayFabBaseModel
+    {
+        
+        // The new contact email to associate with the player.
+        FString EmailAddress;
+
+        FAddOrUpdateContactEmailRequest() :
+            FPlayFabBaseModel(),
+            EmailAddress()
+            {}
+
+        FAddOrUpdateContactEmailRequest(const FAddOrUpdateContactEmailRequest& src) :
+            FPlayFabBaseModel(),
+            EmailAddress(src.EmailAddress)
+            {}
+
+        FAddOrUpdateContactEmailRequest(const TSharedPtr<FJsonObject>& obj) : FAddOrUpdateContactEmailRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FAddOrUpdateContactEmailRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FAddOrUpdateContactEmailResult : public FPlayFabBaseModel
+    {
+        
+
+        FAddOrUpdateContactEmailResult() :
+            FPlayFabBaseModel()
+            {}
+
+        FAddOrUpdateContactEmailResult(const FAddOrUpdateContactEmailResult& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FAddOrUpdateContactEmailResult(const TSharedPtr<FJsonObject>& obj) : FAddOrUpdateContactEmailResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FAddOrUpdateContactEmailResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
     struct PLAYFAB_API FAddSharedGroupMembersRequest : public FPlayFabBaseModel
     {
         
@@ -8960,6 +9010,52 @@ namespace ClientModels
         }
 
         ~FRegisterWithWindowsHelloRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FRemoveContactEmailRequest : public FPlayFabBaseModel
+    {
+        
+
+        FRemoveContactEmailRequest() :
+            FPlayFabBaseModel()
+            {}
+
+        FRemoveContactEmailRequest(const FRemoveContactEmailRequest& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FRemoveContactEmailRequest(const TSharedPtr<FJsonObject>& obj) : FRemoveContactEmailRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FRemoveContactEmailRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FRemoveContactEmailResult : public FPlayFabBaseModel
+    {
+        
+
+        FRemoveContactEmailResult() :
+            FPlayFabBaseModel()
+            {}
+
+        FRemoveContactEmailResult(const FRemoveContactEmailResult& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FRemoveContactEmailResult(const TSharedPtr<FJsonObject>& obj) : FRemoveContactEmailResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FRemoveContactEmailResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

@@ -7771,6 +7771,64 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    struct PLAYFAB_API FSendCustomAccountRecoveryEmailRequest : public FPlayFabBaseModel
+    {
+        
+        // [optional] User email address attached to their account
+        FString Email;
+        // The email template id of the account recovery email template to send.
+        FString EmailTemplateId;
+        // [optional] The user's username requesting an account recovery.
+        FString Username;
+
+        FSendCustomAccountRecoveryEmailRequest() :
+            FPlayFabBaseModel(),
+            Email(),
+            EmailTemplateId(),
+            Username()
+            {}
+
+        FSendCustomAccountRecoveryEmailRequest(const FSendCustomAccountRecoveryEmailRequest& src) :
+            FPlayFabBaseModel(),
+            Email(src.Email),
+            EmailTemplateId(src.EmailTemplateId),
+            Username(src.Username)
+            {}
+
+        FSendCustomAccountRecoveryEmailRequest(const TSharedPtr<FJsonObject>& obj) : FSendCustomAccountRecoveryEmailRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FSendCustomAccountRecoveryEmailRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FSendCustomAccountRecoveryEmailResult : public FPlayFabBaseModel
+    {
+        
+
+        FSendCustomAccountRecoveryEmailResult() :
+            FPlayFabBaseModel()
+            {}
+
+        FSendCustomAccountRecoveryEmailResult(const FSendCustomAccountRecoveryEmailResult& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FSendCustomAccountRecoveryEmailResult(const TSharedPtr<FJsonObject>& obj) : FSendCustomAccountRecoveryEmailResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FSendCustomAccountRecoveryEmailResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
     struct PLAYFAB_API FSendPushNotificationRequest : public FPlayFabBaseModel
     {
         

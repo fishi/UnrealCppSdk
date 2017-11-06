@@ -519,6 +519,59 @@ bool PlayFab::ClientModels::FAddGenericIDResult::readFromValue(const TSharedPtr<
 }
 
 
+PlayFab::ClientModels::FAddOrUpdateContactEmailRequest::~FAddOrUpdateContactEmailRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FAddOrUpdateContactEmailRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("EmailAddress")); writer->WriteValue(EmailAddress);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FAddOrUpdateContactEmailRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> EmailAddressValue = obj->TryGetField(TEXT("EmailAddress"));
+    if (EmailAddressValue.IsValid()&& !EmailAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailAddressValue->TryGetString(TmpValue)) {EmailAddress = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FAddOrUpdateContactEmailResult::~FAddOrUpdateContactEmailResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FAddOrUpdateContactEmailResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FAddOrUpdateContactEmailResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FAddSharedGroupMembersRequest::~FAddSharedGroupMembersRequest()
 {
     
@@ -14317,6 +14370,50 @@ bool PlayFab::ClientModels::FRegisterWithWindowsHelloRequest::readFromValue(cons
         FString TmpValue;
         if(UserNameValue->TryGetString(TmpValue)) {UserName = TmpValue; }
     }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FRemoveContactEmailRequest::~FRemoveContactEmailRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FRemoveContactEmailRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FRemoveContactEmailRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FRemoveContactEmailResult::~FRemoveContactEmailResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FRemoveContactEmailResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FRemoveContactEmailResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
     
     
     return HasSucceeded;

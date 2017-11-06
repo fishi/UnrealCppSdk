@@ -1873,6 +1873,20 @@ public:
 	, FString& OutStackTrace
 );
 
+    // SendCustomAccountRecoveryEmailRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
+    static FBPServerSendCustomAccountRecoveryEmailRequest MakeBPServerSendCustomAccountRecoveryEmailRequest(
+    FString InEmail
+	, FString InEmailTemplateId
+	, FString InUsername
+);
+
+    // SendCustomAccountRecoveryEmailResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+    static void BreakBPServerSendCustomAccountRecoveryEmailResult(
+    const FBPServerSendCustomAccountRecoveryEmailResult& In
+);
+
     // SendPushNotificationRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
     static FBPServerSendPushNotificationRequest MakeBPServerSendPushNotificationRequest(

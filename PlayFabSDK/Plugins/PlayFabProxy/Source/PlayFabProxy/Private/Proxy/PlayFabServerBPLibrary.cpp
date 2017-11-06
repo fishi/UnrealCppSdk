@@ -3561,6 +3561,29 @@ void UPFServerProxyLibrary::BreakBPServerScriptExecutionError(
 	
 }
 
+// SendCustomAccountRecoveryEmailRequest
+FBPServerSendCustomAccountRecoveryEmailRequest UPFServerProxyLibrary::MakeBPServerSendCustomAccountRecoveryEmailRequest(
+    FString InEmail
+	, FString InEmailTemplateId
+	, FString InUsername
+    )
+{
+    FBPServerSendCustomAccountRecoveryEmailRequest Out = FBPServerSendCustomAccountRecoveryEmailRequest();
+    Out.Data.Email = InEmail;
+	Out.Data.EmailTemplateId = InEmailTemplateId;
+	Out.Data.Username = InUsername;
+	
+    return Out;
+}
+
+// SendCustomAccountRecoveryEmailResult
+void UPFServerProxyLibrary::BreakBPServerSendCustomAccountRecoveryEmailResult(
+    const FBPServerSendCustomAccountRecoveryEmailResult& In
+ )
+{
+    
+}
+
 // SendPushNotificationRequest
 FBPServerSendPushNotificationRequest UPFServerProxyLibrary::MakeBPServerSendPushNotificationRequest(
     TArray<FBPServerAdvancedPushPlatformMsg> InAdvancedPlatformDelivery

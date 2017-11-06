@@ -1059,6 +1059,42 @@ bool PlayFab::AdminModels::FApiCondition::readFromValue(const TSharedPtr<FJsonOb
 }
 
 
+void PlayFab::AdminModels::writeAuthTokenTypeEnumJSON(AuthTokenType enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case AuthTokenTypeEmail: writer->WriteValue(TEXT("Email")); break;
+    }
+}
+
+AdminModels::AuthTokenType PlayFab::AdminModels::readAuthTokenTypeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    return readAuthTokenTypeFromValue(value.IsValid() ? value->AsString() : "");
+}
+
+AdminModels::AuthTokenType PlayFab::AdminModels::readAuthTokenTypeFromValue(const FString& value)
+{
+    static TMap<FString, AuthTokenType> _AuthTokenTypeMap;
+    if (_AuthTokenTypeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _AuthTokenTypeMap.Add(TEXT("Email"), AuthTokenTypeEmail);
+
+    } 
+
+    if(!value.IsEmpty())
+    {
+        auto output = _AuthTokenTypeMap.Find(value);
+        if (output != nullptr)
+            return *output;
+    }
+
+
+    return AuthTokenTypeEmail; // Basically critical fail
+}
+
+
 PlayFab::AdminModels::FBanInfo::~FBanInfo()
 {
     
@@ -5115,6 +5151,72 @@ bool PlayFab::AdminModels::FGetMatchmakerGameModesResult::readFromValue(const TS
         }
     }
 
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerIdFromAuthTokenRequest::~FGetPlayerIdFromAuthTokenRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerIdFromAuthTokenRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Token")); writer->WriteValue(Token);
+    
+    writer->WriteIdentifierPrefix(TEXT("TokenType")); writeAuthTokenTypeEnumJSON(TokenType, writer);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerIdFromAuthTokenRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> TokenValue = obj->TryGetField(TEXT("Token"));
+    if (TokenValue.IsValid()&& !TokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(TokenValue->TryGetString(TmpValue)) {Token = TmpValue; }
+    }
+    
+    TokenType = readAuthTokenTypeFromValue(obj->TryGetField(TEXT("TokenType")));
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerIdFromAuthTokenResult::~FGetPlayerIdFromAuthTokenResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerIdFromAuthTokenResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerIdFromAuthTokenResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -11764,6 +11866,68 @@ void PlayFab::AdminModels::FResetCharacterStatisticsResult::writeJSON(JsonWriter
 }
 
 bool PlayFab::AdminModels::FResetCharacterStatisticsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FResetPasswordRequest::~FResetPasswordRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FResetPasswordRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Password")); writer->WriteValue(Password);
+    
+    writer->WriteIdentifierPrefix(TEXT("Token")); writer->WriteValue(Token);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FResetPasswordRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> PasswordValue = obj->TryGetField(TEXT("Password"));
+    if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
+    {
+        FString TmpValue;
+        if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TokenValue = obj->TryGetField(TEXT("Token"));
+    if (TokenValue.IsValid()&& !TokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(TokenValue->TryGetString(TmpValue)) {Token = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FResetPasswordResult::~FResetPasswordResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FResetPasswordResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FResetPasswordResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
     bool HasSucceeded = true; 
     

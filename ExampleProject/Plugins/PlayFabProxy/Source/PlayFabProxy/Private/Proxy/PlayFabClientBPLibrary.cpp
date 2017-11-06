@@ -103,6 +103,25 @@ void UPFClientProxyLibrary::BreakBPClientAddGenericIDResult(
     
 }
 
+// AddOrUpdateContactEmailRequest
+FBPClientAddOrUpdateContactEmailRequest UPFClientProxyLibrary::MakeBPClientAddOrUpdateContactEmailRequest(
+    FString InEmailAddress
+    )
+{
+    FBPClientAddOrUpdateContactEmailRequest Out = FBPClientAddOrUpdateContactEmailRequest();
+    Out.Data.EmailAddress = InEmailAddress;
+	
+    return Out;
+}
+
+// AddOrUpdateContactEmailResult
+void UPFClientProxyLibrary::BreakBPClientAddOrUpdateContactEmailResult(
+    const FBPClientAddOrUpdateContactEmailResult& In
+ )
+{
+    
+}
+
 // AddSharedGroupMembersRequest
 FBPClientAddSharedGroupMembersRequest UPFClientProxyLibrary::MakeBPClientAddSharedGroupMembersRequest(
     TArray<FString> InPlayFabIds
@@ -3778,6 +3797,23 @@ FBPClientRegisterWithWindowsHelloRequest UPFClientProxyLibrary::MakeBPClientRegi
 	Out.Data.UserName = InUserName;
 	
     return Out;
+}
+
+// RemoveContactEmailRequest
+FBPClientRemoveContactEmailRequest UPFClientProxyLibrary::MakeBPClientRemoveContactEmailRequest(
+        )
+{
+    FBPClientRemoveContactEmailRequest Out = FBPClientRemoveContactEmailRequest();
+    
+    return Out;
+}
+
+// RemoveContactEmailResult
+void UPFClientProxyLibrary::BreakBPClientRemoveContactEmailResult(
+    const FBPClientRemoveContactEmailResult& In
+ )
+{
+    
 }
 
 // RemoveFriendRequest

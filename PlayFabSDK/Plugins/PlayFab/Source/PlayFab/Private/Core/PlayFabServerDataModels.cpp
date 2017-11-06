@@ -12542,6 +12542,77 @@ bool PlayFab::ServerModels::FRevokeInventoryResult::readFromValue(const TSharedP
 }
 
 
+PlayFab::ServerModels::FSendCustomAccountRecoveryEmailRequest::~FSendCustomAccountRecoveryEmailRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FSendCustomAccountRecoveryEmailRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Email.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Email")); writer->WriteValue(Email); }
+    
+    writer->WriteIdentifierPrefix(TEXT("EmailTemplateId")); writer->WriteValue(EmailTemplateId);
+    
+    if(Username.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Username")); writer->WriteValue(Username); }
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSendCustomAccountRecoveryEmailRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EmailTemplateIdValue = obj->TryGetField(TEXT("EmailTemplateId"));
+    if (EmailTemplateIdValue.IsValid()&& !EmailTemplateIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailTemplateIdValue->TryGetString(TmpValue)) {EmailTemplateId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FSendCustomAccountRecoveryEmailResult::~FSendCustomAccountRecoveryEmailResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FSendCustomAccountRecoveryEmailResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSendCustomAccountRecoveryEmailResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FSendPushNotificationRequest::~FSendPushNotificationRequest()
 {
     //if(Package != nullptr) delete Package;

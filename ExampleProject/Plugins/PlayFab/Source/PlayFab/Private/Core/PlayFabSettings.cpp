@@ -2,9 +2,9 @@
 
 namespace PlayFab
 {
-    const FString PlayFabSettings::sdkVersion = "0.0.171026";
+    const FString PlayFabSettings::sdkVersion = "0.0.171102";
     const FString PlayFabSettings::buildIdentifier = "jbuild_unrealcppsdk_2";
-    const FString PlayFabSettings::versionString = "UE4SDK-0.0.171026";
+    const FString PlayFabSettings::versionString = "UE4SDK-0.0.171102";
 
     bool PlayFabSettings::useDevelopmentEnvironment = false;
     FString PlayFabSettings::serverURL;
