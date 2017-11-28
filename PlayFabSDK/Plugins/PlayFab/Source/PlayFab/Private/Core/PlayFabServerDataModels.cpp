@@ -12613,6 +12613,68 @@ bool PlayFab::ServerModels::FSendCustomAccountRecoveryEmailResult::readFromValue
 }
 
 
+PlayFab::ServerModels::FSendEmailFromTemplateRequest::~FSendEmailFromTemplateRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FSendEmailFromTemplateRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("EmailTemplateId")); writer->WriteValue(EmailTemplateId);
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSendEmailFromTemplateRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> EmailTemplateIdValue = obj->TryGetField(TEXT("EmailTemplateId"));
+    if (EmailTemplateIdValue.IsValid()&& !EmailTemplateIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailTemplateIdValue->TryGetString(TmpValue)) {EmailTemplateId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FSendEmailFromTemplateResult::~FSendEmailFromTemplateResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FSendEmailFromTemplateResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSendEmailFromTemplateResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FSendPushNotificationRequest::~FSendPushNotificationRequest()
 {
     //if(Package != nullptr) delete Package;

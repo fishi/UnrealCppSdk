@@ -7829,6 +7829,60 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    struct PLAYFAB_API FSendEmailFromTemplateRequest : public FPlayFabBaseModel
+    {
+        
+        // The email template id of the email template to send.
+        FString EmailTemplateId;
+        // Unique PlayFab assigned ID of the user on whom the operation will be performed.
+        FString PlayFabId;
+
+        FSendEmailFromTemplateRequest() :
+            FPlayFabBaseModel(),
+            EmailTemplateId(),
+            PlayFabId()
+            {}
+
+        FSendEmailFromTemplateRequest(const FSendEmailFromTemplateRequest& src) :
+            FPlayFabBaseModel(),
+            EmailTemplateId(src.EmailTemplateId),
+            PlayFabId(src.PlayFabId)
+            {}
+
+        FSendEmailFromTemplateRequest(const TSharedPtr<FJsonObject>& obj) : FSendEmailFromTemplateRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FSendEmailFromTemplateRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FSendEmailFromTemplateResult : public FPlayFabBaseModel
+    {
+        
+
+        FSendEmailFromTemplateResult() :
+            FPlayFabBaseModel()
+            {}
+
+        FSendEmailFromTemplateResult(const FSendEmailFromTemplateResult& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FSendEmailFromTemplateResult(const TSharedPtr<FJsonObject>& obj) : FSendEmailFromTemplateResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FSendEmailFromTemplateResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
     struct PLAYFAB_API FSendPushNotificationRequest : public FPlayFabBaseModel
     {
         

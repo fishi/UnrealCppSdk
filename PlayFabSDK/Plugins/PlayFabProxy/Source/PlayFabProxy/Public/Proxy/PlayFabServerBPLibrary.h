@@ -1887,6 +1887,19 @@ public:
     const FBPServerSendCustomAccountRecoveryEmailResult& In
 );
 
+    // SendEmailFromTemplateRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
+    static FBPServerSendEmailFromTemplateRequest MakeBPServerSendEmailFromTemplateRequest(
+    FString InEmailTemplateId
+	, FString InPlayFabId
+);
+
+    // SendEmailFromTemplateResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+    static void BreakBPServerSendEmailFromTemplateResult(
+    const FBPServerSendEmailFromTemplateResult& In
+);
+
     // SendPushNotificationRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
     static FBPServerSendPushNotificationRequest MakeBPServerSendPushNotificationRequest(

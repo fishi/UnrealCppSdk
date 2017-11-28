@@ -3584,6 +3584,27 @@ void UPFServerProxyLibrary::BreakBPServerSendCustomAccountRecoveryEmailResult(
     
 }
 
+// SendEmailFromTemplateRequest
+FBPServerSendEmailFromTemplateRequest UPFServerProxyLibrary::MakeBPServerSendEmailFromTemplateRequest(
+    FString InEmailTemplateId
+	, FString InPlayFabId
+    )
+{
+    FBPServerSendEmailFromTemplateRequest Out = FBPServerSendEmailFromTemplateRequest();
+    Out.Data.EmailTemplateId = InEmailTemplateId;
+	Out.Data.PlayFabId = InPlayFabId;
+	
+    return Out;
+}
+
+// SendEmailFromTemplateResult
+void UPFServerProxyLibrary::BreakBPServerSendEmailFromTemplateResult(
+    const FBPServerSendEmailFromTemplateResult& In
+ )
+{
+    
+}
+
 // SendPushNotificationRequest
 FBPServerSendPushNotificationRequest UPFServerProxyLibrary::MakeBPServerSendPushNotificationRequest(
     TArray<FBPServerAdvancedPushPlatformMsg> InAdvancedPlatformDelivery
