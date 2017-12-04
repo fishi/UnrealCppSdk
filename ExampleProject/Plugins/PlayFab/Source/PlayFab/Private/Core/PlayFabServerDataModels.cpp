@@ -4966,46 +4966,6 @@ bool PlayFab::ServerModels::FValueToDateModel::readFromValue(const TSharedPtr<FJ
 }
 
 
-PlayFab::ServerModels::FVirtualCurrencyBalanceModel::~FVirtualCurrencyBalanceModel()
-{
-    
-}
-
-void PlayFab::ServerModels::FVirtualCurrencyBalanceModel::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    if(Currency.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Currency")); writer->WriteValue(Currency); }
-    
-    writer->WriteIdentifierPrefix(TEXT("TotalValue")); writer->WriteValue(TotalValue);
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ServerModels::FVirtualCurrencyBalanceModel::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    const TSharedPtr<FJsonValue> CurrencyValue = obj->TryGetField(TEXT("Currency"));
-    if (CurrencyValue.IsValid()&& !CurrencyValue->IsNull())
-    {
-        FString TmpValue;
-        if(CurrencyValue->TryGetString(TmpValue)) {Currency = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> TotalValueValue = obj->TryGetField(TEXT("TotalValue"));
-    if (TotalValueValue.IsValid()&& !TotalValueValue->IsNull())
-    {
-        int32 TmpValue;
-        if(TotalValueValue->TryGetNumber(TmpValue)) {TotalValue = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
 PlayFab::ServerModels::FPlayerProfileModel::~FPlayerProfileModel()
 {
     
@@ -5128,17 +5088,6 @@ void PlayFab::ServerModels::FPlayerProfileModel::writeJSON(JsonWriter& writer) c
         writer->WriteArrayStart(TEXT("ValuesToDate"));
     
         for (const FValueToDateModel& item : ValuesToDate)
-        {
-            item.writeJSON(writer);
-        }
-        writer->WriteArrayEnd();
-     }
-    
-    if(VirtualCurrencyBalances.Num() != 0) 
-    {
-        writer->WriteArrayStart(TEXT("VirtualCurrencyBalances"));
-    
-        for (const FVirtualCurrencyBalanceModel& item : VirtualCurrencyBalances)
         {
             item.writeJSON(writer);
         }
@@ -5310,17 +5259,6 @@ bool PlayFab::ServerModels::FPlayerProfileModel::readFromValue(const TSharedPtr<
             TSharedPtr<FJsonValue> CurrentItem = ValuesToDateArray[Idx];
             
             ValuesToDate.Add(FValueToDateModel(CurrentItem->AsObject()));
-        }
-    }
-
-    
-    {
-        const TArray< TSharedPtr<FJsonValue> >&VirtualCurrencyBalancesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("VirtualCurrencyBalances"));
-        for (int32 Idx = 0; Idx < VirtualCurrencyBalancesArray.Num(); Idx++)
-        {
-            TSharedPtr<FJsonValue> CurrentItem = VirtualCurrencyBalancesArray[Idx];
-            
-            VirtualCurrencyBalances.Add(FVirtualCurrencyBalanceModel(CurrentItem->AsObject()));
         }
     }
 
@@ -11579,8 +11517,6 @@ void PlayFab::ServerModels::FPushNotificationPackage::writeJSON(JsonWriter& writ
     
     writer->WriteIdentifierPrefix(TEXT("Message")); writer->WriteValue(Message);
     
-    if(ScheduleDate.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ScheduleDate")); writer->WriteValue(ScheduleDate); }
-    
     if(Sound.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Sound")); writer->WriteValue(Sound); }
     
     writer->WriteIdentifierPrefix(TEXT("Title")); writer->WriteValue(Title);
@@ -11619,13 +11555,6 @@ bool PlayFab::ServerModels::FPushNotificationPackage::readFromValue(const TShare
     {
         FString TmpValue;
         if(MessageValue->TryGetString(TmpValue)) {Message = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> ScheduleDateValue = obj->TryGetField(TEXT("ScheduleDate"));
-    if (ScheduleDateValue.IsValid()&& !ScheduleDateValue->IsNull())
-    {
-        FString TmpValue;
-        if(ScheduleDateValue->TryGetString(TmpValue)) {ScheduleDate = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> SoundValue = obj->TryGetField(TEXT("Sound"));

@@ -3085,37 +3085,6 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
-    struct PLAYFAB_API FVirtualCurrencyBalanceModel : public FPlayFabBaseModel
-    {
-        
-        // [optional] Name of the virtual currency
-        FString Currency;
-        // Balance of the virtual currency
-        int32 TotalValue;
-
-        FVirtualCurrencyBalanceModel() :
-            FPlayFabBaseModel(),
-            Currency(),
-            TotalValue(0)
-            {}
-
-        FVirtualCurrencyBalanceModel(const FVirtualCurrencyBalanceModel& src) :
-            FPlayFabBaseModel(),
-            Currency(src.Currency),
-            TotalValue(src.TotalValue)
-            {}
-
-        FVirtualCurrencyBalanceModel(const TSharedPtr<FJsonObject>& obj) : FVirtualCurrencyBalanceModel()
-        {
-            readFromValue(obj);
-        }
-
-        ~FVirtualCurrencyBalanceModel();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
     struct PLAYFAB_API FPlayerProfileModel : public FPlayFabBaseModel
     {
         
@@ -3157,8 +3126,6 @@ namespace ServerModels
         Boxed<uint32> TotalValueToDateInUSD;
         // [optional] List of the player's lifetime purchase totals, summed by real-money currency
         TArray<FValueToDateModel> ValuesToDate;
-        // [optional] List of the player's virtual currency balances
-        TArray<FVirtualCurrencyBalanceModel> VirtualCurrencyBalances;
 
         FPlayerProfileModel() :
             FPlayFabBaseModel(),
@@ -3180,8 +3147,7 @@ namespace ServerModels
             Tags(),
             TitleId(),
             TotalValueToDateInUSD(),
-            ValuesToDate(),
-            VirtualCurrencyBalances()
+            ValuesToDate()
             {}
 
         FPlayerProfileModel(const FPlayerProfileModel& src) :
@@ -3204,8 +3170,7 @@ namespace ServerModels
             Tags(src.Tags),
             TitleId(src.TitleId),
             TotalValueToDateInUSD(src.TotalValueToDateInUSD),
-            ValuesToDate(src.ValuesToDate),
-            VirtualCurrencyBalances(src.VirtualCurrencyBalances)
+            ValuesToDate(src.ValuesToDate)
             {}
 
         FPlayerProfileModel(const TSharedPtr<FJsonObject>& obj) : FPlayerProfileModel()
@@ -7084,8 +7049,6 @@ namespace ServerModels
         FString Icon;
         // Content of the message (all platforms)
         FString Message;
-        // [optional] This field was solely for use with the PlayFab custom Push Plugin, which has been deprecated in favor of the supported platform-specific fields
-        FString ScheduleDate;
         // [optional] Sound file to play with the message (all platforms)
         FString Sound;
         // Title/Subject of the message. Not supported for iOS
@@ -7097,7 +7060,6 @@ namespace ServerModels
             CustomData(),
             Icon(),
             Message(),
-            ScheduleDate(),
             Sound(),
             Title()
             {}
@@ -7108,7 +7070,6 @@ namespace ServerModels
             CustomData(src.CustomData),
             Icon(src.Icon),
             Message(src.Message),
-            ScheduleDate(src.ScheduleDate),
             Sound(src.Sound),
             Title(src.Title)
             {}

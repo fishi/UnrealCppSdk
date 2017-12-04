@@ -323,6 +323,20 @@ public:
 	, TMap<FString, int32>& OutVirtualCurrencyContents
 );
 
+    // CheckLimitedEditionItemAvailabilityRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+    static FBPAdminCheckLimitedEditionItemAvailabilityRequest MakeBPAdminCheckLimitedEditionItemAvailabilityRequest(
+    FString InCatalogVersion
+	, FString InItemId
+);
+
+    // CheckLimitedEditionItemAvailabilityResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+    static void BreakBPAdminCheckLimitedEditionItemAvailabilityResult(
+    const FBPAdminCheckLimitedEditionItemAvailabilityResult& In
+	, int32& OutAmount
+);
+
     // CloudScriptFile
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
     static FBPAdminCloudScriptFile MakeBPAdminCloudScriptFile(
@@ -1123,6 +1137,20 @@ public:
 	, TArray<FBPAdminGrantedItemInstance>& OutItemGrantResults
 );
 
+    // IncrementLimitedEditionItemAvailabilityRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
+    static FBPAdminIncrementLimitedEditionItemAvailabilityRequest MakeBPAdminIncrementLimitedEditionItemAvailabilityRequest(
+    int32 InAmount
+	, FString InCatalogVersion
+	, FString InItemId
+);
+
+    // IncrementLimitedEditionItemAvailabilityResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+    static void BreakBPAdminIncrementLimitedEditionItemAvailabilityResult(
+    const FBPAdminIncrementLimitedEditionItemAvailabilityResult& In
+);
+
     // IncrementPlayerStatisticVersionRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
     static FBPAdminIncrementPlayerStatisticVersionRequest MakeBPAdminIncrementPlayerStatisticVersionRequest(
@@ -1495,7 +1523,6 @@ public:
 	, TArray<FBPAdminTagModel> InTags
 	, int32 InTotalValueToDateInUSD
 	, TArray<FBPAdminValueToDateModel> InValuesToDate
-	, TArray<FBPAdminVirtualCurrencyBalanceModel> InVirtualCurrencyBalances
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
     static void BreakBPAdminPlayerProfileModel(
@@ -1518,7 +1545,6 @@ public:
 	, TArray<FBPAdminTagModel>& OutTags
 	, int32& OutTotalValueToDateInUSD
 	, TArray<FBPAdminValueToDateModel>& OutValuesToDate
-	, TArray<FBPAdminVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
 );
 
     // PlayerProfileViewConstraints
@@ -2510,19 +2536,6 @@ public:
 	, FString& OutCurrency
 	, int32& OutTotalValue
 	, FString& OutTotalValueAsDecimal
-);
-
-    // VirtualCurrencyBalanceModel
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
-    static FBPAdminVirtualCurrencyBalanceModel MakeBPAdminVirtualCurrencyBalanceModel(
-    FString InCurrency
-	, int32 InTotalValue
-);
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-    static void BreakBPAdminVirtualCurrencyBalanceModel(
-    const FBPAdminVirtualCurrencyBalanceModel& In
-	, FString& OutCurrency
-	, int32& OutTotalValue
 );
 
     // VirtualCurrencyData

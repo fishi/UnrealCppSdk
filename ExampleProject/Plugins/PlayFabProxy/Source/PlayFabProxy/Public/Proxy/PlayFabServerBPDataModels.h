@@ -2980,16 +2980,6 @@ public:
     PlayFab::ServerModels::FValueToDateModel Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerVirtualCurrencyBalanceModel", HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerVirtualCurrencyBalanceModel"))
-struct FBPServerVirtualCurrencyBalanceModel
-{
-    GENERATED_BODY()
-public:
-    FBPServerVirtualCurrencyBalanceModel() {};
-    FBPServerVirtualCurrencyBalanceModel(PlayFab::ServerModels::FVirtualCurrencyBalanceModel InData) : Data(InData) {};
-    PlayFab::ServerModels::FVirtualCurrencyBalanceModel Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFServerProxyLibrary.MakeBPServerVirtualCurrencyRechargeTime", HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerVirtualCurrencyRechargeTime"))
 struct FBPServerVirtualCurrencyRechargeTime
 {

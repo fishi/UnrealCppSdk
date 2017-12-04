@@ -1048,6 +1048,64 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    struct PLAYFAB_API FCheckLimitedEditionItemAvailabilityRequest : public FPlayFabBaseModel
+    {
+        
+        // [optional] Which catalog is being updated. If null, uses the default catalog.
+        FString CatalogVersion;
+        // The item to check for.
+        FString ItemId;
+
+        FCheckLimitedEditionItemAvailabilityRequest() :
+            FPlayFabBaseModel(),
+            CatalogVersion(),
+            ItemId()
+            {}
+
+        FCheckLimitedEditionItemAvailabilityRequest(const FCheckLimitedEditionItemAvailabilityRequest& src) :
+            FPlayFabBaseModel(),
+            CatalogVersion(src.CatalogVersion),
+            ItemId(src.ItemId)
+            {}
+
+        FCheckLimitedEditionItemAvailabilityRequest(const TSharedPtr<FJsonObject>& obj) : FCheckLimitedEditionItemAvailabilityRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FCheckLimitedEditionItemAvailabilityRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FCheckLimitedEditionItemAvailabilityResult : public FPlayFabBaseModel
+    {
+        
+        // The amount of the specified resource remaining.
+        int32 Amount;
+
+        FCheckLimitedEditionItemAvailabilityResult() :
+            FPlayFabBaseModel(),
+            Amount(0)
+            {}
+
+        FCheckLimitedEditionItemAvailabilityResult(const FCheckLimitedEditionItemAvailabilityResult& src) :
+            FPlayFabBaseModel(),
+            Amount(src.Amount)
+            {}
+
+        FCheckLimitedEditionItemAvailabilityResult(const TSharedPtr<FJsonObject>& obj) : FCheckLimitedEditionItemAvailabilityResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FCheckLimitedEditionItemAvailabilityResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
     struct PLAYFAB_API FCloudScriptFile : public FPlayFabBaseModel
     {
         
@@ -3769,37 +3827,6 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
-    struct PLAYFAB_API FVirtualCurrencyBalanceModel : public FPlayFabBaseModel
-    {
-        
-        // [optional] Name of the virtual currency
-        FString Currency;
-        // Balance of the virtual currency
-        int32 TotalValue;
-
-        FVirtualCurrencyBalanceModel() :
-            FPlayFabBaseModel(),
-            Currency(),
-            TotalValue(0)
-            {}
-
-        FVirtualCurrencyBalanceModel(const FVirtualCurrencyBalanceModel& src) :
-            FPlayFabBaseModel(),
-            Currency(src.Currency),
-            TotalValue(src.TotalValue)
-            {}
-
-        FVirtualCurrencyBalanceModel(const TSharedPtr<FJsonObject>& obj) : FVirtualCurrencyBalanceModel()
-        {
-            readFromValue(obj);
-        }
-
-        ~FVirtualCurrencyBalanceModel();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
     struct PLAYFAB_API FPlayerProfileModel : public FPlayFabBaseModel
     {
         
@@ -3841,8 +3868,6 @@ namespace AdminModels
         Boxed<uint32> TotalValueToDateInUSD;
         // [optional] List of the player's lifetime purchase totals, summed by real-money currency
         TArray<FValueToDateModel> ValuesToDate;
-        // [optional] List of the player's virtual currency balances
-        TArray<FVirtualCurrencyBalanceModel> VirtualCurrencyBalances;
 
         FPlayerProfileModel() :
             FPlayFabBaseModel(),
@@ -3864,8 +3889,7 @@ namespace AdminModels
             Tags(),
             TitleId(),
             TotalValueToDateInUSD(),
-            ValuesToDate(),
-            VirtualCurrencyBalances()
+            ValuesToDate()
             {}
 
         FPlayerProfileModel(const FPlayerProfileModel& src) :
@@ -3888,8 +3912,7 @@ namespace AdminModels
             Tags(src.Tags),
             TitleId(src.TitleId),
             TotalValueToDateInUSD(src.TotalValueToDateInUSD),
-            ValuesToDate(src.ValuesToDate),
-            VirtualCurrencyBalances(src.VirtualCurrencyBalances)
+            ValuesToDate(src.ValuesToDate)
             {}
 
         FPlayerProfileModel(const TSharedPtr<FJsonObject>& obj) : FPlayerProfileModel()
@@ -6112,6 +6135,64 @@ namespace AdminModels
         }
 
         ~FGrantItemsToUsersResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FIncrementLimitedEditionItemAvailabilityRequest : public FPlayFabBaseModel
+    {
+        
+        // Amount to increase availability by.
+        int32 Amount;
+        // [optional] Which catalog is being updated. If null, uses the default catalog.
+        FString CatalogVersion;
+        // The item which needs more availability.
+        FString ItemId;
+
+        FIncrementLimitedEditionItemAvailabilityRequest() :
+            FPlayFabBaseModel(),
+            Amount(0),
+            CatalogVersion(),
+            ItemId()
+            {}
+
+        FIncrementLimitedEditionItemAvailabilityRequest(const FIncrementLimitedEditionItemAvailabilityRequest& src) :
+            FPlayFabBaseModel(),
+            Amount(src.Amount),
+            CatalogVersion(src.CatalogVersion),
+            ItemId(src.ItemId)
+            {}
+
+        FIncrementLimitedEditionItemAvailabilityRequest(const TSharedPtr<FJsonObject>& obj) : FIncrementLimitedEditionItemAvailabilityRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FIncrementLimitedEditionItemAvailabilityRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FIncrementLimitedEditionItemAvailabilityResult : public FPlayFabBaseModel
+    {
+        
+
+        FIncrementLimitedEditionItemAvailabilityResult() :
+            FPlayFabBaseModel()
+            {}
+
+        FIncrementLimitedEditionItemAvailabilityResult(const FIncrementLimitedEditionItemAvailabilityResult& src) :
+            FPlayFabBaseModel()
+            {}
+
+        FIncrementLimitedEditionItemAvailabilityResult(const TSharedPtr<FJsonObject>& obj) : FIncrementLimitedEditionItemAvailabilityResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FIncrementLimitedEditionItemAvailabilityResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

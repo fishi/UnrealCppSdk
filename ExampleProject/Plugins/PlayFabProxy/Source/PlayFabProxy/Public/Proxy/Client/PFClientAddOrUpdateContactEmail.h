@@ -17,7 +17,7 @@ public:
     UPROPERTY(BlueprintAssignable)
         FEmptyPlayFabDelegate OnSuccess; 
 
-    // Adds or updates a contact email to the player's profile
+    // Adds or updates a contact email to the player's profile.
     UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "PlayFab|Client|Account Management")
         static UPFClientAddOrUpdateContactEmail* AddOrUpdateContactEmail(class APlayerController* PlayerController, const FBPClientAddOrUpdateContactEmailRequest& InAddOrUpdateContactEmailRequest);
 

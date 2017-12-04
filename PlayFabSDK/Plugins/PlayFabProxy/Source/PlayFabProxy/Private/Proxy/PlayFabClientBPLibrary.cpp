@@ -800,6 +800,21 @@ void UPFClientProxyLibrary::BreakBPClientCurrentGamesResult(
 	
 }
 
+// DeviceInfoRequest
+FBPClientDeviceInfoRequest UPFClientProxyLibrary::MakeBPClientDeviceInfoRequest(
+    TMap<FString, UPlayFabJsonValue*> InInfo
+    )
+{
+    FBPClientDeviceInfoRequest Out = FBPClientDeviceInfoRequest();
+    for (auto& elem : InInfo)
+	{
+		const UPlayFabJsonValue* value = elem.Value;
+		Out.Data.Info.Add(elem.Key, value->GetRootValue());
+	}
+	
+    return Out;
+}
+
 // EmptyResult
 void UPFClientProxyLibrary::BreakBPClientEmptyResult(
     const FBPClientEmptyResult& In
@@ -1520,6 +1535,29 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardResult(
 	}
 	OutNextReset = In.Data.NextReset;
 	OutVersion = In.Data.Version;
+	
+}
+
+// GetPaymentTokenRequest
+FBPClientGetPaymentTokenRequest UPFClientProxyLibrary::MakeBPClientGetPaymentTokenRequest(
+    FString InTokenProvider
+    )
+{
+    FBPClientGetPaymentTokenRequest Out = FBPClientGetPaymentTokenRequest();
+    Out.Data.TokenProvider = InTokenProvider;
+	
+    return Out;
+}
+
+// GetPaymentTokenResult
+void UPFClientProxyLibrary::BreakBPClientGetPaymentTokenResult(
+    const FBPClientGetPaymentTokenResult& In
+	, FString& OutOrderId
+	, FString& OutProviderToken
+ )
+{
+    OutOrderId = In.Data.OrderId;
+	OutProviderToken = In.Data.ProviderToken;
 	
 }
 
@@ -3349,7 +3387,6 @@ FBPClientPlayerProfileModel UPFClientProxyLibrary::MakeBPClientPlayerProfileMode
 	, TArray<FBPClientTagModel> InTags
 	, int32 InTotalValueToDateInUSD
 	, TArray<FBPClientValueToDateModel> InValuesToDate
-	, TArray<FBPClientVirtualCurrencyBalanceModel> InVirtualCurrencyBalances
     )
 {
     FBPClientPlayerProfileModel Out = FBPClientPlayerProfileModel();
@@ -3398,10 +3435,6 @@ FBPClientPlayerProfileModel UPFClientProxyLibrary::MakeBPClientPlayerProfileMode
 	{
 		Out.Data.ValuesToDate.Add(elem.Data);
 	}
-	for (const FBPClientVirtualCurrencyBalanceModel& elem : InVirtualCurrencyBalances)
-	{
-		Out.Data.VirtualCurrencyBalances.Add(elem.Data);
-	}
 	
     return Out;
 }
@@ -3425,7 +3458,6 @@ void UPFClientProxyLibrary::BreakBPClientPlayerProfileModel(
 	, TArray<FBPClientTagModel>& OutTags
 	, int32& OutTotalValueToDateInUSD
 	, TArray<FBPClientValueToDateModel>& OutValuesToDate
-	, TArray<FBPClientVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
  )
 {
     for (const PlayFab::ClientModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
@@ -3472,10 +3504,6 @@ void UPFClientProxyLibrary::BreakBPClientPlayerProfileModel(
 	for (const PlayFab::ClientModels::FValueToDateModel& elem : In.Data.ValuesToDate)
 	{
 		OutValuesToDate.Add(FBPClientValueToDateModel(elem));
-	}
-	for (const PlayFab::ClientModels::FVirtualCurrencyBalanceModel& elem : In.Data.VirtualCurrencyBalances)
-	{
-		OutVirtualCurrencyBalances.Add(FBPClientVirtualCurrencyBalanceModel(elem));
 	}
 	
 }
@@ -5473,29 +5501,6 @@ void UPFClientProxyLibrary::BreakBPClientValueToDateModel(
     OutCurrency = In.Data.Currency;
 	OutTotalValue = In.Data.TotalValue;
 	OutTotalValueAsDecimal = In.Data.TotalValueAsDecimal;
-	
-}
-
-// VirtualCurrencyBalanceModel
-FBPClientVirtualCurrencyBalanceModel UPFClientProxyLibrary::MakeBPClientVirtualCurrencyBalanceModel(
-    FString InCurrency
-	, int32 InTotalValue
-    )
-{
-    FBPClientVirtualCurrencyBalanceModel Out = FBPClientVirtualCurrencyBalanceModel();
-    Out.Data.Currency = InCurrency;
-	Out.Data.TotalValue = InTotalValue;
-	
-    return Out;
-}
-void UPFClientProxyLibrary::BreakBPClientVirtualCurrencyBalanceModel(
-    const FBPClientVirtualCurrencyBalanceModel& In
-	, FString& OutCurrency
-	, int32& OutTotalValue
- )
-{
-    OutCurrency = In.Data.Currency;
-	OutTotalValue = In.Data.TotalValue;
 	
 }
 

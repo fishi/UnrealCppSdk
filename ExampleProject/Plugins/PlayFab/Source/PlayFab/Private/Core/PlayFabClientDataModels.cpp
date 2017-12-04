@@ -3634,6 +3634,49 @@ bool PlayFab::ClientModels::FCurrentGamesResult::readFromValue(const TSharedPtr<
 }
 
 
+PlayFab::ClientModels::FDeviceInfoRequest::~FDeviceInfoRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FDeviceInfoRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Info.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Info"));
+        for (TMap<FString, FJsonKeeper>::TConstIterator It(Info); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FDeviceInfoRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonObject>* InfoObject;
+    if (obj->TryGetObjectField(TEXT("Info"), InfoObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*InfoObject)->Values); It; ++It)
+        {
+            
+            Info.Add(It.Key(), FJsonKeeper(It.Value()));
+        }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FEmptyResult::~FEmptyResult()
 {
     
@@ -4647,46 +4690,6 @@ bool PlayFab::ClientModels::FValueToDateModel::readFromValue(const TSharedPtr<FJ
 }
 
 
-PlayFab::ClientModels::FVirtualCurrencyBalanceModel::~FVirtualCurrencyBalanceModel()
-{
-    
-}
-
-void PlayFab::ClientModels::FVirtualCurrencyBalanceModel::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    if(Currency.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Currency")); writer->WriteValue(Currency); }
-    
-    writer->WriteIdentifierPrefix(TEXT("TotalValue")); writer->WriteValue(TotalValue);
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FVirtualCurrencyBalanceModel::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    const TSharedPtr<FJsonValue> CurrencyValue = obj->TryGetField(TEXT("Currency"));
-    if (CurrencyValue.IsValid()&& !CurrencyValue->IsNull())
-    {
-        FString TmpValue;
-        if(CurrencyValue->TryGetString(TmpValue)) {Currency = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> TotalValueValue = obj->TryGetField(TEXT("TotalValue"));
-    if (TotalValueValue.IsValid()&& !TotalValueValue->IsNull())
-    {
-        int32 TmpValue;
-        if(TotalValueValue->TryGetNumber(TmpValue)) {TotalValue = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
 PlayFab::ClientModels::FPlayerProfileModel::~FPlayerProfileModel()
 {
     
@@ -4809,17 +4812,6 @@ void PlayFab::ClientModels::FPlayerProfileModel::writeJSON(JsonWriter& writer) c
         writer->WriteArrayStart(TEXT("ValuesToDate"));
     
         for (const FValueToDateModel& item : ValuesToDate)
-        {
-            item.writeJSON(writer);
-        }
-        writer->WriteArrayEnd();
-     }
-    
-    if(VirtualCurrencyBalances.Num() != 0) 
-    {
-        writer->WriteArrayStart(TEXT("VirtualCurrencyBalances"));
-    
-        for (const FVirtualCurrencyBalanceModel& item : VirtualCurrencyBalances)
         {
             item.writeJSON(writer);
         }
@@ -4991,17 +4983,6 @@ bool PlayFab::ClientModels::FPlayerProfileModel::readFromValue(const TSharedPtr<
             TSharedPtr<FJsonValue> CurrentItem = ValuesToDateArray[Idx];
             
             ValuesToDate.Add(FValueToDateModel(CurrentItem->AsObject()));
-        }
-    }
-
-    
-    {
-        const TArray< TSharedPtr<FJsonValue> >&VirtualCurrencyBalancesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("VirtualCurrencyBalances"));
-        for (int32 Idx = 0; Idx < VirtualCurrencyBalancesArray.Num(); Idx++)
-        {
-            TSharedPtr<FJsonValue> CurrentItem = VirtualCurrencyBalancesArray[Idx];
-            
-            VirtualCurrencyBalances.Add(FVirtualCurrencyBalanceModel(CurrentItem->AsObject()));
         }
     }
 
@@ -7871,6 +7852,77 @@ bool PlayFab::ClientModels::FGetLeaderboardResult::readFromValue(const TSharedPt
     {
         int32 TmpValue;
         if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetPaymentTokenRequest::~FGetPaymentTokenRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPaymentTokenRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("TokenProvider")); writer->WriteValue(TokenProvider);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPaymentTokenRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> TokenProviderValue = obj->TryGetField(TEXT("TokenProvider"));
+    if (TokenProviderValue.IsValid()&& !TokenProviderValue->IsNull())
+    {
+        FString TmpValue;
+        if(TokenProviderValue->TryGetString(TmpValue)) {TokenProvider = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetPaymentTokenResult::~FGetPaymentTokenResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPaymentTokenResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(OrderId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("OrderId")); writer->WriteValue(OrderId); }
+    
+    if(ProviderToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ProviderToken")); writer->WriteValue(ProviderToken); }
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPaymentTokenResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ProviderTokenValue = obj->TryGetField(TEXT("ProviderToken"));
+    if (ProviderTokenValue.IsValid()&& !ProviderTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(ProviderTokenValue->TryGetString(TmpValue)) {ProviderToken = TmpValue; }
     }
     
     

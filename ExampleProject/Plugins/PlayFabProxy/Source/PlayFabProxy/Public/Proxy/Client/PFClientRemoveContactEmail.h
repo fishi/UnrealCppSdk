@@ -17,7 +17,7 @@ public:
     UPROPERTY(BlueprintAssignable)
         FEmptyPlayFabDelegate OnSuccess; 
 
-    // Removes a contact email from the player's profile
+    // Removes a contact email from the player's profile.
     UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "PlayFab|Client|Account Management")
         static UPFClientRemoveContactEmail* RemoveContactEmail(class APlayerController* PlayerController);
 

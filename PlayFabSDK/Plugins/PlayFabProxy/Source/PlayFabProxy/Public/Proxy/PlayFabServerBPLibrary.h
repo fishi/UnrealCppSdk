@@ -1534,7 +1534,6 @@ public:
 	, TArray<FBPServerTagModel> InTags
 	, int32 InTotalValueToDateInUSD
 	, TArray<FBPServerValueToDateModel> InValuesToDate
-	, TArray<FBPServerVirtualCurrencyBalanceModel> InVirtualCurrencyBalances
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
     static void BreakBPServerPlayerProfileModel(
@@ -1557,7 +1556,6 @@ public:
 	, TArray<FBPServerTagModel>& OutTags
 	, int32& OutTotalValueToDateInUSD
 	, TArray<FBPServerValueToDateModel>& OutValuesToDate
-	, TArray<FBPServerVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
 );
 
     // PlayerProfileViewConstraints
@@ -1646,7 +1644,6 @@ public:
 	, FString InCustomData
 	, FString InIcon
 	, FString InMessage
-	, FString InScheduleDate
 	, FString InSound
 	, FString InTitle
 );
@@ -1657,7 +1654,6 @@ public:
 	, FString& OutCustomData
 	, FString& OutIcon
 	, FString& OutMessage
-	, FString& OutScheduleDate
 	, FString& OutSound
 	, FString& OutTitle
 );
@@ -2558,19 +2554,6 @@ public:
 	, FString& OutCurrency
 	, int32& OutTotalValue
 	, FString& OutTotalValueAsDecimal
-);
-
-    // VirtualCurrencyBalanceModel
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeMakeFunc))
-    static FBPServerVirtualCurrencyBalanceModel MakeBPServerVirtualCurrencyBalanceModel(
-    FString InCurrency
-	, int32 InTotalValue
-);
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-    static void BreakBPServerVirtualCurrencyBalanceModel(
-    const FBPServerVirtualCurrencyBalanceModel& In
-	, FString& OutCurrency
-	, int32& OutTotalValue
 );
 
     // VirtualCurrencyRechargeTime

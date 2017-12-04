@@ -1771,6 +1771,77 @@ bool PlayFab::AdminModels::FCatalogItem::readFromValue(const TSharedPtr<FJsonObj
 }
 
 
+PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityRequest::~FCheckLimitedEditionItemAvailabilityRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+    
+    writer->WriteIdentifierPrefix(TEXT("ItemId")); writer->WriteValue(ItemId);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityResult::~FCheckLimitedEditionItemAvailabilityResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Amount")); writer->WriteValue(Amount);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> AmountValue = obj->TryGetField(TEXT("Amount"));
+    if (AmountValue.IsValid()&& !AmountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(AmountValue->TryGetNumber(TmpValue)) {Amount = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FCloudScriptFile::~FCloudScriptFile()
 {
     
@@ -6009,46 +6080,6 @@ bool PlayFab::AdminModels::FValueToDateModel::readFromValue(const TSharedPtr<FJs
 }
 
 
-PlayFab::AdminModels::FVirtualCurrencyBalanceModel::~FVirtualCurrencyBalanceModel()
-{
-    
-}
-
-void PlayFab::AdminModels::FVirtualCurrencyBalanceModel::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    if(Currency.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Currency")); writer->WriteValue(Currency); }
-    
-    writer->WriteIdentifierPrefix(TEXT("TotalValue")); writer->WriteValue(TotalValue);
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FVirtualCurrencyBalanceModel::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-    bool HasSucceeded = true; 
-    
-    const TSharedPtr<FJsonValue> CurrencyValue = obj->TryGetField(TEXT("Currency"));
-    if (CurrencyValue.IsValid()&& !CurrencyValue->IsNull())
-    {
-        FString TmpValue;
-        if(CurrencyValue->TryGetString(TmpValue)) {Currency = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> TotalValueValue = obj->TryGetField(TEXT("TotalValue"));
-    if (TotalValueValue.IsValid()&& !TotalValueValue->IsNull())
-    {
-        int32 TmpValue;
-        if(TotalValueValue->TryGetNumber(TmpValue)) {TotalValue = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
 PlayFab::AdminModels::FPlayerProfileModel::~FPlayerProfileModel()
 {
     
@@ -6171,17 +6202,6 @@ void PlayFab::AdminModels::FPlayerProfileModel::writeJSON(JsonWriter& writer) co
         writer->WriteArrayStart(TEXT("ValuesToDate"));
     
         for (const FValueToDateModel& item : ValuesToDate)
-        {
-            item.writeJSON(writer);
-        }
-        writer->WriteArrayEnd();
-     }
-    
-    if(VirtualCurrencyBalances.Num() != 0) 
-    {
-        writer->WriteArrayStart(TEXT("VirtualCurrencyBalances"));
-    
-        for (const FVirtualCurrencyBalanceModel& item : VirtualCurrencyBalances)
         {
             item.writeJSON(writer);
         }
@@ -6353,17 +6373,6 @@ bool PlayFab::AdminModels::FPlayerProfileModel::readFromValue(const TSharedPtr<F
             TSharedPtr<FJsonValue> CurrentItem = ValuesToDateArray[Idx];
             
             ValuesToDate.Add(FValueToDateModel(CurrentItem->AsObject()));
-        }
-    }
-
-    
-    {
-        const TArray< TSharedPtr<FJsonValue> >&VirtualCurrencyBalancesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("VirtualCurrencyBalances"));
-        for (int32 Idx = 0; Idx < VirtualCurrencyBalancesArray.Num(); Idx++)
-        {
-            TSharedPtr<FJsonValue> CurrentItem = VirtualCurrencyBalancesArray[Idx];
-            
-            VirtualCurrencyBalances.Add(FVirtualCurrencyBalanceModel(CurrentItem->AsObject()));
         }
     }
 
@@ -10028,6 +10037,77 @@ bool PlayFab::AdminModels::FGrantItemsToUsersResult::readFromValue(const TShared
         }
     }
 
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityRequest::~FIncrementLimitedEditionItemAvailabilityRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Amount")); writer->WriteValue(Amount);
+    
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+    
+    writer->WriteIdentifierPrefix(TEXT("ItemId")); writer->WriteValue(ItemId);
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
+    
+    const TSharedPtr<FJsonValue> AmountValue = obj->TryGetField(TEXT("Amount"));
+    if (AmountValue.IsValid()&& !AmountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(AmountValue->TryGetNumber(TmpValue)) {Amount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityResult::~FIncrementLimitedEditionItemAvailabilityResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+    bool HasSucceeded = true; 
     
     
     return HasSucceeded;

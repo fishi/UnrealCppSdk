@@ -20,6 +20,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAddUserVirtualCurrencyDelegate, const AdminModels::FModifyUserVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FAddVirtualCurrencyTypesDelegate, const AdminModels::FBlankResult&);
         DECLARE_DELEGATE_OneParam(FBanUsersDelegate, const AdminModels::FBanUsersResult&);
+        DECLARE_DELEGATE_OneParam(FCheckLimitedEditionItemAvailabilityDelegate, const AdminModels::FCheckLimitedEditionItemAvailabilityResult&);
         DECLARE_DELEGATE_OneParam(FCreateActionsOnPlayersInSegmentTaskDelegate, const AdminModels::FCreateTaskResult&);
         DECLARE_DELEGATE_OneParam(FCreateCloudScriptTaskDelegate, const AdminModels::FCreateTaskResult&);
         DECLARE_DELEGATE_OneParam(FCreatePlayerSharedSecretDelegate, const AdminModels::FCreatePlayerSharedSecretResult&);
@@ -69,6 +70,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserReadOnlyDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGrantItemsToUsersDelegate, const AdminModels::FGrantItemsToUsersResult&);
+        DECLARE_DELEGATE_OneParam(FIncrementLimitedEditionItemAvailabilityDelegate, const AdminModels::FIncrementLimitedEditionItemAvailabilityResult&);
         DECLARE_DELEGATE_OneParam(FIncrementPlayerStatisticVersionDelegate, const AdminModels::FIncrementPlayerStatisticVersionResult&);
         DECLARE_DELEGATE_OneParam(FListServerBuildsDelegate, const AdminModels::FListBuildsResult&);
         DECLARE_DELEGATE_OneParam(FListVirtualCurrencyTypesDelegate, const AdminModels::FListVirtualCurrencyTypesResult&);
@@ -154,6 +156,11 @@ namespace PlayFab
          * The existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so use this feature with caution. Returns information about the new bans.
          */
         bool BanUsers(AdminModels::FBanUsersRequest& request, const FBanUsersDelegate& SuccessDelegate = FBanUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Checks the global count for the limited edition item.
+         * This returns the total number of these items available.
+         */
+        bool CheckLimitedEditionItemAvailability(AdminModels::FCheckLimitedEditionItemAvailabilityRequest& request, const FCheckLimitedEditionItemAvailabilityDelegate& SuccessDelegate = FCheckLimitedEditionItemAvailabilityDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Create an ActionsOnPlayersInSegment task, which iterates through all players in a segment to execute action.
          * Task name is unique within a title. Using a task name that's already taken will cause a name conflict error. Too many create-task requests within a short time will cause a create conflict error.
@@ -386,6 +393,11 @@ namespace PlayFab
          */
         bool GrantItemsToUsers(AdminModels::FGrantItemsToUsersRequest& request, const FGrantItemsToUsersDelegate& SuccessDelegate = FGrantItemsToUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Increases the global count for the given scarce resource.
+         * This operation will increment the global counter for the number of these items available. This number cannot be decremented, except by actual grants.
+         */
+        bool IncrementLimitedEditionItemAvailability(AdminModels::FIncrementLimitedEditionItemAvailabilityRequest& request, const FIncrementLimitedEditionItemAvailabilityDelegate& SuccessDelegate = FIncrementLimitedEditionItemAvailabilityDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Resets the indicated statistic, removing all player entries for it and backing up the old values.
          * Statistics are numeric values, with each statistic in the title also generating a leaderboard.  When this call is made on a given statistic, this forces a reset of that statistic. Upon reset, the statistic updates to a new version with no values (effectively removing all players from the leaderboard). The previous version's statistic values are also archived for retrieval, if needed (see GetPlayerStatisticVersions). Statistics not created via a call to CreatePlayerStatisticDefinition by default have a VersionChangeInterval of Never, meaning they do not reset on a schedule, but they can be set to do so via a call to UpdatePlayerStatisticDefinition. Once a statistic has been reset (sometimes referred to as versioned or incremented), the now-previous version can still be written to for up a short, pre-defined period (currently 10 seconds), to prevent issues with levels completing around the time of the reset. Also, once reset, the historical statistics for players in the title may be retrieved using the URL specified in the version information (GetPlayerStatisticVersions).
          */
@@ -601,6 +613,7 @@ namespace PlayFab
         void OnAddUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnCheckLimitedEditionItemAvailabilityResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCheckLimitedEditionItemAvailabilityDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreateActionsOnPlayersInSegmentTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateActionsOnPlayersInSegmentTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreateCloudScriptTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateCloudScriptTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreatePlayerSharedSecretResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreatePlayerSharedSecretDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -650,6 +663,7 @@ namespace PlayFab
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGrantItemsToUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGrantItemsToUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnIncrementLimitedEditionItemAvailabilityResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FIncrementLimitedEditionItemAvailabilityDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnIncrementPlayerStatisticVersionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FIncrementPlayerStatisticVersionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnListServerBuildsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FListServerBuildsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnListVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FListVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

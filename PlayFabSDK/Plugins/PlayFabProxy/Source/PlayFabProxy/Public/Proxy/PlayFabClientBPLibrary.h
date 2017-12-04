@@ -424,6 +424,12 @@ public:
 	, int32& OutPlayerCount
 );
 
+    // DeviceInfoRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
+    static FBPClientDeviceInfoRequest MakeBPClientDeviceInfoRequest(
+    TMap<FString, UPlayFabJsonValue*> InInfo
+);
+
     // EmptyResult
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
     static void BreakBPClientEmptyResult(
@@ -811,6 +817,20 @@ public:
 	, TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
 	, FDateTime& OutNextReset
 	, int32& OutVersion
+);
+
+    // GetPaymentTokenRequest
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
+    static FBPClientGetPaymentTokenRequest MakeBPClientGetPaymentTokenRequest(
+    FString InTokenProvider
+);
+
+    // GetPaymentTokenResult
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+    static void BreakBPClientGetPaymentTokenResult(
+    const FBPClientGetPaymentTokenResult& In
+	, FString& OutOrderId
+	, FString& OutProviderToken
 );
 
     // GetPhotonAuthenticationTokenRequest
@@ -1823,7 +1843,6 @@ public:
 	, TArray<FBPClientTagModel> InTags
 	, int32 InTotalValueToDateInUSD
 	, TArray<FBPClientValueToDateModel> InValuesToDate
-	, TArray<FBPClientVirtualCurrencyBalanceModel> InVirtualCurrencyBalances
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
     static void BreakBPClientPlayerProfileModel(
@@ -1846,7 +1865,6 @@ public:
 	, TArray<FBPClientTagModel>& OutTags
 	, int32& OutTotalValueToDateInUSD
 	, TArray<FBPClientValueToDateModel>& OutValuesToDate
-	, TArray<FBPClientVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
 );
 
     // PlayerProfileViewConstraints
@@ -2967,19 +2985,6 @@ public:
 	, FString& OutCurrency
 	, int32& OutTotalValue
 	, FString& OutTotalValueAsDecimal
-);
-
-    // VirtualCurrencyBalanceModel
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
-    static FBPClientVirtualCurrencyBalanceModel MakeBPClientVirtualCurrencyBalanceModel(
-    FString InCurrency
-	, int32 InTotalValue
-);
-    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-    static void BreakBPClientVirtualCurrencyBalanceModel(
-    const FBPClientVirtualCurrencyBalanceModel& In
-	, FString& OutCurrency
-	, int32& OutTotalValue
 );
 
     // VirtualCurrencyRechargeTime

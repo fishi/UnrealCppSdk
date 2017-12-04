@@ -243,6 +243,26 @@ public:
     PlayFab::AdminModels::FCatalogItemContainerInfo Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminCheckLimitedEditionItemAvailabilityRequest"))
+struct FBPAdminCheckLimitedEditionItemAvailabilityRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminCheckLimitedEditionItemAvailabilityRequest() {};
+    FBPAdminCheckLimitedEditionItemAvailabilityRequest(PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCheckLimitedEditionItemAvailabilityResult"))
+struct FBPAdminCheckLimitedEditionItemAvailabilityResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminCheckLimitedEditionItemAvailabilityResult() {};
+    FBPAdminCheckLimitedEditionItemAvailabilityResult(PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FCheckLimitedEditionItemAvailabilityResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminCloudScriptFile", HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCloudScriptFile"))
 struct FBPAdminCloudScriptFile
 {
@@ -1649,6 +1669,26 @@ public:
     PlayFab::AdminModels::FGrantItemsToUsersResult Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminIncrementLimitedEditionItemAvailabilityRequest"))
+struct FBPAdminIncrementLimitedEditionItemAvailabilityRequest
+{
+    GENERATED_BODY()
+public:
+    FBPAdminIncrementLimitedEditionItemAvailabilityRequest() {};
+    FBPAdminIncrementLimitedEditionItemAvailabilityRequest(PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityRequest InData) : Data(InData) {};
+    PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminIncrementLimitedEditionItemAvailabilityResult"))
+struct FBPAdminIncrementLimitedEditionItemAvailabilityResult
+{
+    GENERATED_BODY()
+public:
+    FBPAdminIncrementLimitedEditionItemAvailabilityResult() {};
+    FBPAdminIncrementLimitedEditionItemAvailabilityResult(PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityResult InData) : Data(InData) {};
+    PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityResult Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminIncrementPlayerStatisticVersionRequest"))
 struct FBPAdminIncrementPlayerStatisticVersionRequest
 {
@@ -3010,16 +3050,6 @@ public:
     PlayFab::AdminModels::FValueToDateModel Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminVirtualCurrencyBalanceModel", HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminVirtualCurrencyBalanceModel"))
-struct FBPAdminVirtualCurrencyBalanceModel
-{
-    GENERATED_BODY()
-public:
-    FBPAdminVirtualCurrencyBalanceModel() {};
-    FBPAdminVirtualCurrencyBalanceModel(PlayFab::AdminModels::FVirtualCurrencyBalanceModel InData) : Data(InData) {};
-    PlayFab::AdminModels::FVirtualCurrencyBalanceModel Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFAdminProxyLibrary.MakeBPAdminVirtualCurrencyData", HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminVirtualCurrencyData"))
 struct FBPAdminVirtualCurrencyData
 {
@@ -3045,6 +3075,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminAddPlayerTagResultDelegate, 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminAddServerBuildResultDelegate, const FBPAdminAddServerBuildResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminBanUsersResultDelegate, const FBPAdminBanUsersResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminBlankResultDelegate, const FBPAdminBlankResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCheckLimitedEditionItemAvailabilityResultDelegate, const FBPAdminCheckLimitedEditionItemAvailabilityResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerSharedSecretResultDelegate, const FBPAdminCreatePlayerSharedSecretResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerStatisticDefinitionResultDelegate, const FBPAdminCreatePlayerStatisticDefinitionResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreateTaskResultDelegate, const FBPAdminCreateTaskResult&, Result);
@@ -3089,6 +3120,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetUserBansResultDelegate, c
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetUserDataResultDelegate, const FBPAdminGetUserDataResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetUserInventoryResultDelegate, const FBPAdminGetUserInventoryResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGrantItemsToUsersResultDelegate, const FBPAdminGrantItemsToUsersResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminIncrementLimitedEditionItemAvailabilityResultDelegate, const FBPAdminIncrementLimitedEditionItemAvailabilityResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminIncrementPlayerStatisticVersionResultDelegate, const FBPAdminIncrementPlayerStatisticVersionResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminListBuildsResultDelegate, const FBPAdminListBuildsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminListVirtualCurrencyTypesResultDelegate, const FBPAdminListVirtualCurrencyTypesResult&, Result);

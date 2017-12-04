@@ -2872,7 +2872,6 @@ FBPServerPlayerProfileModel UPFServerProxyLibrary::MakeBPServerPlayerProfileMode
 	, TArray<FBPServerTagModel> InTags
 	, int32 InTotalValueToDateInUSD
 	, TArray<FBPServerValueToDateModel> InValuesToDate
-	, TArray<FBPServerVirtualCurrencyBalanceModel> InVirtualCurrencyBalances
     )
 {
     FBPServerPlayerProfileModel Out = FBPServerPlayerProfileModel();
@@ -2921,10 +2920,6 @@ FBPServerPlayerProfileModel UPFServerProxyLibrary::MakeBPServerPlayerProfileMode
 	{
 		Out.Data.ValuesToDate.Add(elem.Data);
 	}
-	for (const FBPServerVirtualCurrencyBalanceModel& elem : InVirtualCurrencyBalances)
-	{
-		Out.Data.VirtualCurrencyBalances.Add(elem.Data);
-	}
 	
     return Out;
 }
@@ -2948,7 +2943,6 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileModel(
 	, TArray<FBPServerTagModel>& OutTags
 	, int32& OutTotalValueToDateInUSD
 	, TArray<FBPServerValueToDateModel>& OutValuesToDate
-	, TArray<FBPServerVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
  )
 {
     for (const PlayFab::ServerModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
@@ -2995,10 +2989,6 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfileModel(
 	for (const PlayFab::ServerModels::FValueToDateModel& elem : In.Data.ValuesToDate)
 	{
 		OutValuesToDate.Add(FBPServerValueToDateModel(elem));
-	}
-	for (const PlayFab::ServerModels::FVirtualCurrencyBalanceModel& elem : In.Data.VirtualCurrencyBalances)
-	{
-		OutVirtualCurrencyBalances.Add(FBPServerVirtualCurrencyBalanceModel(elem));
 	}
 	
 }
@@ -3158,7 +3148,6 @@ FBPServerPushNotificationPackage UPFServerProxyLibrary::MakeBPServerPushNotifica
 	, FString InCustomData
 	, FString InIcon
 	, FString InMessage
-	, FString InScheduleDate
 	, FString InSound
 	, FString InTitle
     )
@@ -3168,7 +3157,6 @@ FBPServerPushNotificationPackage UPFServerProxyLibrary::MakeBPServerPushNotifica
 	Out.Data.CustomData = InCustomData;
 	Out.Data.Icon = InIcon;
 	Out.Data.Message = InMessage;
-	Out.Data.ScheduleDate = InScheduleDate;
 	Out.Data.Sound = InSound;
 	Out.Data.Title = InTitle;
 	
@@ -3180,7 +3168,6 @@ void UPFServerProxyLibrary::BreakBPServerPushNotificationPackage(
 	, FString& OutCustomData
 	, FString& OutIcon
 	, FString& OutMessage
-	, FString& OutScheduleDate
 	, FString& OutSound
 	, FString& OutTitle
  )
@@ -3189,7 +3176,6 @@ void UPFServerProxyLibrary::BreakBPServerPushNotificationPackage(
 	OutCustomData = In.Data.CustomData;
 	OutIcon = In.Data.Icon;
 	OutMessage = In.Data.Message;
-	OutScheduleDate = In.Data.ScheduleDate;
 	OutSound = In.Data.Sound;
 	OutTitle = In.Data.Title;
 	
@@ -4791,29 +4777,6 @@ void UPFServerProxyLibrary::BreakBPServerValueToDateModel(
     OutCurrency = In.Data.Currency;
 	OutTotalValue = In.Data.TotalValue;
 	OutTotalValueAsDecimal = In.Data.TotalValueAsDecimal;
-	
-}
-
-// VirtualCurrencyBalanceModel
-FBPServerVirtualCurrencyBalanceModel UPFServerProxyLibrary::MakeBPServerVirtualCurrencyBalanceModel(
-    FString InCurrency
-	, int32 InTotalValue
-    )
-{
-    FBPServerVirtualCurrencyBalanceModel Out = FBPServerVirtualCurrencyBalanceModel();
-    Out.Data.Currency = InCurrency;
-	Out.Data.TotalValue = InTotalValue;
-	
-    return Out;
-}
-void UPFServerProxyLibrary::BreakBPServerVirtualCurrencyBalanceModel(
-    const FBPServerVirtualCurrencyBalanceModel& In
-	, FString& OutCurrency
-	, int32& OutTotalValue
- )
-{
-    OutCurrency = In.Data.Currency;
-	OutTotalValue = In.Data.TotalValue;
 	
 }
 

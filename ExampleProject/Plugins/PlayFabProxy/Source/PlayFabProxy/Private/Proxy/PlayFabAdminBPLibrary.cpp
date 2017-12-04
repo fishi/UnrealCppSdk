@@ -610,6 +610,29 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItemContainerInfo(
 	
 }
 
+// CheckLimitedEditionItemAvailabilityRequest
+FBPAdminCheckLimitedEditionItemAvailabilityRequest UPFAdminProxyLibrary::MakeBPAdminCheckLimitedEditionItemAvailabilityRequest(
+    FString InCatalogVersion
+	, FString InItemId
+    )
+{
+    FBPAdminCheckLimitedEditionItemAvailabilityRequest Out = FBPAdminCheckLimitedEditionItemAvailabilityRequest();
+    Out.Data.CatalogVersion = InCatalogVersion;
+	Out.Data.ItemId = InItemId;
+	
+    return Out;
+}
+
+// CheckLimitedEditionItemAvailabilityResult
+void UPFAdminProxyLibrary::BreakBPAdminCheckLimitedEditionItemAvailabilityResult(
+    const FBPAdminCheckLimitedEditionItemAvailabilityResult& In
+	, int32& OutAmount
+ )
+{
+    OutAmount = In.Data.Amount;
+	
+}
+
 // CloudScriptFile
 FBPAdminCloudScriptFile UPFAdminProxyLibrary::MakeBPAdminCloudScriptFile(
     FString InFileContents
@@ -2046,6 +2069,29 @@ void UPFAdminProxyLibrary::BreakBPAdminGrantItemsToUsersResult(
 	
 }
 
+// IncrementLimitedEditionItemAvailabilityRequest
+FBPAdminIncrementLimitedEditionItemAvailabilityRequest UPFAdminProxyLibrary::MakeBPAdminIncrementLimitedEditionItemAvailabilityRequest(
+    int32 InAmount
+	, FString InCatalogVersion
+	, FString InItemId
+    )
+{
+    FBPAdminIncrementLimitedEditionItemAvailabilityRequest Out = FBPAdminIncrementLimitedEditionItemAvailabilityRequest();
+    Out.Data.Amount = InAmount;
+	Out.Data.CatalogVersion = InCatalogVersion;
+	Out.Data.ItemId = InItemId;
+	
+    return Out;
+}
+
+// IncrementLimitedEditionItemAvailabilityResult
+void UPFAdminProxyLibrary::BreakBPAdminIncrementLimitedEditionItemAvailabilityResult(
+    const FBPAdminIncrementLimitedEditionItemAvailabilityResult& In
+ )
+{
+    
+}
+
 // IncrementPlayerStatisticVersionRequest
 FBPAdminIncrementPlayerStatisticVersionRequest UPFAdminProxyLibrary::MakeBPAdminIncrementPlayerStatisticVersionRequest(
     FString InStatisticName
@@ -2770,7 +2816,6 @@ FBPAdminPlayerProfileModel UPFAdminProxyLibrary::MakeBPAdminPlayerProfileModel(
 	, TArray<FBPAdminTagModel> InTags
 	, int32 InTotalValueToDateInUSD
 	, TArray<FBPAdminValueToDateModel> InValuesToDate
-	, TArray<FBPAdminVirtualCurrencyBalanceModel> InVirtualCurrencyBalances
     )
 {
     FBPAdminPlayerProfileModel Out = FBPAdminPlayerProfileModel();
@@ -2819,10 +2864,6 @@ FBPAdminPlayerProfileModel UPFAdminProxyLibrary::MakeBPAdminPlayerProfileModel(
 	{
 		Out.Data.ValuesToDate.Add(elem.Data);
 	}
-	for (const FBPAdminVirtualCurrencyBalanceModel& elem : InVirtualCurrencyBalances)
-	{
-		Out.Data.VirtualCurrencyBalances.Add(elem.Data);
-	}
 	
     return Out;
 }
@@ -2846,7 +2887,6 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfileModel(
 	, TArray<FBPAdminTagModel>& OutTags
 	, int32& OutTotalValueToDateInUSD
 	, TArray<FBPAdminValueToDateModel>& OutValuesToDate
-	, TArray<FBPAdminVirtualCurrencyBalanceModel>& OutVirtualCurrencyBalances
  )
 {
     for (const PlayFab::AdminModels::FAdCampaignAttributionModel& elem : In.Data.AdCampaignAttributions)
@@ -2893,10 +2933,6 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfileModel(
 	for (const PlayFab::AdminModels::FValueToDateModel& elem : In.Data.ValuesToDate)
 	{
 		OutValuesToDate.Add(FBPAdminValueToDateModel(elem));
-	}
-	for (const PlayFab::AdminModels::FVirtualCurrencyBalanceModel& elem : In.Data.VirtualCurrencyBalances)
-	{
-		OutVirtualCurrencyBalances.Add(FBPAdminVirtualCurrencyBalanceModel(elem));
 	}
 	
 }
@@ -4697,29 +4733,6 @@ void UPFAdminProxyLibrary::BreakBPAdminValueToDateModel(
     OutCurrency = In.Data.Currency;
 	OutTotalValue = In.Data.TotalValue;
 	OutTotalValueAsDecimal = In.Data.TotalValueAsDecimal;
-	
-}
-
-// VirtualCurrencyBalanceModel
-FBPAdminVirtualCurrencyBalanceModel UPFAdminProxyLibrary::MakeBPAdminVirtualCurrencyBalanceModel(
-    FString InCurrency
-	, int32 InTotalValue
-    )
-{
-    FBPAdminVirtualCurrencyBalanceModel Out = FBPAdminVirtualCurrencyBalanceModel();
-    Out.Data.Currency = InCurrency;
-	Out.Data.TotalValue = InTotalValue;
-	
-    return Out;
-}
-void UPFAdminProxyLibrary::BreakBPAdminVirtualCurrencyBalanceModel(
-    const FBPAdminVirtualCurrencyBalanceModel& In
-	, FString& OutCurrency
-	, int32& OutTotalValue
- )
-{
-    OutCurrency = In.Data.Currency;
-	OutTotalValue = In.Data.TotalValue;
 	
 }
 

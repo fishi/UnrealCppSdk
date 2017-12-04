@@ -2099,6 +2099,33 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    struct PLAYFAB_API FDeviceInfoRequest : public FPlayFabBaseModel
+    {
+        
+        // [optional] Information posted to the PlayStream Event. Currently arbitrary, and specific to the environment sending it.
+        TMap<FString, FJsonKeeper> Info;
+
+        FDeviceInfoRequest() :
+            FPlayFabBaseModel(),
+            Info()
+            {}
+
+        FDeviceInfoRequest(const FDeviceInfoRequest& src) :
+            FPlayFabBaseModel(),
+            Info(src.Info)
+            {}
+
+        FDeviceInfoRequest(const TSharedPtr<FJsonObject>& obj) : FDeviceInfoRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FDeviceInfoRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
     struct PLAYFAB_API FEmptyResult : public FPlayFabBaseModel
     {
         
@@ -2750,37 +2777,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
-    struct PLAYFAB_API FVirtualCurrencyBalanceModel : public FPlayFabBaseModel
-    {
-        
-        // [optional] Name of the virtual currency
-        FString Currency;
-        // Balance of the virtual currency
-        int32 TotalValue;
-
-        FVirtualCurrencyBalanceModel() :
-            FPlayFabBaseModel(),
-            Currency(),
-            TotalValue(0)
-            {}
-
-        FVirtualCurrencyBalanceModel(const FVirtualCurrencyBalanceModel& src) :
-            FPlayFabBaseModel(),
-            Currency(src.Currency),
-            TotalValue(src.TotalValue)
-            {}
-
-        FVirtualCurrencyBalanceModel(const TSharedPtr<FJsonObject>& obj) : FVirtualCurrencyBalanceModel()
-        {
-            readFromValue(obj);
-        }
-
-        ~FVirtualCurrencyBalanceModel();
-
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-    
     struct PLAYFAB_API FPlayerProfileModel : public FPlayFabBaseModel
     {
         
@@ -2822,8 +2818,6 @@ namespace ClientModels
         Boxed<uint32> TotalValueToDateInUSD;
         // [optional] List of the player's lifetime purchase totals, summed by real-money currency
         TArray<FValueToDateModel> ValuesToDate;
-        // [optional] List of the player's virtual currency balances
-        TArray<FVirtualCurrencyBalanceModel> VirtualCurrencyBalances;
 
         FPlayerProfileModel() :
             FPlayFabBaseModel(),
@@ -2845,8 +2839,7 @@ namespace ClientModels
             Tags(),
             TitleId(),
             TotalValueToDateInUSD(),
-            ValuesToDate(),
-            VirtualCurrencyBalances()
+            ValuesToDate()
             {}
 
         FPlayerProfileModel(const FPlayerProfileModel& src) :
@@ -2869,8 +2862,7 @@ namespace ClientModels
             Tags(src.Tags),
             TitleId(src.TitleId),
             TotalValueToDateInUSD(src.TotalValueToDateInUSD),
-            ValuesToDate(src.ValuesToDate),
-            VirtualCurrencyBalances(src.VirtualCurrencyBalances)
+            ValuesToDate(src.ValuesToDate)
             {}
 
         FPlayerProfileModel(const TSharedPtr<FJsonObject>& obj) : FPlayerProfileModel()
@@ -4718,6 +4710,64 @@ namespace ClientModels
         }
 
         ~FGetLeaderboardResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FGetPaymentTokenRequest : public FPlayFabBaseModel
+    {
+        
+        // The name of service to provide the payment token. Allowed Values are: xsolla
+        FString TokenProvider;
+
+        FGetPaymentTokenRequest() :
+            FPlayFabBaseModel(),
+            TokenProvider()
+            {}
+
+        FGetPaymentTokenRequest(const FGetPaymentTokenRequest& src) :
+            FPlayFabBaseModel(),
+            TokenProvider(src.TokenProvider)
+            {}
+
+        FGetPaymentTokenRequest(const TSharedPtr<FJsonObject>& obj) : FGetPaymentTokenRequest()
+        {
+            readFromValue(obj);
+        }
+
+        ~FGetPaymentTokenRequest();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FGetPaymentTokenResult : public FPlayFabBaseModel
+    {
+        
+        // [optional] PlayFab's purchase order identifier.
+        FString OrderId;
+        // [optional] The token from provider.
+        FString ProviderToken;
+
+        FGetPaymentTokenResult() :
+            FPlayFabBaseModel(),
+            OrderId(),
+            ProviderToken()
+            {}
+
+        FGetPaymentTokenResult(const FGetPaymentTokenResult& src) :
+            FPlayFabBaseModel(),
+            OrderId(src.OrderId),
+            ProviderToken(src.ProviderToken)
+            {}
+
+        FGetPaymentTokenResult(const TSharedPtr<FJsonObject>& obj) : FGetPaymentTokenResult()
+        {
+            readFromValue(obj);
+        }
+
+        ~FGetPaymentTokenResult();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

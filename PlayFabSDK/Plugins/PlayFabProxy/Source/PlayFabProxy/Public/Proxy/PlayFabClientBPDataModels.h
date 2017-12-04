@@ -838,6 +838,16 @@ public:
     PlayFab::ClientModels::FCurrentGamesResult Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientDeviceInfoRequest"))
+struct FBPClientDeviceInfoRequest
+{
+    GENERATED_BODY()
+public:
+    FBPClientDeviceInfoRequest() {};
+    FBPClientDeviceInfoRequest(PlayFab::ClientModels::FDeviceInfoRequest InData) : Data(InData) {};
+    PlayFab::ClientModels::FDeviceInfoRequest Data;
+};
+
 UENUM(BlueprintType)
 enum class EBPClientEmailVerificationStatus : uint8
 {
@@ -1231,6 +1241,26 @@ public:
     FBPClientGetLeaderboardResult() {};
     FBPClientGetLeaderboardResult(PlayFab::ClientModels::FGetLeaderboardResult InData) : Data(InData) {};
     PlayFab::ClientModels::FGetLeaderboardResult Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientGetPaymentTokenRequest"))
+struct FBPClientGetPaymentTokenRequest
+{
+    GENERATED_BODY()
+public:
+    FBPClientGetPaymentTokenRequest() {};
+    FBPClientGetPaymentTokenRequest(PlayFab::ClientModels::FGetPaymentTokenRequest InData) : Data(InData) {};
+    PlayFab::ClientModels::FGetPaymentTokenRequest Data;
+};
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPaymentTokenResult"))
+struct FBPClientGetPaymentTokenResult
+{
+    GENERATED_BODY()
+public:
+    FBPClientGetPaymentTokenResult() {};
+    FBPClientGetPaymentTokenResult(PlayFab::ClientModels::FGetPaymentTokenResult InData) : Data(InData) {};
+    PlayFab::ClientModels::FGetPaymentTokenResult Data;
 };
 
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientGetPhotonAuthenticationTokenRequest"))
@@ -3621,16 +3651,6 @@ public:
     PlayFab::ClientModels::FValueToDateModel Data;
 };
 
-USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientVirtualCurrencyBalanceModel", HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientVirtualCurrencyBalanceModel"))
-struct FBPClientVirtualCurrencyBalanceModel
-{
-    GENERATED_BODY()
-public:
-    FBPClientVirtualCurrencyBalanceModel() {};
-    FBPClientVirtualCurrencyBalanceModel(PlayFab::ClientModels::FVirtualCurrencyBalanceModel InData) : Data(InData) {};
-    PlayFab::ClientModels::FVirtualCurrencyBalanceModel Data;
-};
-
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientVirtualCurrencyRechargeTime", HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientVirtualCurrencyRechargeTime"))
 struct FBPClientVirtualCurrencyRechargeTime
 {
@@ -3711,6 +3731,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetLeaderboardAroundCharact
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetLeaderboardAroundPlayerResultDelegate, const FBPClientGetLeaderboardAroundPlayerResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetLeaderboardForUsersCharactersResultDelegate, const FBPClientGetLeaderboardForUsersCharactersResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetLeaderboardResultDelegate, const FBPClientGetLeaderboardResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPaymentTokenResultDelegate, const FBPClientGetPaymentTokenResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPhotonAuthenticationTokenResultDelegate, const FBPClientGetPhotonAuthenticationTokenResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerCombinedInfoResultDelegate, const FBPClientGetPlayerCombinedInfoResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerCombinedInfoResultPayloadDelegate, const FBPClientGetPlayerCombinedInfoResultPayload&, Result);
