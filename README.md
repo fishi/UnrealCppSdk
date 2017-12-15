@@ -4,7 +4,7 @@ This repository will be made private and/or deleted at an unspecified point in t
 
 ## 1. Overview:
 
-Unreal 4.9, 4.12, 4.13, 4.14, 4.15 C++ SDKs for PlayFab
+Unreal 4.14 thru 4.18 C++ SDKs for PlayFab
 
 The Unreal C++ SDK includes:
 
