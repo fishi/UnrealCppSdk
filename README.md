@@ -1,7 +1,5 @@
 # Unreal 4 C++ SDK for PlayFab README
 
-This repository will be made private and/or deleted at an unspecified point in the future.  It is also no longer updated with the latest PlayFab API changes, and it does not support Unreal versions greater than 4.15 (meaning it's two versions out of date).
-
 ## 1. Overview:
 
 Unreal 4.14 thru 4.18 C++ SDKs for PlayFab
