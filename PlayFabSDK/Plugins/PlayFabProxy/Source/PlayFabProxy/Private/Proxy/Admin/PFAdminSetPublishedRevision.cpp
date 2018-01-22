@@ -26,15 +26,13 @@ void UPFAdminSetPublishedRevision::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->SetPublishedRevision(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminSetPublishedRevision::OnSuccessCallback(const PlayFab::AdminModels::FSetPublishedRevisionResult& Result)

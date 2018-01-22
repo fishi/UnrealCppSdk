@@ -26,15 +26,13 @@ void UPFClientGetTitlePublicKey::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetTitlePublicKey(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetTitlePublicKey::OnSuccessCallback(const PlayFab::ClientModels::FGetTitlePublicKeyResult& Result)

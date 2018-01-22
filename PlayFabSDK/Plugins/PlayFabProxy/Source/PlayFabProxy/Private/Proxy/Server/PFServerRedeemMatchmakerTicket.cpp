@@ -26,15 +26,13 @@ void UPFServerRedeemMatchmakerTicket::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->RedeemMatchmakerTicket(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerRedeemMatchmakerTicket::OnSuccessCallback(const PlayFab::ServerModels::FRedeemMatchmakerTicketResult& Result)

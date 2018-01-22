@@ -26,15 +26,13 @@ void UPFServerSetFriendTags::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->SetFriendTags(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerSetFriendTags::OnSuccessCallback(const PlayFab::ServerModels::FEmptyResult& Result)

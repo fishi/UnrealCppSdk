@@ -26,15 +26,13 @@ void UPFAdminGetCatalogItems::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetCatalogItems(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetCatalogItems::OnSuccessCallback(const PlayFab::AdminModels::FGetCatalogItemsResult& Result)

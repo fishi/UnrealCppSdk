@@ -26,15 +26,13 @@ void UPFClientGetUserPublisherReadOnlyData::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetUserPublisherReadOnlyData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetUserPublisherReadOnlyData::OnSuccessCallback(const PlayFab::ClientModels::FGetUserDataResult& Result)

@@ -26,15 +26,13 @@ void UPFMatchmakerUserInfo::Activate()
 
     bool CallResult = false;
 
-    if(MatchmakerAPI.IsValid())
+    if (MatchmakerAPI.IsValid())
     {
         CallResult = MatchmakerAPI->UserInfo(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFMatchmakerUserInfo::OnSuccessCallback(const PlayFab::MatchmakerModels::FUserInfoResponse& Result)

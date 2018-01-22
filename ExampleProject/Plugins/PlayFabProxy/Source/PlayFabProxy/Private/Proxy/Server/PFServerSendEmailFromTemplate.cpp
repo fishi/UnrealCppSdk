@@ -26,15 +26,13 @@ void UPFServerSendEmailFromTemplate::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->SendEmailFromTemplate(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerSendEmailFromTemplate::OnSuccessCallback(const PlayFab::ServerModels::FSendEmailFromTemplateResult& Result)

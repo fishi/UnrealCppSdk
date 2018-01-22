@@ -26,15 +26,13 @@ void UPFAdminBanUsers::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->BanUsers(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminBanUsers::OnSuccessCallback(const PlayFab::AdminModels::FBanUsersResult& Result)

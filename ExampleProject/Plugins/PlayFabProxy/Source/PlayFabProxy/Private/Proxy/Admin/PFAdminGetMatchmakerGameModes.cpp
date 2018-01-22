@@ -26,15 +26,13 @@ void UPFAdminGetMatchmakerGameModes::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetMatchmakerGameModes(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetMatchmakerGameModes::OnSuccessCallback(const PlayFab::AdminModels::FGetMatchmakerGameModesResult& Result)

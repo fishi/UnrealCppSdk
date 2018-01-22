@@ -26,15 +26,13 @@ void UPFServerAddPlayerTag::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->AddPlayerTag(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerAddPlayerTag::OnSuccessCallback(const PlayFab::ServerModels::FAddPlayerTagResult& Result)

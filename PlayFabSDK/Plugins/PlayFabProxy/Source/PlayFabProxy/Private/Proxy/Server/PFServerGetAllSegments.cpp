@@ -25,15 +25,13 @@ void UPFServerGetAllSegments::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetAllSegments(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetAllSegments::OnSuccessCallback(const PlayFab::ServerModels::FGetAllSegmentsResult& Result)

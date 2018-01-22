@@ -26,15 +26,13 @@ void UPFClientGetContentDownloadUrl::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetContentDownloadUrl(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetContentDownloadUrl::OnSuccessCallback(const PlayFab::ClientModels::FGetContentDownloadUrlResult& Result)

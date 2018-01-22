@@ -26,15 +26,13 @@ void UPFAdminDeletePlayerSharedSecret::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->DeletePlayerSharedSecret(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminDeletePlayerSharedSecret::OnSuccessCallback(const PlayFab::AdminModels::FDeletePlayerSharedSecretResult& Result)

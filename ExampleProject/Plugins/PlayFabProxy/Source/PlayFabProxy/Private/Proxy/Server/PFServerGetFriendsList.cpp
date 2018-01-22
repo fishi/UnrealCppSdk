@@ -26,15 +26,13 @@ void UPFServerGetFriendsList::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetFriendsList(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetFriendsList::OnSuccessCallback(const PlayFab::ServerModels::FGetFriendsListResult& Result)

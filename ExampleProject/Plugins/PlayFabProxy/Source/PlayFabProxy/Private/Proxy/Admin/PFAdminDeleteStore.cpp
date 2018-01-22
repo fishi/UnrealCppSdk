@@ -26,15 +26,13 @@ void UPFAdminDeleteStore::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->DeleteStore(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminDeleteStore::OnSuccessCallback(const PlayFab::AdminModels::FDeleteStoreResult& Result)

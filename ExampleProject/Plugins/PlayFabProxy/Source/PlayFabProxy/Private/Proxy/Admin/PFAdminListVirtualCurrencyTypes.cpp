@@ -25,15 +25,13 @@ void UPFAdminListVirtualCurrencyTypes::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->ListVirtualCurrencyTypes(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminListVirtualCurrencyTypes::OnSuccessCallback(const PlayFab::AdminModels::FListVirtualCurrencyTypesResult& Result)

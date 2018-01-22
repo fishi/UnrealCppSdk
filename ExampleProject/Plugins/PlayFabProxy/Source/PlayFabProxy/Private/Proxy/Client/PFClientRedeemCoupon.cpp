@@ -26,15 +26,13 @@ void UPFClientRedeemCoupon::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->RedeemCoupon(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientRedeemCoupon::OnSuccessCallback(const PlayFab::ClientModels::FRedeemCouponResult& Result)

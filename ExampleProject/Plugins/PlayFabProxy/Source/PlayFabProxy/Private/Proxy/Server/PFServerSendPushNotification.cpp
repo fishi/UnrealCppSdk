@@ -26,15 +26,13 @@ void UPFServerSendPushNotification::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->SendPushNotification(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerSendPushNotification::OnSuccessCallback(const PlayFab::ServerModels::FSendPushNotificationResult& Result)

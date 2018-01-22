@@ -8,16 +8,16 @@ DECLARE_LOG_CATEGORY_EXTERN(LogPlayFab, Log, All);
 // forward declaration of classes
 namespace PlayFab
 {
-    class UPlayFabClientAPI;
-    class UPlayFabServerAPI;
-    class UPlayFabMatchmakerAPI;
     class UPlayFabAdminAPI;
+    class UPlayFabMatchmakerAPI;
+    class UPlayFabServerAPI;
+    class UPlayFabClientAPI;
 }
 
-typedef TSharedPtr<class PlayFab::UPlayFabClientAPI> PlayFabClientPtr;
-typedef TSharedPtr<class PlayFab::UPlayFabServerAPI> PlayFabServerPtr;
-typedef TSharedPtr<class PlayFab::UPlayFabMatchmakerAPI> PlayFabMatchmakerPtr;
 typedef TSharedPtr<class PlayFab::UPlayFabAdminAPI> PlayFabAdminPtr;
+typedef TSharedPtr<class PlayFab::UPlayFabMatchmakerAPI> PlayFabMatchmakerPtr;
+typedef TSharedPtr<class PlayFab::UPlayFabServerAPI> PlayFabServerPtr;
+typedef TSharedPtr<class PlayFab::UPlayFabClientAPI> PlayFabClientPtr;
 
 /**
 * The public interface to this module.  In most cases, this interface is only public to sibling modules
@@ -49,8 +49,8 @@ public:
     }
 
     virtual FString GetTitleId() const = 0;
-    virtual PlayFabClientPtr GetClientAPI() const = 0;
-    virtual PlayFabServerPtr GetServerAPI() const = 0;
-    virtual PlayFabMatchmakerPtr GetMatchmakerAPI() const = 0;
     virtual PlayFabAdminPtr GetAdminAPI() const = 0;
+    virtual PlayFabMatchmakerPtr GetMatchmakerAPI() const = 0;
+    virtual PlayFabServerPtr GetServerAPI() const = 0;
+    virtual PlayFabClientPtr GetClientAPI() const = 0;
 };

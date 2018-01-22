@@ -26,15 +26,13 @@ void UPFAdminRefundPurchase::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->RefundPurchase(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminRefundPurchase::OnSuccessCallback(const PlayFab::AdminModels::FRefundPurchaseResponse& Result)

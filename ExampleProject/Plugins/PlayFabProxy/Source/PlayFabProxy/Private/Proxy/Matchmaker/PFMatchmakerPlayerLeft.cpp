@@ -26,15 +26,13 @@ void UPFMatchmakerPlayerLeft::Activate()
 
     bool CallResult = false;
 
-    if(MatchmakerAPI.IsValid())
+    if (MatchmakerAPI.IsValid())
     {
         CallResult = MatchmakerAPI->PlayerLeft(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFMatchmakerPlayerLeft::OnSuccessCallback(const PlayFab::MatchmakerModels::FPlayerLeftResponse& Result)

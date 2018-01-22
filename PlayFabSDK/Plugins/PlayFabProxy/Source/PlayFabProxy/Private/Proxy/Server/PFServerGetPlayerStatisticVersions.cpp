@@ -26,15 +26,13 @@ void UPFServerGetPlayerStatisticVersions::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetPlayerStatisticVersions(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetPlayerStatisticVersions::OnSuccessCallback(const PlayFab::ServerModels::FGetPlayerStatisticVersionsResult& Result)

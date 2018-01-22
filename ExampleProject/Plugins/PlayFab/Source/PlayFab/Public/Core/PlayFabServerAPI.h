@@ -133,12 +133,11 @@ namespace PlayFab
         void SetDevSecretKey(const FString& developerSecretKey);
 
         // ------------ Generated API calls
-        /**
-         * Increments  the character's balance of the specified virtual currency by the stated amount
-         */
+        /** Increments  the character's balance of the specified virtual currency by the stated amount */
         bool AddCharacterVirtualCurrency(ServerModels::FAddCharacterVirtualCurrencyRequest& request, const FAddCharacterVirtualCurrencyDelegate& SuccessDelegate = FAddCharacterVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds the Friend user to the friendlist of the user with PlayFabId. At least one of FriendPlayFabId,FriendUsername,FriendEmail, or FriendTitleDisplayName should be initialized.
+         * Adds the Friend user to the friendlist of the user with PlayFabId. At least one of
+         * FriendPlayFabId,FriendUsername,FriendEmail, or FriendTitleDisplayName should be initialized.
          */
         bool AddFriend(ServerModels::FAddFriendRequest& request, const FAddFriendDelegate& SuccessDelegate = FAddFriendDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -147,33 +146,32 @@ namespace PlayFab
          */
         bool AddPlayerTag(ServerModels::FAddPlayerTagRequest& request, const FAddPlayerTagDelegate& SuccessDelegate = FAddPlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds users to the set of those able to update both the shared data, as well as the set of users  in the group. Only users in the group (and the server) can add new members. Shared Groups are designed for sharing data  between a very small number of players, please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+         * Adds users to the set of those able to update both the shared data, as well as the set of users  in the group. Only
+         * users in the group (and the server) can add new members. Shared Groups are designed for sharing data  between a very
+         * small number of players, please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
          */
         bool AddSharedGroupMembers(ServerModels::FAddSharedGroupMembersRequest& request, const FAddSharedGroupMembersDelegate& SuccessDelegate = FAddSharedGroupMembersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Increments  the user's balance of the specified virtual currency by the stated amount
-         */
+        /** Increments  the user's balance of the specified virtual currency by the stated amount */
         bool AddUserVirtualCurrency(ServerModels::FAddUserVirtualCurrencyRequest& request, const FAddUserVirtualCurrencyDelegate& SuccessDelegate = FAddUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Validated a client's session ticket, and if successful, returns details for that user
          * Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
          */
         bool AuthenticateSessionTicket(ServerModels::FAuthenticateSessionTicketRequest& request, const FAuthenticateSessionTicketDelegate& SuccessDelegate = FAuthenticateSessionTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Awards the specified users the specified Steam achievements
-         */
+        /** Awards the specified users the specified Steam achievements */
         bool AwardSteamAchievement(ServerModels::FAwardSteamAchievementRequest& request, const FAwardSteamAchievementDelegate& SuccessDelegate = FAwardSteamAchievementDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Bans users by PlayFab ID with optional IP address, or MAC address for the provided game.
          * The existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so use this feature with caution. Returns information about the new bans.
          */
         bool BanUsers(ServerModels::FBanUsersRequest& request, const FBanUsersDelegate& SuccessDelegate = FBanUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Consume uses of a consumable item. When all uses are consumed, it will be removed from the player's inventory.
-         */
+        /** Consume uses of a consumable item. When all uses are consumed, it will be removed from the player's inventory. */
         bool ConsumeItem(ServerModels::FConsumeItemRequest& request, const FConsumeItemDelegate& SuccessDelegate = FConsumeItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Requests the creation of a shared group object, containing key/value pairs which may  be updated by all members of the group. When created by a server, the group will initially have no members.  Shared Groups are designed for sharing data between a very small number of players, please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+         * Requests the creation of a shared group object, containing key/value pairs which may  be updated by all members of the
+         * group. When created by a server, the group will initially have no members.  Shared Groups are designed for sharing data
+         * between a very small number of players, please see our guide:
+         * https://api.playfab.com/docs/tutorials/landing-players/shared-groups
          * If SharedGroupId is specified, the service will attempt to create a group with that  identifier, and will return an error if it is already in use. If no SharedGroupId is specified, a random identifier will be assigned.
          */
         bool CreateSharedGroup(ServerModels::FCreateSharedGroupRequest& request, const FCreateSharedGroupDelegate& SuccessDelegate = FCreateSharedGroupDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -183,7 +181,9 @@ namespace PlayFab
          */
         bool DeleteCharacterFromUser(ServerModels::FDeleteCharacterFromUserRequest& request, const FDeleteCharacterFromUserDelegate& SuccessDelegate = FDeleteCharacterFromUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Deletes a shared group, freeing up the shared group ID to be reused for a new group.  Shared Groups are designed for sharing data between a very small number of players, please see our guide:  https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+         * Deletes a shared group, freeing up the shared group ID to be reused for a new group.  Shared Groups are designed for
+         * sharing data between a very small number of players, please see our guide:
+         * https://api.playfab.com/docs/tutorials/landing-players/shared-groups
          */
         bool DeleteSharedGroup(ServerModels::FDeleteSharedGroupRequest& request, const FDeleteSharedGroupDelegate& SuccessDelegate = FDeleteSharedGroupDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -191,31 +191,29 @@ namespace PlayFab
          * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.  This API must be enabled for use as an option in the game manager website. It is disabled by default.
          */
         bool DeleteUsers(ServerModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Inform the matchmaker that a Game Server Instance is removed.
-         */
+        /** Inform the matchmaker that a Game Server Instance is removed. */
         bool DeregisterGame(ServerModels::FDeregisterGameRequest& request, const FDeregisterGameDelegate& SuccessDelegate = FDeregisterGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Returns the result of an evaluation of a Random Result Table - the ItemId from the game Catalog which would have been added to the player inventory, if the Random Result Table were added via a Bundle or a call to UnlockContainer.
+         * Returns the result of an evaluation of a Random Result Table - the ItemId from the game Catalog which would have been
+         * added to the player inventory, if the Random Result Table were added via a Bundle or a call to UnlockContainer.
          */
         bool EvaluateRandomResultTable(ServerModels::FEvaluateRandomResultTableRequest& request, const FEvaluateRandomResultTableDelegate& SuccessDelegate = FEvaluateRandomResultTableDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Executes a CloudScript function, with the 'currentPlayerId' variable set to the specified PlayFabId parameter value.
-         */
+        /** Executes a CloudScript function, with the 'currentPlayerId' variable set to the specified PlayFabId parameter value. */
         bool ExecuteCloudScript(ServerModels::FExecuteCloudScriptServerRequest& request, const FExecuteCloudScriptDelegate& SuccessDelegate = FExecuteCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
+         * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as
+         * GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
          * Request has no paramaters.
          */
+
         bool GetAllSegments(const FGetAllSegmentsDelegate& SuccessDelegate = FGetAllSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Lists all of the characters that belong to a specific user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
+         * Lists all of the characters that belong to a specific user. CharacterIds are not globally unique; characterId must be
+         * evaluated with the parent PlayFabId to guarantee uniqueness.
          * Returns a list of every character that currently belongs to a user.
          */
         bool GetAllUsersCharacters(ServerModels::FListUsersCharactersRequest& request, const FGetAllUsersCharactersDelegate& SuccessDelegate = FGetAllUsersCharactersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
-         */
+        /** Retrieves the specified version of the title's catalog of virtual goods, including all defined properties */
         bool GetCatalogItems(ServerModels::FGetCatalogItemsRequest& request, const FGetCatalogItemsDelegate& SuccessDelegate = FGetCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the title-specific custom data for the user which is readable and writable by the client
@@ -232,9 +230,7 @@ namespace PlayFab
          * All items currently in the character inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included. Also returns their virtual currency balances.
          */
         bool GetCharacterInventory(ServerModels::FGetCharacterInventoryRequest& request, const FGetCharacterInventoryDelegate& SuccessDelegate = FGetCharacterInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves a list of ranked characters for the given statistic, starting from the indicated point in the leaderboard
-         */
+        /** Retrieves a list of ranked characters for the given statistic, starting from the indicated point in the leaderboard */
         bool GetCharacterLeaderboard(ServerModels::FGetCharacterLeaderboardRequest& request, const FGetCharacterLeaderboardDelegate& SuccessDelegate = FGetCharacterLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the title-specific custom data for the user's character which can only be read by the client
@@ -247,35 +243,36 @@ namespace PlayFab
          */
         bool GetCharacterStatistics(ServerModels::FGetCharacterStatisticsRequest& request, const FGetCharacterStatisticsDelegate& SuccessDelegate = FGetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service.  Also, please be aware that the Content service is specifically PlayFab's CDN offering, for which standard CDN rates apply.
+         * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned
+         * URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the
+         * content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded,
+         * the query to retrieve the data will fail. See this post for more information:
+         * https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service.
+         * Also, please be aware that the Content service is specifically PlayFab's CDN offering, for which standard CDN rates
+         * apply.
          */
         bool GetContentDownloadUrl(ServerModels::FGetContentDownloadUrlRequest& request, const FGetContentDownloadUrlDelegate& SuccessDelegate = FGetContentDownloadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves a list of ranked friends of the given player for the given statistic, starting from the indicated point in the leaderboard
+         * Retrieves a list of ranked friends of the given player for the given statistic, starting from the indicated point in the
+         * leaderboard
          */
         bool GetFriendLeaderboard(ServerModels::FGetFriendLeaderboardRequest& request, const FGetFriendLeaderboardDelegate& SuccessDelegate = FGetFriendLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the current friends for the user with PlayFabId, constrained to users who have PlayFab accounts. Friends from linked accounts (Facebook, Steam) are also included. You may optionally exclude some linked services' friends.
+         * Retrieves the current friends for the user with PlayFabId, constrained to users who have PlayFab accounts. Friends from
+         * linked accounts (Facebook, Steam) are also included. You may optionally exclude some linked services' friends.
          */
         bool GetFriendsList(ServerModels::FGetFriendsListRequest& request, const FGetFriendsListDelegate& SuccessDelegate = FGetFriendsListDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves a list of ranked users for the given statistic, starting from the indicated point in the leaderboard
-         */
+        /** Retrieves a list of ranked users for the given statistic, starting from the indicated point in the leaderboard */
         bool GetLeaderboard(ServerModels::FGetLeaderboardRequest& request, const FGetLeaderboardDelegate& SuccessDelegate = FGetLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves a list of ranked characters for the given statistic, centered on the requested user
-         */
+        /** Retrieves a list of ranked characters for the given statistic, centered on the requested user */
         bool GetLeaderboardAroundCharacter(ServerModels::FGetLeaderboardAroundCharacterRequest& request, const FGetLeaderboardAroundCharacterDelegate& SuccessDelegate = FGetLeaderboardAroundCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves a list of ranked users for the given statistic, centered on the currently signed-in user
-         */
+        /** Retrieves a list of ranked users for the given statistic, centered on the currently signed-in user */
         bool GetLeaderboardAroundUser(ServerModels::FGetLeaderboardAroundUserRequest& request, const FGetLeaderboardAroundUserDelegate& SuccessDelegate = FGetLeaderboardAroundUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves a list of all of the user's characters for the given statistic.
-         */
+        /** Retrieves a list of all of the user's characters for the given statistic. */
         bool GetLeaderboardForUserCharacters(ServerModels::FGetLeaderboardForUsersCharactersRequest& request, const FGetLeaderboardForUserCharactersDelegate& SuccessDelegate = FGetLeaderboardForUserCharactersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Returns whatever info is requested in the response for the user. Note that PII (like email address, facebook id)             may be returned. All parameters default to false.
+         * Returns whatever info is requested in the response for the user. Note that PII (like email address, facebook id)
+         * may be returned. All parameters default to false.
          */
         bool GetPlayerCombinedInfo(ServerModels::FGetPlayerCombinedInfoRequest& request, const FGetPlayerCombinedInfoDelegate& SuccessDelegate = FGetPlayerCombinedInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -283,34 +280,30 @@ namespace PlayFab
          * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
          */
         bool GetPlayerProfile(ServerModels::FGetPlayerProfileRequest& request, const FGetPlayerProfileDelegate& SuccessDelegate = FGetPlayerProfileDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * List all segments that a player currently belongs to at this moment in time.
-         */
+        /** List all segments that a player currently belongs to at this moment in time. */
         bool GetPlayerSegments(ServerModels::FGetPlayersSegmentsRequest& request, const FGetPlayerSegmentsDelegate& SuccessDelegate = FGetPlayerSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected in the results. AB Test segments are currently not supported by this operation.
+         * Allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match
+         * the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span
+         * on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected
+         * in the results. AB Test segments are currently not supported by this operation.
          * Initial request must contain at least a Segment ID. Subsequent requests must contain the Segment ID as well as the Continuation Token. Failure to send the Continuation Token will result in a new player segment list being generated. Each time the Continuation Token is passed in the length of the Total Seconds to Live is refreshed. If too much time passes between requests to the point that a subsequent request is past the Total Seconds to Live an error will be returned and paging will be terminated. This API is resource intensive and should not be used in scenarios which might generate high request volumes. Only one request to this API at a time should be made per title. Concurrent requests to the API may be rejected with the APIConcurrentRequestLimitExceeded error.
          */
         bool GetPlayersInSegment(ServerModels::FGetPlayersInSegmentRequest& request, const FGetPlayersInSegmentDelegate& SuccessDelegate = FGetPlayersInSegmentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the current version and values for the indicated statistics, for the local player.
-         */
+        /** Retrieves the current version and values for the indicated statistics, for the local player. */
         bool GetPlayerStatistics(ServerModels::FGetPlayerStatisticsRequest& request, const FGetPlayerStatisticsDelegate& SuccessDelegate = FGetPlayerStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the information on the available versions of the specified statistic.
-         */
+        /** Retrieves the information on the available versions of the specified statistic. */
         bool GetPlayerStatisticVersions(ServerModels::FGetPlayerStatisticVersionsRequest& request, const FGetPlayerStatisticVersionsDelegate& SuccessDelegate = FGetPlayerStatisticVersionsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Get all tags with a given Namespace (optional) from a player profile.
          * This API will return a list of canonical tags which includes both namespace and tag's name. If namespace is not provided, the result is a list of all canonical tags. TagName can be used for segmentation and Namespace is limited to 128 characters.
          */
         bool GetPlayerTags(ServerModels::FGetPlayerTagsRequest& request, const FGetPlayerTagsDelegate& SuccessDelegate = FGetPlayerTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the unique PlayFab identifiers for the given set of Facebook identifiers.
-         */
+        /** Retrieves the unique PlayFab identifiers for the given set of Facebook identifiers. */
         bool GetPlayFabIDsFromFacebookIDs(ServerModels::FGetPlayFabIDsFromFacebookIDsRequest& request, const FGetPlayFabIDsFromFacebookIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromFacebookIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the unique PlayFab identifiers for the given set of Steam identifiers. The Steam identifiers  are the profile IDs for the user accounts, available as SteamId in the Steamworks Community API calls.
+         * Retrieves the unique PlayFab identifiers for the given set of Steam identifiers. The Steam identifiers  are the profile
+         * IDs for the user accounts, available as SteamId in the Steamworks Community API calls.
          */
         bool GetPlayFabIDsFromSteamIDs(ServerModels::FGetPlayFabIDsFromSteamIDsRequest& request, const FGetPlayFabIDsFromSteamIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromSteamIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -319,17 +312,21 @@ namespace PlayFab
          */
         bool GetPublisherData(ServerModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the configuration information for the specified random results tables for the title, including all ItemId values and weights
+         * Retrieves the configuration information for the specified random results tables for the title, including all ItemId
+         * values and weights
          */
         bool GetRandomResultTables(ServerModels::FGetRandomResultTablesRequest& request, const FGetRandomResultTablesDelegate& SuccessDelegate = FGetRandomResultTablesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves data stored in a shared group object, as well as the list of members in the group.  The server can access all public and private group data. Shared Groups are designed for sharing data between a very  small number of players, please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+         * Retrieves data stored in a shared group object, as well as the list of members in the group.  The server can access all
+         * public and private group data. Shared Groups are designed for sharing data between a very  small number of players,
+         * please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
          */
         bool GetSharedGroupData(ServerModels::FGetSharedGroupDataRequest& request, const FGetSharedGroupDataDelegate& SuccessDelegate = FGetSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the current server time
          * This query retrieves the current time from one of the servers in PlayFab. Please note that due to clock drift between servers, there is a potential variance of up to 5 seconds.
          */
+
         bool GetTime(const FGetTimeDelegate& SuccessDelegate = FGetTimeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the key-value store of custom title settings
@@ -341,9 +338,7 @@ namespace PlayFab
          * This API is designed to return title specific values which are accessible only to the server. This can be used to tweak settings on game servers and Cloud Scripts without needed to update and re-deploy them. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
          */
         bool GetTitleInternalData(ServerModels::FGetTitleDataRequest& request, const FGetTitleInternalDataDelegate& SuccessDelegate = FGetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the title news feed, as configured in the developer portal
-         */
+        /** Retrieves the title news feed, as configured in the developer portal */
         bool GetTitleNews(ServerModels::FGetTitleNewsRequest& request, const FGetTitleNewsDelegate& SuccessDelegate = FGetTitleNewsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the relevant details for a specified user
@@ -391,7 +386,8 @@ namespace PlayFab
          */
         bool GetUserReadOnlyData(ServerModels::FGetUserDataRequest& request, const FGetUserReadOnlyDataDelegate& SuccessDelegate = FGetUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Grants the specified character type to the user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
+         * Grants the specified character type to the user. CharacterIds are not globally unique; characterId must be evaluated
+         * with the parent PlayFabId to guarantee uniqueness.
          * Grants a character to the user of the type and name specified in the request.
          */
         bool GrantCharacterToUser(ServerModels::FGrantCharacterToUserRequest& request, const FGrantCharacterToUserDelegate& SuccessDelegate = FGrantCharacterToUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -430,12 +426,11 @@ namespace PlayFab
          * Transfers an item from a character to the owning user. This will remove the item from the character's inventory (until and unless it is moved back), and will enable the user to make use of the item instead.
          */
         bool MoveItemToUserFromCharacter(ServerModels::FMoveItemToUserFromCharacterRequest& request, const FMoveItemToUserFromCharacterDelegate& SuccessDelegate = FMoveItemToUserFromCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Informs the PlayFab match-making service that the user specified has left the Game Server Instance
-         */
+        /** Informs the PlayFab match-making service that the user specified has left the Game Server Instance */
         bool NotifyMatchmakerPlayerLeft(ServerModels::FNotifyMatchmakerPlayerLeftRequest& request, const FNotifyMatchmakerPlayerLeftDelegate& SuccessDelegate = FNotifyMatchmakerPlayerLeftDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
+         * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the
+         * Economy->Catalogs tab in the PlayFab Game Manager.
          * Coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code, or a code which has not yet been created in the service, will result in an error.
          */
         bool RedeemCoupon(ServerModels::FRedeemCouponRequest& request, const FRedeemCouponDelegate& SuccessDelegate = FRedeemCouponDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -444,17 +439,11 @@ namespace PlayFab
          * This function is used by a Game Server Instance to validate with the PlayFab service that a user has been registered as connected to the server. The Ticket is provided to the client either as a result of a call to StartGame or Matchmake, each of which return a Ticket specific to the Game Server Instance. This function will fail in any case where the Ticket presented is not valid for the specific Game Server Instance making the call. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
          */
         bool RedeemMatchmakerTicket(ServerModels::FRedeemMatchmakerTicketRequest& request, const FRedeemMatchmakerTicketDelegate& SuccessDelegate = FRedeemMatchmakerTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Set the state of the indicated Game Server Instance. Also update the heartbeat for the instance.
-         */
+        /** Set the state of the indicated Game Server Instance. Also update the heartbeat for the instance. */
         bool RefreshGameServerInstanceHeartbeat(ServerModels::FRefreshGameServerInstanceHeartbeatRequest& request, const FRefreshGameServerInstanceHeartbeatDelegate& SuccessDelegate = FRefreshGameServerInstanceHeartbeatDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Inform the matchmaker that a new Game Server Instance is added.
-         */
+        /** Inform the matchmaker that a new Game Server Instance is added. */
         bool RegisterGame(ServerModels::FRegisterGameRequest& request, const FRegisterGameDelegate& SuccessDelegate = FRegisterGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Removes the specified friend from the the user's friend list
-         */
+        /** Removes the specified friend from the the user's friend list */
         bool RemoveFriend(ServerModels::FRemoveFriendRequest& request, const FRemoveFriendDelegate& SuccessDelegate = FRemoveFriendDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Remove a given tag from a player profile. The tag's namespace is automatically generated based on the source of the tag.
@@ -462,11 +451,15 @@ namespace PlayFab
          */
         bool RemovePlayerTag(ServerModels::FRemovePlayerTagRequest& request, const FRemovePlayerTagDelegate& SuccessDelegate = FRemovePlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Removes users from the set of those able to update the shared data and the set of users in the group. Only users in the group can remove members. If as a result of the call, zero users remain with access, the group and its associated data will be deleted. Shared Groups are designed for sharing data between a very small number of players,  please see our guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+         * Removes users from the set of those able to update the shared data and the set of users in the group. Only users in the
+         * group can remove members. If as a result of the call, zero users remain with access, the group and its associated data
+         * will be deleted. Shared Groups are designed for sharing data between a very small number of players,  please see our
+         * guide: https://api.playfab.com/docs/tutorials/landing-players/shared-groups
          */
         bool RemoveSharedGroupMembers(ServerModels::FRemoveSharedGroupMembersRequest& request, const FRemoveSharedGroupMembersDelegate& SuccessDelegate = FRemoveSharedGroupMembersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Submit a report about a player (due to bad bahavior, etc.) on behalf of another player, so that customer service representatives for the title can take action concerning potentially toxic players.
+         * Submit a report about a player (due to bad bahavior, etc.) on behalf of another player, so that customer service
+         * representatives for the title can take action concerning potentially toxic players.
          */
         bool ReportPlayer(ServerModels::FReportPlayerServerRequest& request, const FReportPlayerDelegate& SuccessDelegate = FReportPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -485,17 +478,19 @@ namespace PlayFab
          */
         bool RevokeInventoryItem(ServerModels::FRevokeInventoryItemRequest& request, const FRevokeInventoryItemDelegate& SuccessDelegate = FRevokeInventoryItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Forces an email to be sent to the registered contact email address for the user's account based on an account recovery email template
+         * Forces an email to be sent to the registered contact email address for the user's account based on an account recovery
+         * email template
          * PlayFab accounts which have valid email address or username will be able to receive a password reset email using this API.The email sent must be an account recovery email template. The username or email can be passed in to send the email
          */
         bool SendCustomAccountRecoveryEmail(ServerModels::FSendCustomAccountRecoveryEmailRequest& request, const FSendCustomAccountRecoveryEmailDelegate& SuccessDelegate = FSendCustomAccountRecoveryEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Sends an email based on an email template to a player's contact email 
+         * Sends an email based on an email template to a player's contact email
          * Sends an email for only players that have contact emails associated with them. Takes in an email template ID specifyingthe email template to send.
          */
         bool SendEmailFromTemplate(ServerModels::FSendEmailFromTemplateRequest& request, const FSendEmailFromTemplateDelegate& SuccessDelegate = FSendEmailFromTemplateDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Sends an iOS/Android Push Notification to a specific user, if that user's device has been configured for Push Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
+         * Sends an iOS/Android Push Notification to a specific user, if that user's device has been configured for Push
+         * Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
          */
         bool SendPushNotification(ServerModels::FSendPushNotificationRequest& request, const FSendPushNotificationDelegate& SuccessDelegate = FSendPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -503,20 +498,15 @@ namespace PlayFab
          * This operation is not additive. It will completely replace the tag list for the specified user.  Please note that only users in the PlayFab friends list can be assigned tags. Attempting to set a tag on a friend only included  in the friends list from a social site integration (such as Facebook or Steam) will return the AccountNotFound error.
          */
         bool SetFriendTags(ServerModels::FSetFriendTagsRequest& request, const FSetFriendTagsDelegate& SuccessDelegate = FSetFriendTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Sets the custom data of the indicated Game Server Instance
-         */
+        /** Sets the custom data of the indicated Game Server Instance */
         bool SetGameServerInstanceData(ServerModels::FSetGameServerInstanceDataRequest& request, const FSetGameServerInstanceDataDelegate& SuccessDelegate = FSetGameServerInstanceDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Set the state of the indicated Game Server Instance.
-         */
+        /** Set the state of the indicated Game Server Instance. */
         bool SetGameServerInstanceState(ServerModels::FSetGameServerInstanceStateRequest& request, const FSetGameServerInstanceStateDelegate& SuccessDelegate = FSetGameServerInstanceStateDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Set custom tags for the specified Game Server Instance
-         */
+        /** Set custom tags for the specified Game Server Instance */
         bool SetGameServerInstanceTags(ServerModels::FSetGameServerInstanceTagsRequest& request, const FSetGameServerInstanceTagsDelegate& SuccessDelegate = FSetGameServerInstanceTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Sets the player's secret if it is not already set. Player secrets are used to sign API requests. To reset a player's secret use the Admin or Server API method SetPlayerSecret.
+         * Sets the player's secret if it is not already set. Player secrets are used to sign API requests. To reset a player's
+         * secret use the Admin or Server API method SetPlayerSecret.
          * APIs that require signatures require that the player have a configured Player Secret Key that is used to sign all requests. Players that don't have a secret will be blocked from making API calls until it is configured. To create a signature header add a SHA256 hashed string containing UTF8 encoded JSON body as it will be sent to the server, the current time in UTC formatted to ISO 8601, and the players secret formatted as 'body.date.secret'. Place the resulting hash into the header X-PlayFab-Signature, along with a header X-PlayFab-Timestamp of the same UTC timestamp used in the signature.
          */
         bool SetPlayerSecret(ServerModels::FSetPlayerSecretRequest& request, const FSetPlayerSecretDelegate& SuccessDelegate = FSetPlayerSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -536,26 +526,31 @@ namespace PlayFab
          */
         bool SetTitleInternalData(ServerModels::FSetTitleDataRequest& request, const FSetTitleInternalDataDelegate& SuccessDelegate = FSetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Decrements the character's balance of the specified virtual currency by the stated amount. It is possible to make a VC balance negative with this API.
+         * Decrements the character's balance of the specified virtual currency by the stated amount. It is possible to make a VC
+         * balance negative with this API.
          */
         bool SubtractCharacterVirtualCurrency(ServerModels::FSubtractCharacterVirtualCurrencyRequest& request, const FSubtractCharacterVirtualCurrencyDelegate& SuccessDelegate = FSubtractCharacterVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Decrements the user's balance of the specified virtual currency by the stated amount. It is possible to make a VC balance negative with this API.
+         * Decrements the user's balance of the specified virtual currency by the stated amount. It is possible to make a VC
+         * balance negative with this API.
          */
         bool SubtractUserVirtualCurrency(ServerModels::FSubtractUserVirtualCurrencyRequest& request, const FSubtractUserVirtualCurrencyDelegate& SuccessDelegate = FSubtractUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+         * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and
+         * returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses >
+         * 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
          * Specify the container and optionally the catalogVersion for the container to open
          */
         bool UnlockContainerInstance(ServerModels::FUnlockContainerInstanceRequest& request, const FUnlockContainerInstanceDelegate& SuccessDelegate = FUnlockContainerInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+         * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it
+         * using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant)
+         * are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of
+         * ConsumeItem.
          * Specify the type of container to open and optionally the catalogVersion for the container to open
          */
         bool UnlockContainerItem(ServerModels::FUnlockContainerItemRequest& request, const FUnlockContainerItemDelegate& SuccessDelegate = FUnlockContainerItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Update the avatar URL of the specified player
-         */
+        /** Update the avatar URL of the specified player */
         bool UpdateAvatarUrl(ServerModels::FUpdateAvatarUrlRequest& request, const FUpdateAvatarUrlDelegate& SuccessDelegate = FUpdateAvatarUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates information of a list of existing bans specified with Ban Ids.
@@ -588,7 +583,11 @@ namespace PlayFab
          */
         bool UpdatePlayerStatistics(ServerModels::FUpdatePlayerStatisticsRequest& request, const FUpdatePlayerStatisticsDelegate& SuccessDelegate = FUpdatePlayerStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds, updates, and removes data keys for a shared group object. If the permission is set to Public, all fields updated or added in this call will be readable by users not in the group. By default, data permissions are set to Private. Regardless of the permission setting, only members of the group (and the server) can update the data.  Shared Groups are designed for sharing data between a very small number of players, please see our guide:  https://api.playfab.com/docs/tutorials/landing-players/shared-groups
+         * Adds, updates, and removes data keys for a shared group object. If the permission is set to Public, all fields updated
+         * or added in this call will be readable by users not in the group. By default, data permissions are set to Private.
+         * Regardless of the permission setting, only members of the group (and the server) can update the data.  Shared Groups are
+         * designed for sharing data between a very small number of players, please see our guide:
+         * https://api.playfab.com/docs/tutorials/landing-players/shared-groups
          * Note that in the case of multiple calls to write to the same shared group data keys, the last write received by the PlayFab service will determine the value available to subsequent read operations. For scenarios requiring coordination of data updates, it is recommended that titles make use of user data with read permission set to public, or a combination of user data and shared group data.
          */
         bool UpdateSharedGroupData(ServerModels::FUpdateSharedGroupDataRequest& request, const FUpdateSharedGroupDataDelegate& SuccessDelegate = FUpdateSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());

@@ -26,15 +26,13 @@ void UPFClientPayForPurchase::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->PayForPurchase(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientPayForPurchase::OnSuccessCallback(const PlayFab::ClientModels::FPayForPurchaseResult& Result)

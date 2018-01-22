@@ -25,15 +25,13 @@ void UPFAdminGetCloudScriptVersions::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetCloudScriptVersions(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetCloudScriptVersions::OnSuccessCallback(const PlayFab::AdminModels::FGetCloudScriptVersionsResult& Result)

@@ -26,15 +26,13 @@ void UPFServerGrantCharacterToUser::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GrantCharacterToUser(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGrantCharacterToUser::OnSuccessCallback(const PlayFab::ServerModels::FGrantCharacterToUserResult& Result)

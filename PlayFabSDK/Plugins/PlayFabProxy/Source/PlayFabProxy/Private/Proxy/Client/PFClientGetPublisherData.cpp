@@ -26,15 +26,13 @@ void UPFClientGetPublisherData::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPublisherData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPublisherData::OnSuccessCallback(const PlayFab::ClientModels::FGetPublisherDataResult& Result)

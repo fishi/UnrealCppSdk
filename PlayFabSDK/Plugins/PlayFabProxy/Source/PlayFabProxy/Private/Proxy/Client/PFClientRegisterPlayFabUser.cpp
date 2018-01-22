@@ -26,15 +26,13 @@ void UPFClientRegisterPlayFabUser::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->RegisterPlayFabUser(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientRegisterPlayFabUser::OnSuccessCallback(const PlayFab::ClientModels::FRegisterPlayFabUserResult& Result)

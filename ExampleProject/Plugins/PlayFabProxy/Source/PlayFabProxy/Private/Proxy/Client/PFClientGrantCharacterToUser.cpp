@@ -26,15 +26,13 @@ void UPFClientGrantCharacterToUser::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GrantCharacterToUser(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGrantCharacterToUser::OnSuccessCallback(const PlayFab::ClientModels::FGrantCharacterToUserResult& Result)

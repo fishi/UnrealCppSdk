@@ -25,15 +25,13 @@ void UPFClientUnlinkTwitch::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkTwitch(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkTwitch::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkTwitchAccountResult& Result)

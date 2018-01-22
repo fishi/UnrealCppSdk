@@ -26,15 +26,13 @@ void UPFClientGetPlayFabIDsFromSteamIDs::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPlayFabIDsFromSteamIDs(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPlayFabIDsFromSteamIDs::OnSuccessCallback(const PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsResult& Result)

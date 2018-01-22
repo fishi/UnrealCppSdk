@@ -26,15 +26,13 @@ void UPFAdminGetContentUploadUrl::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetContentUploadUrl(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetContentUploadUrl::OnSuccessCallback(const PlayFab::AdminModels::FGetContentUploadUrlResult& Result)

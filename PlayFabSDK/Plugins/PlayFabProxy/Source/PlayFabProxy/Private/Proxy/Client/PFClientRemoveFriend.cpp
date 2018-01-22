@@ -26,15 +26,13 @@ void UPFClientRemoveFriend::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->RemoveFriend(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientRemoveFriend::OnSuccessCallback(const PlayFab::ClientModels::FRemoveFriendResult& Result)

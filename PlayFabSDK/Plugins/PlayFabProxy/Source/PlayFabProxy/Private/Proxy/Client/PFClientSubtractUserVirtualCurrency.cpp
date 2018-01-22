@@ -26,15 +26,13 @@ void UPFClientSubtractUserVirtualCurrency::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->SubtractUserVirtualCurrency(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientSubtractUserVirtualCurrency::OnSuccessCallback(const PlayFab::ClientModels::FModifyUserVirtualCurrencyResult& Result)

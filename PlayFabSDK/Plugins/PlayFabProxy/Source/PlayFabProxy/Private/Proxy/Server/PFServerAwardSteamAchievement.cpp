@@ -26,15 +26,13 @@ void UPFServerAwardSteamAchievement::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->AwardSteamAchievement(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerAwardSteamAchievement::OnSuccessCallback(const PlayFab::ServerModels::FAwardSteamAchievementResult& Result)

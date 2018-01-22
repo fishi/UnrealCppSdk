@@ -26,15 +26,13 @@ void UPFServerGetTitleData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetTitleData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetTitleData::OnSuccessCallback(const PlayFab::ServerModels::FGetTitleDataResult& Result)

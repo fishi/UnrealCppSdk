@@ -26,15 +26,13 @@ void UPFAdminResetUserStatistics::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->ResetUserStatistics(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminResetUserStatistics::OnSuccessCallback(const PlayFab::AdminModels::FResetUserStatisticsResult& Result)

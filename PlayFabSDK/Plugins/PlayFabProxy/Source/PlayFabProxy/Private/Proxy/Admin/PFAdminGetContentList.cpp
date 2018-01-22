@@ -26,15 +26,13 @@ void UPFAdminGetContentList::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetContentList(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetContentList::OnSuccessCallback(const PlayFab::AdminModels::FGetContentListResult& Result)

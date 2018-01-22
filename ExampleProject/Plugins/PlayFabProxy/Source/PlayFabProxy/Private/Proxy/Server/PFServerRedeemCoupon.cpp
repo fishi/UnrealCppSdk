@@ -26,15 +26,13 @@ void UPFServerRedeemCoupon::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->RedeemCoupon(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerRedeemCoupon::OnSuccessCallback(const PlayFab::ServerModels::FRedeemCouponResult& Result)

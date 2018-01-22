@@ -26,15 +26,13 @@ void UPFClientLinkSteamAccount::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->LinkSteamAccount(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientLinkSteamAccount::OnSuccessCallback(const PlayFab::ClientModels::FLinkSteamAccountResult& Result)

@@ -26,15 +26,13 @@ void UPFClientGetAccountInfo::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetAccountInfo(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetAccountInfo::OnSuccessCallback(const PlayFab::ClientModels::FGetAccountInfoResult& Result)

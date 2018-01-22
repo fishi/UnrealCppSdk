@@ -2606,6 +2606,8 @@ namespace ClientModels
         FString MembershipId;
         // [optional] Membership expirations can be explicitly overridden (via game manager or the admin api). If this membership has been overridden, this will be the new expiration time.
         Boxed<FDateTime> OverrideExpiration;
+        // [optional] Whether the override expiration is set.
+        Boxed<bool> OverrideIsSet;
         // [optional] The list of subscriptions that this player has for this membership
         TArray<FSubscriptionModel> Subscriptions;
 
@@ -2615,6 +2617,7 @@ namespace ClientModels
             MembershipExpiration(0),
             MembershipId(),
             OverrideExpiration(),
+            OverrideIsSet(),
             Subscriptions()
             {}
 
@@ -2624,6 +2627,7 @@ namespace ClientModels
             MembershipExpiration(src.MembershipExpiration),
             MembershipId(src.MembershipId),
             OverrideExpiration(src.OverrideExpiration),
+            OverrideIsSet(src.OverrideIsSet),
             Subscriptions(src.Subscriptions)
             {}
 
@@ -4208,6 +4212,8 @@ namespace ClientModels
         TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
         // Statistic used to rank players for this leaderboard.
         FString StatisticName;
+        // [optional] If set to false, Version is considered null. If true, uses the specified Version
+        Boxed<bool> UseSpecificVersion;
         // [optional] The version of the leaderboard to get.
         Boxed<int32> Version;
 
@@ -4219,6 +4225,7 @@ namespace ClientModels
             PlayFabId(),
             ProfileConstraints(nullptr),
             StatisticName(),
+            UseSpecificVersion(),
             Version()
             {}
 
@@ -4230,6 +4237,7 @@ namespace ClientModels
             PlayFabId(src.PlayFabId),
             ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
             StatisticName(src.StatisticName),
+            UseSpecificVersion(src.UseSpecificVersion),
             Version(src.Version)
             {}
 
@@ -4337,6 +4345,8 @@ namespace ClientModels
         int32 StartPosition;
         // Statistic used to rank friends for this leaderboard.
         FString StatisticName;
+        // [optional] If set to false, Version is considered null. If true, uses the specified Version
+        Boxed<bool> UseSpecificVersion;
         // [optional] The version of the leaderboard to get.
         Boxed<int32> Version;
 
@@ -4348,6 +4358,7 @@ namespace ClientModels
             ProfileConstraints(nullptr),
             StartPosition(0),
             StatisticName(),
+            UseSpecificVersion(),
             Version()
             {}
 
@@ -4359,6 +4370,7 @@ namespace ClientModels
             ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
             StartPosition(src.StartPosition),
             StatisticName(src.StatisticName),
+            UseSpecificVersion(src.UseSpecificVersion),
             Version(src.Version)
             {}
 
@@ -4512,6 +4524,8 @@ namespace ClientModels
         TSharedPtr<FPlayerProfileViewConstraints> ProfileConstraints;
         // Statistic used to rank players for this leaderboard.
         FString StatisticName;
+        // [optional] If set to false, Version is considered null. If true, uses the specified Version
+        Boxed<bool> UseSpecificVersion;
         // [optional] The version of the leaderboard to get.
         Boxed<int32> Version;
 
@@ -4521,6 +4535,7 @@ namespace ClientModels
             PlayFabId(),
             ProfileConstraints(nullptr),
             StatisticName(),
+            UseSpecificVersion(),
             Version()
             {}
 
@@ -4530,6 +4545,7 @@ namespace ClientModels
             PlayFabId(src.PlayFabId),
             ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
             StatisticName(src.StatisticName),
+            UseSpecificVersion(src.UseSpecificVersion),
             Version(src.Version)
             {}
 
@@ -4648,6 +4664,8 @@ namespace ClientModels
         int32 StartPosition;
         // Statistic used to rank players for this leaderboard.
         FString StatisticName;
+        // [optional] If set to false, Version is considered null. If true, uses the specified Version
+        Boxed<bool> UseSpecificVersion;
         // [optional] The version of the leaderboard to get.
         Boxed<int32> Version;
 
@@ -4657,6 +4675,7 @@ namespace ClientModels
             ProfileConstraints(nullptr),
             StartPosition(0),
             StatisticName(),
+            UseSpecificVersion(),
             Version()
             {}
 
@@ -4666,6 +4685,7 @@ namespace ClientModels
             ProfileConstraints(src.ProfileConstraints.IsValid() ? MakeShareable(new FPlayerProfileViewConstraints(*src.ProfileConstraints)) : nullptr),
             StartPosition(src.StartPosition),
             StatisticName(src.StatisticName),
+            UseSpecificVersion(src.UseSpecificVersion),
             Version(src.Version)
             {}
 

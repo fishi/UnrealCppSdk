@@ -26,15 +26,13 @@ void UPFClientGetPlayerProfile::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPlayerProfile(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPlayerProfile::OnSuccessCallback(const PlayFab::ClientModels::FGetPlayerProfileResult& Result)

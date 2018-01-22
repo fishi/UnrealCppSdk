@@ -26,15 +26,13 @@ void UPFServerUpdateBans::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->UpdateBans(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerUpdateBans::OnSuccessCallback(const PlayFab::ServerModels::FUpdateBansResult& Result)

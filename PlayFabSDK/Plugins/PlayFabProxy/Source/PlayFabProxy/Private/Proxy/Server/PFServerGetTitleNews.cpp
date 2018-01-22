@@ -26,15 +26,13 @@ void UPFServerGetTitleNews::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetTitleNews(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetTitleNews::OnSuccessCallback(const PlayFab::ServerModels::FGetTitleNewsResult& Result)

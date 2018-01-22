@@ -26,15 +26,13 @@ void UPFServerUpdateCharacterStatistics::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->UpdateCharacterStatistics(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerUpdateCharacterStatistics::OnSuccessCallback(const PlayFab::ServerModels::FUpdateCharacterStatisticsResult& Result)

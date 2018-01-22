@@ -25,15 +25,13 @@ void UPFClientUnlinkSteamAccount::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkSteamAccount(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkSteamAccount::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkSteamAccountResult& Result)

@@ -26,15 +26,13 @@ void UPFMatchmakerPlayerJoined::Activate()
 
     bool CallResult = false;
 
-    if(MatchmakerAPI.IsValid())
+    if (MatchmakerAPI.IsValid())
     {
         CallResult = MatchmakerAPI->PlayerJoined(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFMatchmakerPlayerJoined::OnSuccessCallback(const PlayFab::MatchmakerModels::FPlayerJoinedResponse& Result)

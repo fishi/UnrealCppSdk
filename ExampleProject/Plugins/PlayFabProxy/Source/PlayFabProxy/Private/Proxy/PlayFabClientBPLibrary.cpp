@@ -1327,6 +1327,7 @@ FBPClientGetFriendLeaderboardAroundPlayerRequest UPFClientProxyLibrary::MakeBPCl
 	, FString InPlayFabId
 	, FBPClientPlayerProfileViewConstraints InProfileConstraints
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
     )
 {
@@ -1337,6 +1338,7 @@ FBPClientGetFriendLeaderboardAroundPlayerRequest UPFClientProxyLibrary::MakeBPCl
 	Out.Data.PlayFabId = InPlayFabId;
 	Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ClientModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
 	Out.Data.StatisticName = InStatisticName;
+	Out.Data.UseSpecificVersion = InUseSpecificVersion;
 	Out.Data.Version = InVersion;
 	
     return Out;
@@ -1367,6 +1369,7 @@ FBPClientGetFriendLeaderboardRequest UPFClientProxyLibrary::MakeBPClientGetFrien
 	, FBPClientPlayerProfileViewConstraints InProfileConstraints
 	, int32 InStartPosition
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
     )
 {
@@ -1377,6 +1380,7 @@ FBPClientGetFriendLeaderboardRequest UPFClientProxyLibrary::MakeBPClientGetFrien
 	Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ClientModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
 	Out.Data.StartPosition = InStartPosition;
 	Out.Data.StatisticName = InStatisticName;
+	Out.Data.UseSpecificVersion = InUseSpecificVersion;
 	Out.Data.Version = InVersion;
 	
     return Out;
@@ -1446,6 +1450,7 @@ FBPClientGetLeaderboardAroundPlayerRequest UPFClientProxyLibrary::MakeBPClientGe
 	, FString InPlayFabId
 	, FBPClientPlayerProfileViewConstraints InProfileConstraints
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
     )
 {
@@ -1454,6 +1459,7 @@ FBPClientGetLeaderboardAroundPlayerRequest UPFClientProxyLibrary::MakeBPClientGe
 	Out.Data.PlayFabId = InPlayFabId;
 	Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ClientModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
 	Out.Data.StatisticName = InStatisticName;
+	Out.Data.UseSpecificVersion = InUseSpecificVersion;
 	Out.Data.Version = InVersion;
 	
     return Out;
@@ -1508,6 +1514,7 @@ FBPClientGetLeaderboardRequest UPFClientProxyLibrary::MakeBPClientGetLeaderboard
 	, FBPClientPlayerProfileViewConstraints InProfileConstraints
 	, int32 InStartPosition
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
     )
 {
@@ -1516,6 +1523,7 @@ FBPClientGetLeaderboardRequest UPFClientProxyLibrary::MakeBPClientGetLeaderboard
 	Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ClientModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
 	Out.Data.StartPosition = InStartPosition;
 	Out.Data.StatisticName = InStatisticName;
+	Out.Data.UseSpecificVersion = InUseSpecificVersion;
 	Out.Data.Version = InVersion;
 	
     return Out;
@@ -3157,6 +3165,7 @@ FBPClientMembershipModel UPFClientProxyLibrary::MakeBPClientMembershipModel(
 	, FDateTime InMembershipExpiration
 	, FString InMembershipId
 	, FDateTime InOverrideExpiration
+	, bool InOverrideIsSet
 	, TArray<FBPClientSubscriptionModel> InSubscriptions
     )
 {
@@ -3165,6 +3174,7 @@ FBPClientMembershipModel UPFClientProxyLibrary::MakeBPClientMembershipModel(
 	Out.Data.MembershipExpiration = InMembershipExpiration;
 	Out.Data.MembershipId = InMembershipId;
 	Out.Data.OverrideExpiration = InOverrideExpiration;
+	Out.Data.OverrideIsSet = InOverrideIsSet;
 	for (const FBPClientSubscriptionModel& elem : InSubscriptions)
 	{
 		Out.Data.Subscriptions.Add(elem.Data);
@@ -3178,6 +3188,7 @@ void UPFClientProxyLibrary::BreakBPClientMembershipModel(
 	, FDateTime& OutMembershipExpiration
 	, FString& OutMembershipId
 	, FDateTime& OutOverrideExpiration
+	, bool& OutOverrideIsSet
 	, TArray<FBPClientSubscriptionModel>& OutSubscriptions
  )
 {
@@ -3185,6 +3196,7 @@ void UPFClientProxyLibrary::BreakBPClientMembershipModel(
 	OutMembershipExpiration = In.Data.MembershipExpiration;
 	OutMembershipId = In.Data.MembershipId;
 	OutOverrideExpiration = In.Data.OverrideExpiration;
+	OutOverrideIsSet = In.Data.OverrideIsSet;
 	for (const PlayFab::ClientModels::FSubscriptionModel& elem : In.Data.Subscriptions)
 	{
 		OutSubscriptions.Add(FBPClientSubscriptionModel(elem));

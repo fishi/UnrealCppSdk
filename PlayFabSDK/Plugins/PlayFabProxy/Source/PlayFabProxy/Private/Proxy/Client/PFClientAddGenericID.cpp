@@ -26,15 +26,13 @@ void UPFClientAddGenericID::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->AddGenericID(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientAddGenericID::OnSuccessCallback(const PlayFab::ClientModels::FAddGenericIDResult& Result)

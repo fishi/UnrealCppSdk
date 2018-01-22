@@ -26,15 +26,13 @@ void UPFServerRemoveFriend::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->RemoveFriend(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerRemoveFriend::OnSuccessCallback(const PlayFab::ServerModels::FEmptyResult& Result)

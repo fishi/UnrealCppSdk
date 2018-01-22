@@ -1322,6 +1322,7 @@ public:
 	, FDateTime InMembershipExpiration
 	, FString InMembershipId
 	, FDateTime InOverrideExpiration
+	, bool InOverrideIsSet
 	, TArray<FBPAdminSubscriptionModel> InSubscriptions
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -1331,6 +1332,7 @@ public:
 	, FDateTime& OutMembershipExpiration
 	, FString& OutMembershipId
 	, FDateTime& OutOverrideExpiration
+	, bool& OutOverrideIsSet
 	, TArray<FBPAdminSubscriptionModel>& OutSubscriptions
 );
 

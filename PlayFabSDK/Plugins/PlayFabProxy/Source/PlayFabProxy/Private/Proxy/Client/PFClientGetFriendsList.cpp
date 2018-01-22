@@ -26,15 +26,13 @@ void UPFClientGetFriendsList::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetFriendsList(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetFriendsList::OnSuccessCallback(const PlayFab::ClientModels::FGetFriendsListResult& Result)

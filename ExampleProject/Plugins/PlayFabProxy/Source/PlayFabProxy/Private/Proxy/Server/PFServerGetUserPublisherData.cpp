@@ -26,15 +26,13 @@ void UPFServerGetUserPublisherData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetUserPublisherData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetUserPublisherData::OnSuccessCallback(const PlayFab::ServerModels::FGetUserDataResult& Result)

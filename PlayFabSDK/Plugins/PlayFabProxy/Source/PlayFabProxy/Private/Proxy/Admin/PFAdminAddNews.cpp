@@ -26,15 +26,13 @@ void UPFAdminAddNews::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->AddNews(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminAddNews::OnSuccessCallback(const PlayFab::AdminModels::FAddNewsResult& Result)

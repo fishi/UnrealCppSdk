@@ -26,15 +26,13 @@ void UPFServerBanUsers::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->BanUsers(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerBanUsers::OnSuccessCallback(const PlayFab::ServerModels::FBanUsersResult& Result)

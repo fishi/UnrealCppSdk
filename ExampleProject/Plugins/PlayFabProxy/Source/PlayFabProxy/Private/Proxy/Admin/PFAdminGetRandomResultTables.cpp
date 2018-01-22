@@ -26,15 +26,13 @@ void UPFAdminGetRandomResultTables::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetRandomResultTables(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetRandomResultTables::OnSuccessCallback(const PlayFab::AdminModels::FGetRandomResultTablesResult& Result)

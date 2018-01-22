@@ -26,15 +26,13 @@ void UPFClientLinkWindowsHello::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->LinkWindowsHello(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientLinkWindowsHello::OnSuccessCallback(const PlayFab::ClientModels::FLinkWindowsHelloAccountResponse& Result)

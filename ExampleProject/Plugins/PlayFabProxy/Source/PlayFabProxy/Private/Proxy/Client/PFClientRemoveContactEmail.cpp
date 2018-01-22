@@ -25,15 +25,13 @@ void UPFClientRemoveContactEmail::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->RemoveContactEmail(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientRemoveContactEmail::OnSuccessCallback(const PlayFab::ClientModels::FRemoveContactEmailResult& Result)

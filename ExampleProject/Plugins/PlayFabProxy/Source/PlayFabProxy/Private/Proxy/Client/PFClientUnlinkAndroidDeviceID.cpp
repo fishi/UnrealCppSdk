@@ -26,15 +26,13 @@ void UPFClientUnlinkAndroidDeviceID::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkAndroidDeviceID(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkAndroidDeviceID::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkAndroidDeviceIDResult& Result)

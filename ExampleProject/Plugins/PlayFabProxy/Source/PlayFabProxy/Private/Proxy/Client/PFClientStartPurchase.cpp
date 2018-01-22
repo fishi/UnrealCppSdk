@@ -26,15 +26,13 @@ void UPFClientStartPurchase::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->StartPurchase(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientStartPurchase::OnSuccessCallback(const PlayFab::ClientModels::FStartPurchaseResult& Result)

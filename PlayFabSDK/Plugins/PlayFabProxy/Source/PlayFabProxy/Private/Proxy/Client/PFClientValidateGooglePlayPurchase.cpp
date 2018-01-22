@@ -26,15 +26,13 @@ void UPFClientValidateGooglePlayPurchase::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->ValidateGooglePlayPurchase(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientValidateGooglePlayPurchase::OnSuccessCallback(const PlayFab::ClientModels::FValidateGooglePlayPurchaseResult& Result)

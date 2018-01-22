@@ -9,10 +9,10 @@
 #include "PlayFabSettings.h"
 
 // Api's
-#include "Core/PlayFabClientAPI.h"
 #include "Core/PlayFabAdminAPI.h"
+#include "Core/PlayFabMatchmakerAPI.h"
 #include "Core/PlayFabServerAPI.h"
-#include "Core/PlayFabMatchMakerAPI.h"
+#include "Core/PlayFabClientAPI.h"
 
 DEFINE_LOG_CATEGORY(LogPlayFab);
 
@@ -32,15 +32,15 @@ class FPlayFabModule : public IPlayFabModuleInterface
     bool HandleSettingsSaved();
 
     FString GetTitleId() const override { return PlayFab::PlayFabSettings::titleId; };
-    PlayFabClientPtr GetClientAPI() const override { return ClientAPI; };
-    PlayFabServerPtr GetServerAPI() const override { return ServerAPI; };
-    PlayFabMatchmakerPtr GetMatchmakerAPI() const override { return MatchMakerAPI; };
     PlayFabAdminPtr GetAdminAPI() const override { return AdminAPI; };
+    PlayFabMatchmakerPtr GetMatchmakerAPI() const override { return MatchmakerAPI; };
+    PlayFabServerPtr GetServerAPI() const override { return ServerAPI; };
+    PlayFabClientPtr GetClientAPI() const override { return ClientAPI; };
 
-    PlayFabClientPtr ClientAPI;
-    PlayFabServerPtr ServerAPI;
-    PlayFabMatchmakerPtr MatchMakerAPI;
     PlayFabAdminPtr AdminAPI;
+    PlayFabMatchmakerPtr MatchmakerAPI;
+    PlayFabServerPtr ServerAPI;
+    PlayFabClientPtr ClientAPI;
 };
 
 void FPlayFabModule::StartupModule()
@@ -51,10 +51,11 @@ void FPlayFabModule::StartupModule()
 
     // create the API
     ClientAPI = MakeShareable(new PlayFab::UPlayFabClientAPI());
+    // EntityAPI = MakeShareable(new PlayFab::UPlayFabEntityAPI());
 
 #if WITH_SERVER_CODE
     ServerAPI = MakeShareable(new PlayFab::UPlayFabServerAPI());
-    MatchMakerAPI = MakeShareable(new PlayFab::UPlayFabMatchmakerAPI());
+    MatchmakerAPI = MakeShareable(new PlayFab::UPlayFabMatchmakerAPI());
     AdminAPI = MakeShareable(new PlayFab::UPlayFabAdminAPI());
 #endif
 }

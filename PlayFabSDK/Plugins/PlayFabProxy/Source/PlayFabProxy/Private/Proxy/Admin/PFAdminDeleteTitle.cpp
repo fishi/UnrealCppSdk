@@ -25,15 +25,13 @@ void UPFAdminDeleteTitle::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->DeleteTitle(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminDeleteTitle::OnSuccessCallback(const PlayFab::AdminModels::FDeleteTitleResult& Result)

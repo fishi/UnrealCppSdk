@@ -26,15 +26,13 @@ void UPFClientRegisterWithWindowsHello::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->RegisterWithWindowsHello(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientRegisterWithWindowsHello::OnSuccessCallback(const PlayFab::ClientModels::FLoginResult& Result)

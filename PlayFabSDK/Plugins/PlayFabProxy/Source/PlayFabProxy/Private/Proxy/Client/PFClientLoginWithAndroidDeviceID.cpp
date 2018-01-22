@@ -26,15 +26,13 @@ void UPFClientLoginWithAndroidDeviceID::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->LoginWithAndroidDeviceID(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientLoginWithAndroidDeviceID::OnSuccessCallback(const PlayFab::ClientModels::FLoginResult& Result)

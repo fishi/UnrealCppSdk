@@ -26,15 +26,13 @@ void UPFClientUpdatePlayerStatistics::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UpdatePlayerStatistics(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUpdatePlayerStatistics::OnSuccessCallback(const PlayFab::ClientModels::FUpdatePlayerStatisticsResult& Result)

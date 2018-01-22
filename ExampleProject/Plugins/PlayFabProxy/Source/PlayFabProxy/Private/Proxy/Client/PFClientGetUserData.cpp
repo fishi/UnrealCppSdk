@@ -26,15 +26,13 @@ void UPFClientGetUserData::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetUserData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetUserData::OnSuccessCallback(const PlayFab::ClientModels::FGetUserDataResult& Result)

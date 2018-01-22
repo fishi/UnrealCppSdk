@@ -26,15 +26,13 @@ void UPFServerGetPlayersInSegment::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetPlayersInSegment(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetPlayersInSegment::OnSuccessCallback(const PlayFab::ServerModels::FGetPlayersInSegmentResult& Result)

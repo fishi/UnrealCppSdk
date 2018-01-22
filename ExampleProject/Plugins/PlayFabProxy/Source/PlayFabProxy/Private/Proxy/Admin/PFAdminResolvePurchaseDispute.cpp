@@ -26,15 +26,13 @@ void UPFAdminResolvePurchaseDispute::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->ResolvePurchaseDispute(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminResolvePurchaseDispute::OnSuccessCallback(const PlayFab::AdminModels::FResolvePurchaseDisputeResponse& Result)

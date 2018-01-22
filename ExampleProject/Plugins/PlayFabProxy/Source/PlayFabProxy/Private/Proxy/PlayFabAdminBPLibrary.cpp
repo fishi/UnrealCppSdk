@@ -2399,6 +2399,7 @@ FBPAdminMembershipModel UPFAdminProxyLibrary::MakeBPAdminMembershipModel(
 	, FDateTime InMembershipExpiration
 	, FString InMembershipId
 	, FDateTime InOverrideExpiration
+	, bool InOverrideIsSet
 	, TArray<FBPAdminSubscriptionModel> InSubscriptions
     )
 {
@@ -2407,6 +2408,7 @@ FBPAdminMembershipModel UPFAdminProxyLibrary::MakeBPAdminMembershipModel(
 	Out.Data.MembershipExpiration = InMembershipExpiration;
 	Out.Data.MembershipId = InMembershipId;
 	Out.Data.OverrideExpiration = InOverrideExpiration;
+	Out.Data.OverrideIsSet = InOverrideIsSet;
 	for (const FBPAdminSubscriptionModel& elem : InSubscriptions)
 	{
 		Out.Data.Subscriptions.Add(elem.Data);
@@ -2420,6 +2422,7 @@ void UPFAdminProxyLibrary::BreakBPAdminMembershipModel(
 	, FDateTime& OutMembershipExpiration
 	, FString& OutMembershipId
 	, FDateTime& OutOverrideExpiration
+	, bool& OutOverrideIsSet
 	, TArray<FBPAdminSubscriptionModel>& OutSubscriptions
  )
 {
@@ -2427,6 +2430,7 @@ void UPFAdminProxyLibrary::BreakBPAdminMembershipModel(
 	OutMembershipExpiration = In.Data.MembershipExpiration;
 	OutMembershipId = In.Data.MembershipId;
 	OutOverrideExpiration = In.Data.OverrideExpiration;
+	OutOverrideIsSet = In.Data.OverrideIsSet;
 	for (const PlayFab::AdminModels::FSubscriptionModel& elem : In.Data.Subscriptions)
 	{
 		OutSubscriptions.Add(FBPAdminSubscriptionModel(elem));

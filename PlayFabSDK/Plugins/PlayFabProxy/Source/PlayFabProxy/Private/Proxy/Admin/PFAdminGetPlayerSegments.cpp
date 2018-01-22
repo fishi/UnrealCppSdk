@@ -26,15 +26,13 @@ void UPFAdminGetPlayerSegments::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetPlayerSegments(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetPlayerSegments::OnSuccessCallback(const PlayFab::AdminModels::FGetPlayerSegmentsResult& Result)

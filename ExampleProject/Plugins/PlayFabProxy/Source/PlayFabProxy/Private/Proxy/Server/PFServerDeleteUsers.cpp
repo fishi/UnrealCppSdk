@@ -26,15 +26,13 @@ void UPFServerDeleteUsers::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->DeleteUsers(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerDeleteUsers::OnSuccessCallback(const PlayFab::ServerModels::FDeleteUsersResult& Result)

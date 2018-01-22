@@ -26,15 +26,13 @@ void UPFServerReportPlayer::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->ReportPlayer(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerReportPlayer::OnSuccessCallback(const PlayFab::ServerModels::FReportPlayerServerResult& Result)

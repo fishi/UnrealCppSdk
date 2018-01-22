@@ -26,15 +26,13 @@ void UPFServerGrantItemsToUser::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GrantItemsToUser(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGrantItemsToUser::OnSuccessCallback(const PlayFab::ServerModels::FGrantItemsToUserResult& Result)

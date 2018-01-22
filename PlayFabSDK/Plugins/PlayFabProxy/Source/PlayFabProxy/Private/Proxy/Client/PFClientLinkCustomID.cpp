@@ -26,15 +26,13 @@ void UPFClientLinkCustomID::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->LinkCustomID(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientLinkCustomID::OnSuccessCallback(const PlayFab::ClientModels::FLinkCustomIDResult& Result)

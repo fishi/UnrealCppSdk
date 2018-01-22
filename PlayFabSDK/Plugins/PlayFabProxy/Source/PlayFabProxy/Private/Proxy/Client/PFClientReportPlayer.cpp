@@ -26,15 +26,13 @@ void UPFClientReportPlayer::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->ReportPlayer(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientReportPlayer::OnSuccessCallback(const PlayFab::ClientModels::FReportPlayerClientResult& Result)

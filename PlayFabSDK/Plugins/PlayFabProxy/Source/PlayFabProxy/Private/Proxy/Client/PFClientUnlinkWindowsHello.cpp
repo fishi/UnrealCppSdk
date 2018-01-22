@@ -26,15 +26,13 @@ void UPFClientUnlinkWindowsHello::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkWindowsHello(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkWindowsHello::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkWindowsHelloAccountResponse& Result)

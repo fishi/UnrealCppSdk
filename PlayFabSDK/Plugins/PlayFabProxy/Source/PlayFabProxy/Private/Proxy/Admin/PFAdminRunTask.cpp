@@ -26,15 +26,13 @@ void UPFAdminRunTask::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->RunTask(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminRunTask::OnSuccessCallback(const PlayFab::AdminModels::FRunTaskResult& Result)

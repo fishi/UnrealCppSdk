@@ -25,15 +25,13 @@ void UPFClientUnlinkKongregate::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkKongregate(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkKongregate::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkKongregateAccountResult& Result)

@@ -26,15 +26,13 @@ void UPFClientGetFriendLeaderboard::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetFriendLeaderboard(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetFriendLeaderboard::OnSuccessCallback(const PlayFab::ClientModels::FGetLeaderboardResult& Result)

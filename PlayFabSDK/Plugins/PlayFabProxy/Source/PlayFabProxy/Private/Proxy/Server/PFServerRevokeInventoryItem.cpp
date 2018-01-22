@@ -26,15 +26,13 @@ void UPFServerRevokeInventoryItem::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->RevokeInventoryItem(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerRevokeInventoryItem::OnSuccessCallback(const PlayFab::ServerModels::FRevokeInventoryResult& Result)

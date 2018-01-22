@@ -26,15 +26,13 @@ void UPFServerEvaluateRandomResultTable::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->EvaluateRandomResultTable(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerEvaluateRandomResultTable::OnSuccessCallback(const PlayFab::ServerModels::FEvaluateRandomResultTableResult& Result)

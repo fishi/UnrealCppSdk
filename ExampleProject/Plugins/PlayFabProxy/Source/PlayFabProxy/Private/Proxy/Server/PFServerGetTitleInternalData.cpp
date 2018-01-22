@@ -26,15 +26,13 @@ void UPFServerGetTitleInternalData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetTitleInternalData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetTitleInternalData::OnSuccessCallback(const PlayFab::ServerModels::FGetTitleDataResult& Result)

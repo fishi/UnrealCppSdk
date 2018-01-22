@@ -26,15 +26,13 @@ void UPFClientLoginWithKongregate::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->LoginWithKongregate(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientLoginWithKongregate::OnSuccessCallback(const PlayFab::ClientModels::FLoginResult& Result)

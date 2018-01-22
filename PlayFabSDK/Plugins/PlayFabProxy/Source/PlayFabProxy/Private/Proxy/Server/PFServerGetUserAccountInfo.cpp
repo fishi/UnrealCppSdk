@@ -26,15 +26,13 @@ void UPFServerGetUserAccountInfo::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetUserAccountInfo(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetUserAccountInfo::OnSuccessCallback(const PlayFab::ServerModels::FGetUserAccountInfoResult& Result)

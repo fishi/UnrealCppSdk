@@ -26,15 +26,13 @@ void UPFAdminGetPlayerIdFromAuthToken::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetPlayerIdFromAuthToken(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetPlayerIdFromAuthToken::OnSuccessCallback(const PlayFab::AdminModels::FGetPlayerIdFromAuthTokenResult& Result)

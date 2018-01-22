@@ -26,15 +26,13 @@ void UPFClientUpdateAvatarUrl::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UpdateAvatarUrl(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUpdateAvatarUrl::OnSuccessCallback(const PlayFab::ClientModels::FEmptyResult& Result)

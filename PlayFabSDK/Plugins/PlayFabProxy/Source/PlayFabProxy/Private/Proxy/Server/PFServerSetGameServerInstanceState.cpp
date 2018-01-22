@@ -26,15 +26,13 @@ void UPFServerSetGameServerInstanceState::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->SetGameServerInstanceState(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerSetGameServerInstanceState::OnSuccessCallback(const PlayFab::ServerModels::FSetGameServerInstanceStateResult& Result)

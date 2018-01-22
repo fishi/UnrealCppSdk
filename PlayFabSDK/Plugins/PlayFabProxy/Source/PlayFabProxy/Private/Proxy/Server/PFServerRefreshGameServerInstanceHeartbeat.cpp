@@ -26,15 +26,13 @@ void UPFServerRefreshGameServerInstanceHeartbeat::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->RefreshGameServerInstanceHeartbeat(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerRefreshGameServerInstanceHeartbeat::OnSuccessCallback(const PlayFab::ServerModels::FRefreshGameServerInstanceHeartbeatResult& Result)

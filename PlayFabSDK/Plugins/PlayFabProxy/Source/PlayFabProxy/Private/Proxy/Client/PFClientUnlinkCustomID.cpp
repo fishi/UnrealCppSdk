@@ -26,15 +26,13 @@ void UPFClientUnlinkCustomID::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkCustomID(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkCustomID::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkCustomIDResult& Result)

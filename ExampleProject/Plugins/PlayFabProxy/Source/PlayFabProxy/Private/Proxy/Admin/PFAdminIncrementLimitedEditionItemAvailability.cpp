@@ -26,15 +26,13 @@ void UPFAdminIncrementLimitedEditionItemAvailability::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->IncrementLimitedEditionItemAvailability(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminIncrementLimitedEditionItemAvailability::OnSuccessCallback(const PlayFab::AdminModels::FIncrementLimitedEditionItemAvailabilityResult& Result)

@@ -26,15 +26,13 @@ void UPFClientGetSharedGroupData::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetSharedGroupData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetSharedGroupData::OnSuccessCallback(const PlayFab::ClientModels::FGetSharedGroupDataResult& Result)

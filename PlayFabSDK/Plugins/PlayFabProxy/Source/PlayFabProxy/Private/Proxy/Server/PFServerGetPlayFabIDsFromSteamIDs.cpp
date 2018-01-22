@@ -26,15 +26,13 @@ void UPFServerGetPlayFabIDsFromSteamIDs::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetPlayFabIDsFromSteamIDs(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetPlayFabIDsFromSteamIDs::OnSuccessCallback(const PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsResult& Result)

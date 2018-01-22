@@ -26,15 +26,13 @@ void UPFServerSetTitleData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->SetTitleData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerSetTitleData::OnSuccessCallback(const PlayFab::ServerModels::FSetTitleDataResult& Result)

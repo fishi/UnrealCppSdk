@@ -25,15 +25,13 @@ void UPFServerGetTime::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetTime(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetTime::OnSuccessCallback(const PlayFab::ServerModels::FGetTimeResult& Result)

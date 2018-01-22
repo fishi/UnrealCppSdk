@@ -26,15 +26,13 @@ void UPFAdminSubtractUserVirtualCurrency::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->SubtractUserVirtualCurrency(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminSubtractUserVirtualCurrency::OnSuccessCallback(const PlayFab::AdminModels::FModifyUserVirtualCurrencyResult& Result)

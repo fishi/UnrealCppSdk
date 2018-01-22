@@ -26,15 +26,13 @@ void UPFAdminGetUserPublisherData::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetUserPublisherData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetUserPublisherData::OnSuccessCallback(const PlayFab::AdminModels::FGetUserDataResult& Result)

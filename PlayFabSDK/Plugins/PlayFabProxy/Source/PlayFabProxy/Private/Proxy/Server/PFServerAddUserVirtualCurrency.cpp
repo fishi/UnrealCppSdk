@@ -26,15 +26,13 @@ void UPFServerAddUserVirtualCurrency::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->AddUserVirtualCurrency(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerAddUserVirtualCurrency::OnSuccessCallback(const PlayFab::ServerModels::FModifyUserVirtualCurrencyResult& Result)

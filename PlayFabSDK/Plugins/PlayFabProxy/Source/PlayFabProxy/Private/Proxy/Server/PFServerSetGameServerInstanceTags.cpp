@@ -26,15 +26,13 @@ void UPFServerSetGameServerInstanceTags::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->SetGameServerInstanceTags(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerSetGameServerInstanceTags::OnSuccessCallback(const PlayFab::ServerModels::FSetGameServerInstanceTagsResult& Result)

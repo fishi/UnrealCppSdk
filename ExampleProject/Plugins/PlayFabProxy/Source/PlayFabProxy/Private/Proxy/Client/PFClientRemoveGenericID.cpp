@@ -26,15 +26,13 @@ void UPFClientRemoveGenericID::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->RemoveGenericID(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientRemoveGenericID::OnSuccessCallback(const PlayFab::ClientModels::FRemoveGenericIDResult& Result)

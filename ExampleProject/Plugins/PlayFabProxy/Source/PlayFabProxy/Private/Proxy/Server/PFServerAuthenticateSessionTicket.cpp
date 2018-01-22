@@ -26,15 +26,13 @@ void UPFServerAuthenticateSessionTicket::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->AuthenticateSessionTicket(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerAuthenticateSessionTicket::OnSuccessCallback(const PlayFab::ServerModels::FAuthenticateSessionTicketResult& Result)

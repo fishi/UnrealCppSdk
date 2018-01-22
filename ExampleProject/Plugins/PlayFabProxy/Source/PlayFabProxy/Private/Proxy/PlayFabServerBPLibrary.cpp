@@ -1198,6 +1198,7 @@ FBPServerGetFriendLeaderboardRequest UPFServerProxyLibrary::MakeBPServerGetFrien
 	, FBPServerPlayerProfileViewConstraints InProfileConstraints
 	, int32 InStartPosition
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
     )
 {
@@ -1209,6 +1210,7 @@ FBPServerGetFriendLeaderboardRequest UPFServerProxyLibrary::MakeBPServerGetFrien
 	Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ServerModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
 	Out.Data.StartPosition = InStartPosition;
 	Out.Data.StatisticName = InStatisticName;
+	Out.Data.UseSpecificVersion = InUseSpecificVersion;
 	Out.Data.Version = InVersion;
 	
     return Out;
@@ -1282,6 +1284,7 @@ FBPServerGetLeaderboardAroundUserRequest UPFServerProxyLibrary::MakeBPServerGetL
 	, FString InPlayFabId
 	, FBPServerPlayerProfileViewConstraints InProfileConstraints
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
     )
 {
@@ -1290,6 +1293,7 @@ FBPServerGetLeaderboardAroundUserRequest UPFServerProxyLibrary::MakeBPServerGetL
 	Out.Data.PlayFabId = InPlayFabId;
 	Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ServerModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
 	Out.Data.StatisticName = InStatisticName;
+	Out.Data.UseSpecificVersion = InUseSpecificVersion;
 	Out.Data.Version = InVersion;
 	
     return Out;
@@ -1346,6 +1350,7 @@ FBPServerGetLeaderboardRequest UPFServerProxyLibrary::MakeBPServerGetLeaderboard
 	, FBPServerPlayerProfileViewConstraints InProfileConstraints
 	, int32 InStartPosition
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
     )
 {
@@ -1354,6 +1359,7 @@ FBPServerGetLeaderboardRequest UPFServerProxyLibrary::MakeBPServerGetLeaderboard
 	Out.Data.ProfileConstraints = MakeShareable(new PlayFab::ServerModels::FPlayerProfileViewConstraints(InProfileConstraints.Data));
 	Out.Data.StartPosition = InStartPosition;
 	Out.Data.StatisticName = InStatisticName;
+	Out.Data.UseSpecificVersion = InUseSpecificVersion;
 	Out.Data.Version = InVersion;
 	
     return Out;
@@ -2430,6 +2436,7 @@ FBPServerMembershipModel UPFServerProxyLibrary::MakeBPServerMembershipModel(
 	, FDateTime InMembershipExpiration
 	, FString InMembershipId
 	, FDateTime InOverrideExpiration
+	, bool InOverrideIsSet
 	, TArray<FBPServerSubscriptionModel> InSubscriptions
     )
 {
@@ -2438,6 +2445,7 @@ FBPServerMembershipModel UPFServerProxyLibrary::MakeBPServerMembershipModel(
 	Out.Data.MembershipExpiration = InMembershipExpiration;
 	Out.Data.MembershipId = InMembershipId;
 	Out.Data.OverrideExpiration = InOverrideExpiration;
+	Out.Data.OverrideIsSet = InOverrideIsSet;
 	for (const FBPServerSubscriptionModel& elem : InSubscriptions)
 	{
 		Out.Data.Subscriptions.Add(elem.Data);
@@ -2451,6 +2459,7 @@ void UPFServerProxyLibrary::BreakBPServerMembershipModel(
 	, FDateTime& OutMembershipExpiration
 	, FString& OutMembershipId
 	, FDateTime& OutOverrideExpiration
+	, bool& OutOverrideIsSet
 	, TArray<FBPServerSubscriptionModel>& OutSubscriptions
  )
 {
@@ -2458,6 +2467,7 @@ void UPFServerProxyLibrary::BreakBPServerMembershipModel(
 	OutMembershipExpiration = In.Data.MembershipExpiration;
 	OutMembershipId = In.Data.MembershipId;
 	OutOverrideExpiration = In.Data.OverrideExpiration;
+	OutOverrideIsSet = In.Data.OverrideIsSet;
 	for (const PlayFab::ServerModels::FSubscriptionModel& elem : In.Data.Subscriptions)
 	{
 		OutSubscriptions.Add(FBPServerSubscriptionModel(elem));

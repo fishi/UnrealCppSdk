@@ -26,15 +26,13 @@ void UPFClientGetLeaderboardAroundCharacter::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetLeaderboardAroundCharacter(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetLeaderboardAroundCharacter::OnSuccessCallback(const PlayFab::ClientModels::FGetLeaderboardAroundCharacterResult& Result)

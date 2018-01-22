@@ -26,15 +26,13 @@ void UPFAdminRemovePlayerTag::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->RemovePlayerTag(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminRemovePlayerTag::OnSuccessCallback(const PlayFab::AdminModels::FRemovePlayerTagResult& Result)

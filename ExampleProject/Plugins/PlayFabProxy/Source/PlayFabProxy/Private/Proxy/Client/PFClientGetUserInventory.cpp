@@ -25,15 +25,13 @@ void UPFClientGetUserInventory::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetUserInventory(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetUserInventory::OnSuccessCallback(const PlayFab::ClientModels::FGetUserInventoryResult& Result)

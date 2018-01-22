@@ -26,15 +26,13 @@ void UPFServerMoveItemToUserFromCharacter::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->MoveItemToUserFromCharacter(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerMoveItemToUserFromCharacter::OnSuccessCallback(const PlayFab::ServerModels::FMoveItemToUserFromCharacterResult& Result)

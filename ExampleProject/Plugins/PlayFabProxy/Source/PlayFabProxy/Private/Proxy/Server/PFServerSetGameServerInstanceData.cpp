@@ -26,15 +26,13 @@ void UPFServerSetGameServerInstanceData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->SetGameServerInstanceData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerSetGameServerInstanceData::OnSuccessCallback(const PlayFab::ServerModels::FSetGameServerInstanceDataResult& Result)

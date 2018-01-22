@@ -26,15 +26,13 @@ void UPFAdminGetTaskInstances::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetTaskInstances(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetTaskInstances::OnSuccessCallback(const PlayFab::AdminModels::FGetTaskInstancesResult& Result)

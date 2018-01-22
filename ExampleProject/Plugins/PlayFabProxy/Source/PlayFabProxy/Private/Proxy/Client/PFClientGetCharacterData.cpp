@@ -26,15 +26,13 @@ void UPFClientGetCharacterData::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetCharacterData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetCharacterData::OnSuccessCallback(const PlayFab::ClientModels::FGetCharacterDataResult& Result)

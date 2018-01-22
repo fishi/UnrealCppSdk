@@ -26,15 +26,13 @@ void UPFClientGetStoreItems::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetStoreItems(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetStoreItems::OnSuccessCallback(const PlayFab::ClientModels::FGetStoreItemsResult& Result)

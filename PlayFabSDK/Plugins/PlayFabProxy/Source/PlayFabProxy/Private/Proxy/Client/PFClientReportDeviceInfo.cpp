@@ -26,15 +26,13 @@ void UPFClientReportDeviceInfo::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->ReportDeviceInfo(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientReportDeviceInfo::OnSuccessCallback(const PlayFab::ClientModels::FEmptyResult& Result)

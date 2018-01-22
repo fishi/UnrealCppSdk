@@ -26,15 +26,13 @@ void UPFAdminDeletePlayer::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->DeletePlayer(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminDeletePlayer::OnSuccessCallback(const PlayFab::AdminModels::FDeletePlayerResult& Result)

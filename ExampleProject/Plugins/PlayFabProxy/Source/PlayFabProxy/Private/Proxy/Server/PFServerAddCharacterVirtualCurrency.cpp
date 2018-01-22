@@ -26,15 +26,13 @@ void UPFServerAddCharacterVirtualCurrency::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->AddCharacterVirtualCurrency(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerAddCharacterVirtualCurrency::OnSuccessCallback(const PlayFab::ServerModels::FModifyCharacterVirtualCurrencyResult& Result)

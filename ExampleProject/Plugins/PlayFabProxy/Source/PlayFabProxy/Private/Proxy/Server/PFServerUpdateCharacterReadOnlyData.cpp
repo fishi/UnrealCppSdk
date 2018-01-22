@@ -26,15 +26,13 @@ void UPFServerUpdateCharacterReadOnlyData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->UpdateCharacterReadOnlyData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerUpdateCharacterReadOnlyData::OnSuccessCallback(const PlayFab::ServerModels::FUpdateCharacterDataResult& Result)

@@ -25,15 +25,13 @@ void UPFClientGetTime::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetTime(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetTime::OnSuccessCallback(const PlayFab::ClientModels::FGetTimeResult& Result)

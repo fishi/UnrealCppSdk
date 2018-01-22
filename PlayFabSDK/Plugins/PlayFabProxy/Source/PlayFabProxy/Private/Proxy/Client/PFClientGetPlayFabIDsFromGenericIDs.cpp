@@ -26,15 +26,13 @@ void UPFClientGetPlayFabIDsFromGenericIDs::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPlayFabIDsFromGenericIDs(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPlayFabIDsFromGenericIDs::OnSuccessCallback(const PlayFab::ClientModels::FGetPlayFabIDsFromGenericIDsResult& Result)

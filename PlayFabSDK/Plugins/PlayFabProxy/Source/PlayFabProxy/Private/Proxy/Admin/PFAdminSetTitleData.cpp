@@ -26,15 +26,13 @@ void UPFAdminSetTitleData::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->SetTitleData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminSetTitleData::OnSuccessCallback(const PlayFab::AdminModels::FSetTitleDataResult& Result)

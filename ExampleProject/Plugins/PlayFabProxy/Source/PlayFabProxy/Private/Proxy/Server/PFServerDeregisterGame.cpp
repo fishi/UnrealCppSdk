@@ -26,15 +26,13 @@ void UPFServerDeregisterGame::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->DeregisterGame(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerDeregisterGame::OnSuccessCallback(const PlayFab::ServerModels::FDeregisterGameResponse& Result)

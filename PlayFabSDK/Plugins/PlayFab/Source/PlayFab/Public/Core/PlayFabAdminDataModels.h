@@ -3656,6 +3656,8 @@ namespace AdminModels
         FString MembershipId;
         // [optional] Membership expirations can be explicitly overridden (via game manager or the admin api). If this membership has been overridden, this will be the new expiration time.
         Boxed<FDateTime> OverrideExpiration;
+        // [optional] Whether the override expiration is set.
+        Boxed<bool> OverrideIsSet;
         // [optional] The list of subscriptions that this player has for this membership
         TArray<FSubscriptionModel> Subscriptions;
 
@@ -3665,6 +3667,7 @@ namespace AdminModels
             MembershipExpiration(0),
             MembershipId(),
             OverrideExpiration(),
+            OverrideIsSet(),
             Subscriptions()
             {}
 
@@ -3674,6 +3677,7 @@ namespace AdminModels
             MembershipExpiration(src.MembershipExpiration),
             MembershipId(src.MembershipId),
             OverrideExpiration(src.OverrideExpiration),
+            OverrideIsSet(src.OverrideIsSet),
             Subscriptions(src.Subscriptions)
             {}
 

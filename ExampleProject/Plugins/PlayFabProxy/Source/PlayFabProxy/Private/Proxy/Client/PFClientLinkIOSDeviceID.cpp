@@ -26,15 +26,13 @@ void UPFClientLinkIOSDeviceID::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->LinkIOSDeviceID(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientLinkIOSDeviceID::OnSuccessCallback(const PlayFab::ClientModels::FLinkIOSDeviceIDResult& Result)

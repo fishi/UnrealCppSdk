@@ -25,15 +25,13 @@ void UPFAdminGetPlayerStatisticDefinitions::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetPlayerStatisticDefinitions(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetPlayerStatisticDefinitions::OnSuccessCallback(const PlayFab::AdminModels::FGetPlayerStatisticDefinitionsResult& Result)

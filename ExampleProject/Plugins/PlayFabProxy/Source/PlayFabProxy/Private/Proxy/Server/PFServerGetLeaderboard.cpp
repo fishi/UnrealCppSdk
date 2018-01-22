@@ -26,15 +26,13 @@ void UPFServerGetLeaderboard::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->GetLeaderboard(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerGetLeaderboard::OnSuccessCallback(const PlayFab::ServerModels::FGetLeaderboardResult& Result)

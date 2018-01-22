@@ -26,15 +26,13 @@ void UPFServerAddSharedGroupMembers::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->AddSharedGroupMembers(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerAddSharedGroupMembers::OnSuccessCallback(const PlayFab::ServerModels::FAddSharedGroupMembersResult& Result)

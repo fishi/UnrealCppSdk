@@ -26,15 +26,13 @@ void UPFServerRevokeAllBansForUser::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->RevokeAllBansForUser(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerRevokeAllBansForUser::OnSuccessCallback(const PlayFab::ServerModels::FRevokeAllBansForUserResult& Result)

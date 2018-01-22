@@ -26,15 +26,13 @@ void UPFAdminGetUserReadOnlyData::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetUserReadOnlyData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetUserReadOnlyData::OnSuccessCallback(const PlayFab::AdminModels::FGetUserDataResult& Result)

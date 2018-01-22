@@ -26,15 +26,13 @@ void UPFClientGetWindowsHelloChallenge::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetWindowsHelloChallenge(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetWindowsHelloChallenge::OnSuccessCallback(const PlayFab::ClientModels::FGetWindowsHelloChallengeResponse& Result)

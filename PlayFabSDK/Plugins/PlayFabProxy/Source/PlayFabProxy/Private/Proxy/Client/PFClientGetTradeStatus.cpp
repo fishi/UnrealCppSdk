@@ -26,15 +26,13 @@ void UPFClientGetTradeStatus::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetTradeStatus(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetTradeStatus::OnSuccessCallback(const PlayFab::ClientModels::FGetTradeStatusResponse& Result)

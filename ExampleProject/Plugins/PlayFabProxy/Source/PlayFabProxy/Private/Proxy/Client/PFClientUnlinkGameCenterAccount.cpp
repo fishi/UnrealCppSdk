@@ -25,15 +25,13 @@ void UPFClientUnlinkGameCenterAccount::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkGameCenterAccount(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkGameCenterAccount::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkGameCenterAccountResult& Result)

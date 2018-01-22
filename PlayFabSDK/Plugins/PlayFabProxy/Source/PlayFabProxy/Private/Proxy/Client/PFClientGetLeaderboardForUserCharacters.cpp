@@ -26,15 +26,13 @@ void UPFClientGetLeaderboardForUserCharacters::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetLeaderboardForUserCharacters(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetLeaderboardForUserCharacters::OnSuccessCallback(const PlayFab::ClientModels::FGetLeaderboardForUsersCharactersResult& Result)

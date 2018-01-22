@@ -25,15 +25,13 @@ void UPFAdminGetAllSegments::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetAllSegments(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetAllSegments::OnSuccessCallback(const PlayFab::AdminModels::FGetAllSegmentsResult& Result)

@@ -25,15 +25,13 @@ void UPFClientUnlinkGoogleAccount::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkGoogleAccount(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkGoogleAccount::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkGoogleAccountResult& Result)

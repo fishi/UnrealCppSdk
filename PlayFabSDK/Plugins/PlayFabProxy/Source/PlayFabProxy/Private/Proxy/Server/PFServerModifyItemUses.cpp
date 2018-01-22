@@ -26,15 +26,13 @@ void UPFServerModifyItemUses::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->ModifyItemUses(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerModifyItemUses::OnSuccessCallback(const PlayFab::ServerModels::FModifyItemUsesResult& Result)

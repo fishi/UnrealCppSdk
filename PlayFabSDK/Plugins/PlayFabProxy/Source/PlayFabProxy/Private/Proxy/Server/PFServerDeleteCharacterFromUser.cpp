@@ -26,15 +26,13 @@ void UPFServerDeleteCharacterFromUser::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->DeleteCharacterFromUser(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerDeleteCharacterFromUser::OnSuccessCallback(const PlayFab::ServerModels::FDeleteCharacterFromUserResult& Result)

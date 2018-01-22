@@ -25,15 +25,13 @@ void UPFClientGetPlayerSegments::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPlayerSegments(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPlayerSegments::OnSuccessCallback(const PlayFab::ClientModels::FGetPlayerSegmentsResult& Result)

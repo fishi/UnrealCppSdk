@@ -26,15 +26,13 @@ void UPFServerUpdateUserInternalData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->UpdateUserInternalData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerUpdateUserInternalData::OnSuccessCallback(const PlayFab::ServerModels::FUpdateUserDataResult& Result)

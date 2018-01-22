@@ -26,15 +26,13 @@ void UPFClientRemoveSharedGroupMembers::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->RemoveSharedGroupMembers(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientRemoveSharedGroupMembers::OnSuccessCallback(const PlayFab::ClientModels::FRemoveSharedGroupMembersResult& Result)

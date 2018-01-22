@@ -26,15 +26,13 @@ void UPFClientOpenTrade::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->OpenTrade(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientOpenTrade::OnSuccessCallback(const PlayFab::ClientModels::FOpenTradeResponse& Result)

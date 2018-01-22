@@ -657,6 +657,7 @@ public:
 	, FBPServerPlayerProfileViewConstraints InProfileConstraints
 	, int32 InStartPosition
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
 );
 
@@ -700,6 +701,7 @@ public:
 	, FString InPlayFabId
 	, FBPServerPlayerProfileViewConstraints InProfileConstraints
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
 );
 
@@ -734,6 +736,7 @@ public:
 	, FBPServerPlayerProfileViewConstraints InProfileConstraints
 	, int32 InStartPosition
 	, FString InStatisticName
+	, bool InUseSpecificVersion
 	, int32 InVersion
 );
 
@@ -1308,6 +1311,7 @@ public:
 	, FDateTime InMembershipExpiration
 	, FString InMembershipId
 	, FDateTime InOverrideExpiration
+	, bool InOverrideIsSet
 	, TArray<FBPServerSubscriptionModel> InSubscriptions
 );
     UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1317,6 +1321,7 @@ public:
 	, FDateTime& OutMembershipExpiration
 	, FString& OutMembershipId
 	, FDateTime& OutOverrideExpiration
+	, bool& OutOverrideIsSet
 	, TArray<FBPServerSubscriptionModel>& OutSubscriptions
 );
 

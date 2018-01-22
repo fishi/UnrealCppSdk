@@ -26,15 +26,13 @@ void UPFServerExecuteCloudScript::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->ExecuteCloudScript(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerExecuteCloudScript::OnSuccessCallback(const PlayFab::ServerModels::FExecuteCloudScriptResult& Result)

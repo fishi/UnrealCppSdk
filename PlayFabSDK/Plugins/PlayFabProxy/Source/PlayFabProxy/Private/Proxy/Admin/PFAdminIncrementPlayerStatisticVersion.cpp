@@ -26,15 +26,13 @@ void UPFAdminIncrementPlayerStatisticVersion::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->IncrementPlayerStatisticVersion(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminIncrementPlayerStatisticVersion::OnSuccessCallback(const PlayFab::AdminModels::FIncrementPlayerStatisticVersionResult& Result)

@@ -26,15 +26,13 @@ void UPFClientGetPlayerStatistics::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPlayerStatistics(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPlayerStatistics::OnSuccessCallback(const PlayFab::ClientModels::FGetPlayerStatisticsResult& Result)

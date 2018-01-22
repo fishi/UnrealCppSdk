@@ -26,15 +26,13 @@ void UPFClientLoginWithGoogleAccount::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->LoginWithGoogleAccount(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientLoginWithGoogleAccount::OnSuccessCallback(const PlayFab::ClientModels::FLoginResult& Result)

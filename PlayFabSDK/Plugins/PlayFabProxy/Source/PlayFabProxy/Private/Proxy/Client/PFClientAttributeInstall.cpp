@@ -26,15 +26,13 @@ void UPFClientAttributeInstall::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->AttributeInstall(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientAttributeInstall::OnSuccessCallback(const PlayFab::ClientModels::FAttributeInstallResult& Result)

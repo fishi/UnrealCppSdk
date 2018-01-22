@@ -26,15 +26,13 @@ void UPFClientGetCatalogItems::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetCatalogItems(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetCatalogItems::OnSuccessCallback(const PlayFab::ClientModels::FGetCatalogItemsResult& Result)

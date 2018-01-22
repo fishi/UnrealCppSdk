@@ -26,15 +26,13 @@ void UPFAdminRevokeBans::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->RevokeBans(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminRevokeBans::OnSuccessCallback(const PlayFab::AdminModels::FRevokeBansResult& Result)

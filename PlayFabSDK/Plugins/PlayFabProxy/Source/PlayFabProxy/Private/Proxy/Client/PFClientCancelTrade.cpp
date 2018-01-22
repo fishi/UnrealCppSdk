@@ -26,15 +26,13 @@ void UPFClientCancelTrade::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->CancelTrade(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientCancelTrade::OnSuccessCallback(const PlayFab::ClientModels::FCancelTradeResponse& Result)

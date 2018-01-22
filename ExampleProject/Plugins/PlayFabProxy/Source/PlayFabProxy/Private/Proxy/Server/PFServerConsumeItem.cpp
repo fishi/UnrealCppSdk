@@ -26,15 +26,13 @@ void UPFServerConsumeItem::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->ConsumeItem(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerConsumeItem::OnSuccessCallback(const PlayFab::ServerModels::FConsumeItemResult& Result)

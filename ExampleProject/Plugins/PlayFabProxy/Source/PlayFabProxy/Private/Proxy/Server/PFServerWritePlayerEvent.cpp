@@ -26,15 +26,13 @@ void UPFServerWritePlayerEvent::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->WritePlayerEvent(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerWritePlayerEvent::OnSuccessCallback(const PlayFab::ServerModels::FWriteEventResponse& Result)

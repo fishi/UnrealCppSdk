@@ -26,15 +26,13 @@ void UPFClientGetAllUsersCharacters::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetAllUsersCharacters(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetAllUsersCharacters::OnSuccessCallback(const PlayFab::ClientModels::FListUsersCharactersResult& Result)

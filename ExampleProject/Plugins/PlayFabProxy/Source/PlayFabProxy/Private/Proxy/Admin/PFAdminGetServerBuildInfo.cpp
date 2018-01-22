@@ -26,15 +26,13 @@ void UPFAdminGetServerBuildInfo::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetServerBuildInfo(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetServerBuildInfo::OnSuccessCallback(const PlayFab::AdminModels::FGetServerBuildInfoResult& Result)

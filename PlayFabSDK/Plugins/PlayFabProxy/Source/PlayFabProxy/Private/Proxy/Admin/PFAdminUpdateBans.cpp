@@ -26,15 +26,13 @@ void UPFAdminUpdateBans::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->UpdateBans(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminUpdateBans::OnSuccessCallback(const PlayFab::AdminModels::FUpdateBansResult& Result)

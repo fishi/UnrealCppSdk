@@ -26,15 +26,13 @@ void UPFClientExecuteCloudScript::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->ExecuteCloudScript(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientExecuteCloudScript::OnSuccessCallback(const PlayFab::ClientModels::FExecuteCloudScriptResult& Result)

@@ -26,15 +26,13 @@ void UPFServerUnlockContainerInstance::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->UnlockContainerInstance(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerUnlockContainerInstance::OnSuccessCallback(const PlayFab::ServerModels::FUnlockContainerItemResult& Result)

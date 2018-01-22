@@ -26,15 +26,13 @@ void UPFClientGetLeaderboardAroundPlayer::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetLeaderboardAroundPlayer(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetLeaderboardAroundPlayer::OnSuccessCallback(const PlayFab::ClientModels::FGetLeaderboardAroundPlayerResult& Result)

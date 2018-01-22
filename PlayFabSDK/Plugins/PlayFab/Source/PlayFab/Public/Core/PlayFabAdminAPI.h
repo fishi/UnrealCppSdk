@@ -129,9 +129,7 @@ namespace PlayFab
          * If the task instance has already completed, there will be no-op.
          */
         bool AbortTaskInstance(AdminModels::FAbortTaskInstanceRequest& request, const FAbortTaskInstanceDelegate& SuccessDelegate = FAbortTaskInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Adds a new news item to the title's news feed
-         */
+        /** Adds a new news item to the title's news feed */
         bool AddNews(AdminModels::FAddNewsRequest& request, const FAddNewsDelegate& SuccessDelegate = FAddNewsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Adds a given tag to a player profile. The tag's namespace is automatically generated based on the source of the tag.
@@ -139,15 +137,15 @@ namespace PlayFab
          */
         bool AddPlayerTag(AdminModels::FAddPlayerTagRequest& request, const FAddPlayerTagDelegate& SuccessDelegate = FAddPlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds the game server executable specified (previously uploaded - see GetServerBuildUploadUrl) to the set of those a client is permitted to request in a call to StartGame
+         * Adds the game server executable specified (previously uploaded - see GetServerBuildUploadUrl) to the set of those a
+         * client is permitted to request in a call to StartGame
          */
         bool AddServerBuild(AdminModels::FAddServerBuildRequest& request, const FAddServerBuildDelegate& SuccessDelegate = FAddServerBuildDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Increments the specified virtual currency by the stated amount
-         */
+        /** Increments the specified virtual currency by the stated amount */
         bool AddUserVirtualCurrency(AdminModels::FAddUserVirtualCurrencyRequest& request, const FAddUserVirtualCurrencyDelegate& SuccessDelegate = FAddUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds one or more virtual currencies to the set defined for the title. Virtual Currencies have a maximum value of 2,147,483,647 when granted to a player. Any value over that will be discarded.
+         * Adds one or more virtual currencies to the set defined for the title. Virtual Currencies have a maximum value of
+         * 2,147,483,647 when granted to a player. Any value over that will be discarded.
          * This operation is additive. Any new currencies defined in the array will be added to the set of those available for the title, while any CurrencyCode identifiers matching existing ones in the game will be overwritten with the new values.
          */
         bool AddVirtualCurrencyTypes(AdminModels::FAddVirtualCurrencyTypesRequest& request, const FAddVirtualCurrencyTypesDelegate& SuccessDelegate = FAddVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -172,18 +170,18 @@ namespace PlayFab
          */
         bool CreateCloudScriptTask(AdminModels::FCreateCloudScriptTaskRequest& request, const FCreateCloudScriptTaskDelegate& SuccessDelegate = FCreateCloudScriptTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Creates a new Player Shared Secret Key. It may take up to 5 minutes for this key to become generally available after this API returns.
+         * Creates a new Player Shared Secret Key. It may take up to 5 minutes for this key to become generally available after
+         * this API returns.
          * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
          */
         bool CreatePlayerSharedSecret(AdminModels::FCreatePlayerSharedSecretRequest& request, const FCreatePlayerSharedSecretDelegate& SuccessDelegate = FCreatePlayerSharedSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds a new player statistic configuration to the title, optionally allowing the developer to specify a reset interval and an aggregation method.
+         * Adds a new player statistic configuration to the title, optionally allowing the developer to specify a reset interval
+         * and an aggregation method.
          * Statistics are numeric values, with each statistic in the title also generating a leaderboard. The ResetInterval  enables automatically resetting leaderboards on a specified interval. Upon reset, the statistic updates to a new version with no values (effectively removing all players from the leaderboard). The previous version's statistic values are also archived for retrieval, if needed (see GetPlayerStatisticVersions). Statistics not created via a call to CreatePlayerStatisticDefinition by default have a VersionChangeInterval of Never, meaning they do not reset on a schedule, but they can be set to do so via a call to UpdatePlayerStatisticDefinition. Once a statistic has been reset (sometimes referred to as versioned or incremented), the now-previous version can still be written to for up a short, pre-defined period (currently 10 seconds), to prevent issues with levels completing around the time of the reset. Also, once reset, the historical statistics for players in the title may be retrieved using the URL specified in the version information (GetPlayerStatisticVersions). The AggregationMethod determines what action is taken when a new statistic value is submitted - always update with the new value (Last), use the highest of the old and new values (Max), use the smallest (Min), or add them together (Sum).
          */
         bool CreatePlayerStatisticDefinition(AdminModels::FCreatePlayerStatisticDefinitionRequest& request, const FCreatePlayerStatisticDefinitionDelegate& SuccessDelegate = FCreatePlayerStatisticDefinitionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Delete a content file from the title. When deleting a file that does not exist, it returns success.
-         */
+        /** Delete a content file from the title. When deleting a file that does not exist, it returns success. */
         bool DeleteContent(AdminModels::FDeleteContentRequest& request, const FDeleteContentDelegate& SuccessDelegate = FDeleteContentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Removes a user's player account from a title and deletes all associated data
@@ -191,7 +189,8 @@ namespace PlayFab
          */
         bool DeletePlayer(AdminModels::FDeletePlayerRequest& request, const FDeletePlayerDelegate& SuccessDelegate = FDeletePlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Deletes an existing Player Shared Secret Key. It may take up to 5 minutes for this delete to be reflected after this API returns.
+         * Deletes an existing Player Shared Secret Key. It may take up to 5 minutes for this delete to be reflected after this API
+         * returns.
          * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
          */
         bool DeletePlayerSharedSecret(AdminModels::FDeletePlayerSharedSecretRequest& request, const FDeletePlayerSharedSecretDelegate& SuccessDelegate = FDeletePlayerSharedSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -209,6 +208,7 @@ namespace PlayFab
          * Permanently deletes a title and all associated configuration
          * Deletes all data associated with the title, including catalog, virtual currencies, leaderboard statistics, Cloud Script revisions,                 segment definitions, event rules, tasks, add-ons, secret keys, data encryption keys, and permission policies.                  Removes the title from its studio and removes all associated developer roles and permissions.                  Does not delete PlayStream event history associated with the title.                 Note, this API queues the title for deletion and returns immediately. It may take several hours or more before all title data is fully deleted.                 All player accounts in the title must be deleted before deleting the title. If any player accounts exist, the API will return a 'TitleContainsUserAccounts' error.                                 Until the title data is fully deleted, attempts to call APIs with the title will fail with the 'TitleDeleted' error.
          */
+
         bool DeleteTitle(const FDeleteTitleDelegate& SuccessDelegate = FDeleteTitleDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Get information about a ActionsOnPlayersInSegment task instance.
@@ -216,17 +216,15 @@ namespace PlayFab
          */
         bool GetActionsOnPlayersInSegmentTaskInstance(AdminModels::FGetTaskInstanceRequest& request, const FGetActionsOnPlayersInSegmentTaskInstanceDelegate& SuccessDelegate = FGetActionsOnPlayersInSegmentTaskInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
+         * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as
+         * GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
          * Request has no paramaters.
          */
+
         bool GetAllSegments(const FGetAllSegmentsDelegate& SuccessDelegate = FGetAllSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
-         */
+        /** Retrieves the specified version of the title's catalog of virtual goods, including all defined properties */
         bool GetCatalogItems(AdminModels::FGetCatalogItemsRequest& request, const FGetCatalogItemsDelegate& SuccessDelegate = FGetCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Gets the contents and information of a specific Cloud Script revision.
-         */
+        /** Gets the contents and information of a specific Cloud Script revision. */
         bool GetCloudScriptRevision(AdminModels::FGetCloudScriptRevisionRequest& request, const FGetCloudScriptRevisionDelegate& SuccessDelegate = FGetCloudScriptRevisionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Get detail information about a CloudScript task instance.
@@ -234,15 +232,17 @@ namespace PlayFab
          */
         bool GetCloudScriptTaskInstance(AdminModels::FGetTaskInstanceRequest& request, const FGetCloudScriptTaskInstanceDelegate& SuccessDelegate = FGetCloudScriptTaskInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Lists all the current cloud script versions. For each version, information about the current published and latest revisions is also listed.
+         * Lists all the current cloud script versions. For each version, information about the current published and latest
+         * revisions is also listed.
          */
+
         bool GetCloudScriptVersions(const FGetCloudScriptVersionsDelegate& SuccessDelegate = FGetCloudScriptVersionsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * List all contents of the title and get statistics such as size
-         */
+        /** List all contents of the title and get statistics such as size */
         bool GetContentList(AdminModels::FGetContentListRequest& request, const FGetContentListDelegate& SuccessDelegate = FGetContentListDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the pre-signed URL for uploading a content file. A subsequent HTTP PUT to the returned URL uploads the  content. Also, please be aware that the Content service is specifically PlayFab's CDN offering, for which standard CDN rates apply.
+         * Retrieves the pre-signed URL for uploading a content file. A subsequent HTTP PUT to the returned URL uploads the
+         * content. Also, please be aware that the Content service is specifically PlayFab's CDN offering, for which standard CDN
+         * rates apply.
          */
         bool GetContentUploadUrl(AdminModels::FGetContentUploadUrlRequest& request, const FGetContentUploadUrlDelegate& SuccessDelegate = FGetContentUploadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -250,9 +250,7 @@ namespace PlayFab
          * Gets the download URL for the requested report data as csv. The reports available through this api are those available in Game Manager. Current ReportName values include: Daily Api Usage Details Report, Daily New User History Report, Daily Overview Report, Daily Real Money Purchase History Report, Daily Top Items Report, Daily Top Spender Report, Daily VC Purchase History Report, Monthly New User History Report, Monthly Overview Report, Monthly Real Money Purchase History Report, Monthly Top Items Report, Monthly Top Spender Report, Monthly Totals Report, Monthly VC Purchase History Report, Seven Day Retention Report.
          */
         bool GetDataReport(AdminModels::FGetDataReportRequest& request, const FGetDataReportDelegate& SuccessDelegate = FGetDataReportDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the details for a specific completed session, including links to standard out and standard error logs
-         */
+        /** Retrieves the details for a specific completed session, including links to standard out and standard error logs */
         bool GetMatchmakerGameInfo(AdminModels::FGetMatchmakerGameInfoRequest& request, const FGetMatchmakerGameInfoDelegate& SuccessDelegate = FGetMatchmakerGameInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the details of defined game modes for the specified game server executable
@@ -269,27 +267,29 @@ namespace PlayFab
          * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
          */
         bool GetPlayerProfile(AdminModels::FGetPlayerProfileRequest& request, const FGetPlayerProfileDelegate& SuccessDelegate = FGetPlayerProfileDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * List all segments that a player currently belongs to at this moment in time.
-         */
+        /** List all segments that a player currently belongs to at this moment in time. */
         bool GetPlayerSegments(AdminModels::FGetPlayersSegmentsRequest& request, const FGetPlayerSegmentsDelegate& SuccessDelegate = FGetPlayerSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Returns all Player Shared Secret Keys including disabled and expired.
          * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
          */
+
         bool GetPlayerSharedSecrets(const FGetPlayerSharedSecretsDelegate& SuccessDelegate = FGetPlayerSharedSecretsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected in the results. AB Test segments are currently not supported by this operation.
+         * Allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match
+         * the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span
+         * on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected
+         * in the results. AB Test segments are currently not supported by this operation.
          * Initial request must contain at least a Segment ID. Subsequent requests must contain the Segment ID as well as the Continuation Token. Failure to send the Continuation Token will result in a new player segment list being generated. Each time the Continuation Token is passed in the length of the Total Seconds to Live is refreshed. If too much time passes between requests to the point that a subsequent request is past the Total Seconds to Live an error will be returned and paging will be terminated. This API is resource intensive and should not be used in scenarios which might generate high request volumes. Only one request to this API at a time should be made per title. Concurrent requests to the API may be rejected with the APIConcurrentRequestLimitExceeded error.
          */
         bool GetPlayersInSegment(AdminModels::FGetPlayersInSegmentRequest& request, const FGetPlayersInSegmentDelegate& SuccessDelegate = FGetPlayersInSegmentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the configuration information for all player statistics defined in the title, regardless of whether they have a reset interval.
+         * Retrieves the configuration information for all player statistics defined in the title, regardless of whether they have
+         * a reset interval.
          */
+
         bool GetPlayerStatisticDefinitions(const FGetPlayerStatisticDefinitionsDelegate& SuccessDelegate = FGetPlayerStatisticDefinitionsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the information on the available versions of the specified statistic.
-         */
+        /** Retrieves the information on the available versions of the specified statistic. */
         bool GetPlayerStatisticVersions(AdminModels::FGetPlayerStatisticVersionsRequest& request, const FGetPlayerStatisticVersionsDelegate& SuccessDelegate = FGetPlayerStatisticVersionsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Get all tags with a given Namespace (optional) from a player profile.
@@ -306,16 +306,13 @@ namespace PlayFab
          * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com.  This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
          */
         bool GetPublisherData(AdminModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the random drop table configuration for the title
-         */
+        /** Retrieves the random drop table configuration for the title */
         bool GetRandomResultTables(AdminModels::FGetRandomResultTablesRequest& request, const FGetRandomResultTablesDelegate& SuccessDelegate = FGetRandomResultTablesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the build details for the specified game server executable
-         */
+        /** Retrieves the build details for the specified game server executable */
         bool GetServerBuildInfo(AdminModels::FGetServerBuildInfoRequest& request, const FGetServerBuildInfoDelegate& SuccessDelegate = FGetServerBuildInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the pre-authorized URL for uploading a game server package containing a build (does not enable the build for use - see AddServerBuild)
+         * Retrieves the pre-authorized URL for uploading a game server package containing a build (does not enable the build for
+         * use - see AddServerBuild)
          */
         bool GetServerBuildUploadUrl(AdminModels::FGetServerBuildUploadURLRequest& request, const FGetServerBuildUploadUrlDelegate& SuccessDelegate = FGetServerBuildUploadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -328,9 +325,7 @@ namespace PlayFab
          * Only the most recent 100 task instances are returned, ordered by start time descending. The results are generic basic information for task instances. To get detail information specific to each task type, use Get*TaskInstance based on its corresponding task type.
          */
         bool GetTaskInstances(AdminModels::FGetTaskInstancesRequest& request, const FGetTaskInstancesDelegate& SuccessDelegate = FGetTaskInstancesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Get definition information on a specified task or all tasks within a title.
-         */
+        /** Get definition information on a specified task or all tasks within a title. */
         bool GetTasks(AdminModels::FGetTasksRequest& request, const FGetTasksDelegate& SuccessDelegate = FGetTasksDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the key-value store of custom title settings which can be read by the client
@@ -402,26 +397,20 @@ namespace PlayFab
          * Statistics are numeric values, with each statistic in the title also generating a leaderboard.  When this call is made on a given statistic, this forces a reset of that statistic. Upon reset, the statistic updates to a new version with no values (effectively removing all players from the leaderboard). The previous version's statistic values are also archived for retrieval, if needed (see GetPlayerStatisticVersions). Statistics not created via a call to CreatePlayerStatisticDefinition by default have a VersionChangeInterval of Never, meaning they do not reset on a schedule, but they can be set to do so via a call to UpdatePlayerStatisticDefinition. Once a statistic has been reset (sometimes referred to as versioned or incremented), the now-previous version can still be written to for up a short, pre-defined period (currently 10 seconds), to prevent issues with levels completing around the time of the reset. Also, once reset, the historical statistics for players in the title may be retrieved using the URL specified in the version information (GetPlayerStatisticVersions).
          */
         bool IncrementPlayerStatisticVersion(AdminModels::FIncrementPlayerStatisticVersionRequest& request, const FIncrementPlayerStatisticVersionDelegate& SuccessDelegate = FIncrementPlayerStatisticVersionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the build details for all game server executables which are currently defined for the title
-         */
+        /** Retrieves the build details for all game server executables which are currently defined for the title */
+
         bool ListServerBuilds(const FListServerBuildsDelegate& SuccessDelegate = FListServerBuildsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retuns the list of all defined virtual currencies for the title
-         */
+        /** Retuns the list of all defined virtual currencies for the title */
+
         bool ListVirtualCurrencyTypes(const FListVirtualCurrencyTypesDelegate& SuccessDelegate = FListVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the game server mode details for the specified game server executable
          * These details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for additional users, and by the PlayFab game server management service to determine when a new Game Server Host should be created in order to prevent excess load on existing Hosts. This operation is not additive. Using it will cause the game mode definition for the game server executable in question to be created from scratch. If there is an existing game server mode definition for the given BuildVersion, it will be deleted and replaced with the data specified in this call.
          */
         bool ModifyMatchmakerGameModes(AdminModels::FModifyMatchmakerGameModesRequest& request, const FModifyMatchmakerGameModesDelegate& SuccessDelegate = FModifyMatchmakerGameModesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Updates the build details for the specified game server executable
-         */
+        /** Updates the build details for the specified game server executable */
         bool ModifyServerBuild(AdminModels::FModifyServerBuildRequest& request, const FModifyServerBuildDelegate& SuccessDelegate = FModifyServerBuildDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Attempts to process an order refund through the original real money payment provider.
-         */
+        /** Attempts to process an order refund through the original real money payment provider. */
         bool RefundPurchase(AdminModels::FRefundPurchaseRequest& request, const FRefundPurchaseDelegate& SuccessDelegate = FRefundPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Remove a given tag from a player profile. The tag's namespace is automatically generated based on the source of the tag.
@@ -429,7 +418,8 @@ namespace PlayFab
          */
         bool RemovePlayerTag(AdminModels::FRemovePlayerTagRequest& request, const FRemovePlayerTagDelegate& SuccessDelegate = FRemovePlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Removes the game server executable specified from the set of those a client is permitted to request in a call to StartGame
+         * Removes the game server executable specified from the set of those a client is permitted to request in a call to
+         * StartGame
          */
         bool RemoveServerBuild(AdminModels::FRemoveServerBuildRequest& request, const FRemoveServerBuildDelegate& SuccessDelegate = FRemoveServerBuildDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -452,9 +442,7 @@ namespace PlayFab
          * Note that this action cannot be un-done. All statistics for this user will be deleted, removing the user from all leaderboards for the game.
          */
         bool ResetUserStatistics(AdminModels::FResetUserStatisticsRequest& request, const FResetUserStatisticsDelegate& SuccessDelegate = FResetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Attempts to resolve a dispute with the original order's payment provider.
-         */
+        /** Attempts to resolve a dispute with the original order's payment provider. */
         bool ResolvePurchaseDispute(AdminModels::FResolvePurchaseDisputeRequest& request, const FResolvePurchaseDisputeDelegate& SuccessDelegate = FResolvePurchaseDisputeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Revoke all active bans for a user.
@@ -477,7 +465,8 @@ namespace PlayFab
          */
         bool RunTask(AdminModels::FRunTaskRequest& request, const FRunTaskDelegate& SuccessDelegate = FRunTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Forces an email to be sent to the registered email address for the specified account, with a link allowing the user to change the password
+         * Forces an email to be sent to the registered email address for the specified account, with a link allowing the user to
+         * change the password
          * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
          */
         bool SendAccountRecoveryEmail(AdminModels::FSendAccountRecoveryEmailRequest& request, const FSendAccountRecoveryEmailDelegate& SuccessDelegate = FSendAccountRecoveryEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -491,9 +480,7 @@ namespace PlayFab
          * APIs that require signatures require that the player have a configured Player Secret Key that is used to sign all requests. Players that don't have a secret will be blocked from making API calls until it is configured. To create a signature header add a SHA256 hashed string containing UTF8 encoded JSON body as it will be sent to the server, the current time in UTC formatted to ISO 8601, and the players secret formatted as 'body.date.secret'. Place the resulting hash into the header X-PlayFab-Signature, along with a header X-PlayFab-Timestamp of the same UTC timestamp used in the signature.
          */
         bool SetPlayerSecret(AdminModels::FSetPlayerSecretRequest& request, const FSetPlayerSecretDelegate& SuccessDelegate = FSetPlayerSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Sets the currently published revision of a title Cloud Script
-         */
+        /** Sets the currently published revision of a title Cloud Script */
         bool SetPublishedRevision(AdminModels::FSetPublishedRevisionRequest& request, const FSetPublishedRevisionDelegate& SuccessDelegate = FSetPublishedRevisionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the key-value store of custom publisher settings
@@ -516,13 +503,13 @@ namespace PlayFab
          */
         bool SetTitleInternalData(AdminModels::FSetTitleDataRequest& request, const FSetTitleInternalDataDelegate& SuccessDelegate = FSetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Sets the Amazon Resource Name (ARN) for iOS and Android push notifications. Documentation on the exact restrictions can be found at: http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformApplication.html. Currently, Amazon device Messaging is not supported.
+         * Sets the Amazon Resource Name (ARN) for iOS and Android push notifications. Documentation on the exact restrictions can
+         * be found at: http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformApplication.html. Currently, Amazon device
+         * Messaging is not supported.
          * When using the Apple Push Notification service (APNS) or the development version (APNS_SANDBOX), the APNS Private Key should be used as the Credential in this call. With Google Cloud Messaging (GCM), the Android API Key should be used. The current ARN (if one exists) can be overwritten by setting the OverwriteOldARN boolean to true.
          */
         bool SetupPushNotification(AdminModels::FSetupPushNotificationRequest& request, const FSetupPushNotificationDelegate& SuccessDelegate = FSetupPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Decrements the specified virtual currency by the stated amount
-         */
+        /** Decrements the specified virtual currency by the stated amount */
         bool SubtractUserVirtualCurrency(AdminModels::FSubtractUserVirtualCurrencyRequest& request, const FSubtractUserVirtualCurrencyDelegate& SuccessDelegate = FSubtractUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates information of a list of existing bans specified with Ban Ids.
@@ -535,11 +522,13 @@ namespace PlayFab
          */
         bool UpdateCatalogItems(AdminModels::FUpdateCatalogItemsRequest& request, const FUpdateCatalogItemsDelegate& SuccessDelegate = FUpdateCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Creates a new Cloud Script revision and uploads source code to it. Note that at this time, only one file should be submitted in the revision.
+         * Creates a new Cloud Script revision and uploads source code to it. Note that at this time, only one file should be
+         * submitted in the revision.
          */
         bool UpdateCloudScript(AdminModels::FUpdateCloudScriptRequest& request, const FUpdateCloudScriptDelegate& SuccessDelegate = FUpdateCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Updates a existing Player Shared Secret Key. It may take up to 5 minutes for this update to become generally available after this API returns.
+         * Updates a existing Player Shared Secret Key. It may take up to 5 minutes for this update to become generally available
+         * after this API returns.
          * Player Shared Secret Keys are used for the call to Client/GetTitlePublicKey, which exchanges the shared secret for an RSA CSP blob to be used to encrypt the payload of account creation requests when that API requires a signature header.
          */
         bool UpdatePlayerSharedSecret(AdminModels::FUpdatePlayerSharedSecretRequest& request, const FUpdatePlayerSharedSecretDelegate& SuccessDelegate = FUpdatePlayerSharedSecretDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());

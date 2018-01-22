@@ -26,15 +26,13 @@ void UPFClientGetPhotonAuthenticationToken::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPhotonAuthenticationToken(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPhotonAuthenticationToken::OnSuccessCallback(const PlayFab::ClientModels::FGetPhotonAuthenticationTokenResult& Result)

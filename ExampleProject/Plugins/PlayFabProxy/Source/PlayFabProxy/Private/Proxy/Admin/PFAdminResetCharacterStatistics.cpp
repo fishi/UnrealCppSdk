@@ -26,15 +26,13 @@ void UPFAdminResetCharacterStatistics::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->ResetCharacterStatistics(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminResetCharacterStatistics::OnSuccessCallback(const PlayFab::AdminModels::FResetCharacterStatisticsResult& Result)

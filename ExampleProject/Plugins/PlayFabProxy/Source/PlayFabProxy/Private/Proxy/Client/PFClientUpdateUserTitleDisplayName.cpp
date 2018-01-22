@@ -26,15 +26,13 @@ void UPFClientUpdateUserTitleDisplayName::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UpdateUserTitleDisplayName(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUpdateUserTitleDisplayName::OnSuccessCallback(const PlayFab::ClientModels::FUpdateUserTitleDisplayNameResult& Result)

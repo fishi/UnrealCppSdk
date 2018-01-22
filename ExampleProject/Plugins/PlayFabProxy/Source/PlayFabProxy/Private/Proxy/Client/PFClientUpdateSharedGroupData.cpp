@@ -26,15 +26,13 @@ void UPFClientUpdateSharedGroupData::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UpdateSharedGroupData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUpdateSharedGroupData::OnSuccessCallback(const PlayFab::ClientModels::FUpdateSharedGroupDataResult& Result)

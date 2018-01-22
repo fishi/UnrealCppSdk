@@ -26,15 +26,13 @@ void UPFClientUnlockContainerItem::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlockContainerItem(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlockContainerItem::OnSuccessCallback(const PlayFab::ClientModels::FUnlockContainerItemResult& Result)

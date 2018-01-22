@@ -25,15 +25,13 @@ void UPFAdminGetPlayerSharedSecrets::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetPlayerSharedSecrets(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetPlayerSharedSecrets::OnSuccessCallback(const PlayFab::AdminModels::FGetPlayerSharedSecretsResult& Result)

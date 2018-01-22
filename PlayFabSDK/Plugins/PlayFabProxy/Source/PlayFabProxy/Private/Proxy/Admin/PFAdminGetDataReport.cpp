@@ -26,15 +26,13 @@ void UPFAdminGetDataReport::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->GetDataReport(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminGetDataReport::OnSuccessCallback(const PlayFab::AdminModels::FGetDataReportResult& Result)

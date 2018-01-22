@@ -26,15 +26,13 @@ void UPFClientGetTitleNews::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetTitleNews(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetTitleNews::OnSuccessCallback(const PlayFab::ClientModels::FGetTitleNewsResult& Result)

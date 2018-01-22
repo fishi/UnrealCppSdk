@@ -26,15 +26,13 @@ void UPFClientGetPlayFabIDsFromFacebookIDs::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPlayFabIDsFromFacebookIDs(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPlayFabIDsFromFacebookIDs::OnSuccessCallback(const PlayFab::ClientModels::FGetPlayFabIDsFromFacebookIDsResult& Result)

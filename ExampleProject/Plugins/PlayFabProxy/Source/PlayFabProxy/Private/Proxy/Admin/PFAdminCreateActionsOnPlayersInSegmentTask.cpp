@@ -26,15 +26,13 @@ void UPFAdminCreateActionsOnPlayersInSegmentTask::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->CreateActionsOnPlayersInSegmentTask(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminCreateActionsOnPlayersInSegmentTask::OnSuccessCallback(const PlayFab::AdminModels::FCreateTaskResult& Result)

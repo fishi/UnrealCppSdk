@@ -26,15 +26,13 @@ void UPFAdminUpdatePolicy::Activate()
 
     bool CallResult = false;
 
-    if(AdminAPI.IsValid())
+    if (AdminAPI.IsValid())
     {
         CallResult = AdminAPI->UpdatePolicy(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFAdminUpdatePolicy::OnSuccessCallback(const PlayFab::AdminModels::FUpdatePolicyResponse& Result)

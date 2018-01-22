@@ -26,15 +26,13 @@ void UPFClientAndroidDevicePushNotificationRegistration::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->AndroidDevicePushNotificationRegistration(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientAndroidDevicePushNotificationRegistration::OnSuccessCallback(const PlayFab::ClientModels::FAndroidDevicePushNotificationRegistrationResult& Result)

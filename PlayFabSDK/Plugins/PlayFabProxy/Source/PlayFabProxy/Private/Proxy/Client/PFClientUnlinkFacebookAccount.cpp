@@ -25,15 +25,13 @@ void UPFClientUnlinkFacebookAccount::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->UnlinkFacebookAccount(SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientUnlinkFacebookAccount::OnSuccessCallback(const PlayFab::ClientModels::FUnlinkFacebookAccountResult& Result)

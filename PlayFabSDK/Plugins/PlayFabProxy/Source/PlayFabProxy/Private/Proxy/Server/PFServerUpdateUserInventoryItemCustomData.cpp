@@ -26,15 +26,13 @@ void UPFServerUpdateUserInventoryItemCustomData::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->UpdateUserInventoryItemCustomData(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerUpdateUserInventoryItemCustomData::OnSuccessCallback(const PlayFab::ServerModels::FEmptyResult& Result)

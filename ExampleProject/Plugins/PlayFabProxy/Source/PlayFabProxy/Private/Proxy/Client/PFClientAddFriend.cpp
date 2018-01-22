@@ -26,15 +26,13 @@ void UPFClientAddFriend::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->AddFriend(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientAddFriend::OnSuccessCallback(const PlayFab::ClientModels::FAddFriendResult& Result)

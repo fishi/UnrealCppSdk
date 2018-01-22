@@ -26,15 +26,13 @@ void UPFServerRegisterGame::Activate()
 
     bool CallResult = false;
 
-    if(ServerAPI.IsValid())
+    if (ServerAPI.IsValid())
     {
         CallResult = ServerAPI->RegisterGame(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFServerRegisterGame::OnSuccessCallback(const PlayFab::ServerModels::FRegisterGameResponse& Result)

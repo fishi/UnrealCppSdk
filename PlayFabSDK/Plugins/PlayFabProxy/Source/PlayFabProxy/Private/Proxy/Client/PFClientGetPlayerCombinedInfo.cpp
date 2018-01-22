@@ -26,15 +26,13 @@ void UPFClientGetPlayerCombinedInfo::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->GetPlayerCombinedInfo(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientGetPlayerCombinedInfo::OnSuccessCallback(const PlayFab::ClientModels::FGetPlayerCombinedInfoResult& Result)

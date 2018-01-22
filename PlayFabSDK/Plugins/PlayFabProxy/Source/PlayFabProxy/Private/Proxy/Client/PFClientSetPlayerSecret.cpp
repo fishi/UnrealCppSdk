@@ -26,15 +26,13 @@ void UPFClientSetPlayerSecret::Activate()
 
     bool CallResult = false;
 
-    if(ClientAPI.IsValid())
+    if (ClientAPI.IsValid())
     {
         CallResult = ClientAPI->SetPlayerSecret(Request.Data, SuccessDelegate, ErrorDelegate);
     }
 
-    if(CallResult == false)
-    {
+    if (CallResult == false)
         OnFailure.Broadcast();
-    }
 }
 
 void UPFClientSetPlayerSecret::OnSuccessCallback(const PlayFab::ClientModels::FSetPlayerSecretResult& Result)
