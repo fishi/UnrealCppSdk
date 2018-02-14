@@ -13,7 +13,7 @@ namespace ClientModels
     struct PLAYFAB_API FAcceptTradeRequest : public FPlayFabBaseModel
     {
         
-        // [optional] Items from the accepting player's or guild's inventory in exchange for the offered items in the trade. In the case of a gift, this will be null.
+        // [optional] Items from the accepting player's inventory in exchange for the offered items in the trade. In the case of a gift, this will be null.
         TArray<FString> AcceptedInventoryInstanceIds;
         // Player who opened the trade.
         FString OfferingPlayerId;
@@ -2144,6 +2144,45 @@ namespace ClientModels
         }
 
         ~FEmptyResult();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
+    struct PLAYFAB_API FEntityTokenResponse : public FPlayFabBaseModel
+    {
+        
+        // [optional] The identifier of the entity the token was issued for.
+        FString EntityId;
+        // [optional] The token used to set X-EntityToken for all entity based API calls.
+        FString EntityToken;
+        // [optional] The type of entity the token was issued for.
+        FString EntityType;
+        // [optional] The time the token will expire, if it is an expiring token, in UTC.
+        Boxed<FDateTime> TokenExpiration;
+
+        FEntityTokenResponse() :
+            FPlayFabBaseModel(),
+            EntityId(),
+            EntityToken(),
+            EntityType(),
+            TokenExpiration()
+            {}
+
+        FEntityTokenResponse(const FEntityTokenResponse& src) :
+            FPlayFabBaseModel(),
+            EntityId(src.EntityId),
+            EntityToken(src.EntityToken),
+            EntityType(src.EntityType),
+            TokenExpiration(src.TokenExpiration)
+            {}
+
+        FEntityTokenResponse(const TSharedPtr<FJsonObject>& obj) : FEntityTokenResponse()
+        {
+            readFromValue(obj);
+        }
+
+        ~FEntityTokenResponse();
 
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7712,6 +7751,8 @@ namespace ClientModels
     struct PLAYFAB_API FLoginResult : public FPlayFabBaseModel
     {
         
+        // [optional] If LoginTitlePlayerAccountEntity flag is set on the login request the title_player_account will also be logged in and returned.
+        TSharedPtr<FEntityTokenResponse> EntityToken;
         // [optional] Results for requested info.
         TSharedPtr<FGetPlayerCombinedInfoResultPayload> InfoResultPayload;
         // [optional] The time of this user's previous login. If there was no previous login, then it's DateTime.MinValue
@@ -7727,6 +7768,7 @@ namespace ClientModels
 
         FLoginResult() :
             FPlayFabBaseModel(),
+            EntityToken(nullptr),
             InfoResultPayload(nullptr),
             LastLoginTime(),
             NewlyCreated(false),
@@ -7737,6 +7779,7 @@ namespace ClientModels
 
         FLoginResult(const FLoginResult& src) :
             FPlayFabBaseModel(),
+            EntityToken(src.EntityToken.IsValid() ? MakeShareable(new FEntityTokenResponse(*src.EntityToken)) : nullptr),
             InfoResultPayload(src.InfoResultPayload.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoResultPayload(*src.InfoResultPayload)) : nullptr),
             LastLoginTime(src.LastLoginTime),
             NewlyCreated(src.NewlyCreated),
@@ -7769,6 +7812,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Specific Operating System version for the user's device.
         FString OS;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
@@ -7783,6 +7828,7 @@ namespace ClientModels
             CreateAccount(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             OS(),
             PlayerSecret(),
             TitleId()
@@ -7795,6 +7841,7 @@ namespace ClientModels
             CreateAccount(src.CreateAccount),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             OS(src.OS),
             PlayerSecret(src.PlayerSecret),
             TitleId(src.TitleId)
@@ -7822,6 +7869,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
         FString PlayerSecret;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
@@ -7833,6 +7882,7 @@ namespace ClientModels
             CustomId(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PlayerSecret(),
             TitleId()
             {}
@@ -7843,6 +7893,7 @@ namespace ClientModels
             CustomId(src.CustomId),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerSecret(src.PlayerSecret),
             TitleId(src.TitleId)
             {}
@@ -7865,6 +7916,8 @@ namespace ClientModels
         FString Email;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // Password for the PlayFab account (6-100 characters)
         FString Password;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
@@ -7874,6 +7927,7 @@ namespace ClientModels
             FPlayFabBaseModel(),
             Email(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             Password(),
             TitleId()
             {}
@@ -7882,6 +7936,7 @@ namespace ClientModels
             FPlayFabBaseModel(),
             Email(src.Email),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             Password(src.Password),
             TitleId(src.TitleId)
             {}
@@ -7908,6 +7963,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
         FString PlayerSecret;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
@@ -7919,6 +7976,7 @@ namespace ClientModels
             CreateAccount(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PlayerSecret(),
             TitleId()
             {}
@@ -7929,6 +7987,7 @@ namespace ClientModels
             CreateAccount(src.CreateAccount),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerSecret(src.PlayerSecret),
             TitleId(src.TitleId)
             {}
@@ -7953,6 +8012,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Unique Game Center player id.
         FString PlayerId;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
@@ -7965,6 +8026,7 @@ namespace ClientModels
             CreateAccount(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PlayerId(),
             PlayerSecret(),
             TitleId()
@@ -7975,6 +8037,7 @@ namespace ClientModels
             CreateAccount(src.CreateAccount),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerId(src.PlayerId),
             PlayerSecret(src.PlayerSecret),
             TitleId(src.TitleId)
@@ -8000,6 +8063,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
         FString PlayerSecret;
         // [optional] OAuth 2.0 server authentication code obtained on the client by calling the getServerAuthCode() (https://developers.google.com/identity/sign-in/android/offline-access) Google client API.
@@ -8012,6 +8077,7 @@ namespace ClientModels
             CreateAccount(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PlayerSecret(),
             ServerAuthCode(),
             TitleId()
@@ -8022,6 +8088,7 @@ namespace ClientModels
             CreateAccount(src.CreateAccount),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerSecret(src.PlayerSecret),
             ServerAuthCode(src.ServerAuthCode),
             TitleId(src.TitleId)
@@ -8051,6 +8118,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Specific Operating System version for the user's device.
         FString OS;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
@@ -8065,6 +8134,7 @@ namespace ClientModels
             DeviceModel(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             OS(),
             PlayerSecret(),
             TitleId()
@@ -8077,6 +8147,7 @@ namespace ClientModels
             DeviceModel(src.DeviceModel),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             OS(src.OS),
             PlayerSecret(src.PlayerSecret),
             TitleId(src.TitleId)
@@ -8106,6 +8177,8 @@ namespace ClientModels
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
         // [optional] Numeric user ID assigned by Kongregate
         FString KongregateId;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
         FString PlayerSecret;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
@@ -8118,6 +8191,7 @@ namespace ClientModels
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
             KongregateId(),
+            LoginTitlePlayerAccountEntity(),
             PlayerSecret(),
             TitleId()
             {}
@@ -8129,6 +8203,7 @@ namespace ClientModels
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
             KongregateId(src.KongregateId),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerSecret(src.PlayerSecret),
             TitleId(src.TitleId)
             {}
@@ -8149,6 +8224,8 @@ namespace ClientModels
         
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // Password for the PlayFab account (6-100 characters)
         FString Password;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
@@ -8159,6 +8236,7 @@ namespace ClientModels
         FLoginWithPlayFabRequest() :
             FPlayFabBaseModel(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             Password(),
             TitleId(),
             Username()
@@ -8167,6 +8245,7 @@ namespace ClientModels
         FLoginWithPlayFabRequest(const FLoginWithPlayFabRequest& src) :
             FPlayFabBaseModel(),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             Password(src.Password),
             TitleId(src.TitleId),
             Username(src.Username)
@@ -8192,6 +8271,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
         FString PlayerSecret;
         // [optional] Authentication token for the user, returned as a byte array from Steam, and converted to a string (for example, the byte 0x08 should become "08").
@@ -8204,6 +8285,7 @@ namespace ClientModels
             CreateAccount(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PlayerSecret(),
             SteamTicket(),
             TitleId()
@@ -8214,6 +8296,7 @@ namespace ClientModels
             CreateAccount(src.CreateAccount),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerSecret(src.PlayerSecret),
             SteamTicket(src.SteamTicket),
             TitleId(src.TitleId)
@@ -8241,6 +8324,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
         FString PlayerSecret;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
@@ -8252,6 +8337,7 @@ namespace ClientModels
             CreateAccount(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PlayerSecret(),
             TitleId()
             {}
@@ -8262,6 +8348,7 @@ namespace ClientModels
             CreateAccount(src.CreateAccount),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerSecret(src.PlayerSecret),
             TitleId(src.TitleId)
             {}
@@ -8284,6 +8371,8 @@ namespace ClientModels
         FString ChallengeSignature;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // SHA256 hash of the PublicKey generated by Windows Hello.
         FString PublicKeyHint;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
@@ -8293,6 +8382,7 @@ namespace ClientModels
             FPlayFabBaseModel(),
             ChallengeSignature(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PublicKeyHint(),
             TitleId()
             {}
@@ -8301,6 +8391,7 @@ namespace ClientModels
             FPlayFabBaseModel(),
             ChallengeSignature(src.ChallengeSignature),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PublicKeyHint(src.PublicKeyHint),
             TitleId(src.TitleId)
             {}
@@ -8947,6 +9038,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Password for the PlayFab account (6-100 characters)
         FString Password;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
@@ -8964,6 +9057,7 @@ namespace ClientModels
             Email(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             Password(),
             PlayerSecret(),
             RequireBothUsernameAndEmail(),
@@ -8977,6 +9071,7 @@ namespace ClientModels
             Email(src.Email),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             Password(src.Password),
             PlayerSecret(src.PlayerSecret),
             RequireBothUsernameAndEmail(src.RequireBothUsernameAndEmail),
@@ -9043,6 +9138,8 @@ namespace ClientModels
         FString EncryptedRequest;
         // [optional] Flags for which pieces of info to return for the user.
         TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+        // [optional] Flag to automatically login the player's title_player_account and return the associated entity token.
+        Boxed<bool> LoginTitlePlayerAccountEntity;
         // [optional] Player secret that is used to verify API request signatures (Enterprise Only).
         FString PlayerSecret;
         // [optional] PublicKey generated by Windows Hello.
@@ -9057,6 +9154,7 @@ namespace ClientModels
             DeviceName(),
             EncryptedRequest(),
             InfoRequestParameters(nullptr),
+            LoginTitlePlayerAccountEntity(),
             PlayerSecret(),
             PublicKey(),
             TitleId(),
@@ -9068,6 +9166,7 @@ namespace ClientModels
             DeviceName(src.DeviceName),
             EncryptedRequest(src.EncryptedRequest),
             InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
+            LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
             PlayerSecret(src.PlayerSecret),
             PublicKey(src.PublicKey),
             TitleId(src.TitleId),
@@ -9398,18 +9497,22 @@ namespace ClientModels
         
         // User email address attached to their account
         FString Email;
+        // [optional] The email template id of the account recovery email template to send.
+        FString EmailTemplateId;
         // Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
         FString TitleId;
 
         FSendAccountRecoveryEmailRequest() :
             FPlayFabBaseModel(),
             Email(),
+            EmailTemplateId(),
             TitleId()
             {}
 
         FSendAccountRecoveryEmailRequest(const FSendAccountRecoveryEmailRequest& src) :
             FPlayFabBaseModel(),
             Email(src.Email),
+            EmailTemplateId(src.EmailTemplateId),
             TitleId(src.TitleId)
             {}
 

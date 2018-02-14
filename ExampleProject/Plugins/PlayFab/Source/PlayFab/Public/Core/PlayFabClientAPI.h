@@ -633,7 +633,8 @@ namespace PlayFab
         bool RestoreIOSPurchases(ClientModels::FRestoreIOSPurchasesRequest& request, const FRestoreIOSPurchasesDelegate& SuccessDelegate = FRestoreIOSPurchasesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to
-         * change the password
+         * change the password.If an account recovery email template ID is provided, an email using the custom email template will
+         * be used.
          * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
          */
         bool SendAccountRecoveryEmail(ClientModels::FSendAccountRecoveryEmailRequest& request, const FSendAccountRecoveryEmailDelegate& SuccessDelegate = FSendAccountRecoveryEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());

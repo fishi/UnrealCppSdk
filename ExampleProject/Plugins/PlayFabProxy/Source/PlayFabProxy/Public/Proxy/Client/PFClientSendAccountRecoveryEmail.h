@@ -17,7 +17,7 @@ public:
     UPROPERTY(BlueprintAssignable)
         FEmptyPlayFabDelegate OnSuccess; 
 
-    // Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to change the password
+    // Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to change the password.If an account recovery email template ID is provided, an email using the custom email template will be used.
     UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "PlayFab|Client|Account Management")
         static UPFClientSendAccountRecoveryEmail* SendAccountRecoveryEmail(class APlayerController* PlayerController, const FBPClientSendAccountRecoveryEmailRequest& InSendAccountRecoveryEmailRequest);
 

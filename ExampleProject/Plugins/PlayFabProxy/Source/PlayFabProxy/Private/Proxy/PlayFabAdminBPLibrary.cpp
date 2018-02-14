@@ -3563,10 +3563,12 @@ void UPFAdminProxyLibrary::BreakBPAdminScriptExecutionError(
 // SendAccountRecoveryEmailRequest
 FBPAdminSendAccountRecoveryEmailRequest UPFAdminProxyLibrary::MakeBPAdminSendAccountRecoveryEmailRequest(
     FString InEmail
+	, FString InEmailTemplateId
     )
 {
     FBPAdminSendAccountRecoveryEmailRequest Out = FBPAdminSendAccountRecoveryEmailRequest();
     Out.Data.Email = InEmail;
+	Out.Data.EmailTemplateId = InEmailTemplateId;
 	
     return Out;
 }

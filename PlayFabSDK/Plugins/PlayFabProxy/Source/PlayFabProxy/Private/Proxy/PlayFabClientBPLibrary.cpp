@@ -823,6 +823,22 @@ void UPFClientProxyLibrary::BreakBPClientEmptyResult(
     
 }
 
+// EntityTokenResponse
+void UPFClientProxyLibrary::BreakBPClientEntityTokenResponse(
+    const FBPClientEntityTokenResponse& In
+	, FString& OutEntityId
+	, FString& OutEntityToken
+	, FString& OutEntityType
+	, FDateTime& OutTokenExpiration
+ )
+{
+    OutEntityId = In.Data.EntityId;
+	OutEntityToken = In.Data.EntityToken;
+	OutEntityType = In.Data.EntityType;
+	OutTokenExpiration = In.Data.TokenExpiration;
+	
+}
+
 // ExecuteCloudScriptRequest
 FBPClientExecuteCloudScriptRequest UPFClientProxyLibrary::MakeBPClientExecuteCloudScriptRequest(
     FString InFunctionName
@@ -2838,6 +2854,7 @@ void UPFClientProxyLibrary::BreakBPClientLocationModel(
 // LoginResult
 void UPFClientProxyLibrary::BreakBPClientLoginResult(
     const FBPClientLoginResult& In
+	, FBPClientEntityTokenResponse& OutEntityToken
 	, FBPClientGetPlayerCombinedInfoResultPayload& OutInfoResultPayload
 	, FDateTime& OutLastLoginTime
 	, bool& OutNewlyCreated
@@ -2846,7 +2863,8 @@ void UPFClientProxyLibrary::BreakBPClientLoginResult(
 	, FBPClientUserSettings& OutSettingsForUser
  )
 {
-    if (In.Data.InfoResultPayload.IsValid()) {OutInfoResultPayload.Data = *In.Data.InfoResultPayload;}
+    if (In.Data.EntityToken.IsValid()) {OutEntityToken.Data = *In.Data.EntityToken;}
+	if (In.Data.InfoResultPayload.IsValid()) {OutInfoResultPayload.Data = *In.Data.InfoResultPayload;}
 	OutLastLoginTime = In.Data.LastLoginTime;
 	OutNewlyCreated = In.Data.NewlyCreated;
 	OutPlayFabId = In.Data.PlayFabId;
@@ -2862,6 +2880,7 @@ FBPClientLoginWithAndroidDeviceIDRequest UPFClientProxyLibrary::MakeBPClientLogi
 	, bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InOS
 	, FString InPlayerSecret
     )
@@ -2872,6 +2891,7 @@ FBPClientLoginWithAndroidDeviceIDRequest UPFClientProxyLibrary::MakeBPClientLogi
 	Out.Data.CreateAccount = InCreateAccount;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.OS = InOS;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	
@@ -2884,6 +2904,7 @@ FBPClientLoginWithCustomIDRequest UPFClientProxyLibrary::MakeBPClientLoginWithCu
 	, FString InCustomId
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
     )
 {
@@ -2892,6 +2913,7 @@ FBPClientLoginWithCustomIDRequest UPFClientProxyLibrary::MakeBPClientLoginWithCu
 	Out.Data.CustomId = InCustomId;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	
     return Out;
@@ -2901,12 +2923,14 @@ FBPClientLoginWithCustomIDRequest UPFClientProxyLibrary::MakeBPClientLoginWithCu
 FBPClientLoginWithEmailAddressRequest UPFClientProxyLibrary::MakeBPClientLoginWithEmailAddressRequest(
     FString InEmail
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPassword
     )
 {
     FBPClientLoginWithEmailAddressRequest Out = FBPClientLoginWithEmailAddressRequest();
     Out.Data.Email = InEmail;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.Password = InPassword;
 	
     return Out;
@@ -2918,6 +2942,7 @@ FBPClientLoginWithFacebookRequest UPFClientProxyLibrary::MakeBPClientLoginWithFa
 	, bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
     )
 {
@@ -2926,6 +2951,7 @@ FBPClientLoginWithFacebookRequest UPFClientProxyLibrary::MakeBPClientLoginWithFa
 	Out.Data.CreateAccount = InCreateAccount;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	
     return Out;
@@ -2936,6 +2962,7 @@ FBPClientLoginWithGameCenterRequest UPFClientProxyLibrary::MakeBPClientLoginWith
     bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerId
 	, FString InPlayerSecret
     )
@@ -2944,6 +2971,7 @@ FBPClientLoginWithGameCenterRequest UPFClientProxyLibrary::MakeBPClientLoginWith
     Out.Data.CreateAccount = InCreateAccount;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerId = InPlayerId;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	
@@ -2955,6 +2983,7 @@ FBPClientLoginWithGoogleAccountRequest UPFClientProxyLibrary::MakeBPClientLoginW
     bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 	, FString InServerAuthCode
     )
@@ -2963,6 +2992,7 @@ FBPClientLoginWithGoogleAccountRequest UPFClientProxyLibrary::MakeBPClientLoginW
     Out.Data.CreateAccount = InCreateAccount;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	Out.Data.ServerAuthCode = InServerAuthCode;
 	
@@ -2976,6 +3006,7 @@ FBPClientLoginWithIOSDeviceIDRequest UPFClientProxyLibrary::MakeBPClientLoginWit
 	, FString InDeviceModel
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InOS
 	, FString InPlayerSecret
     )
@@ -2986,6 +3017,7 @@ FBPClientLoginWithIOSDeviceIDRequest UPFClientProxyLibrary::MakeBPClientLoginWit
 	Out.Data.DeviceModel = InDeviceModel;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.OS = InOS;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	
@@ -2999,6 +3031,7 @@ FBPClientLoginWithKongregateRequest UPFClientProxyLibrary::MakeBPClientLoginWith
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
 	, FString InKongregateId
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
     )
 {
@@ -3008,6 +3041,7 @@ FBPClientLoginWithKongregateRequest UPFClientProxyLibrary::MakeBPClientLoginWith
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
 	Out.Data.KongregateId = InKongregateId;
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	
     return Out;
@@ -3016,12 +3050,14 @@ FBPClientLoginWithKongregateRequest UPFClientProxyLibrary::MakeBPClientLoginWith
 // LoginWithPlayFabRequest
 FBPClientLoginWithPlayFabRequest UPFClientProxyLibrary::MakeBPClientLoginWithPlayFabRequest(
     FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPassword
 	, FString InUsername
     )
 {
     FBPClientLoginWithPlayFabRequest Out = FBPClientLoginWithPlayFabRequest();
     Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.Password = InPassword;
 	Out.Data.Username = InUsername;
 	
@@ -3033,6 +3069,7 @@ FBPClientLoginWithSteamRequest UPFClientProxyLibrary::MakeBPClientLoginWithSteam
     bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 	, FString InSteamTicket
     )
@@ -3041,6 +3078,7 @@ FBPClientLoginWithSteamRequest UPFClientProxyLibrary::MakeBPClientLoginWithSteam
     Out.Data.CreateAccount = InCreateAccount;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	Out.Data.SteamTicket = InSteamTicket;
 	
@@ -3053,6 +3091,7 @@ FBPClientLoginWithTwitchRequest UPFClientProxyLibrary::MakeBPClientLoginWithTwit
 	, bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
     )
 {
@@ -3061,6 +3100,7 @@ FBPClientLoginWithTwitchRequest UPFClientProxyLibrary::MakeBPClientLoginWithTwit
 	Out.Data.CreateAccount = InCreateAccount;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	
     return Out;
@@ -3070,12 +3110,14 @@ FBPClientLoginWithTwitchRequest UPFClientProxyLibrary::MakeBPClientLoginWithTwit
 FBPClientLoginWithWindowsHelloRequest UPFClientProxyLibrary::MakeBPClientLoginWithWindowsHelloRequest(
     FString InChallengeSignature
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPublicKeyHint
     )
 {
     FBPClientLoginWithWindowsHelloRequest Out = FBPClientLoginWithWindowsHelloRequest();
     Out.Data.ChallengeSignature = InChallengeSignature;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PublicKeyHint = InPublicKeyHint;
 	
     return Out;
@@ -3783,6 +3825,7 @@ FBPClientRegisterPlayFabUserRequest UPFClientProxyLibrary::MakeBPClientRegisterP
 	, FString InEmail
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPassword
 	, FString InPlayerSecret
 	, bool InRequireBothUsernameAndEmail
@@ -3794,6 +3837,7 @@ FBPClientRegisterPlayFabUserRequest UPFClientProxyLibrary::MakeBPClientRegisterP
 	Out.Data.Email = InEmail;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.Password = InPassword;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	Out.Data.RequireBothUsernameAndEmail = InRequireBothUsernameAndEmail;
@@ -3823,6 +3867,7 @@ FBPClientRegisterWithWindowsHelloRequest UPFClientProxyLibrary::MakeBPClientRegi
     FString InDeviceName
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 	, FString InPublicKey
 	, FString InUserName
@@ -3832,6 +3877,7 @@ FBPClientRegisterWithWindowsHelloRequest UPFClientProxyLibrary::MakeBPClientRegi
     Out.Data.DeviceName = InDeviceName;
 	Out.Data.EncryptedRequest = InEncryptedRequest;
 	Out.Data.InfoRequestParameters = MakeShareable(new PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams(InInfoRequestParameters.Data));
+	Out.Data.LoginTitlePlayerAccountEntity = InLoginTitlePlayerAccountEntity;
 	Out.Data.PlayerSecret = InPlayerSecret;
 	Out.Data.PublicKey = InPublicKey;
 	Out.Data.UserName = InUserName;
@@ -3987,10 +4033,12 @@ void UPFClientProxyLibrary::BreakBPClientScriptExecutionError(
 // SendAccountRecoveryEmailRequest
 FBPClientSendAccountRecoveryEmailRequest UPFClientProxyLibrary::MakeBPClientSendAccountRecoveryEmailRequest(
     FString InEmail
+	, FString InEmailTemplateId
     )
 {
     FBPClientSendAccountRecoveryEmailRequest Out = FBPClientSendAccountRecoveryEmailRequest();
     Out.Data.Email = InEmail;
+	Out.Data.EmailTemplateId = InEmailTemplateId;
 	
     return Out;
 }

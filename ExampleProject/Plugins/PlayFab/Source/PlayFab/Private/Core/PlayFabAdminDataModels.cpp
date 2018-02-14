@@ -11469,6 +11469,8 @@ void PlayFab::AdminModels::FSendAccountRecoveryEmailRequest::writeJSON(JsonWrite
 
     writer->WriteIdentifierPrefix(TEXT("Email")); writer->WriteValue(Email);
 
+    if (EmailTemplateId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EmailTemplateId")); writer->WriteValue(EmailTemplateId); }
+
     writer->WriteObjectEnd();
 }
 
@@ -11481,6 +11483,13 @@ bool PlayFab::AdminModels::FSendAccountRecoveryEmailRequest::readFromValue(const
     {
         FString TmpValue;
         if (EmailValue->TryGetString(TmpValue)) { Email = TmpValue; }
+    }
+
+    const TSharedPtr<FJsonValue> EmailTemplateIdValue = obj->TryGetField(TEXT("EmailTemplateId"));
+    if (EmailTemplateIdValue.IsValid() && !EmailTemplateIdValue->IsNull())
+    {
+        FString TmpValue;
+        if (EmailTemplateIdValue->TryGetString(TmpValue)) { EmailTemplateId = TmpValue; }
     }
 
     return HasSucceeded;

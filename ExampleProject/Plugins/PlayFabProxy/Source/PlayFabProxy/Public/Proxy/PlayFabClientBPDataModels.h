@@ -866,6 +866,16 @@ public:
     PlayFab::ClientModels::FEmptyResult Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientEntityTokenResponse"))
+struct FBPClientEntityTokenResponse
+{
+    GENERATED_BODY()
+public:
+    FBPClientEntityTokenResponse() {};
+    FBPClientEntityTokenResponse(PlayFab::ClientModels::FEntityTokenResponse InData) : Data(InData) {};
+    PlayFab::ClientModels::FEntityTokenResponse Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientExecuteCloudScriptRequest"))
 struct FBPClientExecuteCloudScriptRequest
 {
@@ -3716,6 +3726,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientConsumeItemResultDelegate, 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCreateSharedGroupResultDelegate, const FBPClientCreateSharedGroupResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCurrentGamesResultDelegate, const FBPClientCurrentGamesResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientEmptyResultDelegate, const FBPClientEmptyResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientEntityTokenResponseDelegate, const FBPClientEntityTokenResponse&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientExecuteCloudScriptResultDelegate, const FBPClientExecuteCloudScriptResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGameServerRegionsResultDelegate, const FBPClientGameServerRegionsResult&, Result);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetAccountInfoResultDelegate, const FBPClientGetAccountInfoResult&, Result);

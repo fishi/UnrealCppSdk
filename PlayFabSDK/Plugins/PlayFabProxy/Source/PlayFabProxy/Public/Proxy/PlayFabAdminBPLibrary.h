@@ -1900,6 +1900,7 @@ public:
     UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeMakeFunc))
     static FBPAdminSendAccountRecoveryEmailRequest MakeBPAdminSendAccountRecoveryEmailRequest(
     FString InEmail
+	, FString InEmailTemplateId
 );
 
     // SendAccountRecoveryEmailResult

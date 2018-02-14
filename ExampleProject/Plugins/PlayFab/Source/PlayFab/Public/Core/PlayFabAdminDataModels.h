@@ -7873,15 +7873,19 @@ namespace AdminModels
         
         // User email address attached to their account
         FString Email;
+        // [optional] The email template id of the account recovery email template to send.
+        FString EmailTemplateId;
 
         FSendAccountRecoveryEmailRequest() :
             FPlayFabBaseModel(),
-            Email()
+            Email(),
+            EmailTemplateId()
             {}
 
         FSendAccountRecoveryEmailRequest(const FSendAccountRecoveryEmailRequest& src) :
             FPlayFabBaseModel(),
-            Email(src.Email)
+            Email(src.Email),
+            EmailTemplateId(src.EmailTemplateId)
             {}
 
         FSendAccountRecoveryEmailRequest(const TSharedPtr<FJsonObject>& obj) : FSendAccountRecoveryEmailRequest()

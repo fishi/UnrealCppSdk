@@ -436,6 +436,16 @@ public:
     const FBPClientEmptyResult& In
 );
 
+    // EntityTokenResponse
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+    static void BreakBPClientEntityTokenResponse(
+    const FBPClientEntityTokenResponse& In
+	, FString& OutEntityId
+	, FString& OutEntityToken
+	, FString& OutEntityType
+	, FDateTime& OutTokenExpiration
+);
+
     // ExecuteCloudScriptRequest
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
     static FBPClientExecuteCloudScriptRequest MakeBPClientExecuteCloudScriptRequest(
@@ -1539,6 +1549,7 @@ public:
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
     static void BreakBPClientLoginResult(
     const FBPClientLoginResult& In
+	, FBPClientEntityTokenResponse& OutEntityToken
 	, FBPClientGetPlayerCombinedInfoResultPayload& OutInfoResultPayload
 	, FDateTime& OutLastLoginTime
 	, bool& OutNewlyCreated
@@ -1555,6 +1566,7 @@ public:
 	, bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InOS
 	, FString InPlayerSecret
 );
@@ -1566,6 +1578,7 @@ public:
 	, FString InCustomId
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 );
 
@@ -1574,6 +1587,7 @@ public:
     static FBPClientLoginWithEmailAddressRequest MakeBPClientLoginWithEmailAddressRequest(
     FString InEmail
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPassword
 );
 
@@ -1584,6 +1598,7 @@ public:
 	, bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 );
 
@@ -1593,6 +1608,7 @@ public:
     bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerId
 	, FString InPlayerSecret
 );
@@ -1603,6 +1619,7 @@ public:
     bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 	, FString InServerAuthCode
 );
@@ -1615,6 +1632,7 @@ public:
 	, FString InDeviceModel
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InOS
 	, FString InPlayerSecret
 );
@@ -1627,6 +1645,7 @@ public:
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
 	, FString InKongregateId
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 );
 
@@ -1634,6 +1653,7 @@ public:
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
     static FBPClientLoginWithPlayFabRequest MakeBPClientLoginWithPlayFabRequest(
     FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPassword
 	, FString InUsername
 );
@@ -1644,6 +1664,7 @@ public:
     bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 	, FString InSteamTicket
 );
@@ -1655,6 +1676,7 @@ public:
 	, bool InCreateAccount
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 );
 
@@ -1663,6 +1685,7 @@ public:
     static FBPClientLoginWithWindowsHelloRequest MakeBPClientLoginWithWindowsHelloRequest(
     FString InChallengeSignature
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPublicKeyHint
 );
 
@@ -2019,6 +2042,7 @@ public:
 	, FString InEmail
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPassword
 	, FString InPlayerSecret
 	, bool InRequireBothUsernameAndEmail
@@ -2041,6 +2065,7 @@ public:
     FString InDeviceName
 	, FString InEncryptedRequest
 	, FBPClientGetPlayerCombinedInfoRequestParams InInfoRequestParameters
+	, bool InLoginTitlePlayerAccountEntity
 	, FString InPlayerSecret
 	, FString InPublicKey
 	, FString InUserName
@@ -2139,6 +2164,7 @@ public:
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
     static FBPClientSendAccountRecoveryEmailRequest MakeBPClientSendAccountRecoveryEmailRequest(
     FString InEmail
+	, FString InEmailTemplateId
 );
 
     // SendAccountRecoveryEmailResult

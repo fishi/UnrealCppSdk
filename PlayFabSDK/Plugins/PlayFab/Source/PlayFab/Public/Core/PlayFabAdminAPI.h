@@ -247,7 +247,7 @@ namespace PlayFab
         bool GetContentUploadUrl(AdminModels::FGetContentUploadUrlRequest& request, const FGetContentUploadUrlDelegate& SuccessDelegate = FGetContentUploadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves a download URL for the requested report
-         * Gets the download URL for the requested report data as csv. The reports available through this api are those available in Game Manager. Current ReportName values include: Daily Api Usage Details Report, Daily New User History Report, Daily Overview Report, Daily Real Money Purchase History Report, Daily Top Items Report, Daily Top Spender Report, Daily VC Purchase History Report, Monthly New User History Report, Monthly Overview Report, Monthly Real Money Purchase History Report, Monthly Top Items Report, Monthly Top Spender Report, Monthly Totals Report, Monthly VC Purchase History Report, Seven Day Retention Report.
+         * Gets the download URL for the requested report data (in CSV form). The reports available through this API call are those available in the Game Manager, in the Analytics->Reports tab.
          */
         bool GetDataReport(AdminModels::FGetDataReportRequest& request, const FGetDataReportDelegate& SuccessDelegate = FGetDataReportDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /** Retrieves the details for a specific completed session, including links to standard out and standard error logs */
@@ -465,8 +465,9 @@ namespace PlayFab
          */
         bool RunTask(AdminModels::FRunTaskRequest& request, const FRunTaskDelegate& SuccessDelegate = FRunTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Forces an email to be sent to the registered email address for the specified account, with a link allowing the user to
-         * change the password
+         * Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to
+         * change the password.If an account recovery email template ID is provided, an email using the custom email template will
+         * be used.
          * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
          */
         bool SendAccountRecoveryEmail(AdminModels::FSendAccountRecoveryEmailRequest& request, const FSendAccountRecoveryEmailDelegate& SuccessDelegate = FSendAccountRecoveryEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
