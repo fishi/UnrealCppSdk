@@ -436,13 +436,27 @@ public:
     const FBPClientEmptyResult& In
 );
 
+    // EntityKey
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeMakeFunc))
+    static FBPClientEntityKey MakeBPClientEntityKey(
+    FString InId
+	, EBPClientEntityTypes InType
+	, FString InTypeString
+);
+    UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+    static void BreakBPClientEntityKey(
+    const FBPClientEntityKey& In
+	, FString& OutId
+	, EBPClientEntityTypes& OutType
+	, FString& OutTypeString
+);
+
     // EntityTokenResponse
     UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
     static void BreakBPClientEntityTokenResponse(
     const FBPClientEntityTokenResponse& In
-	, FString& OutEntityId
+	, FBPClientEntityKey& OutEntity
 	, FString& OutEntityToken
-	, FString& OutEntityType
 	, FDateTime& OutTokenExpiration
 );
 

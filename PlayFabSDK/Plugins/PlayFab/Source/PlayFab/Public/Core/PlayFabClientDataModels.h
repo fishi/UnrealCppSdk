@@ -2149,31 +2149,76 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
     
+    enum EntityTypes
+    {
+        EntityTypestitle,
+        EntityTypesmaster_player_account,
+        EntityTypestitle_player_account,
+        EntityTypescharacter,
+        EntityTypesgroup
+    };
+
+    PLAYFAB_API void writeEntityTypesEnumJSON(EntityTypes enumVal, JsonWriter& writer);
+    PLAYFAB_API EntityTypes readEntityTypesFromValue(const TSharedPtr<FJsonValue>& value);
+    PLAYFAB_API EntityTypes readEntityTypesFromValue(const FString& value);
+
+    
+    struct PLAYFAB_API FEntityKey : public FPlayFabBaseModel
+    {
+        
+        // Entity profile ID.
+        FString Id;
+        // [optional] Entity type. Optional to be used but one of EntityType or EntityTypeString must be set.
+        Boxed<EntityTypes> Type;
+        // [optional] Entity type. Optional to be used but one of EntityType or EntityTypeString must be set.
+        FString TypeString;
+
+        FEntityKey() :
+            FPlayFabBaseModel(),
+            Id(),
+            Type(),
+            TypeString()
+            {}
+
+        FEntityKey(const FEntityKey& src) :
+            FPlayFabBaseModel(),
+            Id(src.Id),
+            Type(src.Type),
+            TypeString(src.TypeString)
+            {}
+
+        FEntityKey(const TSharedPtr<FJsonObject>& obj) : FEntityKey()
+        {
+            readFromValue(obj);
+        }
+
+        ~FEntityKey();
+
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+    
     struct PLAYFAB_API FEntityTokenResponse : public FPlayFabBaseModel
     {
         
-        // [optional] The identifier of the entity the token was issued for.
-        FString EntityId;
+        // [optional] The entity id and type.
+        TSharedPtr<FEntityKey> Entity;
         // [optional] The token used to set X-EntityToken for all entity based API calls.
         FString EntityToken;
-        // [optional] The type of entity the token was issued for.
-        FString EntityType;
         // [optional] The time the token will expire, if it is an expiring token, in UTC.
         Boxed<FDateTime> TokenExpiration;
 
         FEntityTokenResponse() :
             FPlayFabBaseModel(),
-            EntityId(),
+            Entity(nullptr),
             EntityToken(),
-            EntityType(),
             TokenExpiration()
             {}
 
         FEntityTokenResponse(const FEntityTokenResponse& src) :
             FPlayFabBaseModel(),
-            EntityId(src.EntityId),
+            Entity(src.Entity.IsValid() ? MakeShareable(new FEntityKey(*src.Entity)) : nullptr),
             EntityToken(src.EntityToken),
-            EntityType(src.EntityType),
             TokenExpiration(src.TokenExpiration)
             {}
 
@@ -6809,7 +6854,7 @@ namespace ClientModels
         
         // [optional] The version that currently exists according to the caller. The call will return the data for all of the keys if the version in the system is greater than this.
         Boxed<uint32> IfChangedFromDataVersion;
-        // [optional] Specific keys to search for in the custom data. Leave null to get all keys.
+        // [optional] List of unique keys to load from.
         TArray<FString> Keys;
         // [optional] Unique PlayFab identifier of the user to load data for. Optional, defaults to yourself if not set. When specified to a PlayFab id of another player, then this will only return public keys for that account.
         FString PlayFabId;

@@ -823,18 +823,43 @@ void UPFClientProxyLibrary::BreakBPClientEmptyResult(
     
 }
 
+// EntityKey
+FBPClientEntityKey UPFClientProxyLibrary::MakeBPClientEntityKey(
+    FString InId
+	, EBPClientEntityTypes InType
+	, FString InTypeString
+    )
+{
+    FBPClientEntityKey Out = FBPClientEntityKey();
+    Out.Data.Id = InId;
+	Out.Data.Type = static_cast<PlayFab::ClientModels::EntityTypes>(static_cast<uint8>(InType));
+	Out.Data.TypeString = InTypeString;
+	
+    return Out;
+}
+void UPFClientProxyLibrary::BreakBPClientEntityKey(
+    const FBPClientEntityKey& In
+	, FString& OutId
+	, EBPClientEntityTypes& OutType
+	, FString& OutTypeString
+ )
+{
+    OutId = In.Data.Id;
+	if (In.Data.Type.notNull()) {OutType = static_cast<EBPClientEntityTypes>(static_cast<uint8>(In.Data.Type.mValue));}
+	OutTypeString = In.Data.TypeString;
+	
+}
+
 // EntityTokenResponse
 void UPFClientProxyLibrary::BreakBPClientEntityTokenResponse(
     const FBPClientEntityTokenResponse& In
-	, FString& OutEntityId
+	, FBPClientEntityKey& OutEntity
 	, FString& OutEntityToken
-	, FString& OutEntityType
 	, FDateTime& OutTokenExpiration
  )
 {
-    OutEntityId = In.Data.EntityId;
+    if (In.Data.Entity.IsValid()) {OutEntity.Data = *In.Data.Entity;}
 	OutEntityToken = In.Data.EntityToken;
-	OutEntityType = In.Data.EntityType;
 	OutTokenExpiration = In.Data.TokenExpiration;
 	
 }

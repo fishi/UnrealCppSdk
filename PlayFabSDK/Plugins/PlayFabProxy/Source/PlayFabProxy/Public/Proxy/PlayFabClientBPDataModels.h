@@ -866,6 +866,16 @@ public:
     PlayFab::ClientModels::FEmptyResult Data;
 };
 
+USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientEntityKey", HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientEntityKey"))
+struct FBPClientEntityKey
+{
+    GENERATED_BODY()
+public:
+    FBPClientEntityKey() {};
+    FBPClientEntityKey(PlayFab::ClientModels::FEntityKey InData) : Data(InData) {};
+    PlayFab::ClientModels::FEntityKey Data;
+};
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientEntityTokenResponse"))
 struct FBPClientEntityTokenResponse
 {
@@ -874,6 +884,16 @@ public:
     FBPClientEntityTokenResponse() {};
     FBPClientEntityTokenResponse(PlayFab::ClientModels::FEntityTokenResponse InData) : Data(InData) {};
     PlayFab::ClientModels::FEntityTokenResponse Data;
+};
+
+UENUM(BlueprintType)
+enum class EBPClientEntityTypes : uint8
+{
+    EntityTypes_title UMETA(DisplayName = "title"),
+    EntityTypes_master_player_account UMETA(DisplayName = "master_player_account"),
+    EntityTypes_title_player_account UMETA(DisplayName = "title_player_account"),
+    EntityTypes_character UMETA(DisplayName = "character"),
+    EntityTypes_group UMETA(DisplayName = "group")
 };
 
 USTRUCT(BlueprintType, meta = (HasNativeMake = "PlayFabProxy.PFClientProxyLibrary.MakeBPClientExecuteCloudScriptRequest"))
